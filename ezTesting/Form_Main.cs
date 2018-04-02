@@ -22,7 +22,7 @@ namespace ezTesting
         {
             AT aa = new AT();
             aa = aa.GetElement(Name: "Program Manager");
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }
