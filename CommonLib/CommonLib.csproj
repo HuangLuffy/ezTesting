@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7E1E761B-431F-4494-A606-50DAF578D09E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CommonLib</RootNamespace>
+    <AssemblyName>CommonLib</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Util\clone.cs" />
+    <Compile Include="Util\deletable.cs" />
+    <Compile Include="Util\Generics.cs" />
+    <Compile Include="Util\io\UtilFile.cs" />
+    <Compile Include="Util\io\UtilFolder.cs" />
+    <Compile Include="Util\log\ILog.cs" />
+    <Compile Include="Util\log\Logger.cs" />
+    <Compile Include="Util\log\LogSimple.cs" />
+    <Compile Include="Util\msg\Dlg.cs" />
+    <Compile Include="Util\msg\Msg.cs" />
+    <Compile Include="Util\net\share\AccessShare.cs" />
+    <Compile Include="Util\net\share\IAccessShare.cs" />
+    <Compile Include="Util\net\share\ManagementScopeAccessShare.cs" />
+    <Compile Include="Util\net\share\NetUseAccessShare.cs" />
+    <Compile Include="Util\net\share\AccessShare1.cs" />
+    <Compile Include="Util\net\IP.cs" />
+    <Compile Include="Util\net\share\ShareFolderProperties.cs" />
+    <Compile Include="Util\os\UtilOS.cs" />
+    <Compile Include="Util\project\BaseProject.cs" />
+    <Compile Include="Util\Reg.cs" />
+    <Compile Include="Util\UtilCloner.cs" />
+    <Compile Include="Util\UtilIEnumerable.cs" />
+    <Compile Include="Util\UtilMatch.cs" />
+    <Compile Include="Util\UtilProcess.cs" />
+    <Compile Include="Util\UtilRegex.cs" />
+    <Compile Include="Util\UtilString.cs" />
+    <Compile Include="Util\utilStruct\pathStruct.cs" />
+    <Compile Include="Util\UtilTime.cs" />
+    <Compile Include="Util\Var.cs" />
+    <Compile Include="Util\vm\IVmControl.cs" />
+    <Compile Include="Util\vm\Vm.cs" />
+    <Compile Include="Util\vm\VmCmdControl.cs" />
+    <Compile Include="Util\WinApi.cs" />
+    <Compile Include="Util\xml\IXml.cs" />
+    <Compile Include="Util\xml\XmlLinq.cs" />
+    <Compile Include="Util\xml\XmlSerialization.cs" />
+    <Compile Include="Util\xml\XmlTextWrite.cs" />
+    <Compile Include="Util\zip\IZip.cs" />
+    <Compile Include="Util\zip\Zip7z.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)"ezTesting\bin\Debug
+copy "$(TargetPath)" "$(SolutionDir)"ATLib\bin\Debug</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

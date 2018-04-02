@@ -6,3 +6,9 @@ results
 bin/*
 debug/*
 Debug/*
+CommonLib/obj/*
+CommonLib/bin/*
+ATLib/obj/*
+ATLib/bin/*
+ezTesting/obj/*
+ezTesting/bin/*
