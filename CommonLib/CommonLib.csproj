@@ -61,7 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Util\clone.cs" />
+    <Compile Include="Util\UtilClone.cs" />
     <Compile Include="Util\deletable.cs" />
     <Compile Include="Util\Generics.cs" />
     <Compile Include="Util\io\UtilFile.cs" />
@@ -89,6 +89,7 @@
     <Compile Include="Util\UtilString.cs" />
     <Compile Include="Util\utilStruct\pathStruct.cs" />
     <Compile Include="Util\UtilTime.cs" />
+    <Compile Include="Util\UtilWait.cs" />
     <Compile Include="Util\Var.cs" />
     <Compile Include="Util\vm\IVmControl.cs" />
     <Compile Include="Util\vm\Vm.cs" />

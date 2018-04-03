@@ -1,4 +1,5 @@
 ﻿using ATLib;
+using CommonLib.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,8 +21,29 @@ namespace ezTesting
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
-            AT aa = new AT();
-            aa = aa.GetElement(Name: "Program Manager");
+            //var bb = UtilWait.ForTrue(() =>
+            //{
+            //    if (true)
+            //    {
+            //        return true;
+            //    }
+            //}, 1);
+            //Console.WriteLine("xxx"+ bb + "ccc");
+
+
+            var bb = UtilWait.ForResult(() =>
+            {
+                if (true)
+                {
+                    return false;
+                }
+            }, 1);
+            Console.WriteLine("xxx" + bb + "ccc");
+
+            this.Dispose();
+
+            //AT aa = new AT();
+            //aa = aa.GetElement(Name: "Program Manager");
             //Console.ReadKey();
         }
     }

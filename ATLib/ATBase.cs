@@ -13,21 +13,14 @@ namespace ATLib
 {
     public class ATBase : ATElement
     {
-        protected AutomationElement me = null;
-        protected void SetMe(AutomationElement me)
-        {
-            this.me = me;
-        }
-        protected AutomationElement GetMe(string timeout = null)
-        {
-            return me;
-        }
+        protected AutomationElement AutomationElement { get { return this.AutomationElement; } set { this.AutomationElement = value; } }
+
         protected ATBase()
         {
         }
         protected ATBase(AutomationElement elePara)
         {
-            me = elePara;
+            this.AutomationElement = elePara;
         }
 
         public void DoByMode(string DoMode, double waitTime = 0.1)
@@ -58,7 +51,7 @@ namespace ATLib
         {
             try
             {
-                ExpandCollapsePattern t = me.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
+                ExpandCollapsePattern t = this.AutomationElement.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
                 t.Expand();
                 Thread.Sleep((int)(waitTime * 1000));
             }
@@ -71,7 +64,7 @@ namespace ATLib
         {
             try
             {
-                SelectionItemPattern t = (SelectionItemPattern)me.GetCurrentPattern(SelectionItemPattern.Pattern);
+                SelectionItemPattern t = (SelectionItemPattern)this.AutomationElement.GetCurrentPattern(SelectionItemPattern.Pattern);
                 t.Select();
                 Thread.Sleep((int)(waitTime * 1000));
             }
@@ -94,13 +87,13 @@ namespace ATLib
             {
                 try
                 {
-                    ptClick = me.GetClickablePoint();
+                    ptClick = this.AutomationElement.GetClickablePoint();
                 }
                 catch
                 {
                     try
                     {
-                        ptClick = new Point((me.Current.BoundingRectangle.Left + 2), (me.Current.BoundingRectangle.Top + 2));
+                        ptClick = new Point((this.AutomationElement.Current.BoundingRectangle.Left + 2), (this.AutomationElement.Current.BoundingRectangle.Top + 2));
                     }
                     catch (Exception ex)
                     {
@@ -112,7 +105,7 @@ namespace ATLib
             {
                 try
                 {
-                    ptClick = new Point((me.Current.BoundingRectangle.Left), (me.Current.BoundingRectangle.Top));
+                    ptClick = new Point((this.AutomationElement.Current.BoundingRectangle.Left), (this.AutomationElement.Current.BoundingRectangle.Top));
                 }
                 catch (Exception ex)
                 {
@@ -137,7 +130,7 @@ namespace ATLib
         {
             try
             {
-                return new ScrollEvents(new AT(me));
+                return new ScrollEvents(new AT(this.AutomationElement));
             }
             catch (Exception ex)
             {
@@ -160,13 +153,13 @@ namespace ATLib
             /// <summary>
             /// 
             /// </summary>
-            /// <param name="elePara"></param>
-            public ScrollEvents(AT elePara)
+            /// <param name="atObj"></param>
+            public ScrollEvents(AT atObj)
             {
-                this.elePara = elePara;
+                this.elePara = atObj;
                 try
                 {
-                    scrollPattern = (ScrollPattern)elePara.GetMe().GetCurrentPattern(ScrollPattern.Pattern);
+                    scrollPattern = (ScrollPattern)atObj.AutomationElement.GetCurrentPattern(ScrollPattern.Pattern);
                 }
                 catch (Exception)
                 {
@@ -202,7 +195,7 @@ namespace ATLib
             //try { DoSetFocus(ele); }catch (Exception) { }
             try
             {
-                InvokePattern t = (InvokePattern)me.GetCurrentPattern(InvokePattern.Pattern);
+                InvokePattern t = (InvokePattern)this.AutomationElement.GetCurrentPattern(InvokePattern.Pattern);
                 Thread invokeThread = new Thread(t.Invoke);
                 invokeThread.Start();
                 //t.Invoke();
@@ -221,7 +214,7 @@ namespace ATLib
         {
             try
             {
-                me.SetFocus();
+                this.AutomationElement.SetFocus();
                 Thread.Sleep((int)(waitTime * 1000));
             }
             catch (Exception ex)
@@ -237,7 +230,7 @@ namespace ATLib
         {
             try
             {
-                return new WindowEvents(new AT(me));
+                return new WindowEvents(new AT(this.AutomationElement));
             }
             catch (Exception ex)
             {
@@ -266,7 +259,7 @@ namespace ATLib
                 this.elePara = elePara;
                 try
                 {
-                    WindowPattern = (WindowPattern)elePara.GetMe().GetCurrentPattern(WindowPattern.Pattern);
+                    WindowPattern = (WindowPattern)elePara.AutomationElement.GetCurrentPattern(WindowPattern.Pattern);
                 }
                 catch (Exception)
                 {
@@ -349,7 +342,7 @@ namespace ATLib
             catch (Exception) { }
             try
             {
-                ValuePattern tbTestBox = me.GetCurrentPattern(ValuePattern.Pattern) as ValuePattern;
+                ValuePattern tbTestBox = this.AutomationElement.GetCurrentPattern(ValuePattern.Pattern) as ValuePattern;
                 tbTestBox.SetValue("");
                 Thread.Sleep((int)(0.3 * 1000));
                 //PublicClass.Sendkeys(strValue);
@@ -377,7 +370,7 @@ namespace ATLib
             public CurrentElement(AT elePara)
             {
                 this.elePara = elePara;
-                this.current = elePara.GetMe().Current;
+                this.current = elePara.AutomationElement.Current;
             }
             /// <summary>
             /// 
@@ -433,7 +426,7 @@ namespace ATLib
             {
                 try
                 {
-                    SelectionItemPattern t = (SelectionItemPattern)elePara.GetMe().GetCurrentPattern(SelectionItemPattern.Pattern);
+                    SelectionItemPattern t = (SelectionItemPattern)elePara.AutomationElement.GetCurrentPattern(SelectionItemPattern.Pattern);
                     return t.Current.IsSelected;
                 }
                 catch (Exception ex)
@@ -449,7 +442,7 @@ namespace ATLib
             {
                 try
                 {
-                    SelectionPattern t = (SelectionPattern)elePara.GetMe().GetCurrentPattern(SelectionPattern.Pattern);
+                    SelectionPattern t = (SelectionPattern)elePara.AutomationElement.GetCurrentPattern(SelectionPattern.Pattern);
                     return t.Current.GetSelection()[0].Current.Name;
                 }
                 catch (Exception ex)
@@ -465,7 +458,7 @@ namespace ATLib
             {
                 try
                 {
-                    ValuePattern t = (ValuePattern)elePara.GetMe().GetCurrentPattern(ValuePattern.Pattern);
+                    ValuePattern t = (ValuePattern)elePara.AutomationElement.GetCurrentPattern(ValuePattern.Pattern);
                     return t.Current.Value;
                 }
                 catch (Exception ex)
@@ -481,7 +474,7 @@ namespace ATLib
             {
                 try
                 {
-                    TogglePattern t = (TogglePattern)elePara.GetMe().GetCurrentPattern(TogglePattern.Pattern);
+                    TogglePattern t = (TogglePattern)elePara.AutomationElement.GetCurrentPattern(TogglePattern.Pattern);
                     return t.Cached.ToggleState.ToString();
                 }
                 catch (Exception ex)
@@ -497,7 +490,7 @@ namespace ATLib
             {
                 try
                 {
-                    return new IntPtr(elePara.GetMe().Current.NativeWindowHandle);
+                    return new IntPtr(elePara.AutomationElement.Current.NativeWindowHandle);
                 }
                 catch (Exception ex)
                 {
@@ -512,7 +505,7 @@ namespace ATLib
             {
                 try
                 {
-                    TogglePattern t = (TogglePattern)elePara.GetMe().GetCurrentPattern(TogglePattern.Pattern);
+                    TogglePattern t = (TogglePattern)elePara.AutomationElement.GetCurrentPattern(TogglePattern.Pattern);
                     return t.Current.ToggleState.ToString();
                 }
                 catch (Exception ex)

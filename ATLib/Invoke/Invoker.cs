@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ATLib.Invoke
 {
-    public class Invoker : BaseInvoker, IInvoker
+    public class Invoker : BaseInvoker
     {
         public Invoker(string[] args) :base(args)
         {

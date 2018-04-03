@@ -104,7 +104,6 @@
     <Compile Include="Input\SafeNativeMethods.cs" />
     <Compile Include="Input\UnsafeNativeMethods.cs" />
     <Compile Include="Invoke\BaseInvoker.cs" />
-    <Compile Include="Invoke\IInvoker.cs" />
     <Compile Include="Invoke\Invoker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

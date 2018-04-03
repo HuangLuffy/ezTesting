@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATLib.Invoke
 {
-    public class BaseInvoker : IInvoker
+    public class BaseInvoker
     {
         protected string[] args = null;
         protected string functionName = null;

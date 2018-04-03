@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CommonLib.Util
 {
-    static class clone
+    static class UtilClone
     {
         public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
         {

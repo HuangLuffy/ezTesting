@@ -56,7 +56,7 @@ namespace ATLib
         /// <param name="elePara"></param>
         public AT(AutomationElement elePara)
         {
-            me = elePara;
+            this.AutomationElement = elePara;
         }
         private struct Ele
         {
@@ -77,14 +77,14 @@ namespace ATLib
             try
             {
                 AT atObj = null;
-                this.me = (this.me == null) ? AutomationElement.RootElement : this.me;
+                this.AutomationElement = (this.AutomationElement == null) ? AutomationElement.RootElement : this.AutomationElement;
                 System.Windows.Automation.TreeScope treeScope = GetTreeScope(TreeScope);
                 System.Windows.Automation.Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
                 if (WaitProcessEventDelegate != null && !String.IsNullOrEmpty(Timeout))
                 {
                     Timeout = null;
                 }
-                AT.Ele.me = me; AT.Ele.condition = condition; AT.Ele.treeScope = treeScope; AT.Ele.Name = Name; AT.Ele.AutomationId = AutomationId; AT.Ele.ClassName = ClassName; AT.Ele.Index = Index;
+                AT.Ele.me = this.AutomationElement; AT.Ele.condition = condition; AT.Ele.treeScope = treeScope; AT.Ele.Name = Name; AT.Ele.AutomationId = AutomationId; AT.Ele.ClassName = ClassName; AT.Ele.Index = Index;
                 if (String.IsNullOrEmpty(Timeout))
                 {
                     atObj = this.GetElementHandle();
@@ -169,8 +169,8 @@ namespace ATLib
             {
                 System.Windows.Automation.TreeScope treeScope = GetTreeScope(TreeScope);
                 System.Windows.Automation.Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
-                me = me == null ? AutomationElement.RootElement : me;
-                AutomationElementCollection aec = me.FindAll(treeScope, condition);
+                this.AutomationElement = this.AutomationElement == null ? AutomationElement.RootElement : this.AutomationElement;
+                AutomationElementCollection aec = this.AutomationElement.FindAll(treeScope, condition);
                 AT[] at = new AT[aec.Count];
                 for (int i = 0; i < aec.Count; i++)
                 {
@@ -192,8 +192,8 @@ namespace ATLib
             try
             {
                 AT atObj = null;
-                this.me = (this.me == null) ? AutomationElement.RootElement : this.me;  //System.Windows.Automation.Condition.TrueCondition
-                AutomationElementCollection t = this.me.FindAll(System.Windows.Automation.TreeScope.Descendants, System.Windows.Automation.Condition.TrueCondition);
+                this.AutomationElement = (this.AutomationElement == null) ? AutomationElement.RootElement : this.AutomationElement;  //System.Windows.Automation.Condition.TrueCondition
+                AutomationElementCollection t = this.AutomationElement.FindAll(System.Windows.Automation.TreeScope.Descendants, System.Windows.Automation.Condition.TrueCondition);
                 //AutomationElementCollection t = this.me.FindAll(System.Windows.Automation.TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, System.Windows.Automation.ControlType.Pane));
                 foreach (AutomationElement item in t)
                 {
@@ -370,11 +370,11 @@ namespace ATLib
         /// <summary>
         /// 
         /// </summary>
-        public void test(AT t)
+        public void test(AT atObj)
         {
             try
             {
-                AutomationElement aaa = GetTopLevelWindow(t.GetMe());
+                AutomationElement aaa = GetTopLevelWindow(atObj.AutomationElement);
             }
             catch (Exception ex)
             {
