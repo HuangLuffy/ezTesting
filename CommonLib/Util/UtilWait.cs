@@ -8,6 +8,8 @@ namespace CommonLib.Util
 {
     public class UtilWait
     {
+        private const int maxWaitTimeInSec = 60;
+        private const int intervalInSec = 1;
         private struct ResulType
         {
             public const string NON_NULL_RESULT = "NON_NULL_RESULT";
@@ -15,7 +17,7 @@ namespace CommonLib.Util
             public const string ANY_RESULT = "ANY_RESULT";
             public const string FOR_TRUE = "FOR_TRUE";
         }
-        public static bool ForTrueCatch<T>(Func<T> action, int maxWaitTimeInSec = 60, int intervalInSec = 1)
+        public static bool ForTrueCatch<T>(Func<T> action, int maxWaitTimeInSec = maxWaitTimeInSec, int intervalInSec = intervalInSec)
         {
             try
             {
@@ -27,15 +29,15 @@ namespace CommonLib.Util
             }
             return true;
         }
-        public static T ForTrue<T>(Func<T> action, int maxWaitTimeInSec = 60, int intervalInSec = 1)
+        public static T ForTrue<T>(Func<T> action, int maxWaitTimeInSec = maxWaitTimeInSec, int intervalInSec = intervalInSec)
         {
             return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResulType.FOR_TRUE);
         }
-        public static T ForResult<T>(Func<T> action, int maxWaitTimeInSec = 60, int intervalInSec = 1)
+        public static T ForResult<T>(Func<T> action, int maxWaitTimeInSec = maxWaitTimeInSec, int intervalInSec = intervalInSec)
         {
             return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResulType.ANY_RESULT);
         }
-        public static T ForWhat<T>(Func<T> action, int maxWaitTimeInSec = 60, int intervalInSec = 1, dynamic expectedResult = null)
+        public static T ForWhat<T>(Func<T> action, int maxWaitTimeInSec = maxWaitTimeInSec, int intervalInSec = intervalInSec, dynamic expectedResult = null)
         {
             DateTime dt = DateTime.Now;
             do {
@@ -67,7 +69,7 @@ namespace CommonLib.Util
                 UtilTime.WaitTime(intervalInSec);
             } while(true);
         }
-        public static bool ForPass(Action action, int maxWaitTimeInSec = 60, int intervalInSec = 1)
+        public static bool ForPass(Action action, int maxWaitTimeInSec = maxWaitTimeInSec, int intervalInSec = intervalInSec)
         {
             bool passed = false;
             int retries = 0;
