@@ -25,7 +25,7 @@ namespace ezTesting
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
-
+            UtilWait.intervalInSec = 88;
             var bb = UtilWait.ForTrue(() =>
             {
                 //if (true)
