@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Util\UtilClone.cs" />
-    <Compile Include="Util\deletable.cs" />
     <Compile Include="Util\Generics.cs" />
     <Compile Include="Util\io\UtilFile.cs" />
     <Compile Include="Util\io\UtilFolder.cs" />
@@ -80,7 +79,7 @@
     <Compile Include="Util\net\share\ShareFolderProperties.cs" />
     <Compile Include="Util\os\UtilOS.cs" />
     <Compile Include="Util\project\BaseProject.cs" />
-    <Compile Include="Util\Reg.cs" />
+    <Compile Include="Util\UtilRegistry.cs" />
     <Compile Include="Util\UtilCloner.cs" />
     <Compile Include="Util\UtilIEnumerable.cs" />
     <Compile Include="Util\UtilMatch.cs" />

@@ -18,29 +18,25 @@ namespace ezTesting
         {
             InitializeComponent();
         }
+        public bool aaa()
+        {
+            return true;
+        }
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
-            //var bb = UtilWait.ForTrue(() =>
-            //{
-            //    if (true)
-            //    {
-            //        return true;
-            //    }
-            //}, 1);
-            //Console.WriteLine("xxx"+ bb + "ccc");
 
-
-            var bb = UtilWait.ForResult(() =>
+            var bb = UtilWait.ForTrue(() =>
             {
-                if (true)
-                {
-                    return false;
-                }
+                //if (true)
+                //{
+                //    return false;
+                //}
+                return aaa();
             }, 1);
             Console.WriteLine("xxx" + bb + "ccc");
 
-            this.Dispose();
+            Application.Exit();
 
             //AT aa = new AT();
             //aa = aa.GetElement(Name: "Program Manager");

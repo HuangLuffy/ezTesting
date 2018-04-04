@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CommonLib.Util
 {
-    public class Reg
+    public class UtilRegistry
     {
         private bool IsRegeditKeyExit()
         {
@@ -24,12 +24,10 @@ namespace CommonLib.Util
                     hkml.Close();
                     return true;
                 }
-
             }
             hkml.Close();
             return false;
         }
-
         public static string getValue(string path, string name)
         {
             RegistryKey Key = Registry.LocalMachine;

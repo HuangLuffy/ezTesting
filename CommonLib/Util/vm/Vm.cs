@@ -15,9 +15,9 @@ namespace CommonLib.Util.vm
         {
             try
             {
-                vmwareInstallFolderPath = Reg.getValue("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\vmware.exe", "Path");
+                vmwareInstallFolderPath = UtilRegistry.getValue("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\vmware.exe", "Path");
                 vmwareInstallFolderPath = vmwareInstallFolderPath.Remove(vmwareInstallFolderPath.Length - 1, 1);
-                vmwareInstallFullPath = Reg.getValue("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\vmware.exe", "");
+                vmwareInstallFullPath = UtilRegistry.getValue("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\vmware.exe", "");
             }
             catch (Exception)
             {

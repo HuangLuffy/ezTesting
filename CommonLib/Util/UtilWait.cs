@@ -13,12 +13,13 @@ namespace CommonLib.Util
             public const string NON_NULL_RESULT = "NON_NULL_RESULT";
             public const string NON_EMPTY_RESULT = "NON_EMPTY";
             public const string ANY_RESULT = "ANY_RESULT";
+            public const string FOR_TRUE = "FOR_TRUE";
         }
         public static bool ForTrueCatch<T>(Func<T> action, int maxWaitTimeInSec = 60, int intervalInSec = 1)
         {
             try
             {
-                ForWhat(action, maxWaitTimeInSec, intervalInSec, true);
+                ForWhat(action, maxWaitTimeInSec, intervalInSec, ResulType.FOR_TRUE);
             }
             catch (Exception)
             {
@@ -28,7 +29,7 @@ namespace CommonLib.Util
         }
         public static T ForTrue<T>(Func<T> action, int maxWaitTimeInSec = 60, int intervalInSec = 1)
         {
-            return ForWhat(action, maxWaitTimeInSec, intervalInSec, true);
+            return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResulType.FOR_TRUE);
         }
         public static T ForResult<T>(Func<T> action, int maxWaitTimeInSec = 60, int intervalInSec = 1)
         {
@@ -40,16 +41,17 @@ namespace CommonLib.Util
             do {
                 try
                 {
-                    if (expectedResult == true || expectedResult == false)
+                    T actualResult = action.Invoke();
+                    if (expectedResult == ResulType.FOR_TRUE)
                     {
-                        if (expectedResult == action.Invoke())
+                        if (actualResult.ToString() == "True")
                         {
-                            return expectedResult;
+                            return actualResult;
                         }
                     }
                     else if (expectedResult == ResulType.ANY_RESULT)
                     {
-                        return expectedResult;
+                        return actualResult;
                     }
                     if (UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second) > Convert.ToDouble(maxWaitTimeInSec))
                     {
@@ -86,11 +88,11 @@ namespace CommonLib.Util
         
         //public void test()
         //{
-        //    ForPassed(() =>
+        //    ForTrue(() =>
         //    {
         //        if (true)
         //        {
-
+        //            return true;
         //        }
         //    }, 600, 10);
         //}
