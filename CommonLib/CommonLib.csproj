@@ -87,6 +87,7 @@
     <Compile Include="Util\UtilRegex.cs" />
     <Compile Include="Util\UtilString.cs" />
     <Compile Include="Util\utilStruct\pathStruct.cs" />
+    <Compile Include="Util\UtilSysEnv.cs" />
     <Compile Include="Util\UtilTime.cs" />
     <Compile Include="Util\UtilWait.cs" />
     <Compile Include="Util\Var.cs" />

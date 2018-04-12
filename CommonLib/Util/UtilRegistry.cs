@@ -9,7 +9,7 @@ namespace CommonLib.Util
 {
     public class UtilRegistry
     {
-        private bool IsRegeditKeyExit()
+        private bool IsRegeditKeyExisting()
         {
             string[] subkeyNames;
             RegistryKey hkml = Registry.LocalMachine;
