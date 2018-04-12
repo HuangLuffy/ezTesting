@@ -105,7 +105,7 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                throw new Exception("GetElement error. " + ex.Message);
+                throw new Exception("[ERROR]: GetElement. " + ex.Message);
             }
         }
         /// <summary>

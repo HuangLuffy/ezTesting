@@ -27,7 +27,6 @@ namespace CommonLib.Util
                 return string.Empty;
             }
             return result;
-
         }
 
         /// <summary>
@@ -41,7 +40,6 @@ namespace CommonLib.Util
             RegistryKey regControlSet001 = regSYSTEM.OpenSubKey("ControlSet001", true);//打开ControlSet001 
             RegistryKey regControl = regControlSet001.OpenSubKey("Control", true);//打开Control 
             RegistryKey regManager = regControl.OpenSubKey("Session Manager", true);//打开Control 
-
             RegistryKey regEnvironment = regManager.OpenSubKey("Environment", true);
             return regEnvironment;
         }
@@ -54,7 +52,6 @@ namespace CommonLib.Util
         public static void SetSysEnvironment(string name, string strValue)
         {
             OpenSysEnvironment().SetValue(name, strValue);
-
         }
 
         /// <summary>
@@ -104,7 +101,6 @@ namespace CommonLib.Util
             pathlist = GetSysEnvironmentByName("PATH");
             string[] list = pathlist.Split(';');
             bool isPathExist = false;
-
             foreach (string item in list)
             {
                 if (item == strHome)
@@ -114,7 +110,6 @@ namespace CommonLib.Util
             {
                 SetSysEnvironment("PATH", strHome + ";" + pathlist);
             }
-
         }
 
         public static void SetPath(string strHome)
@@ -133,7 +128,6 @@ namespace CommonLib.Util
             if (!isPathExist)
             {
                 SetSysEnvironment("PATH", pathlist + strHome + ";");
-
             }
         }
     }

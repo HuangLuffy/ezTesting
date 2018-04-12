@@ -13,7 +13,7 @@ namespace ATLib
 {
     public class ATBase : ATElement
     {
-        protected AutomationElement AutomationElement { get { return this.AutomationElement; } set { this.AutomationElement = value; } }
+        protected AutomationElement AutomationElement { get; set; }
 
         protected ATBase()
         {

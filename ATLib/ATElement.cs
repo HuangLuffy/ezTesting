@@ -242,6 +242,18 @@ namespace ATLib
             /// 
             /// </summary>
             public const string Menu = "Menu";
+            /// <summary>
+            /// 
+            /// </summary>
+            public const string ToolBar = "ToolBar";
+            /// <summary>
+            /// 
+            /// </summary>
+            public const string MenuBar = "MenuBar";
+            /// <summary>
+            /// 
+            /// </summary>
+            public const string ToolTip = "ToolTip";
         }
         /// <summary>
         /// 
@@ -475,9 +487,21 @@ namespace ATLib
                 {
                     return System.Windows.Automation.ControlType.Menu;
                 }
+                else if (ctrlType.Equals(ATBase.ControlType.ToolBar))
+                {
+                    return System.Windows.Automation.ControlType.ToolBar;
+                }
+                else if (ctrlType.Equals(ATBase.ControlType.ToolTip))
+                {
+                    return System.Windows.Automation.ControlType.ToolTip;
+                }
+                else if (ctrlType.Equals(ATBase.ControlType.ToolTip))
+                {
+                    return System.Windows.Automation.ControlType.ToolTip;
+                }
                 else
                 {
-                    throw new Exception("Failed to get TreeScope. Current ctrlType = " + ctrlType + " .");
+                    throw new Exception("Failed to get ControlType " + ctrlType + ".");
                 }
             }
             catch (Exception)
