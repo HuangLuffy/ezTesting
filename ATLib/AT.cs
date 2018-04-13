@@ -10,43 +10,6 @@ namespace ATLib
 {
     public class AT : ATBase
     {
-        public class WaitProcessArgs : EventArgs
-        {
-            /// <summary>
-            /// 
-            /// </summary>
-            private string messsage = "";
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="messsage"></param>
-            public void setMessage(string messsage)
-            {
-                this.messsage = messsage;
-            }
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            public string getMessage()
-            {
-                return this.messsage;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        public delegate AT WaitProcessDelegateHandler(object sender, WaitProcessArgs e);
-        /// <summary>
-        /// 
-        /// </summary>
-        public static event WaitProcessDelegateHandler WaitProcessEventDelegate;
-        /// <summary>
-        /// 
-        /// </summary>
         public AT()
         {
         }
@@ -58,21 +21,21 @@ namespace ATLib
         {
             this.AutomationElement = elePara;
         }
-        private struct Ele
-        {
-            public static AutomationElement me = null;
-            public static System.Windows.Automation.Condition condition = null;
-            public static System.Windows.Automation.TreeScope treeScope = System.Windows.Automation.TreeScope.Children;
-            public static string Name = null;
-            public static string AutomationId = null;
-            public static string ClassName = null;
-            public static string Index = null;
-        }
+        //private struct Ele
+        //{
+        //    public static AutomationElement me = null;
+        //    public static System.Windows.Automation.Condition condition = null;
+        //    public static System.Windows.Automation.TreeScope treeScope = System.Windows.Automation.TreeScope.Children;
+        //    public static string Name = null;
+        //    public static string AutomationId = null;
+        //    public static string ClassName = null;
+        //    public static string Index = null;
+        //}
         public AT GetRootElement()
         {
             return new AT(AutomationElement.RootElement);
         }
-        public AT GetElement(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string Timeout = null, string IsEnabled = null)
+        public AT GetElement(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, int? Index = null, int Timeout = 0, bool IsEnabled = false)
         {
             try
             {
@@ -80,25 +43,22 @@ namespace ATLib
                 this.AutomationElement = (this.AutomationElement == null) ? AutomationElement.RootElement : this.AutomationElement;
                 System.Windows.Automation.TreeScope treeScope = GetTreeScope(TreeScope);
                 System.Windows.Automation.Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
-                if (WaitProcessEventDelegate != null && !String.IsNullOrEmpty(Timeout))
+                if (Timeout <= 0)
                 {
-                    Timeout = null;
-                }
-                AT.Ele.me = this.AutomationElement; AT.Ele.condition = condition; AT.Ele.treeScope = treeScope; AT.Ele.Name = Name; AT.Ele.AutomationId = AutomationId; AT.Ele.ClassName = ClassName; AT.Ele.Index = Index;
-                if (String.IsNullOrEmpty(Timeout))
-                {
-                    atObj = this.GetElementHandle();
+                    atObj = this.GetElementByHandler(this.AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index);
                 }
                 else
                 {
-                    WaitProcessEventDelegate += new AT.WaitProcessDelegateHandler(EventDo_GetElementTimeout);
-                    atObj = GetElementAndWaitProcess(new AT(), Timeout);
+                    atObj = UtilWait.ForResult(() =>
+                    {
+                        return GetElementByHandler(this.AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index);
+                    }, Timeout);
                 }
-                if (!String.IsNullOrEmpty(IsEnabled))
+                if (IsEnabled == true)
                 {
                     if (!(atObj.GetElementInfo().IsEnabled()))
                     {
-                        throw new Exception("Not Enabled. ");
+                        throw new Exception("This element is not enabled. ");
                     }
                 }
                 return atObj;
@@ -118,51 +78,6 @@ namespace ATLib
         /// <param name="interval"></param>
         /// <param name="dateInterval"></param>
         /// <returns></returns>
-        public static AT GetElementAndWaitProcess<T>(T sender, string timeout, string waitEvent = WaitEvent.Existed, string interval = "0.5", UtilTime.DateInterval dateInterval = UtilTime.DateInterval.Second)
-        {
-            try
-            {
-                DateTime dt = DateTime.Now;
-                AT at = null;
-                while (true)
-                {
-                    UtilTime.WaitTime(Convert.ToDouble(interval));
-                    try
-                    {
-                        at = WaitProcessEventDelegate(sender, new WaitProcessArgs());
-                        if (at != null && waitEvent.Equals(WaitEvent.Existed))
-                        {
-                            UtilTime.WaitTime(Convert.ToDouble(interval));
-                            return at;
-                        }
-                        else if (at == null && waitEvent.Equals(WaitEvent.Disappeared))
-                        {
-                            return null;
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                    if (UtilTime.DateDiff(dt, DateTime.Now, dateInterval) > Convert.ToDouble(timeout))
-                    {
-                        throw new Exception(string.Format("Timeout > {0}s.", timeout));
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                foreach (Delegate item in WaitProcessEventDelegate.GetInvocationList())
-                {
-                    typeof(AT).GetEvent(nameof(WaitProcessEventDelegate)).RemoveEventHandler(new AT(), item);
-                    //typeof(AT).GetEvent("WaitProcessEventDelegate").RemoveEventHandler(new AT(), item);
-                }
-            }
-        }
         public ATS GetElements(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null)
         {
             try
@@ -180,7 +95,7 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                throw new Exception("GetElements error. " + ex.Message);
+                throw new Exception("[ERROR]: GetElements. " + ex.Message);
             }
         }
         /// <summary>
@@ -230,40 +145,26 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                throw new Exception("GetElementInfo error. " + ex.Message);
+                throw new Exception("[ERROR]: GetElementInfo. " + ex.Message);
             }
         }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool WaitForDisappeared(string timeout = "1")
+        public void WaitForDisappeared(int timeout = 1)
         {
-            try
+            UtilWait.ForTrue(() =>
             {
-                AT.WaitProcessEventDelegate += new AT.WaitProcessDelegateHandler(this.EventDo_IsDisappeared);
-                AT t = AT.GetElementAndWaitProcess(this, timeout, waitEvent: WaitEvent.Disappeared);
-                return t == null ? true : false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+               return !this.GetElementInfo().Exists();
+            }, timeout);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private AT EventDo_IsDisappeared(object sender, WaitProcessArgs e)
+        public void WaitForExisted(int timeout = 1)
         {
-            try
+            UtilWait.ForTrue(() =>
             {
-                return this.GetElementInfo().Exists() ? this : null;
-            }
-            catch (Exception)
-            {
-                return this;
-            }
+                return this.GetElementInfo().Exists();
+            }, timeout);
         }
         private Boolean ContainsAndOrWildcard(String which)
         {
@@ -276,40 +177,40 @@ namespace ATLib
             }
             return false;
         }
-        private AT GetElementHandle()
+        private AT GetElementByHandler(AutomationElement parentElement, System.Windows.Automation.TreeScope TreeScope = System.Windows.Automation.TreeScope.Children, System.Windows.Automation.Condition Condition = null, string Name = null, string AutomationId = null, string ClassName = null, int? Index = null)
         {
             try
             {
                 AutomationElement resultEle = null;
                 AutomationElementCollection resultEles = null;
                 AT atObj;
-                if (AT.Ele.treeScope.ToString().Equals(AT.TreeScope.Element))
+                if (TreeScope.ToString().Equals(AT.TreeScope.Element))
                 {
-                    resultEle = AT.Ele.me;
+                    resultEle = parentElement;
                 }
                 else
                 {
-                    if (this.ContainsAndOrWildcard(AT.Ele.Name) || this.ContainsAndOrWildcard(AT.Ele.ClassName) || this.ContainsAndOrWildcard(AT.Ele.AutomationId) || !String.IsNullOrEmpty(AT.Ele.Index))
+                    if (this.ContainsAndOrWildcard(Name) || this.ContainsAndOrWildcard(ClassName) || this.ContainsAndOrWildcard(AutomationId) || Index != null)
                     {
-                        if (AT.Ele.condition == null)
+                        if (Condition == null)
                         {
-                            AT.Ele.condition = System.Windows.Automation.Condition.TrueCondition;
+                            Condition = System.Windows.Automation.Condition.TrueCondition;
                         }
-                        resultEles = AT.Ele.me.FindAll(AT.Ele.treeScope, AT.Ele.condition);
+                        resultEles = parentElement.FindAll(TreeScope, Condition);
                     }
                     else
                     {
-                        if (AT.Ele.condition == null)
+                        if (Condition == null)
                         {
                             return new AT(null);
                         }
-                        resultEle = AT.Ele.me.FindFirst(AT.Ele.treeScope, AT.Ele.condition);
+                        resultEle = parentElement.FindFirst(TreeScope, Condition);
                     }
                     if (resultEle == null)
                     {
-                        if (!String.IsNullOrEmpty(AT.Ele.Index))
+                        if (Index != null || Index > 0)
                         {
-                            resultEle = resultEles[Convert.ToInt16(AT.Ele.Index)];
+                            resultEle = resultEles[Convert.ToInt16(Index)];
                         }
                         else if (resultEles == null) {
                             throw new Exception("Can not find the element.");
@@ -318,7 +219,7 @@ namespace ATLib
                         {
                             foreach (AutomationElement item in resultEles)
                             {
-                                if (ATElement.IsElementsMatch(atObj: new AT(item), Name: AT.Ele.Name, ClassName: AT.Ele.ClassName, AutomationId: AT.Ele.AutomationId))
+                                if (ATElement.IsElementsMatch(atObj: new AT(item), Name: Name, ClassName: ClassName, AutomationId: AutomationId))
                                 {
                                     return new AT(item);
                                 }
@@ -327,7 +228,7 @@ namespace ATLib
                     }
                 }
                 atObj = new AT(resultEle);
-                if (resultEle != null && IsElementsMatch(atObj: atObj, Name: AT.Ele.Name, ClassName: AT.Ele.ClassName, AutomationId: AT.Ele.AutomationId))
+                if (resultEle != null && IsElementsMatch(atObj: atObj, Name: Name, ClassName: ClassName, AutomationId: AutomationId))
                 {
                     return atObj;
                 }
@@ -336,20 +237,6 @@ namespace ATLib
             catch (Exception)
             {
                 throw;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        private AT EventDo_GetElementTimeout(object sender, WaitProcessArgs e)
-        {
-            try
-            {
-                return GetElementHandle();
-            }
-            catch (Exception)
-            {
-                return null;
             }
         }
         /// <summary>

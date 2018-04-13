@@ -44,7 +44,7 @@ namespace ATLib.Invoke
         { 
             if (propertyType.Equals(StructPropertyType.index))
             {
-                return parent.GetElement(TreeScope: AT.TreeScope.Descendants, Index: propertyValue, ControlType: controlTypeValue);
+                return parent.GetElement(TreeScope: AT.TreeScope.Descendants, Index: int.Parse(propertyValue), ControlType: controlTypeValue);
             }
             else if (propertyType.Equals(StructPropertyType.name))
             {

@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="API\API.cs" />
     <Compile Include="API\APIBase.cs" />
+    <Compile Include="ATEvent.cs" />
     <Compile Include="AT.cs" />
     <Compile Include="ATBase.cs" />
     <Compile Include="ATElement.cs" />

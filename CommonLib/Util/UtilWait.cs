@@ -10,8 +10,8 @@ namespace CommonLib.Util
     {
         private const int MAXWAITTIMEINSEC = 60;
         private const int INTERVALINSEC = 1;
-        public static int maxWaitTimeInSec { get { return UtilWait.maxWaitTimeInSec; } set { UtilWait.maxWaitTimeInSec = -1; } }
-        public static int intervalInSec { get { return UtilWait.intervalInSec; } set { UtilWait.intervalInSec = -1; } }
+        public static int maxWaitTimeInSec = -1;
+        public static int intervalInSec = -1;
         private struct ResulType
         {
             public const string NON_NULL_RESULT = "NON_NULL_RESULT";
@@ -51,6 +51,10 @@ namespace CommonLib.Util
             }
             DateTime dt = DateTime.Now;
             do {
+                if (UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second) > Convert.ToDouble(maxWaitTimeInSec))
+                {
+                    throw new Exception($"Timeout! The max timeout is {maxWaitTimeInSec}s.");
+                }
                 try
                 {
                     T actualResult = action.Invoke();
@@ -65,14 +69,10 @@ namespace CommonLib.Util
                     {
                         return actualResult;
                     }
-                    if (UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second) > Convert.ToDouble(maxWaitTimeInSec))
-                    {
-                        throw new Exception($"Timeout! The max timeout is {maxWaitTimeInSec}s.");
-                    }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    throw e;
+
                 }
                 UtilTime.WaitTime(intervalInSec);
             } while(true);
