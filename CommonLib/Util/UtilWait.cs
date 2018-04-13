@@ -43,11 +43,11 @@ namespace CommonLib.Util
         {
             if (maxWaitTimeInSec == -1)
             {
-                maxWaitTimeInSec = UtilWait.maxWaitTimeInSec == -1 ? UtilWait.MAXWAITTIMEINSEC : UtilWait.maxWaitTimeInSec;
+                maxWaitTimeInSec = UtilWait.maxWaitTimeInSec < 0 ? UtilWait.MAXWAITTIMEINSEC : UtilWait.maxWaitTimeInSec;
             }
             if (intervalInSec == -1)
             {
-                intervalInSec = UtilWait.intervalInSec == -1 ? UtilWait.INTERVALINSEC : UtilWait.intervalInSec;
+                intervalInSec = UtilWait.intervalInSec < 0 ? UtilWait.INTERVALINSEC : UtilWait.intervalInSec;
             }
             DateTime dt = DateTime.Now;
             do {

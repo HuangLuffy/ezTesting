@@ -8,7 +8,7 @@ using System.Windows.Automation;
 
 namespace ATLib
 {
-    public class AT : ATBase
+    public class AT : ATAction
     {
         public AT()
         {
@@ -68,16 +68,6 @@ namespace ATLib
                 throw new Exception("[ERROR]: GetElement. " + ex.Message);
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sender"></param>
-        /// <param name="timeout"></param>
-        /// <param name="waitEvent"></param>
-        /// <param name="interval"></param>
-        /// <param name="dateInterval"></param>
-        /// <returns></returns>
         public ATS GetElements(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null)
         {
             try
@@ -152,19 +142,26 @@ namespace ATLib
         /// 
         /// </summary>
         /// <returns></returns>
-        public void WaitForDisappeared(int timeout = 1)
+        public void WaitForDisappeared(int timeout = 1, int interval = -1)
         {
             UtilWait.ForTrue(() =>
             {
                return !this.GetElementInfo().Exists();
-            }, timeout);
+            }, timeout, interval);
         }
-        public void WaitForExisted(int timeout = 1)
+        //public void WaitForExisted(int timeout = 1)
+        //{
+        //    UtilWait.ForTrue(() =>
+        //    {
+        //        return this.GetElementInfo().Exists();
+        //    }, timeout);
+        //}
+        public void WaitForEnabled(int timeout = 1, int interval = -1)
         {
             UtilWait.ForTrue(() =>
             {
-                return this.GetElementInfo().Exists();
-            }, timeout);
+                return this.GetElementInfo().IsEnabled();
+            }, timeout, interval);
         }
         private Boolean ContainsAndOrWildcard(String which)
         {

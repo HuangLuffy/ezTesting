@@ -11,14 +11,14 @@ using static ATLib.Input.HWSimulator;
 
 namespace ATLib
 {
-    public class ATBase : ATElement
+    public class ATAction : ATElement
     {
         protected AutomationElement AutomationElement { get; set; }
 
-        protected ATBase()
+        protected ATAction()
         {
         }
-        protected ATBase(AutomationElement elePara)
+        protected ATAction(AutomationElement elePara)
         {
             this.AutomationElement = elePara;
         }
@@ -29,13 +29,13 @@ namespace ATLib
             {
                 switch (DoMode)
                 {
-                    case ATBase.DoMode.Invoke:
+                    case ATAction.DoMode.Invoke:
                         DoClick(waitTime);
                         break;
-                    case ATBase.DoMode.Select:
+                    case ATAction.DoMode.Select:
                         DoSelect(waitTime);
                         break;
-                    case ATBase.DoMode.Point:
+                    case ATAction.DoMode.Point:
                         DoClickPoint(0, 0, waitTime);
                         break;
                     default:
