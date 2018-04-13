@@ -97,6 +97,7 @@
     <Compile Include="AT.cs" />
     <Compile Include="ATAction.cs" />
     <Compile Include="ATElement.cs" />
+    <Compile Include="ATPO.cs" />
     <Compile Include="ATPublic.cs" />
     <Compile Include="ATS.cs" />
     <Compile Include="Input\HWSimulator.cs" />

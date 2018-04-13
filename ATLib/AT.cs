@@ -21,21 +21,35 @@ namespace ATLib
         {
             this.AutomationElement = elePara;
         }
-        //private struct Ele
-        //{
-        //    public static AutomationElement me = null;
-        //    public static System.Windows.Automation.Condition condition = null;
-        //    public static System.Windows.Automation.TreeScope treeScope = System.Windows.Automation.TreeScope.Children;
-        //    public static string Name = null;
-        //    public static string AutomationId = null;
-        //    public static string ClassName = null;
-        //    public static string Index = null;
-        //}
         public AT GetRootElement()
         {
             return new AT(AutomationElement.RootElement);
         }
-        public AT GetElement(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, int? Index = null, int Timeout = 0, bool IsEnabled = false)
+        public ATS GetElementsFromPO(ATPO aTPO, string treeScope = AT.TreeScope.Children)
+        {
+            return this.GetElements(treeScope, aTPO.Name, aTPO.AutomationId, aTPO.ClassName, aTPO.FrameworkId, aTPO.ControlType);
+        }
+        public ATS GetElementsFromChild(ATPO aTPO)
+        {
+            return this.GetElementsFromPO(aTPO, AT.TreeScope.Children);
+        }
+        public ATS GetElementsFromDescendants(ATPO aTPO)
+        {
+            return this.GetElementsFromPO(aTPO, AT.TreeScope.Descendants);
+        }
+        public AT GetElementFromPO(ATPO aTPO, string treeScope = AT.TreeScope.Children)
+        {
+            return this.GetElement(treeScope, aTPO.Name, aTPO.AutomationId, aTPO.ClassName, aTPO.FrameworkId, aTPO.ControlType, aTPO.Index, -1, false);
+        }
+        public AT GetElementFromChild(ATPO aTPO)
+        {
+            return this.GetElementFromPO(aTPO, AT.TreeScope.Children);
+        }
+        public AT GetElementFromDescendants(ATPO aTPO)
+        {
+            return this.GetElementFromPO(aTPO, AT.TreeScope.Descendants);
+        }
+        public AT GetElement(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, int? Index = null, int Timeout = -1, bool IsEnabled = false)
         {
             try
             {
