@@ -66,13 +66,31 @@ namespace ezTesting
                             new XAttribute(Attribute_tests, "tests"),
                             new XAttribute(Attribute_version, "version"),
                             new XAttribute(Attribute_name, "name"),
+
+                            new XAttribute(Attribute_blocks, "blocks"),
+                            new XAttribute(Attribute_blocksPercent, "blocksPercent"),
+                            new XAttribute(Attribute_errors, "errors"),
+                            new XAttribute(Attribute_errorsPercent, "errorsPercent"),
+                            new XAttribute(Attribute_failures, "failures"),
+                            new XAttribute(Attribute_failsPercent, "failsPercent"),
+                            new XAttribute(Attribute_passes, "passes"),
+                            new XAttribute(Attribute_passesPercent, "passesPercent"),
+                            new XAttribute(Attribute_tbds, "tbds"),
+                            new XAttribute(Attribute_tbdsPercent, "tbdsPercent"),
+
                             new XElement(Node_testcase,
-                                          new XElement(Node_step, "2"),
-                                          new XElement(Node_description, "2"),
-                                          new XElement(Node_expectedResult, "2"),
-                                          new XElement(Node_needToCheck, "2"),
-                                          new XElement(Node_result, "2"),
-                                          new XElement(Node_failure, "2")
+                                        new XAttribute(Attribute_classname, "classname"),
+                                        new XAttribute(Attribute_time, "time"),
+                                        new XAttribute(Attribute_name, "name"),
+                                        new XElement(Node_step, "2"),
+                                        new XElement(Node_description, "2"),
+                                        new XElement(Node_expectedResult, "2"),
+                                        new XElement(Node_needToCheck, "2"),
+                                        new XElement(Node_result, "2"),
+                                        new XElement(Node_failure,
+                                                    new XAttribute(Attribute_message, "message"),
+                                                    new XAttribute(Attribute_type, "type")
+                                        )
                              )
                 )
             );
