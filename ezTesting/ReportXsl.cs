@@ -21,7 +21,7 @@ namespace ezTesting
         public const string Attribute_passesPercent = "passesPercent";
         public const string Attribute_tbds = "tbds";
         public const string Attribute_tbdsPercent = "tbdsPercent";
-        
+
         public const string Attribute_project = "project";
         public const string Attribute_testName = "testName";  //abc
         public const string Attribute_os = "os";
@@ -49,7 +49,7 @@ namespace ezTesting
         public const string Attribute_message = "message";
         public const string Attribute_type = "type";
 
-        public void CreateElement()
+        public void CreateXml()
         {
             XDocument xDoc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
@@ -87,6 +87,7 @@ namespace ezTesting
                                         new XElement(Node_expectedResult, "2"),
                                         new XElement(Node_needToCheck, "2"),
                                         new XElement(Node_result, "2"),
+                                        new XElement(Node_result, "2"),
                                         new XElement(Node_failure,
                                                     new XAttribute(Attribute_message, "message"),
                                                     new XAttribute(Attribute_type, "type")
@@ -95,6 +96,29 @@ namespace ezTesting
                 )
             );
             xDoc.Save(@"D:\Dev\DevicePass\results\1.xml");
+        }
+        public void AddTestCase()
+        {
+            string path = @"D:\Dev\DevicePass\results\1.xml";
+            var xDoc = XDocument.Load(path);
+            var testcases = xDoc.Root.Elements(Node_testcase);
+            XElement xElement = new XElement(Node_testcase,
+                                            new XAttribute(Attribute_classname, "classname"),
+                                            new XAttribute(Attribute_time, "time"),
+                                            new XAttribute(Attribute_name, "name"),
+                                            new XElement(Node_step, "3"),
+                                            new XElement(Node_description, "3"),
+                                            new XElement(Node_expectedResult, "2"),
+                                            new XElement(Node_needToCheck, "2"),
+                                            new XElement(Node_result, "2"),
+                                            new XElement(Node_result, "2"),
+                                            new XElement(Node_failure,
+                                            new XAttribute(Attribute_message, "message"),
+                                            new XAttribute(Attribute_type, "type")
+                                        )
+                                    );
+            testcases.Last().AddAfterSelf(xElement);
+            xDoc.Save(path);
         }
     }
 }

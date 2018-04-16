@@ -31,7 +31,7 @@ namespace ezTesting
             try
             {
                 ReportXsl reportXsl = new ReportXsl();
-                reportXsl.CreateElement();
+                reportXsl.AddTestCase();
                 //AT window_VirtualBox = new AT();
                 //window_VirtualBox = window_VirtualBox.GetElement(Name: "Oracle VM VirtualBox Manager");
                 ////window_VirtualBox.Spy();
