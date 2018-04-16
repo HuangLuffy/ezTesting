@@ -27,10 +27,10 @@ namespace ezTesting
         private void Form_Main_Load(object sender, EventArgs e)
         {
 
-
             try
             {
-                ReportXsl reportXsl = new ReportXsl();
+                ReportXsl reportXsl = new ReportXsl(@"D:\Dev\DevicePass\results\1.xml");
+                reportXsl.CreateResultXml();
                 reportXsl.AddTestCase();
                 //AT window_VirtualBox = new AT();
                 //window_VirtualBox = window_VirtualBox.GetElement(Name: "Oracle VM VirtualBox Manager");

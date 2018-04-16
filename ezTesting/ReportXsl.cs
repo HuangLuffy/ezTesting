@@ -9,6 +9,12 @@ namespace ezTesting
 {
     public class ReportXsl
     {
+        public XDocument xDoc { get; set; }
+        public string pathXml { get; set; }
+        public ReportXsl(string pathXml)
+        {
+            this.pathXml = pathXml;
+        }
         public class Result_TestSuite
         {
             public string Attribute_blocks { get; set; }
@@ -44,9 +50,9 @@ namespace ezTesting
             public string Attribute_message { get; set; }
             public string Attribute_type { get; set; }
 
-            public string Attribute_time_testcase { get; set; }
-            public string Attribute_classname_testcase { get; set; }
-            public string Attribute_name_testcase { get; set; }
+            public string Attribute_time { get; set; }
+            public string Attribute_classname { get; set; }
+            public string Attribute_name { get; set; }
         }
         public const string Node_testsuite = "testsuite";
         public const string Attribute_blocks = "blocks";
@@ -113,28 +119,29 @@ namespace ezTesting
                     new XAttribute(Attribute_passes, "passes"),
                     new XAttribute(Attribute_passesPercent, "passesPercent"),
                     new XAttribute(Attribute_tbds, "tbds"),
-                    new XAttribute(Attribute_tbdsPercent, "tbdsPercent"),
+                    new XAttribute(Attribute_tbdsPercent, "tbdsPercent")
 
-                    new XElement(
-                        Node_testcase,
-                        new XAttribute(Attribute_classname, "classname"),
-                        new XAttribute(Attribute_time, "time"),
-                        new XAttribute(Attribute_name, "name"),
-                        new XElement(Node_step, "2"),
-                        new XElement(Node_description, "2"),
-                        new XElement(Node_expectedResult, "2"),
-                        new XElement(Node_needToCheck, "2"),
-                        new XElement(Node_result, "2"),
-                        new XElement(Node_result, "2"),
-                        new XElement(
-                            Node_failure,
-                            new XAttribute(Attribute_message, "message"),
-                            new XAttribute(Attribute_type, "type")
-                        )
-                    )
+                    //new XElement(
+                    //    Node_testcase,
+                    //    new XAttribute(Attribute_classname, "classname"),
+                    //    new XAttribute(Attribute_time, "time"),
+                    //    new XAttribute(Attribute_name, "name"),
+                    //    new XElement(Node_step, "2"),
+                    //    new XElement(Node_description, "2"),
+                    //    new XElement(Node_expectedResult, "2"),
+                    //    new XElement(Node_needToCheck, "2"),
+                    //    new XElement(Node_result, "2"),
+                    //    new XElement(Node_result, "2"),
+                    //    new XElement(
+                    //        Node_failure,
+                    //        new XAttribute(Attribute_message, "message"),
+                    //        new XAttribute(Attribute_type, "type")
+                    //    )
+                    //)
                 )
             );
-            xDoc.Save(@"D:\Dev\DevicePass\results\1.xml");
+            this.xDoc = xDoc;
+            xDoc.Save(this.pathXml);
         }
         public XElement AssembleElement()
         {
@@ -156,10 +163,9 @@ namespace ezTesting
                 )
             );
         }
-            public void AddTestCase()
+        public void AddTestCase()
         {
-            string path = @"D:\Dev\DevicePass\results\1.xml";
-            var xDoc = XDocument.Load(path);
+            XDocument xDoc = this.xDoc == null ? XDocument.Load(this.pathXml) : this.xDoc;
             var testcases = xDoc.Root.Elements(Node_testcase);
             XElement xElement = new XElement(
                 Node_testcase,
@@ -177,8 +183,15 @@ namespace ezTesting
                     new XAttribute(Attribute_type, "type")
                 )
             );
-            testcases.Last().AddAfterSelf(xElement);
-            xDoc.Save(path);
+            if (testcases.Count() == 0)
+            {
+                xDoc.Root.Add(xElement);
+            }
+            else
+            {
+                testcases.Last().AddAfterSelf(xElement);
+            }
+            xDoc.Save(this.pathXml);
         }
     }
 }
