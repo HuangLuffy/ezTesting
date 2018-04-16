@@ -9,8 +9,46 @@ namespace ezTesting
 {
     public class ReportXsl
     {
-        public const string Node_testsuite = "testsuite";
+        public class Result_TestSuite
+        {
+            public string Attribute_blocks { get; set; }
+            public string Attribute_blocksPercent { get; set; }
+            public string Attribute_errors { get; set; }
+            public string Attribute_errorsPercent { get; set; }
+            public string Attribute_failures { get; set; }
+            public string Attribute_failsPercent { get; set; }
+            public string Attribute_passes { get; set; }
+            public string Attribute_passesPercent { get; set; }
+            public string Attribute_tbds { get; set; }
+            public string Attribute_tbdsPercent { get; set; }
+            public string Attribute_project { get; set; }
+            public string Attribute_testName { get; set; }
+            public string Attribute_os { get; set; }
+            public string Attribute_language { get; set; }
+            public string Attribute_time { get; set; }
+            public string Attribute_deviceModel { get; set; }
+            public string Attribute_deviceName { get; set; }
+            public string Attribute_region { get; set; }
+            public string Attribute_tests { get; set; }
+            public string Attribute_version { get; set; }
+            public string Attribute_name { get; set; }
+        }
+        public class Result_TestCase
+        {
+            public string Node_step { get; set; }
+            public string Node_description { get; set; }
+            public string Node_expectedResult { get; set; }
+            public string Node_needToCheck { get; set; }
+            public string Node_result { get; set; }
+            public string Node_failure { get; set; }
+            public string Attribute_message { get; set; }
+            public string Attribute_type { get; set; }
 
+            public string Attribute_time_testcase { get; set; }
+            public string Attribute_classname_testcase { get; set; }
+            public string Attribute_name_testcase { get; set; }
+        }
+        public const string Node_testsuite = "testsuite";
         public const string Attribute_blocks = "blocks";
         public const string Attribute_blocksPercent = "blocksPercent";
         public const string Attribute_errors = "errors";
@@ -21,7 +59,6 @@ namespace ezTesting
         public const string Attribute_passesPercent = "passesPercent";
         public const string Attribute_tbds = "tbds";
         public const string Attribute_tbdsPercent = "tbdsPercent";
-
         public const string Attribute_project = "project";
         public const string Attribute_testName = "testName";  //abc
         public const string Attribute_os = "os";
@@ -33,7 +70,6 @@ namespace ezTesting
         public const string Attribute_tests = "tests"; // how many tests
         public const string Attribute_version = "version";
         public const string Attribute_name = "name"; // class name xxx.xxx.abc
-
         public const string Node_testcase = "testcase";
         //public const string Attribute_time = "time";
         public const string Attribute_classname = "classname";
@@ -49,11 +85,11 @@ namespace ezTesting
         public const string Attribute_message = "message";
         public const string Attribute_type = "type";
 
-        public void CreateXml()
+        public void CreateResultXml(string xslName = "xmlReport.xsl")
         {
             XDocument xDoc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
-                new XProcessingInstruction("xml-stylesheet", "type='text/xsl' href = 'xmlReport.xsl'"),
+                new XProcessingInstruction("xml-stylesheet", $"type='text/xsl' href='{xslName}'"),
                 new XElement(
                     Node_testsuite,
                     new XAttribute(Attribute_project, "1"),
@@ -100,7 +136,27 @@ namespace ezTesting
             );
             xDoc.Save(@"D:\Dev\DevicePass\results\1.xml");
         }
-        public void AddTestCase()
+        public XElement AssembleElement()
+        {
+            return 
+                new XElement(
+                Node_testcase,
+                new XAttribute(Attribute_classname, "classname"),
+                new XAttribute(Attribute_time, "time"),
+                new XAttribute(Attribute_name, "name"),
+                new XElement(Node_step, "3"),
+                new XElement(Node_description, "3"),
+                new XElement(Node_expectedResult, "2"),
+                new XElement(Node_needToCheck, "2"),
+                new XElement(Node_result, "2"),
+                new XElement(
+                    Node_failure,
+                    new XAttribute(Attribute_message, "message"),
+                    new XAttribute(Attribute_type, "type")
+                )
+            );
+        }
+            public void AddTestCase()
         {
             string path = @"D:\Dev\DevicePass\results\1.xml";
             var xDoc = XDocument.Load(path);
@@ -114,7 +170,6 @@ namespace ezTesting
                 new XElement(Node_description, "3"),
                 new XElement(Node_expectedResult, "2"),
                 new XElement(Node_needToCheck, "2"),
-                new XElement(Node_result, "2"),
                 new XElement(Node_result, "2"),
                 new XElement(
                     Node_failure,
