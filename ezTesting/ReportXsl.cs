@@ -54,45 +54,48 @@ namespace ezTesting
             XDocument xDoc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XProcessingInstruction("xml-stylesheet", "type='text/xsl' href = 'xmlReport.xsl'"),
-                new XElement(Node_testsuite,
-                            new XAttribute(Attribute_project, "1"),
-                            new XAttribute(Attribute_testName, "testName"),
-                            new XAttribute(Attribute_os, "os"),
-                            new XAttribute(Attribute_language, "language"),
-                            new XAttribute(Attribute_time, "time"),
-                            new XAttribute(Attribute_deviceModel, "deviceModel"),
-                            new XAttribute(Attribute_deviceName, "deviceName"),
-                            new XAttribute(Attribute_region, "region"),
-                            new XAttribute(Attribute_tests, "tests"),
-                            new XAttribute(Attribute_version, "version"),
-                            new XAttribute(Attribute_name, "name"),
+                new XElement(
+                    Node_testsuite,
+                    new XAttribute(Attribute_project, "1"),
+                    new XAttribute(Attribute_testName, "testName"),
+                    new XAttribute(Attribute_os, "os"),
+                    new XAttribute(Attribute_language, "language"),
+                    new XAttribute(Attribute_time, "time"),
+                    new XAttribute(Attribute_deviceModel, "deviceModel"),
+                    new XAttribute(Attribute_deviceName, "deviceName"),
+                    new XAttribute(Attribute_region, "region"),
+                    new XAttribute(Attribute_tests, "tests"),
+                    new XAttribute(Attribute_version, "version"),
+                    new XAttribute(Attribute_name, "name"),
 
-                            new XAttribute(Attribute_blocks, "blocks"),
-                            new XAttribute(Attribute_blocksPercent, "blocksPercent"),
-                            new XAttribute(Attribute_errors, "errors"),
-                            new XAttribute(Attribute_errorsPercent, "errorsPercent"),
-                            new XAttribute(Attribute_failures, "failures"),
-                            new XAttribute(Attribute_failsPercent, "failsPercent"),
-                            new XAttribute(Attribute_passes, "passes"),
-                            new XAttribute(Attribute_passesPercent, "passesPercent"),
-                            new XAttribute(Attribute_tbds, "tbds"),
-                            new XAttribute(Attribute_tbdsPercent, "tbdsPercent"),
+                    new XAttribute(Attribute_blocks, "blocks"),
+                    new XAttribute(Attribute_blocksPercent, "blocksPercent"),
+                    new XAttribute(Attribute_errors, "errors"),
+                    new XAttribute(Attribute_errorsPercent, "errorsPercent"),
+                    new XAttribute(Attribute_failures, "failures"),
+                    new XAttribute(Attribute_failsPercent, "failsPercent"),
+                    new XAttribute(Attribute_passes, "passes"),
+                    new XAttribute(Attribute_passesPercent, "passesPercent"),
+                    new XAttribute(Attribute_tbds, "tbds"),
+                    new XAttribute(Attribute_tbdsPercent, "tbdsPercent"),
 
-                            new XElement(Node_testcase,
-                                        new XAttribute(Attribute_classname, "classname"),
-                                        new XAttribute(Attribute_time, "time"),
-                                        new XAttribute(Attribute_name, "name"),
-                                        new XElement(Node_step, "2"),
-                                        new XElement(Node_description, "2"),
-                                        new XElement(Node_expectedResult, "2"),
-                                        new XElement(Node_needToCheck, "2"),
-                                        new XElement(Node_result, "2"),
-                                        new XElement(Node_result, "2"),
-                                        new XElement(Node_failure,
-                                                    new XAttribute(Attribute_message, "message"),
-                                                    new XAttribute(Attribute_type, "type")
-                                        )
-                             )
+                    new XElement(
+                        Node_testcase,
+                        new XAttribute(Attribute_classname, "classname"),
+                        new XAttribute(Attribute_time, "time"),
+                        new XAttribute(Attribute_name, "name"),
+                        new XElement(Node_step, "2"),
+                        new XElement(Node_description, "2"),
+                        new XElement(Node_expectedResult, "2"),
+                        new XElement(Node_needToCheck, "2"),
+                        new XElement(Node_result, "2"),
+                        new XElement(Node_result, "2"),
+                        new XElement(
+                            Node_failure,
+                            new XAttribute(Attribute_message, "message"),
+                            new XAttribute(Attribute_type, "type")
+                        )
+                    )
                 )
             );
             xDoc.Save(@"D:\Dev\DevicePass\results\1.xml");
@@ -102,21 +105,23 @@ namespace ezTesting
             string path = @"D:\Dev\DevicePass\results\1.xml";
             var xDoc = XDocument.Load(path);
             var testcases = xDoc.Root.Elements(Node_testcase);
-            XElement xElement = new XElement(Node_testcase,
-                                            new XAttribute(Attribute_classname, "classname"),
-                                            new XAttribute(Attribute_time, "time"),
-                                            new XAttribute(Attribute_name, "name"),
-                                            new XElement(Node_step, "3"),
-                                            new XElement(Node_description, "3"),
-                                            new XElement(Node_expectedResult, "2"),
-                                            new XElement(Node_needToCheck, "2"),
-                                            new XElement(Node_result, "2"),
-                                            new XElement(Node_result, "2"),
-                                            new XElement(Node_failure,
-                                            new XAttribute(Attribute_message, "message"),
-                                            new XAttribute(Attribute_type, "type")
-                                        )
-                                    );
+            XElement xElement = new XElement(
+                Node_testcase,
+                new XAttribute(Attribute_classname, "classname"),
+                new XAttribute(Attribute_time, "time"),
+                new XAttribute(Attribute_name, "name"),
+                new XElement(Node_step, "3"),
+                new XElement(Node_description, "3"),
+                new XElement(Node_expectedResult, "2"),
+                new XElement(Node_needToCheck, "2"),
+                new XElement(Node_result, "2"),
+                new XElement(Node_result, "2"),
+                new XElement(
+                    Node_failure,
+                    new XAttribute(Attribute_message, "message"),
+                    new XAttribute(Attribute_type, "type")
+                )
+            );
             testcases.Last().AddAfterSelf(xElement);
             xDoc.Save(path);
         }
