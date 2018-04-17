@@ -57,7 +57,7 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                throw new Exception("Expand error. " + ex);
+                throw new Exception("DoExpand error. " + ex);
             }
         }
         public void DoSelect(double waitTime = 0.1)
@@ -70,7 +70,7 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                throw new Exception("Select error. " + ex);
+                throw new Exception("DoSelect error. " + ex);
             }
             Thread.Sleep((int)(waitTime * 1000));
         }
@@ -196,13 +196,31 @@ namespace ATLib
             try
             {
                 InvokePattern t = (InvokePattern)this.AutomationElement.GetCurrentPattern(InvokePattern.Pattern);
-                Thread invokeThread = new Thread(t.Invoke);
-                invokeThread.Start();
-                //t.Invoke();
+                t.Invoke();
             }
             catch (Exception ex)
             {
-                throw new Exception("Click error. " + ex);
+                throw new Exception("DoClick error. " + ex);
+            }
+            Thread.Sleep((int)(waitTime * 1000));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="waitTime"></param>
+        public void DoClickWithNewThread(double waitTime = 0.1)
+        {
+            try
+            {
+                InvokePattern t = (InvokePattern)this.AutomationElement.GetCurrentPattern(InvokePattern.Pattern);
+                Thread invokeThread = new Thread(t.Invoke);
+                invokeThread.Start();
+                invokeThread.Join();
+                invokeThread.Abort();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DoClickWithNewThread error. " + ex);
             }
             Thread.Sleep((int)(waitTime * 1000));
         }
@@ -219,7 +237,7 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                throw new Exception("SetFocus error. " + ex);
+                throw new Exception("DoSetFocus error. " + ex);
             }
         }
         /// <summary>
@@ -350,7 +368,7 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                throw new Exception("Set value error. " + ex.Message);
+                throw new Exception("DoSetValue error. " + ex.Message);
             }
         }
         /// <summary>
