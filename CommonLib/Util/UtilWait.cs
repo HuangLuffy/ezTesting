@@ -16,7 +16,7 @@ namespace CommonLib.Util
         {
             public const string NON_NULL_RESULT = "NON_NULL_RESULT";
             public const string NON_EMPTY_RESULT = "NON_EMPTY";
-            public const string ANY_RESULT = "ANY_RESULT";
+            public const string ANY_RESULT = "ANY_RESULT"; // suits for either getting result or getting exception
             public const string FOR_TRUE = "FOR_TRUE";
         }
         public static bool ForTrueCatch<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)

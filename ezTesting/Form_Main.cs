@@ -26,6 +26,8 @@ namespace ezTesting
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
+            TestStep testStep = new TestStep();
+            testStep.Run(testStep.firstStep);
 
             try
             {

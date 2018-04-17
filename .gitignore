@@ -9,3 +9,7 @@ ATLib/obj/*
 ATLib/bin/*
 ezTesting/obj/*
 ezTesting/bin/*
+TestLib/obj/*
+TestLib/bin/*
+Report/obj/*
+Report/bin/*
