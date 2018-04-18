@@ -32,10 +32,11 @@ namespace ezTesting
                 throw;
             }
         }
-        [StepProperty("ExpectedResult", "ok")]
-        public void firstStep()
+        [Description("1","2")]
+        [ExpectedResult("3", "4")]
+        public string firstStep()
         {
-
+            return "";
         }
     }
 }

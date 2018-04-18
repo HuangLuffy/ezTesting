@@ -8,12 +8,21 @@ namespace TestLib
 {
     public class StepProperty : Attribute
     {
-        public string Description { get; set; }
-        public string ExpectedResult { get; set; }
-        public StepProperty(string description, string expectedResult)
+    }
+    public class Description : Attribute
+    {
+        public string[] des { set; get; }
+        public Description(params string[] list)
         {
-            this.Description = description;
-            this.ExpectedResult = expectedResult;
+            this.des = list;
+        }
+    }
+    public class ExpectedResult : Attribute
+    {
+        public string[] er { set; get; }
+        public ExpectedResult(params string[] list)
+        {
+            this.er = list;
         }
     }
 }
