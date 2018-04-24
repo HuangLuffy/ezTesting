@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E723B6D5-144E-4D7D-81A6-5474D965A16A}</ProjectGuid>
+    <ProjectGuid>{A33CB8AC-544C-48F8-901B-14C5F0B29BEF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>TestLib</RootNamespace>
-    <AssemblyName>TestLib</AssemblyName>
+    <RootNamespace>ReportLib</RootNamespace>
+    <AssemblyName>ReportLib</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -47,8 +47,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StepProperty.cs" />
-    <Compile Include="TestStep.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -11,5 +11,8 @@ ezTesting/obj/*
 ezTesting/bin/*
 TestLib/obj/*
 TestLib/bin/*
-Report/obj/*
-Report/bin/*
+ReportLib/obj/*
+ReportLib/bin/*
+XunitTest/obj/*
+XunitTest/bin/*
+packages/*
