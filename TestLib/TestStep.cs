@@ -9,7 +9,7 @@ namespace ezTesting
 {
     public class TestStep
     {
-        public T Run<T>(Func<T> action, dynamic expectedResult = null)
+        public T Exec<T>(Func<T> action, dynamic expectedResult = null)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace ezTesting
                 throw;
             }
         }
-        public void Run(Action action, dynamic expectedResult = null)
+        public void Exec(Action action, dynamic expectedResult = null)
         {
             try
             {

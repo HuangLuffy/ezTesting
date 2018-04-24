@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace TestLib
 {
-    class Program
+    public class TestLib
     {
-        static void Main(string[] args)
-        {
-        }
+        public const string DESCRIPTION = "Description";
+        public const string EXPECTEDRESULT = "ExptectedResult";
     }
 }

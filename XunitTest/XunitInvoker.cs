@@ -11,17 +11,13 @@ namespace XunitTest
     public class XunitInvoker
     {
         static object consoleLock = new object();
-
-        // Use an event to know when we're done
         static ManualResetEvent finished = new ManualResetEvent(false);
-        // Start out assuming success; we'll set this to 1 if we get a failed test
         static int result = 0;
         static void Main(string[] args)
         {
             if (args.Length == 0 || args.Length > 2)
             {
                 Console.WriteLine("usage: TestRunner <assembly> [typeName]");
-
             }
             //var testAssembly = args[0];
             var testAssembly = @"D:\Dev\VS2015\TryXunit\TryXunit\bin\Debug\TryXunit.exe";

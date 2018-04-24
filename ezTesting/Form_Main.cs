@@ -1,5 +1,4 @@
-﻿using ATLib;
-using CommonLib.Util;
+﻿using CommonLib.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,14 +25,14 @@ namespace ezTesting
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
-            TestStep testStep = new TestStep();
-            testStep.Run(testStep.firstStep);
+            //TestStep testStep = new TestStep();
+            //testStep.Run(testStep.firstStep);
 
             try
             {
-                ReportXsl reportXsl = new ReportXsl(@"D:\Dev\DevicePass\results\1.xml");
-                reportXsl.CreateResultXml();
-                reportXsl.AddTestCase();
+                //ReportXsl reportXsl = new ReportXsl(@"D:\Dev\DevicePass\results\1.xml");
+                //reportXsl.CreateResultXml();
+                //reportXsl.AddTestCase();
                 //AT window_VirtualBox = new AT();
                 //window_VirtualBox = window_VirtualBox.GetElement(Name: "Oracle VM VirtualBox Manager");
                 ////window_VirtualBox.Spy();
