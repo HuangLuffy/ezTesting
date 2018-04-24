@@ -8,6 +8,7 @@ namespace TestLib
 {
     public class StepProperty : Attribute
     {
+
     }
     public class Description : Attribute
     {

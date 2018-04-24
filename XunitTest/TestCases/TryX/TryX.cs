@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestLib;
 using Xunit;
 using Xunit.Abstractions;
 using XunitTest.ExecOrderers;
@@ -24,12 +25,13 @@ namespace XunitTest.TestCases.TryX
         public class TestXunit : IClassFixture<ShareInTryx>
         {
             private readonly ShareInTryx _Share;
-            private string str = string.Empty;
             private readonly ITestOutputHelper output;
+            private TestStep testStep;
             public TestXunit(ITestOutputHelper output, ShareInTryx _Share)
             {
                 this.output = output;
                 this._Share = _Share;
+                testStep = new TestStep();
             }
             public int Add(int a, int b)
             {
@@ -38,8 +40,7 @@ namespace XunitTest.TestCases.TryX
             [Fact, TestPriority(1)]
             public void ATestAdd5()
             {
-                Assert.Equal(3, this.Add(2, 1));
-                output.WriteLine("4444444444");
+                var a = testStep.Exec<int>(() => { return this.Add(2, 1); });
             }
             [Fact, TestPriority(2)]
             public void BTestAdd4()
@@ -62,8 +63,6 @@ namespace XunitTest.TestCases.TryX
             {
                 Assert.Equal(3, this.Add(1, 2));
                 output.WriteLine("33333333333");
-                str += str;
-
             }
         }
     }

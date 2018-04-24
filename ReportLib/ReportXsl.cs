@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace ezTesting
+namespace ReportLib
 {
-    public class ReportXsl
+    public class ReportXsl : IReporter
     {
         public XDocument xDoc { get; set; }
         public string pathXml { get; set; }
@@ -143,46 +143,31 @@ namespace ezTesting
             this.xDoc = xDoc;
             xDoc.Save(this.pathXml);
         }
-        public XElement AssembleElement()
+        private XElement AssembleElement(string classname, string stepTime, string functionName, string stepNumber, string description, string expectedResult, string needToCheck, string result)
         {
             return 
                 new XElement(
                 Node_testcase,
-                new XAttribute(Attribute_classname, "classname"),
-                new XAttribute(Attribute_time, "time"),
-                new XAttribute(Attribute_name, "name"),
-                new XElement(Node_step, "3"),
-                new XElement(Node_description, "3"),
-                new XElement(Node_expectedResult, "2"),
-                new XElement(Node_needToCheck, "2"),
-                new XElement(Node_result, "2"),
+                new XAttribute(Attribute_classname, classname),
+                new XAttribute(Attribute_time, stepTime),
+                new XAttribute(Attribute_name, functionName),
+                new XElement(Node_step, stepNumber),
+                new XElement(Node_description, description),
+                new XElement(Node_expectedResult, expectedResult),
+                new XElement(Node_needToCheck, needToCheck),
+                new XElement(Node_result, result),
                 new XElement(
                     Node_failure,
-                    new XAttribute(Attribute_message, "message"),
-                    new XAttribute(Attribute_type, "type")
+                    new XAttribute(Attribute_message, "na"),
+                    new XAttribute(Attribute_type, "na")
                 )
             );
         }
-        public void AddTestCase()
+        public void AddTestStep(string classname, string stepTime, string functionName, string stepNumber, string description, string expectedResult, string needToCheck, string result)
         {
             XDocument xDoc = this.xDoc == null ? XDocument.Load(this.pathXml) : this.xDoc;
             var testcases = xDoc.Root.Elements(Node_testcase);
-            XElement xElement = new XElement(
-                Node_testcase,
-                new XAttribute(Attribute_classname, "classname"),
-                new XAttribute(Attribute_time, "time"),
-                new XAttribute(Attribute_name, "name"),
-                new XElement(Node_step, "3"),
-                new XElement(Node_description, "3"),
-                new XElement(Node_expectedResult, "2"),
-                new XElement(Node_needToCheck, "2"),
-                new XElement(Node_result, "2"),
-                new XElement(
-                    Node_failure,
-                    new XAttribute(Attribute_message, "message"),
-                    new XAttribute(Attribute_type, "type")
-                )
-            );
+            XElement xElement = AssembleElement(classname, stepTime, functionName, stepNumber,description, expectedResult, needToCheck, result);
             if (testcases.Count() == 0)
             {
                 xDoc.Root.Add(xElement);
@@ -192,6 +177,11 @@ namespace ezTesting
                 testcases.Last().AddAfterSelf(xElement);
             }
             xDoc.Save(this.pathXml);
+        }
+
+        public void ModifyTotalTestTime(string time)
+        {
+
         }
     }
 }

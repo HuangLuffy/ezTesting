@@ -5,31 +5,47 @@ using System.Text;
 using System.Threading.Tasks;
 using TestLib;
 
-namespace ezTesting
+namespace TestLib
 {
     public class TestStep
     {
-        public T Exec<T>(Func<T> action, dynamic expectedResult = null)
+        public T Exec<T>(Func<T> action)
+        {
+            T actualResult = action.Invoke();
+            return actualResult;
+        }
+        public void Exec(Action action)
+        {
+            action.Invoke();
+        }
+        public T Rec<T>(Func<T> action)
         {
             try
             {
-                T actualResult = action.Invoke();
-                return actualResult;
+                return Exec<T>(action);
             }
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+
             }
         }
-        public void Exec(Action action, dynamic expectedResult = null)
+        public void Rec(Action action)
         {
             try
             {
-                action.Invoke();
+                Exec(action);
             }
             catch (Exception)
             {
-                throw;
+                
+            }
+            finally
+            {
+
             }
         }
         [Description("1","2")]
