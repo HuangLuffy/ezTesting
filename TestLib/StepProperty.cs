@@ -10,18 +10,18 @@ namespace TestLib
     {
 
     }
-    public class Description : Attribute
+    public class Descriptions : Attribute
     {
         public string[] des { set; get; }
-        public Description(params string[] list)
+        public Descriptions(params string[] list)
         {
             this.des = list;
         }
     }
-    public class ExpectedResult : Attribute
+    public class ExpectedResults : Attribute
     {
         public string[] er { set; get; }
-        public ExpectedResult(params string[] list)
+        public ExpectedResults(params string[] list)
         {
             this.er = list;
         }

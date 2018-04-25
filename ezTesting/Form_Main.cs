@@ -43,7 +43,7 @@ namespace ezTesting
                 ////Welcome to VirtualBox
                 //AT sss = window_VirtualBox.GetElement(Name: "Welcome to VirtualBox.*", TreeScope: AT.TreeScope.Descendants);
                 ////sss.Spy();
-               // Debug.WriteLine(sss.GetElementInfo().Name());
+               //Debug.WriteLine(sss.GetElementInfo().Name());
                 //sss.WaitForDisappeared(50);
             }
             catch (Exception ex)

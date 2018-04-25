@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATLib
 {
-    public class ATPO
+    public class ATElementStruct
     {
         public string Name = null;
         public string AutomationId = null;

@@ -7,6 +7,7 @@ using TestLib;
 using Xunit;
 using Xunit.Abstractions;
 using XunitTest.ExecOrderers;
+using XunitTest.Projects.TestPro.Cases;
 using XunitTest.Wrapper;
 
 namespace XunitTest.TestCases.TryX
@@ -27,12 +28,11 @@ namespace XunitTest.TestCases.TryX
         {
             private readonly ShareInTryx _Share;
             private readonly ITestOutputHelper output;
-            private DetailedTestStep testStep;
+            private Steps_VirtualBox _Page_VirtualBox = new Steps_VirtualBox();
             public TestXunit(ITestOutputHelper output, ShareInTryx _Share)
             {
                 this.output = output;
                 this._Share = _Share;
-                testStep = new DetailedTestStep("", typeof(TryX).FullName);
             }
             public int Add(int a, int b)
             {
@@ -41,31 +41,34 @@ namespace XunitTest.TestCases.TryX
             [Fact, TestPriority(1)]
             public void ATestAdd5()
             {
-                testStep.Rec(() => { this.Add(2, 1); });
-                //var a = testStep.Rec(() => { return this.Add(2, 1); });
+                _Page_VirtualBox.OpenVirtualBox();
+                _Page_VirtualBox.verifyIfVirtualBoxlaunchedSuccessfully();
+                //_TestStep.Rec(() => { this.Add(2, 1); });
+                //_TestStep.Rec(() => { this.Add(2, 1); });
+                //var a = _TestStep.Rec(() => { return this.Add(2, 1); });
             }
-            [Fact, TestPriority(2)]
-            public void BTestAdd4()
-            {
-                Assert.Equal(3, this.Add(2, 1));
-                output.WriteLine("1111111111");
-                _Share.str += _Share.str;
-            }
-            [Fact(DisplayName = "Successful response Test2"), TestPriority(3)]
-            [Trait("Description", "Happy Path.")]
-            [Trait("ExpectedResult", "ok")]
-            public void ATestAdd2()
-            {
-                Assert.Equal(3, this.Add(1, 2));
-                output.WriteLine("22222222222");
-                _Share.str += _Share.str;
-            }
-            [Fact, TestPriority(4)]
-            public void ATestAdd3()
-            {
-                Assert.Equal(3, this.Add(1, 2));
-                output.WriteLine("33333333333");
-            }
+            //[Fact, TestPriority(2)]
+            //public void BTestAdd4()
+            //{
+            //    Assert.Equal(3, this.Add(2, 1));
+            //    output.WriteLine("1111111111");
+            //    _Share.str += _Share.str;
+            //}
+            //[Fact(DisplayName = "Successful response Test2"), TestPriority(3)]
+            //[Trait("Description", "Happy Path.")]
+            //[Trait("ExpectedResult", "ok")]
+            //public void ATestAdd2()
+            //{
+            //    Assert.Equal(3, this.Add(1, 2));
+            //    output.WriteLine("22222222222");
+            //    _Share.str += _Share.str;
+            //}
+            //[Fact, TestPriority(4)]
+            //public void ATestAdd3()
+            //{
+            //    Assert.Equal(3, this.Add(1, 2));
+            //    output.WriteLine("33333333333");
+            //}
         }
     }
 }

@@ -12,7 +12,8 @@ namespace XunitTest.Wrapper
     public class DetailedTestStep : TestStep
     {
         IReporter _IReporter;
-        public DetailedTestStep(string pathReportXml, string classname)
+        public string pathReportXml = "";
+        public DetailedTestStep(string pathReportXml)
         {
             _IReporter = ReporterManager.GeReporter(pathReportXml);
         }

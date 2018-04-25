@@ -58,8 +58,8 @@ namespace TestLib
 
         //    }
         //}
-        [Description("1","2")]
-        [ExpectedResult("3", "4")]
+        [Descriptions("1","2")]
+        [ExpectedResults("3", "4")]
         public string firstStep()
         {
             return "";

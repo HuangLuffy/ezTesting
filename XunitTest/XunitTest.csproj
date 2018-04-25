@@ -72,6 +72,8 @@
     <Compile Include="ExecOrderers\InOrderer.cs" />
     <Compile Include="ExecOrderers\PriorityOrderer.cs" />
     <Compile Include="Manager\ReporterManager.cs" />
+    <Compile Include="Projects\TestPro\PO\Models\Model_VirtualBox.cs" />
+    <Compile Include="Projects\TestPro\Cases\Steps_VirtualBox.cs" />
     <Compile Include="TestCases\TryX\TryX.cs" />
     <Compile Include="Wrapper\DetailedTestStep.cs" />
     <Compile Include="XunitInvoker.cs" />
@@ -104,6 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Projects\TestPro\PO\Pages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
