@@ -14,6 +14,7 @@ namespace XunitTest.Projects.TestPro.Cases
     public class Steps_VirtualBox : DetailedTestStep
     {
         Model_VirtualBox _Model_VirtualBox = new Model_VirtualBox();
+
         public Steps_VirtualBox(string pathReportXml = "") : base(pathReportXml)
         {
             this.pathReportXml = pathReportXml;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,7 +21,7 @@ namespace XunitTest
                 Console.WriteLine("usage: TestRunner <assembly> [typeName]");
             }
             //var testAssembly = args[0];
-            var testAssembly = @"D:\Dev\VS2015\TryXunit\TryXunit\bin\Debug\TryXunit.exe";
+            var testAssembly = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
             var typeName = args.Length == 2 ? args[1] : null;
             using (var runner = AssemblyRunner.WithAppDomain(testAssembly))
             {
