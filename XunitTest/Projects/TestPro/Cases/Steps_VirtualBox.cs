@@ -14,10 +14,9 @@ namespace XunitTest.Projects.TestPro.Cases
     public class Steps_VirtualBox : DetailedTestStep
     {
         Model_VirtualBox _Model_VirtualBox = new Model_VirtualBox();
-        public Steps_VirtualBox(string pathReportXml, string classname) : base(pathReportXml, classname)
+        public Steps_VirtualBox(string pathReportXml = "") : base(pathReportXml)
         {
             this.pathReportXml = pathReportXml;
-            this.classname = classname;
         }
 
         [Descriptions("Open VirtualBox.")]
@@ -25,7 +24,6 @@ namespace XunitTest.Projects.TestPro.Cases
         public void OpenVirtualBox()
         {
             this.Rec(() => { UtilProcess.StartProcess(@"D:\Program Files\Oracle\VirtualBox\VirtualBox.exe"); });
-         
         }
         [Descriptions("Follow previous step.")]
         [ExpectedResults("VirtualBox launched successfully")]

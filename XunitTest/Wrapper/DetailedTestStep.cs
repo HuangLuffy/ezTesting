@@ -13,9 +13,10 @@ namespace XunitTest.Wrapper
     {
         IReporter _IReporter;
         public string pathReportXml = "";
-        public DetailedTestStep(string pathReportXml)
+        public DetailedTestStep(string pathReportXml = "")
         {
             _IReporter = ReporterManager.GeReporter(pathReportXml);
+            this.pathReportXml = pathReportXml;
         }
         public T Rec<T>(Func<T> action)
         {
@@ -39,6 +40,8 @@ namespace XunitTest.Wrapper
         {
             if (this.needToBlockTest)
                 return;
+            DateTime dt = DateTime.Now;
+            // _IReporter.AddTestStep(classname, UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second), );
             Exec(action);
         }
     }

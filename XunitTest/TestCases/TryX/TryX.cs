@@ -42,7 +42,7 @@ namespace XunitTest.TestCases.TryX
             public void ATestAdd5()
             {
                 _Page_VirtualBox.OpenVirtualBox();
-                _Page_VirtualBox.verifyIfVirtualBoxlaunchedSuccessfully();
+                _Page_VirtualBox.verifyIfVirtualBoxLaunchedSuccessfully();
                 //_TestStep.Rec(() => { this.Add(2, 1); });
                 //_TestStep.Rec(() => { this.Add(2, 1); });
                 //var a = _TestStep.Rec(() => { return this.Add(2, 1); });
