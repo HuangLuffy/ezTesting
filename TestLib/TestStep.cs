@@ -9,45 +9,55 @@ namespace TestLib
 {
     public class TestStep
     {
-        public T Exec<T>(Func<T> action)
+        public bool needToBlockTest = false;
+        public const string blockedDescription = "This step is blocked since the previous step was failed.";
+        public struct Result
+        {
+            public const string PASS = "Pass";
+            public const string FAIL = "Fail";
+            public const string BLOCK = "Block";
+            public const string TBD = "Tbd";
+        }
+
+        protected T Exec<T>(Func<T> action)
         {
             T actualResult = action.Invoke();
             return actualResult;
         }
-        public void Exec(Action action)
+        protected void Exec(Action action)
         {
             action.Invoke();
         }
-        public T Rec<T>(Func<T> action)
-        {
-            try
-            {
-                return Exec<T>(action);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
+        //public T Rec<T>(Func<T> action)
+        //{
+        //    try
+        //    {
+        //        return Exec<T>(action);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
 
-            }
-        }
-        public void Rec(Action action)
-        {
-            try
-            {
-                Exec(action);
-            }
-            catch (Exception)
-            {
+        //    }
+        //}
+        //public void Rec(Action action)
+        //{
+        //    try
+        //    {
+        //        Exec(action);
+        //    }
+        //    catch (Exception)
+        //    {
                 
-            }
-            finally
-            {
+        //    }
+        //    finally
+        //    {
 
-            }
-        }
+        //    }
+        //}
         [Description("1","2")]
         [ExpectedResult("3", "4")]
         public string firstStep()

@@ -53,6 +53,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReportLib\ReportLib.csproj">
+      <Project>{a33cb8ac-544c-48f8-901b-14c5f0b29bef}</Project>
+      <Name>ReportLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)"XunitTest\bin\Debug</PostBuildEvent>

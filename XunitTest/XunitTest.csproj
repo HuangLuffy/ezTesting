@@ -71,7 +71,9 @@
     <Compile Include="ExecOrderers\DisplayNameOrderer.cs" />
     <Compile Include="ExecOrderers\InOrderer.cs" />
     <Compile Include="ExecOrderers\PriorityOrderer.cs" />
+    <Compile Include="Manager\ReporterManager.cs" />
     <Compile Include="TestCases\TryX\TryX.cs" />
+    <Compile Include="Wrapper\DetailedTestStep.cs" />
     <Compile Include="XunitInvoker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XStatic.cs" />

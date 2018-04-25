@@ -7,6 +7,7 @@ using TestLib;
 using Xunit;
 using Xunit.Abstractions;
 using XunitTest.ExecOrderers;
+using XunitTest.Wrapper;
 
 namespace XunitTest.TestCases.TryX
 {
@@ -26,12 +27,12 @@ namespace XunitTest.TestCases.TryX
         {
             private readonly ShareInTryx _Share;
             private readonly ITestOutputHelper output;
-            private TestStep testStep;
+            private DetailedTestStep testStep;
             public TestXunit(ITestOutputHelper output, ShareInTryx _Share)
             {
                 this.output = output;
                 this._Share = _Share;
-                testStep = new TestStep();
+                testStep = new DetailedTestStep("", typeof(TryX).FullName);
             }
             public int Add(int a, int b)
             {
@@ -40,7 +41,8 @@ namespace XunitTest.TestCases.TryX
             [Fact, TestPriority(1)]
             public void ATestAdd5()
             {
-                var a = testStep.Exec<int>(() => { return this.Add(2, 1); });
+                testStep.Rec(() => { this.Add(2, 1); });
+                //var a = testStep.Rec(() => { return this.Add(2, 1); });
             }
             [Fact, TestPriority(2)]
             public void BTestAdd4()

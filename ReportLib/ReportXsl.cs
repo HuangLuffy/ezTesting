@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,14 @@ namespace ReportLib
     public class ReportXsl : IReporter
     {
         public XDocument xDoc { get; set; }
-        public string pathXml { get; set; }
-        public ReportXsl(string pathXml)
+        public string pathReportXml { get; set; }
+        public ReportXsl(string pathReportXml)
         {
-            this.pathXml = pathXml;
+            this.pathReportXml = pathReportXml;
+            if (!File.Exists(this.pathReportXml))
+            {
+                this.CreateResultXml();
+            }
         }
         public class Result_TestSuite
         {
@@ -93,6 +98,7 @@ namespace ReportLib
 
         public void CreateResultXml(string xslName = "xmlReport.xsl")
         {
+
             XDocument xDoc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XProcessingInstruction("xml-stylesheet", $"type='text/xsl' href='{xslName}'"),
@@ -141,7 +147,7 @@ namespace ReportLib
                 )
             );
             this.xDoc = xDoc;
-            xDoc.Save(this.pathXml);
+            //xDoc.Save(this.pathReportXml);
         }
         private XElement AssembleElement(string classname, string stepTime, string functionName, string stepNumber, string description, string expectedResult, string needToCheck, string result)
         {
@@ -165,7 +171,7 @@ namespace ReportLib
         }
         public void AddTestStep(string classname, string stepTime, string functionName, string stepNumber, string description, string expectedResult, string needToCheck, string result)
         {
-            XDocument xDoc = this.xDoc == null ? XDocument.Load(this.pathXml) : this.xDoc;
+            XDocument xDoc = this.xDoc == null ? XDocument.Load(this.pathReportXml) : this.xDoc;
             var testcases = xDoc.Root.Elements(Node_testcase);
             XElement xElement = AssembleElement(classname, stepTime, functionName, stepNumber,description, expectedResult, needToCheck, result);
             if (testcases.Count() == 0)
@@ -176,7 +182,7 @@ namespace ReportLib
             {
                 testcases.Last().AddAfterSelf(xElement);
             }
-            xDoc.Save(this.pathXml);
+            xDoc.Save(this.pathReportXml);
         }
 
         public void ModifyTotalTestTime(string time)
