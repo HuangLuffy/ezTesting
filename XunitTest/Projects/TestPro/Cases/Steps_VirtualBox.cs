@@ -13,10 +13,13 @@ using XunitTest.Wrapper;
 
 namespace XunitTest.Projects.TestPro.Cases
 {
-    public class Steps_VirtualBox : DetailedTestStep
+    public class Steps_VirtualBox : DetailedTestStep, IDisposable
     {
         Model_VirtualBox _Model_VirtualBox = new Model_VirtualBox();
-
+        public void Dispose()
+        {
+            var a = 1;
+        }
         public Steps_VirtualBox(string pathReportXml = "") : base(pathReportXml)
         {
             this.pathReportXml = pathReportXml;
@@ -26,11 +29,11 @@ namespace XunitTest.Projects.TestPro.Cases
         [ExpectedResults("NA")]
         public void OpenVirtualBox()
         {
-             this.Rec(() => 
+            this.Rec(() => 
                 {
                     UtilProcess.StartProcess(@"D:\Program Files\Oracle\VirtualBox\VirtualBox.exe");
                 }
-             );
+            );
         }
         [Descriptions("Follow previous step.")]
         [ExpectedResults("VirtualBox launched successfully")]

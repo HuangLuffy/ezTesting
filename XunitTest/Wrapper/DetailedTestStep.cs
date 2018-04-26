@@ -38,6 +38,7 @@ namespace XunitTest.Wrapper
         }
         public void Rec(Action action)
         {
+            TestFunctionInfo _TestFunctionInfo = new TestFunctionInfo(3);
             if (this.needToBlockTest)
                 return;
             DateTime dt = DateTime.Now;

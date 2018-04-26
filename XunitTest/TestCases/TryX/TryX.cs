@@ -39,36 +39,11 @@ namespace XunitTest.TestCases.TryX
                 return a + b;
             }
             [Fact, TestPriority(1)]
-            public void ATestAdd5()
+            public void ATestAdd2()
             {
                 _Steps_VirtualBox.OpenVirtualBox();
                 _Steps_VirtualBox.verifyIfVirtualBoxLaunchedSuccessfully();
-                //_TestStep.Rec(() => { this.Add(2, 1); });
-                //_TestStep.Rec(() => { this.Add(2, 1); });
-                //var a = _TestStep.Rec(() => { return this.Add(2, 1); });
             }
-            //[Fact, TestPriority(2)]
-            //public void BTestAdd4()
-            //{
-            //    Assert.Equal(3, this.Add(2, 1));
-            //    output.WriteLine("1111111111");
-            //    _Share.str += _Share.str;
-            //}
-            //[Fact(DisplayName = "Successful response Test2"), TestPriority(3)]
-            //[Trait("Description", "Happy Path.")]
-            //[Trait("ExpectedResult", "ok")]
-            //public void ATestAdd2()
-            //{
-            //    Assert.Equal(3, this.Add(1, 2));
-            //    output.WriteLine("22222222222");
-            //    _Share.str += _Share.str;
-            //}
-            //[Fact, TestPriority(4)]
-            //public void ATestAdd3()
-            //{
-            //    Assert.Equal(3, this.Add(1, 2));
-            //    output.WriteLine("33333333333");
-            //}
         }
     }
 }
