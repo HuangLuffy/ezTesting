@@ -21,7 +21,7 @@ namespace XunitTest.Projects.TestPro.Cases
 
         Model_VirtualBox _Model_VirtualBox = new Model_VirtualBox();
 
-        [Descriptions("Open VirtualBox.")]
+        [Descriptions("1. Open VirtualBox.", "2. 123")]
         [ExpectedResults("NA")]
         public void OpenVirtualBox()
         {

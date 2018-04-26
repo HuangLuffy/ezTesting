@@ -20,6 +20,22 @@ namespace ReportLib
                 this.CreateResultXml();
             }
         }
+        public void SetEnvBlockMsg(string envBlockMsg)
+        {
+            
+        }
+        public string SetAsLink(string link)
+        {
+            return $"#$#{link}#$#{this.SetNewLine("")}";
+        }
+        public string SetNewLine(string line)
+        {
+            return $"{line}~!~";
+        }
+        public string setManualCheck(string comment, string link)
+        {
+            return $"{comment}@@@{link}";
+        }
         public class Result_TestSuite
         {
             public string Attribute_blocks { get; set; }
