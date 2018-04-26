@@ -2,7 +2,9 @@
 using CommonLib.Util;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TestLib;
@@ -24,13 +26,21 @@ namespace XunitTest.Projects.TestPro.Cases
         [ExpectedResults("NA")]
         public void OpenVirtualBox()
         {
-            this.Rec(() => { UtilProcess.StartProcess(@"D:\Program Files\Oracle\VirtualBox\VirtualBox.exe"); });
+             this.Rec(() => 
+                {
+                    UtilProcess.StartProcess(@"D:\Program Files\Oracle\VirtualBox\VirtualBox.exe");
+                }
+             );
         }
         [Descriptions("Follow previous step.")]
         [ExpectedResults("VirtualBox launched successfully")]
         public void verifyIfVirtualBoxLaunchedSuccessfully()
         {
-            this.Rec(() => { AT Window_VirtualBox = new AT().GetElementFromChild(_Model_VirtualBox.main_Window, 10); });
+            this.Rec(() =>
+                {
+                    AT Window_VirtualBox = new AT().GetElementFromChild(_Model_VirtualBox.main_Window, 10);
+                }
+            );
         }
     }
 }

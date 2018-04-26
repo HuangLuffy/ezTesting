@@ -2,7 +2,9 @@
 using ReportLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TestLib;
@@ -18,7 +20,7 @@ namespace XunitTest.Wrapper
             _IReporter = ReporterManager.GeReporter(pathReportXml);
             this.pathReportXml = pathReportXml;
         }
-        public T Rec<T>(Func<T> action)
+        private T Rec<T>(Func<T> action)
         {
             try
             {
@@ -26,8 +28,6 @@ namespace XunitTest.Wrapper
                     return default(T);
                 DateTime dt = DateTime.Now;
                 T result = Exec<T>(action);
-                
-               // _IReporter.AddTestStep(classname, UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second), );
                 return Exec<T>(action);
             }
             catch (Exception)
@@ -43,6 +43,20 @@ namespace XunitTest.Wrapper
             DateTime dt = DateTime.Now;
             // _IReporter.AddTestStep(classname, UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second), );
             Exec(action);
+            //trace.GetFrame(1).GetMethod().ReflectedType.FullName
+        }
+        private class TestFunctionInfo
+        {
+            String ClassName { set; get; }
+            String ClassFullName { set; get; }
+            String FunctionName { set; get; }
+            public TestFunctionInfo(int level)
+            {
+                StackFrame frame = new StackTrace().GetFrame(level);
+                this.ClassName = frame.GetMethod().ReflectedType.Name;
+                this.ClassFullName = frame.GetMethod().ReflectedType.FullName;
+                this.FunctionName = frame.GetMethod().Name;
+            }
         }
     }
 }

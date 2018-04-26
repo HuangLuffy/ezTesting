@@ -28,7 +28,7 @@ namespace XunitTest.TestCases.TryX
         {
             private readonly ShareInTryx _Share;
             private readonly ITestOutputHelper output;
-            private Steps_VirtualBox _Page_VirtualBox = new Steps_VirtualBox();
+            private Steps_VirtualBox _Steps_VirtualBox = new Steps_VirtualBox();
             public TestXunit(ITestOutputHelper output, ShareInTryx _Share)
             {
                 this.output = output;
@@ -41,8 +41,8 @@ namespace XunitTest.TestCases.TryX
             [Fact, TestPriority(1)]
             public void ATestAdd5()
             {
-                _Page_VirtualBox.OpenVirtualBox();
-                _Page_VirtualBox.verifyIfVirtualBoxLaunchedSuccessfully();
+                _Steps_VirtualBox.OpenVirtualBox();
+                _Steps_VirtualBox.verifyIfVirtualBoxLaunchedSuccessfully();
                 //_TestStep.Rec(() => { this.Add(2, 1); });
                 //_TestStep.Rec(() => { this.Add(2, 1); });
                 //var a = _TestStep.Rec(() => { return this.Add(2, 1); });

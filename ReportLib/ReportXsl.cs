@@ -126,24 +126,6 @@ namespace ReportLib
                     new XAttribute(Attribute_passesPercent, "passesPercent"),
                     new XAttribute(Attribute_tbds, "tbds"),
                     new XAttribute(Attribute_tbdsPercent, "tbdsPercent")
-
-                    //new XElement(
-                    //    Node_testcase,
-                    //    new XAttribute(Attribute_classname, "classname"),
-                    //    new XAttribute(Attribute_time, "time"),
-                    //    new XAttribute(Attribute_name, "name"),
-                    //    new XElement(Node_step, "2"),
-                    //    new XElement(Node_description, "2"),
-                    //    new XElement(Node_expectedResult, "2"),
-                    //    new XElement(Node_needToCheck, "2"),
-                    //    new XElement(Node_result, "2"),
-                    //    new XElement(Node_result, "2"),
-                    //    new XElement(
-                    //        Node_failure,
-                    //        new XAttribute(Attribute_message, "message"),
-                    //        new XAttribute(Attribute_type, "type")
-                    //    )
-                    //)
                 )
             );
             this.xDoc = xDoc;
@@ -153,19 +135,19 @@ namespace ReportLib
         {
             return 
                 new XElement(
-                Node_testcase,
-                new XAttribute(Attribute_classname, classname),
-                new XAttribute(Attribute_time, stepTime),
-                new XAttribute(Attribute_name, functionName),
-                new XElement(Node_step, stepNumber),
-                new XElement(Node_description, description),
-                new XElement(Node_expectedResult, expectedResult),
-                new XElement(Node_needToCheck, needToCheck),
-                new XElement(Node_result, result),
-                new XElement(
-                    Node_failure,
-                    new XAttribute(Attribute_message, "na"),
-                    new XAttribute(Attribute_type, "na")
+                    Node_testcase,
+                    new XAttribute(Attribute_classname, classname),
+                    new XAttribute(Attribute_time, stepTime),
+                    new XAttribute(Attribute_name, functionName),
+                    new XElement(Node_step, stepNumber),
+                    new XElement(Node_description, description),
+                    new XElement(Node_expectedResult, expectedResult),
+                    new XElement(Node_needToCheck, needToCheck),
+                    new XElement(Node_result, result),
+                    new XElement(
+                        Node_failure,
+                        new XAttribute(Attribute_message, "na"),
+                        new XAttribute(Attribute_type, "na")
                 )
             );
         }
