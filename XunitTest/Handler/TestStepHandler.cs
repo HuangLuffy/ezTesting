@@ -15,6 +15,7 @@ namespace XunitTest.Handler
     {
         IReporter _IReporter;
         public string pathReportXml = "";
+        public int stepNumber = 0;
         public TestStepHandler(string pathReportXml = "")
         {
             _IReporter = ReporterManager.GeReporter(pathReportXml);
@@ -38,19 +39,19 @@ namespace XunitTest.Handler
         }
         public void Exec(Action action)
         {
-            TestFunctionInfo _TestFunctionInfo = new TestFunctionInfo(3);
+            TestFunctionInfo _Info = new TestFunctionInfo(3);
             if (this.needToBlockTest)
                 return;
             DateTime dt = DateTime.Now;
-            // _IReporter.AddTestStep(classname, UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second), );
+            //_IReporter.AddTestStep(_Info.ClassFullName, UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second), _Info.FunctionName, stepNumber++, );
             base.Execute(action);
             //trace.GetFrame(1).GetMethod().ReflectedType.FullName
         }
         private class TestFunctionInfo
         {
-            String ClassName { set; get; }
-            String ClassFullName { set; get; }
-            String FunctionName { set; get; }
+            public String ClassName { set; get; }
+            public String ClassFullName { set; get; }
+            public String FunctionName { set; get; }
             public TestFunctionInfo(int level)
             {
                 StackFrame frame = new StackTrace().GetFrame(level);

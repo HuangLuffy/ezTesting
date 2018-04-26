@@ -72,10 +72,11 @@
     <Compile Include="ExecOrderers\InOrderer.cs" />
     <Compile Include="ExecOrderers\PriorityOrderer.cs" />
     <Compile Include="Manager\ReporterManager.cs" />
+    <Compile Include="Projects\Steps_Common.cs" />
     <Compile Include="Projects\TestPro\PO\Models\Model_VirtualBox.cs" />
     <Compile Include="Projects\TestPro\Cases\Steps_VirtualBox.cs" />
     <Compile Include="TestCases\TryX\TryX.cs" />
-    <Compile Include="Wrapper\DetailedTestStep.cs" />
+    <Compile Include="Handler\TestStepHandler.cs" />
     <Compile Include="XunitInvoker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XStatic.cs" />

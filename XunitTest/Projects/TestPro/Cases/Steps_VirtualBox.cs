@@ -15,12 +15,11 @@ namespace XunitTest.Projects.TestPro.Cases
 {
     public class Steps_VirtualBox : Steps_Common
     {
-        Model_VirtualBox _Model_VirtualBox = new Model_VirtualBox();
-        TestStepHandler _TestStepHandler;
-        public Steps_VirtualBox(string pathReportXml = "")
+        public Steps_VirtualBox(string pathReportXml = "") : base(pathReportXml)
         {
-            _TestStepHandler = new TestStepHandler(pathReportXml);
         }
+
+        Model_VirtualBox _Model_VirtualBox = new Model_VirtualBox();
 
         [Descriptions("Open VirtualBox.")]
         [ExpectedResults("NA")]
