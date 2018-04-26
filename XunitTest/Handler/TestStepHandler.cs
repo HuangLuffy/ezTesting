@@ -9,26 +9,26 @@ using System.Text;
 using System.Threading.Tasks;
 using TestLib;
 
-namespace XunitTest.Wrapper
+namespace XunitTest.Handler
 {
-    public class DetailedTestStep : TestStep
+    public class TestStepHandler : TestStep
     {
         IReporter _IReporter;
         public string pathReportXml = "";
-        public DetailedTestStep(string pathReportXml = "")
+        public TestStepHandler(string pathReportXml = "")
         {
             _IReporter = ReporterManager.GeReporter(pathReportXml);
             this.pathReportXml = pathReportXml;
         }
-        private T Rec<T>(Func<T> action)
+        private T Exec<T>(Func<T> action)
         {
             try
             {
                 if (this.needToBlockTest)
                     return default(T);
                 DateTime dt = DateTime.Now;
-                T result = Exec<T>(action);
-                return Exec<T>(action);
+                T result = base.Execute(action);
+                return base.Execute(action);
             }
             catch (Exception)
             {
@@ -36,14 +36,14 @@ namespace XunitTest.Wrapper
                 throw;
             }
         }
-        public void Rec(Action action)
+        public void Exec(Action action)
         {
             TestFunctionInfo _TestFunctionInfo = new TestFunctionInfo(3);
             if (this.needToBlockTest)
                 return;
             DateTime dt = DateTime.Now;
             // _IReporter.AddTestStep(classname, UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second), );
-            Exec(action);
+            base.Execute(action);
             //trace.GetFrame(1).GetMethod().ReflectedType.FullName
         }
         private class TestFunctionInfo

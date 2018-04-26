@@ -19,12 +19,12 @@ namespace TestLib
             public const string TBD = "Tbd";
         }
 
-        protected T Exec<T>(Func<T> action)
+        protected T Execute<T>(Func<T> action)
         {
             T actualResult = action.Invoke();
             return actualResult;
         }
-        protected void Exec(Action action)
+        protected void Execute(Action action)
         {
             action.Invoke();
         }

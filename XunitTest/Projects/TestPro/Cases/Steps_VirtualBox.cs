@@ -9,27 +9,24 @@ using System.Text;
 using System.Threading.Tasks;
 using TestLib;
 using XunitTest.Projects.TestPro.PO.Models;
-using XunitTest.Wrapper;
+using XunitTest.Handler;
 
 namespace XunitTest.Projects.TestPro.Cases
 {
-    public class Steps_VirtualBox : DetailedTestStep, IDisposable
+    public class Steps_VirtualBox : Steps_Common
     {
         Model_VirtualBox _Model_VirtualBox = new Model_VirtualBox();
-        public void Dispose()
+        TestStepHandler _TestStepHandler;
+        public Steps_VirtualBox(string pathReportXml = "")
         {
-            var a = 1;
-        }
-        public Steps_VirtualBox(string pathReportXml = "") : base(pathReportXml)
-        {
-            this.pathReportXml = pathReportXml;
+            _TestStepHandler = new TestStepHandler(pathReportXml);
         }
 
         [Descriptions("Open VirtualBox.")]
         [ExpectedResults("NA")]
         public void OpenVirtualBox()
         {
-            this.Rec(() => 
+            _TestStepHandler.Exec(() => 
                 {
                     UtilProcess.StartProcess(@"D:\Program Files\Oracle\VirtualBox\VirtualBox.exe");
                 }
@@ -39,7 +36,7 @@ namespace XunitTest.Projects.TestPro.Cases
         [ExpectedResults("VirtualBox launched successfully")]
         public void verifyIfVirtualBoxLaunchedSuccessfully()
         {
-            this.Rec(() =>
+            _TestStepHandler.Exec(() =>
                 {
                     AT Window_VirtualBox = new AT().GetElementFromChild(_Model_VirtualBox.main_Window, 10);
                 }

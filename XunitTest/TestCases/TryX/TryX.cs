@@ -8,7 +8,7 @@ using Xunit;
 using Xunit.Abstractions;
 using XunitTest.ExecOrderers;
 using XunitTest.Projects.TestPro.Cases;
-using XunitTest.Wrapper;
+using XunitTest.Handler;
 
 namespace XunitTest.TestCases.TryX
 {
