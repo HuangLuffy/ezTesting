@@ -23,7 +23,19 @@ namespace XunitTest.Handler
             _Result_TestInfo = new Result_TestInfo();
             _Result_TestInfo.Attribute_project = "CM";
             _Result_TestInfo.Attribute_os = UtilOS.GetOsVersion();
-            _Result_TestInfo.Attribute_language = UtilOS.GetOsVersion();
+            _Result_TestInfo.Attribute_language = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-","_");
+            _Result_TestInfo.Attribute_region = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1];
+            _Result_TestInfo.Attribute_deviceModel = "NA";
+            _Result_TestInfo.Attribute_deviceName = "NA";
+            _Result_TestInfo.Attribute_version = "NA";
+            _Result_TestInfo.Attribute_tests = 0;
+            _Result_TestInfo.Attribute_passes = 0;
+            _Result_TestInfo.Attribute_failures = 0;
+            _Result_TestInfo.Attribute_tbds = 0;
+            _Result_TestInfo.Attribute_blocks = 0;
+
+            //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
+            //, string testName, string testName, string testName, string testName, string testName)
             this.pathReportFile = pathReportXml;
         }
         private T Exec<T>(Func<T> action)
@@ -45,6 +57,7 @@ namespace XunitTest.Handler
         public void Exec(Action action)
         {
             TestFunctionInfo _XunitInfo = new TestFunctionInfo(3, _IReporter);
+            _Result_TestInfo.Attribute_name = _XunitInfo.ClassName;
             TestFunctionInfo _StepInfo = new TestFunctionInfo(2, _IReporter);
             Result_TestCase _Result_TestCase = new Result_TestCase();
             string result = string.Empty;

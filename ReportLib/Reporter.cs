@@ -10,15 +10,15 @@ namespace ReportLib
     {
         public class Result_TestInfo
         {
-            public string Attribute_blocks { get; set; }
+            public int Attribute_blocks { get; set; }
             public string Attribute_blocksPercent { get; set; }
             public string Attribute_errors { get; set; }
             public string Attribute_errorsPercent { get; set; }
-            public string Attribute_failures { get; set; }
+            public int Attribute_failures { get; set; }
             public string Attribute_failsPercent { get; set; }
-            public string Attribute_passes { get; set; }
+            public int Attribute_passes { get; set; }
             public string Attribute_passesPercent { get; set; }
-            public string Attribute_tbds { get; set; }
+            public int Attribute_tbds { get; set; }
             public string Attribute_tbdsPercent { get; set; }
             public string Attribute_project { get; set; }
             public string Attribute_testName { get; set; }
@@ -28,7 +28,7 @@ namespace ReportLib
             public string Attribute_deviceModel { get; set; }
             public string Attribute_deviceName { get; set; }
             public string Attribute_region { get; set; }
-            public string Attribute_tests { get; set; }
+            public int Attribute_tests { get; set; }
             public string Attribute_version { get; set; }
             public string Attribute_name { get; set; }
         }

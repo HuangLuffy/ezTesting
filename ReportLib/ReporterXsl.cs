@@ -86,7 +86,7 @@ namespace ReportLib
                     new XElement(Node_description, _Result_TestCase.Node_description),
                     new XElement(Node_expectedResult, _Result_TestCase.Node_expectedResult),
                     new XElement(Node_needToCheck, _Result_TestCase.Node_needToCheck),
-                    new XElement(Node_result, _Result_TestCase.Node_result)
+                    new XElement(Node_result, _Result_TestCase.Node_result),
                     new XElement(
                         Node_failure,
                         new XAttribute(Attribute_message, "na"),
@@ -124,20 +124,20 @@ namespace ReportLib
             rootElement.Attribute(Attribute_deviceModel).Value = _Result_TestInfo.Attribute_deviceModel;
             rootElement.Attribute(Attribute_deviceName).Value = _Result_TestInfo.Attribute_deviceName;
             rootElement.Attribute(Attribute_region).Value = _Result_TestInfo.Attribute_region;
-            rootElement.Attribute(Attribute_tests).Value = _Result_TestInfo.Attribute_tests;
+            rootElement.Attribute(Attribute_tests).Value = _Result_TestInfo.Attribute_tests.ToString();
             rootElement.Attribute(Attribute_version).Value = _Result_TestInfo.Attribute_version;
             rootElement.Attribute(Attribute_name).Value = _Result_TestInfo.Attribute_name;
 
-            rootElement.Attribute(Attribute_blocks).Value = _Result_TestInfo.Attribute_blocks;
-            rootElement.Attribute(Attribute_blocksPercent).Value = _Result_TestInfo.Attribute_blocks;
+            rootElement.Attribute(Attribute_blocks).Value = _Result_TestInfo.Attribute_blocks.ToString();
+            rootElement.Attribute(Attribute_blocksPercent).Value = _Result_TestInfo.Attribute_blocksPercent;
             rootElement.Attribute(Attribute_errors).Value = _Result_TestInfo.Attribute_errors;
             rootElement.Attribute(Attribute_errorsPercent).Value = _Result_TestInfo.Attribute_errorsPercent;
-            rootElement.Attribute(Attribute_failures).Value = _Result_TestInfo.Attribute_failures;
+            rootElement.Attribute(Attribute_failures).Value = _Result_TestInfo.Attribute_failures.ToString();
             rootElement.Attribute(Attribute_failsPercent).Value = _Result_TestInfo.Attribute_failsPercent;
-            rootElement.Attribute(Attribute_passes).Value = _Result_TestInfo.Attribute_passes;
+            rootElement.Attribute(Attribute_passes).Value = _Result_TestInfo.Attribute_passes.ToString();
             rootElement.Attribute(Attribute_passesPercent).Value = _Result_TestInfo.Attribute_passesPercent;
-            rootElement.Attribute(Attribute_tbds).Value = _Result_TestInfo.Attribute_tbds;
-            rootElement.Attribute(Attribute_tbdsPercent).Value = _Result_TestInfo.Attribute_tbdsPercent);
+            rootElement.Attribute(Attribute_tbds).Value = _Result_TestInfo.Attribute_tbds.ToString();
+            rootElement.Attribute(Attribute_tbdsPercent).Value = _Result_TestInfo.Attribute_tbdsPercent;
         }
     }
 }

@@ -57,7 +57,7 @@ namespace CommonLib.Util.os
                     {
                         if (Convert.ToString(mo["OSArchitecture"]).IndexOf("64") != -1)
                         {
-                            name+="x64";
+                            name += "x64";
                         }
                         else
                         {
