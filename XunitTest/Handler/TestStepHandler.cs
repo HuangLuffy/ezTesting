@@ -8,24 +8,24 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TestLib;
+using static ReportLib.Reporter;
 
 namespace XunitTest.Handler
 {
     public class TestStepHandler : TestStep
     {
         IReporter _IReporter;
-        public string pathReportXml = "";
-        public int stepNumber = 0;
+
         public TestStepHandler(string pathReportXml = "")
         {
             _IReporter = ReporterManager.GeReporter(pathReportXml);
-            this.pathReportXml = pathReportXml;
+            this.pathReportFile = pathReportXml;
         }
         private T Exec<T>(Func<T> action)
         {
             try
             {
-                if (this.needToBlockTest)
+                if (this.needToBlockAllTests)
                     return default(T);
                 DateTime dt = DateTime.Now;
                 T result = base.Execute(action);
@@ -41,11 +41,16 @@ namespace XunitTest.Handler
         {
             TestFunctionInfo _XunitInfo = new TestFunctionInfo(3, _IReporter);
             TestFunctionInfo _StepInfo = new TestFunctionInfo(2, _IReporter);
+            Result_TestCase _Result_TestCase = new Result_TestCase();
             string result = string.Empty;
             DateTime dt = DateTime.Now;
             try
             {
-                if (this.needToBlockTest)
+                if (_StepInfo.DoNotBlock == true)
+                {
+                    this.needToBlockAllTests = false;
+                }
+                if (this.needToBlockAllTests)
                 {
                     result = TestStepHandler.Result.BLOCK;
                 }
@@ -58,11 +63,18 @@ namespace XunitTest.Handler
             catch (Exception ex)
             {
                 result = TestStepHandler.Result.FAIL;
+                this.needToBlockAllTests = true;
                 throw ex;
             }
             finally
             {
-                _IReporter.AddTestStep(_XunitInfo.ClassFullName, UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second).ToString(), _XunitInfo.FunctionName, stepNumber++.ToString(), _StepInfo.Descriptions, _StepInfo.ExpectedResults, "", result);
+                _Result_TestCase.Attribute_classname = _XunitInfo.ClassFullName;
+                _Result_TestCase.Attribute_time = UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second).ToString();
+                _Result_TestCase.Node_stepNumber = stepNumber++.ToString();
+                _Result_TestCase.Node_description = _StepInfo.Descriptions;
+                _Result_TestCase.Node_needToCheck = "";
+                _Result_TestCase.Node_result = result;
+                _IReporter.AddTestStep(_Result_TestCase);
             }  
         }
         private class TestFunctionInfo
@@ -72,6 +84,7 @@ namespace XunitTest.Handler
             public string FunctionName { set; get; }
             public string Descriptions = "NA";
             public string ExpectedResults = "NA";
+            public bool DoNotBlock = false;
 
             public TestFunctionInfo(int level, IReporter _IReporter)
             {
@@ -88,6 +101,10 @@ namespace XunitTest.Handler
                     else if (attri.AttributeType.Name.Equals(typeof(ExpectedResults).Name))
                     {
                         this.ExpectedResults = this.AssembleStepInstructions(attri.ConstructorArguments[0].Value, _IReporter);
+                    }
+                    else if (attri.AttributeType.Name.Equals(typeof(DoNotBlock).Name))
+                    {
+                        this.DoNotBlock = true;
                     }
                 }
             }

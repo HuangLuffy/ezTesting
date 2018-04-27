@@ -23,6 +23,7 @@ namespace XunitTest.Projects.TestPro.Cases
 
         [Descriptions("1. Open VirtualBox.", "2. 123")]
         [ExpectedResults("NA")]
+        [DoNotBlock]
         public void OpenVirtualBox()
         {
             _TestStepHandler.Exec(() => 

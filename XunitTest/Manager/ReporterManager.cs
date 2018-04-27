@@ -12,7 +12,7 @@ namespace TestLib
         private static IReporter _IReporter;
         public static IReporter GeReporter(string pathReportXml, IReporter iReporter = null)
         {
-            return _IReporter = iReporter == null ? new ReportXsl(pathReportXml) : iReporter;
+            return _IReporter = iReporter == null ? new ReporterXsl(pathReportXml) : iReporter;
         }
     }
 }

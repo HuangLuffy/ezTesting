@@ -9,7 +9,9 @@ namespace TestLib
 {
     public class TestStep
     {
-        public bool needToBlockTest = false;
+        public bool needToBlockAllTests = false;
+        public string pathReportFile = "";
+        public int stepNumber = 0;
         public const string blockedDescription = "This step is blocked since the previous step was failed.";
         public struct Result
         {

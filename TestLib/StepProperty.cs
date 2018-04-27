@@ -26,4 +26,11 @@ namespace TestLib
             this.er = list;
         }
     }
+    public class DoNotBlock : Attribute
+    {
+        public DoNotBlock()
+        {
+
+        }
+    }
 }
