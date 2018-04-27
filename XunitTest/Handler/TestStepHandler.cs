@@ -16,10 +16,10 @@ namespace XunitTest.Handler
 {
     public class TestStepHandler : TestStep
     {
-        private const string NOCONTENT = "NA";
+        private const string DEFAULTCONTENT = "NA";
         private IReporter _IReporter;
         private Result_TestInfo _Result_TestInfo;
-        private string ManualCheckLink = NOCONTENT;
+        private string ManualCheckLink = DEFAULTCONTENT;
         public TestStepHandler(string pathReportXml = "")
         {
             _IReporter = ReporterManager.GeReporter(pathReportXml);
@@ -28,9 +28,9 @@ namespace XunitTest.Handler
             _Result_TestInfo.Attribute_os = UtilOS.GetOsVersion();
             _Result_TestInfo.Attribute_language = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-","_");
             _Result_TestInfo.Attribute_region = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1];
-            _Result_TestInfo.Attribute_deviceModel = NOCONTENT;
-            _Result_TestInfo.Attribute_deviceName = NOCONTENT;
-            _Result_TestInfo.Attribute_version = NOCONTENT;
+            _Result_TestInfo.Attribute_deviceModel = DEFAULTCONTENT;
+            _Result_TestInfo.Attribute_deviceName = DEFAULTCONTENT;
+            _Result_TestInfo.Attribute_version = DEFAULTCONTENT;
             _Result_TestInfo.Attribute_tests = 0;
             _Result_TestInfo.Attribute_passes = 0;
             _Result_TestInfo.Attribute_failures = 0;
@@ -108,7 +108,7 @@ namespace XunitTest.Handler
                 _Result_TestCase.Node_stepNumber = stepNumber++;
                 _Result_TestCase.Node_description = _StepInfo.Descriptions;
                 _Result_TestCase.Node_expectedResult = _StepInfo.ExpectedResults;
-                _Result_TestCase.Node_needToCheck = "";
+                _Result_TestCase.Node_needToCheck = this.ManualCheckLink;
                 _Result_TestCase.Node_result = result;
 
                 _IReporter.AddTestStep(_Result_TestCase);
@@ -127,8 +127,8 @@ namespace XunitTest.Handler
             public string ClassName { set; get; }
             public string ClassFullName { set; get; }
             public string FunctionName { set; get; }
-            public string Descriptions = "NA";
-            public string ExpectedResults = "NA";
+            public string Descriptions = DEFAULTCONTENT;
+            public string ExpectedResults = DEFAULTCONTENT;
             public bool DoNotBlock = false;
 
             public TestFunctionInfo(int level, IReporter _IReporter)
