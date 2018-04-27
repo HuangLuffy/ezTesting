@@ -30,6 +30,7 @@ namespace XunitTest.Projects.TestPro.Cases
                 {
                     UtilTime.WaitTime(1);
                     UtilProcess.StartProcess(@"D:\Program Files\Oracle\VirtualBox\VirtualBox.exe");
+                    _TestStepHandler.Capture("");
                 }
             );
         }

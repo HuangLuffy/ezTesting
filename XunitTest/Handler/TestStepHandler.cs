@@ -9,14 +9,17 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TestLib;
+using static CommonLib.Util.UtilCapturer;
 using static ReportLib.Reporter;
 
 namespace XunitTest.Handler
 {
     public class TestStepHandler : TestStep
     {
+        private const string NOCONTENT = "NA";
         private IReporter _IReporter;
         private Result_TestInfo _Result_TestInfo;
+        private string ManualCheckLink = NOCONTENT;
         public TestStepHandler(string pathReportXml = "")
         {
             _IReporter = ReporterManager.GeReporter(pathReportXml);
@@ -25,9 +28,9 @@ namespace XunitTest.Handler
             _Result_TestInfo.Attribute_os = UtilOS.GetOsVersion();
             _Result_TestInfo.Attribute_language = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-","_");
             _Result_TestInfo.Attribute_region = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1];
-            _Result_TestInfo.Attribute_deviceModel = "NA";
-            _Result_TestInfo.Attribute_deviceName = "NA";
-            _Result_TestInfo.Attribute_version = "NA";
+            _Result_TestInfo.Attribute_deviceModel = NOCONTENT;
+            _Result_TestInfo.Attribute_deviceName = NOCONTENT;
+            _Result_TestInfo.Attribute_version = NOCONTENT;
             _Result_TestInfo.Attribute_tests = 0;
             _Result_TestInfo.Attribute_passes = 0;
             _Result_TestInfo.Attribute_failures = 0;
@@ -37,6 +40,12 @@ namespace XunitTest.Handler
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
             this.pathReportFile = pathReportXml;
+        }
+
+        public void Capture(string pathSave, string comment = "Shot", ImageType ImageType = ImageType.PNG)
+        {
+            ManualCheckLink += _IReporter.setManualCheck(comment, pathSave);
+            UtilCapturer.Capture(pathSave, ImageType);
         }
         private T Exec<T>(Func<T> action)
         {
@@ -89,6 +98,8 @@ namespace XunitTest.Handler
             }
             finally
             {
+                this.Capture("End Shot", "");
+
                 _Result_TestInfo.Attribute_tests += 1;
 
                 _Result_TestCase.Attribute_classname = _XunitInfo.ClassFullName;
@@ -103,11 +114,11 @@ namespace XunitTest.Handler
                 _IReporter.AddTestStep(_Result_TestCase);
                 _Result_TestInfo.Attribute_testName = _XunitInfo.ClassName;
                 _Result_TestInfo.Attribute_time += _Result_TestCase.Attribute_time;
-                _Result_TestInfo.Attribute_passesPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_passes, _Result_TestInfo.Attribute_tests, 1).ToString();
-                _Result_TestInfo.Attribute_failuresPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_failures, _Result_TestInfo.Attribute_tests, 1).ToString();
-                _Result_TestInfo.Attribute_errorsPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_errors, _Result_TestInfo.Attribute_tests, 1).ToString();
-                _Result_TestInfo.Attribute_blocksPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_blocks, _Result_TestInfo.Attribute_tests, 1).ToString();
-                _Result_TestInfo.Attribute_tbdsPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_tbds, _Result_TestInfo.Attribute_tests, 1).ToString();
+                _Result_TestInfo.Attribute_passesPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_passes, _Result_TestInfo.Attribute_tests, 1);
+                _Result_TestInfo.Attribute_failuresPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_failures, _Result_TestInfo.Attribute_tests, 1);
+                _Result_TestInfo.Attribute_errorsPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_errors, _Result_TestInfo.Attribute_tests, 1);
+                _Result_TestInfo.Attribute_blocksPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_blocks, _Result_TestInfo.Attribute_tests, 1);
+                _Result_TestInfo.Attribute_tbdsPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_tbds, _Result_TestInfo.Attribute_tests, 1);
                 _IReporter.ModifyTestInfo(_Result_TestInfo);
             }  
         }
