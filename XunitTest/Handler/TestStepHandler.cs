@@ -16,6 +16,15 @@ namespace XunitTest.Handler
 {
     public class TestStepHandler : TestStep
     {
+        public string folderNameProject = "";
+        public string folderNameTest = "";
+        public string folderNameScreenshots = "";
+
+        public bool needToBlockAllTests = false;
+        public string pathReportFile = "";
+        public int stepNumber = 1;
+        public const string blockedDescription = "This step is blocked since the previous step was failed.";
+
         private const string DEFAULTCONTENT = "NA";
         private IReporter _IReporter;
         private Result_TestInfo _Result_TestInfo;
@@ -79,19 +88,19 @@ namespace XunitTest.Handler
                 }
                 if (this.needToBlockAllTests)
                 {
-                    result = TestStepHandler.Result.BLOCK;
+                    result = Reporter.Result.BLOCK;
                     _Result_TestInfo.Attribute_blocks += 1;
                 }
                 else
                 {
                     base.Execute(action);
-                    result = TestStepHandler.Result.PASS;
+                    result = Reporter.Result.PASS;
                     _Result_TestInfo.Attribute_passes += 1;
                 }
             }
             catch (Exception ex)
             {
-                result = TestStepHandler.Result.FAIL;
+                result = Reporter.Result.FAIL;
                 _Result_TestInfo.Attribute_failures += 1;
                 this.needToBlockAllTests = true;
                 throw ex;

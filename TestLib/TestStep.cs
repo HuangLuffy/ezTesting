@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,14 @@ namespace TestLib
         {
             action.Invoke();
         }
+        public String getTestFullPath()
+        {
+            return this.GetType().Assembly.Location;
+        }
+        public String getTestParentPath()
+        {
+            return new DirectoryInfo(getTestFullPath()).Parent.ToString();
+        }
         //public T Rec<T>(Func<T> action)
         //{
         //    try
@@ -53,7 +62,7 @@ namespace TestLib
         //    }
         //    catch (Exception)
         //    {
-                
+
         //    }
         //    finally
         //    {

@@ -8,6 +8,13 @@ namespace ReportLib
 {
     public class Reporter
     {
+        public struct Result
+        {
+            public const string PASS = "Pass";
+            public const string FAIL = "Fail";
+            public const string BLOCK = "Block";
+            public const string TBD = "Tbd";
+        }
         public class Result_TestInfo
         {
             public int Attribute_blocks { get; set; }
