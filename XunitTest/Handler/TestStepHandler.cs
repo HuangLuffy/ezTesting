@@ -39,22 +39,39 @@ namespace XunitTest.Handler
         }
         public void Exec(Action action)
         {
-            //TestFunctionInfo _XunitInfo = new TestFunctionInfo(3);
+            TestFunctionInfo _XunitInfo = new TestFunctionInfo(3, _IReporter);
             TestFunctionInfo _StepInfo = new TestFunctionInfo(2, _IReporter);
-            if (this.needToBlockTest)
-                return;
+            string result = string.Empty;
             DateTime dt = DateTime.Now;
-            //_IReporter.AddTestStep(_XunitInfo.ClassFullName, UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second), _XunitInfo.FunctionName, stepNumber++, );
-            base.Execute(action);
-            //trace.GetFrame(1).GetMethod().ReflectedType.FullName
+            try
+            {
+                if (this.needToBlockTest)
+                {
+                    result = TestStepHandler.Result.BLOCK;
+                }
+                else
+                {
+                    base.Execute(action);
+                    result = TestStepHandler.Result.PASS;
+                }
+            }
+            catch (Exception ex)
+            {
+                result = TestStepHandler.Result.FAIL;
+                throw ex;
+            }
+            finally
+            {
+                _IReporter.AddTestStep(_XunitInfo.ClassFullName, UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second).ToString(), _XunitInfo.FunctionName, stepNumber++.ToString(), _StepInfo.Descriptions, _StepInfo.ExpectedResults, "", result);
+            }  
         }
         private class TestFunctionInfo
         {
             public string ClassName { set; get; }
             public string ClassFullName { set; get; }
             public string FunctionName { set; get; }
-            public string Descriptions { set; get; }
-            public string ExpectedResults { set; get; }
+            public string Descriptions = "NA";
+            public string ExpectedResults = "NA";
 
             public TestFunctionInfo(int level, IReporter _IReporter)
             {
@@ -66,18 +83,18 @@ namespace XunitTest.Handler
                 {
                     if (attri.AttributeType.Name.Equals(typeof(Descriptions).Name))
                     {
-                        this.AssembleDescriptions(attri, _IReporter);
+                        this.Descriptions = this.AssembleStepInstructions(attri.ConstructorArguments[0].Value, _IReporter);
                     }
                     else if (attri.AttributeType.Name.Equals(typeof(ExpectedResults).Name))
                     {
-
+                        this.ExpectedResults = this.AssembleStepInstructions(attri.ConstructorArguments[0].Value, _IReporter);
                     }
                 }
             }
-            private string AssembleDescriptions(CustomAttributeData cads, IReporter _IReporter)
+            private string AssembleStepInstructions(object cads, IReporter _IReporter)
             {
                 string t = "";
-                var list = (IReadOnlyCollection<System.Reflection.CustomAttributeTypedArgument>)cads.ConstructorArguments[0].Value;
+                var list = (IReadOnlyCollection<System.Reflection.CustomAttributeTypedArgument>)cads;
                 if (list.Count() == 1)
                 {
                     t = list.ElementAt(0).Value.ToString();
@@ -90,10 +107,6 @@ namespace XunitTest.Handler
                     }
                 }
                 return t;
-            }
-            private string AssembleExpectedResults(CustomAttributeData cads, IReporter _IReporter)
-            {
-                return "";
             }
         }
     }
