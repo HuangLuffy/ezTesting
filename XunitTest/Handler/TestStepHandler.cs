@@ -77,9 +77,17 @@ namespace XunitTest.Handler
             private string AssembleDescriptions(CustomAttributeData cads, IReporter _IReporter)
             {
                 string t = "";
-                for (int i = 0; i < cads.ConstructorArguments.Count(); i++)
+                var list = (IReadOnlyCollection<System.Reflection.CustomAttributeTypedArgument>)cads.ConstructorArguments[0].Value;
+                if (list.Count() == 1)
                 {
-                    t += i == 0 ? cads.ConstructorArguments[i].ToString() : _IReporter.SetNewLine(cads.ConstructorArguments[i].ToString());
+                    t = list.ElementAt(0).Value.ToString();
+                }
+                else
+                {
+                    foreach (var item in list)
+                    {
+                        t += _IReporter.SetNewLine(item.Value.ToString());
+                    }
                 }
                 return t;
             }
