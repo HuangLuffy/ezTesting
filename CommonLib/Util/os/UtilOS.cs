@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CommonLib.Util.os
 {
-    class UtilOS
+    public class UtilOS
     {
         public static string GetOsIeVersion()
         {
@@ -64,11 +64,11 @@ namespace CommonLib.Util.os
                             name += "x86"; ;
                         }
                     }
-                    catch (Exception) { name += ""; }
+                    catch (Exception) { return name; }
                 }
                 return name;
             }
-            catch (Exception) {  }
+            catch (Exception) { return name; }
             finally
             {
                 //return name;

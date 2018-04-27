@@ -1,4 +1,5 @@
 ﻿using CommonLib.Util;
+using CommonLib.Util.os;
 using ReportLib;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,15 @@ namespace XunitTest.Handler
 {
     public class TestStepHandler : TestStep
     {
-        IReporter _IReporter;
-
+        private IReporter _IReporter;
+        private Result_TestInfo _Result_TestInfo;
         public TestStepHandler(string pathReportXml = "")
         {
             _IReporter = ReporterManager.GeReporter(pathReportXml);
+            _Result_TestInfo = new Result_TestInfo();
+            _Result_TestInfo.Attribute_project = "CM";
+            _Result_TestInfo.Attribute_os = UtilOS.GetOsVersion();
+            _Result_TestInfo.Attribute_language = UtilOS.GetOsVersion();
             this.pathReportFile = pathReportXml;
         }
         private T Exec<T>(Func<T> action)

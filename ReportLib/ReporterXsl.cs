@@ -86,12 +86,12 @@ namespace ReportLib
                     new XElement(Node_description, _Result_TestCase.Node_description),
                     new XElement(Node_expectedResult, _Result_TestCase.Node_expectedResult),
                     new XElement(Node_needToCheck, _Result_TestCase.Node_needToCheck),
-                    new XElement(Node_result, _Result_TestCase.Node_result),
+                    new XElement(Node_result, _Result_TestCase.Node_result)
                     new XElement(
                         Node_failure,
                         new XAttribute(Attribute_message, "na"),
                         new XAttribute(Attribute_type, "na")
-                )
+                    )
             );
         }
         public void AddTestStep(Result_TestCase _Result_TestCase)
@@ -110,7 +110,7 @@ namespace ReportLib
             xDoc.Save(this.pathReportXml);
         }
 
-        public void ModifTestInfo(Result_TestInfo _Result_TestInfo)
+        public void ModifyTestInfo(Result_TestInfo _Result_TestInfo)
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
         {
