@@ -71,28 +71,44 @@ namespace XunitTest.Handler
                 if (this.needToBlockAllTests)
                 {
                     result = TestStepHandler.Result.BLOCK;
+                    _Result_TestInfo.Attribute_blocks += 1;
                 }
                 else
                 {
                     base.Execute(action);
                     result = TestStepHandler.Result.PASS;
+                    _Result_TestInfo.Attribute_passes += 1;
                 }
             }
             catch (Exception ex)
             {
                 result = TestStepHandler.Result.FAIL;
+                _Result_TestInfo.Attribute_failures += 1;
                 this.needToBlockAllTests = true;
                 throw ex;
             }
             finally
             {
+                _Result_TestInfo.Attribute_tests += 1;
+
                 _Result_TestCase.Attribute_classname = _XunitInfo.ClassFullName;
-                _Result_TestCase.Attribute_time = UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second).ToString();
-                _Result_TestCase.Node_stepNumber = stepNumber++.ToString();
+                _Result_TestCase.Attribute_name = _XunitInfo.FunctionName;
+                _Result_TestCase.Attribute_time = UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second);
+                _Result_TestCase.Node_stepNumber = stepNumber++;
                 _Result_TestCase.Node_description = _StepInfo.Descriptions;
+                _Result_TestCase.Node_expectedResult = _StepInfo.ExpectedResults;
                 _Result_TestCase.Node_needToCheck = "";
                 _Result_TestCase.Node_result = result;
+
                 _IReporter.AddTestStep(_Result_TestCase);
+                _Result_TestInfo.Attribute_testName = _XunitInfo.ClassName;
+                _Result_TestInfo.Attribute_time += _Result_TestCase.Attribute_time;
+                _Result_TestInfo.Attribute_passesPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_passes, _Result_TestInfo.Attribute_tests, 1).ToString();
+                _Result_TestInfo.Attribute_failuresPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_failures, _Result_TestInfo.Attribute_tests, 1).ToString();
+                _Result_TestInfo.Attribute_errorsPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_errors, _Result_TestInfo.Attribute_tests, 1).ToString();
+                _Result_TestInfo.Attribute_blocksPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_blocks, _Result_TestInfo.Attribute_tests, 1).ToString();
+                _Result_TestInfo.Attribute_tbdsPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_tbds, _Result_TestInfo.Attribute_tests, 1).ToString();
+                _IReporter.ModifyTestInfo(_Result_TestInfo);
             }  
         }
         private class TestFunctionInfo

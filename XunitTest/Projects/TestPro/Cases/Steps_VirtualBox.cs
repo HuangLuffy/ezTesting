@@ -28,6 +28,7 @@ namespace XunitTest.Projects.TestPro.Cases
         {
             _TestStepHandler.Exec(() => 
                 {
+                    UtilTime.WaitTime(1);
                     UtilProcess.StartProcess(@"D:\Program Files\Oracle\VirtualBox\VirtualBox.exe");
                 }
             );

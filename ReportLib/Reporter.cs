@@ -12,10 +12,10 @@ namespace ReportLib
         {
             public int Attribute_blocks { get; set; }
             public string Attribute_blocksPercent { get; set; }
-            public string Attribute_errors { get; set; }
+            public int Attribute_errors { get; set; }
             public string Attribute_errorsPercent { get; set; }
             public int Attribute_failures { get; set; }
-            public string Attribute_failsPercent { get; set; }
+            public string Attribute_failuresPercent { get; set; }
             public int Attribute_passes { get; set; }
             public string Attribute_passesPercent { get; set; }
             public int Attribute_tbds { get; set; }
@@ -24,7 +24,7 @@ namespace ReportLib
             public string Attribute_testName { get; set; }
             public string Attribute_os { get; set; }
             public string Attribute_language { get; set; }
-            public string Attribute_time { get; set; }
+            public long Attribute_time { get; set; }
             public string Attribute_deviceModel { get; set; }
             public string Attribute_deviceName { get; set; }
             public string Attribute_region { get; set; }
@@ -34,7 +34,7 @@ namespace ReportLib
         }
         public class Result_TestCase
         {
-            public string Node_stepNumber { get; set; }
+            public int Node_stepNumber { get; set; }
             public string Node_description { get; set; }
             public string Node_expectedResult { get; set; }
             public string Node_needToCheck { get; set; }
@@ -43,7 +43,7 @@ namespace ReportLib
             public string Attribute_message { get; set; }
             public string Attribute_type { get; set; }
 
-            public string Attribute_time { get; set; }
+            public long Attribute_time { get; set; }
             public string Attribute_classname { get; set; }
             public string Attribute_name { get; set; }
         }
@@ -83,5 +83,10 @@ namespace ReportLib
         public const string Node_failure = "failure";
         public const string Attribute_message = "message";
         public const string Attribute_type = "type";
+
+        public string GetResultPercent(int result, int total, int keepPoint = 2)
+        {
+            return (Math.Round((double)result / total, keepPoint) * 100) .ToString() + "%";
+        }
     }
 }

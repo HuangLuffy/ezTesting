@@ -28,7 +28,7 @@ namespace XunitTest.TestCases.TryX
         {
             private readonly ShareInTryx _Share;
             private readonly ITestOutputHelper output;
-            private Steps_VirtualBox _Steps_VirtualBox = new Steps_VirtualBox("");
+            private Steps_VirtualBox _Steps_VirtualBox = new Steps_VirtualBox(@"D:\Dev\1\1.xml");
             public TestXunit(ITestOutputHelper output, ShareInTryx _Share)
             {
                 this.output = output;

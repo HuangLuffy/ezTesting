@@ -37,7 +37,6 @@ namespace ReportLib
             return $"{comment}@@@{link}";
         }
         
-
         public void CreateResultXml(string xslName = "xmlReport.xsl")
         {
 
@@ -71,7 +70,7 @@ namespace ReportLib
                 )
             );
             this.xDoc = xDoc;
-            //xDoc.Save(this.pathReportXml);
+            xDoc.Save(this.pathReportXml);
         }
         private XElement AssembleElement(Result_TestCase _Result_TestCase)
             //(string classname, string stepTime, string functionName, string stepNumber, string description, string expectedResult, string needToCheck, string result)
@@ -120,7 +119,7 @@ namespace ReportLib
             rootElement.Attribute(Attribute_testName).Value = _Result_TestInfo.Attribute_testName;
             rootElement.Attribute(Attribute_os).Value = _Result_TestInfo.Attribute_os;
             rootElement.Attribute(Attribute_language).Value = _Result_TestInfo.Attribute_language;
-            rootElement.Attribute(Attribute_time).Value = _Result_TestInfo.Attribute_time;
+            rootElement.Attribute(Attribute_time).Value = _Result_TestInfo.Attribute_time.ToString();
             rootElement.Attribute(Attribute_deviceModel).Value = _Result_TestInfo.Attribute_deviceModel;
             rootElement.Attribute(Attribute_deviceName).Value = _Result_TestInfo.Attribute_deviceName;
             rootElement.Attribute(Attribute_region).Value = _Result_TestInfo.Attribute_region;
@@ -130,14 +129,15 @@ namespace ReportLib
 
             rootElement.Attribute(Attribute_blocks).Value = _Result_TestInfo.Attribute_blocks.ToString();
             rootElement.Attribute(Attribute_blocksPercent).Value = _Result_TestInfo.Attribute_blocksPercent;
-            rootElement.Attribute(Attribute_errors).Value = _Result_TestInfo.Attribute_errors;
+            rootElement.Attribute(Attribute_errors).Value = _Result_TestInfo.Attribute_errors.ToString();
             rootElement.Attribute(Attribute_errorsPercent).Value = _Result_TestInfo.Attribute_errorsPercent;
             rootElement.Attribute(Attribute_failures).Value = _Result_TestInfo.Attribute_failures.ToString();
-            rootElement.Attribute(Attribute_failsPercent).Value = _Result_TestInfo.Attribute_failsPercent;
+            rootElement.Attribute(Attribute_failsPercent).Value = _Result_TestInfo.Attribute_failuresPercent;
             rootElement.Attribute(Attribute_passes).Value = _Result_TestInfo.Attribute_passes.ToString();
             rootElement.Attribute(Attribute_passesPercent).Value = _Result_TestInfo.Attribute_passesPercent;
             rootElement.Attribute(Attribute_tbds).Value = _Result_TestInfo.Attribute_tbds.ToString();
             rootElement.Attribute(Attribute_tbdsPercent).Value = _Result_TestInfo.Attribute_tbdsPercent;
+            xDoc.Save(this.pathReportXml);
         }
     }
 }
