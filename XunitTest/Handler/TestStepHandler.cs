@@ -16,14 +16,14 @@ namespace XunitTest.Handler
 {
     public class TestStepHandler : TestStep
     {
-        public string folderNameProject = "";
-        public string folderNameTest = "";
-        public string folderNameScreenshots = "";
+        private string folderNameProject = "";
+        private string folderNameTest = "";
+        private string folderNameScreenshots = "Shots";
 
-        public bool needToBlockAllTests = false;
-        public string pathReportFile = "";
-        public int stepNumber = 1;
-        public const string blockedDescription = "This step is blocked since the previous step was failed.";
+        private bool needToBlockAllTests = false;
+        private string pathReportFile = "";
+        private int stepNumber = 1;
+        private const string blockedDescription = "This step is blocked since the previous step was failed.";
 
         private const string DEFAULTCONTENT = "NA";
         private IReporter _IReporter;
