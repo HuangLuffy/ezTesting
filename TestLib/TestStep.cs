@@ -10,18 +10,6 @@ namespace TestLib
 {
     public class TestStep
     {
-        public bool needToBlockAllTests = false;
-        public string pathReportFile = "";
-        public int stepNumber = 1;
-        public const string blockedDescription = "This step is blocked since the previous step was failed.";
-        public struct Result
-        {
-            public const string PASS = "Pass";
-            public const string FAIL = "Fail";
-            public const string BLOCK = "Block";
-            public const string TBD = "Tbd";
-        }
-
         protected T Execute<T>(Func<T> action)
         {
             T actualResult = action.Invoke();
