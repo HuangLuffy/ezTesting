@@ -15,4 +15,6 @@ ReportLib/obj/*
 ReportLib/bin/*
 XunitTest/obj/*
 XunitTest/bin/*
+OpenIt/obj/*
+OpenIt/bin/*
 packages/*

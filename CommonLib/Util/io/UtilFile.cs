@@ -32,14 +32,14 @@ namespace CommonLib.Util
                 return null;
             }
         }
-        public static void WriteFileWhenNotExists(string fileFullPath, string content = "", Boolean append = false)
+        public static void WriteFileWhenNotExists(string fileFullPath, string content = "", Boolean append = true)
         {
             if (!File.Exists(fileFullPath))
             {
                 WriteFile(fileFullPath, content, append);
             } 
         }
-        public static void WriteFile(string fileFullPath, string content = "", Boolean append = false)
+        public static void WriteFile(string fileFullPath, string content = "", Boolean append = true)
         {
             try
             {

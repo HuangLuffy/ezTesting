@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLib", "TestLib\TestLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportLib", "ReportLib\ReportLib.csproj", "{A33CB8AC-544C-48F8-901B-14C5F0B29BEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenIt", "OpenIt\OpenIt.csproj", "{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,14 @@ Global
 		{A33CB8AC-544C-48F8-901B-14C5F0B29BEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A33CB8AC-544C-48F8-901B-14C5F0B29BEF}.Release|x86.ActiveCfg = Release|Any CPU
 		{A33CB8AC-544C-48F8-901B-14C5F0B29BEF}.Release|x86.Build.0 = Release|Any CPU
+		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Debug|x86.Build.0 = Debug|Any CPU
+		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Release|x86.ActiveCfg = Release|Any CPU
+		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
