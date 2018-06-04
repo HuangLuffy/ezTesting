@@ -9,6 +9,21 @@ namespace CommonLib.Util
 {
     public class UtilProcess
     {
+        public static bool IsProcessExistedByName(string name)
+        {
+            foreach (Process p in Process.GetProcessesByName(name))
+            {
+                return true;
+            }
+            return false;
+        }
+        public static void KillProcessByName(string name)
+        {
+            foreach (Process p in Process.GetProcessesByName(name))
+            {
+                p.Kill();
+            }
+        }
         public static void SingletonUI()
         {
             try

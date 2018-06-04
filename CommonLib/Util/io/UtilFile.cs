@@ -46,7 +46,7 @@ namespace CommonLib.Util
                 UtilFolder.CreateDirectory(Path.GetDirectoryName(fileFullPath));
                 using (StreamWriter _StreamWriter = new StreamWriter(fileFullPath, append))
                 {
-                    _StreamWriter.Write(content);
+                    _StreamWriter.WriteLine(content);
                 }
             }
             catch (Exception ex)
