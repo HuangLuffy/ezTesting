@@ -11,8 +11,9 @@ namespace OpenIt
 {
     public class OpenCM
     {
-        private const string NameLightingControl = "LightingControl";
-        private const string LinkPathLightingControl = @"C:\Users\Public\Desktop\LightingControl.lnk";
+        //LightingControl
+        private const string NameLightingControl = "MasterPlus";
+        private const string LinkPathLightingControl = @"C:\Users\Public\Desktop\MasterPlus.lnk";
         private string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
         private string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
         private const string FAIL = "Fail";
