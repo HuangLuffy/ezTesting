@@ -11,48 +11,95 @@ namespace OpenIt
 {
     public class OpenCM
     {
-        public const string NameLightingControl = "LightingControl";
-        public const string LinkPathLightingControl = @"C:\Users\Public\Desktop\LightingControl.lnk";
-        public const string FAIL = "Fail";
-        public const string PROCESSSTILLEXISTS = "[Process Still Exists after closing the LC window.]";
-        public const string NOITEMSINUI = "[No Items in UI.]";
-        public const string CRASH = "[Crash.]";
-        public int launchTimes = 0;
-        public void testc()
+        private const string NameLightingControl = "LightingControl";
+        private const string LinkPathLightingControl = @"C:\Users\Public\Desktop\LightingControl.lnk";
+        private string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
+        private string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
+        private const string FAIL = "Fail";
+        private const string PASS = "Pass";
+        private const string PROCESSSTILLEXISTS = "Process still exists after closing the LC window.";
+        private const string NOITEMSINUI = "No Items in UI.";
+        private const string CRASH = "Crashed.";
+        private string RunAndGet(long num)
         {
-            string comment = "";
-            UtilProcess.KillProcessByName(OpenCM.NameLightingControl);
             UtilProcess.StartProcess(OpenCM.LinkPathLightingControl);
-            AT window_CoolerMasterLightingControl = new AT().GetElement(Name: "Cooler Master.*", Timeout: 10);
+            AT window_CoolerMasterLightingControl = null;
             try
             {
-                AT tab_CONFIGURATION = window_CoolerMasterLightingControl.GetElement(Name: "CONFIGURATION", TreeScope: AT.TreeScope.Descendants, Timeout: 4);
+                Console.Title = num.ToString() + " | Waiting LC launching 11s.";
+                window_CoolerMasterLightingControl = new AT().GetElement(Name: "Cooler Master.*", Timeout: 11);
             }
             catch (Exception)
             {
-                comment = OpenCM.NOITEMSINUI;
+                return getComment(OpenCM.CRASH, num);
             }
-            AT button_Close = new AT().GetElement(AutomationId: "Close", TreeScope: AT.TreeScope.Descendants);
-            UtilTime.WaitTime(10);
+            Console.Title = num.ToString() + " | Waiting 10s for checking crash.";
+            UtilTime.WaitTime(10); 
             try
             {
                 window_CoolerMasterLightingControl = new AT().GetElement(Name: "Cooler Master.*");
             }
             catch (Exception)
             {
-                comment = OpenCM.CRASH;
+                return getComment(OpenCM.CRASH, num);
             }
-
+            try
+            {
+                AT tab_CONFIGURATION = window_CoolerMasterLightingControl.GetElement(Name: "CONFIGURATION", TreeScope: AT.TreeScope.Descendants, Timeout: 5);
+            }
+            catch (Exception)
+            {
+                return getComment(OpenCM.NOITEMSINUI, num);
+            }
+            AT button_Close = window_CoolerMasterLightingControl.GetElement(AutomationId: "Close", TreeScope: AT.TreeScope.Descendants);
             button_Close.DoClick();
+            Console.Title = num.ToString() + " | Waiting 2s for LC closing.";
             UtilTime.WaitTime(2);
             if (UtilProcess.IsProcessExistedByName(OpenCM.NameLightingControl))
             {
-                comment = OpenCM.PROCESSSTILLEXISTS;
-            }
-            string ctt = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {FAIL} Num > [{launchTimes++}] Error > [{comment}]";
-            UtilFile.WriteFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log"), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), true);
-            UtilProcess.KillProcessByName(OpenCM.NameLightingControl);
+                return getComment(OpenCM.PROCESSSTILLEXISTS, num);
+            }       
+            return "";
         }
-
+        public void Run()
+        {
+            string tmp = "";
+            UtilFolder.DeleteDirectory(imagePath);
+            UtilTime.WaitTime(1);
+            UtilFolder.CreateDirectory(imagePath);
+            try
+            {
+                
+                UtilFile.WriteFile(Path.Combine(this.logPath), "", false);
+            }
+            catch (Exception)
+            {
+            }    
+            UtilProcess.KillProcessByName(OpenCM.NameLightingControl);
+            for (int i = 1; i < 99999999; i++)
+            {
+                tmp = this.RunAndGet(i);
+                try
+                {
+                    if (tmp != "")
+                    {
+                        UtilCapturer.Capture(Path.Combine(imagePath, i.ToString()));
+                        UtilFile.WriteFile(Path.Combine(this.logPath), tmp, true);
+                        Console.WriteLine(tmp);
+                    }
+                    UtilProcess.KillProcessByName(OpenCM.NameLightingControl);
+                    UtilTime.WaitTime(2);
+                }
+                catch (Exception ex)
+                {
+                    UtilFile.WriteFile(Path.Combine(this.logPath), ex.Message, true);
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+        private string getComment(string comment, long num)
+        {
+            return $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {FAIL} - Num > [{num}]. Error > [{comment}]";
+        }
     }
 }

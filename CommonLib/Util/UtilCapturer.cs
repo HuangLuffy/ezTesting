@@ -24,10 +24,16 @@ namespace CommonLib.Util
             if (ImageType == ImageType.BMP)
             {
                 imgf = ImageFormat.Bmp;
+                pathSave += ".bmp";
             }
             else if(ImageType == ImageType.JPG)
             {
                 imgf = ImageFormat.Jpeg;
+                pathSave += ".jpg";
+            }
+            else
+            {
+                pathSave += ".png";
             }
             int iWidth = Screen.PrimaryScreen.Bounds.Width;
             int iHeight = Screen.PrimaryScreen.Bounds.Height;
