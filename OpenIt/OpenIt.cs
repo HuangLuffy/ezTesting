@@ -9,56 +9,47 @@ using System.Threading.Tasks;
 
 namespace OpenIt
 {
-    public class OpenCM
+    public class OpenIt
     {
-        //LightingControl
-        private const string NameLightingControl = "MasterPlus";
-        private const string LinkPathLightingControl = @"C:\Users\Public\Desktop\MasterPlus.lnk";
-        private string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
-        private string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
-        private const string FAIL = "Fail";
-        private const string PASS = "Pass";
-        private const string PROCESSSTILLEXISTS = "Process still exists after closing the LC window.";
-        private const string NOITEMSINUI = "No Items in UI.";
-        private const string CRASH = "Crashed.";
+        PORTAL _PORTAL = new PORTAL();
         private string RunAndGet(long num)
         {
-            UtilProcess.StartProcess(OpenCM.LinkPathLightingControl);
-            AT window_CoolerMasterLightingControl = null;
+            UtilProcess.StartProcess(_PORTAL.SwLnkPath);
+            AT MainWindow_SW = null;
             try
             {
-                Console.Title = num.ToString() + " | Waiting LC launching 11s.";
-                window_CoolerMasterLightingControl = new AT().GetElement(Name: "Cooler Master.*", Timeout: 11);
+                Console.Title = num.ToString() + " | Waiting for launching. (11s)";
+                MainWindow_SW = new AT().GetElement(Name: "Cooler Master.*", Timeout: 11);
             }
             catch (Exception)
             {
-                return getComment(OpenCM.CRASH, num);
+                return getComment(PORTAL.Log.CRASH, num);
             }
             Console.Title = num.ToString() + " | Waiting 10s for checking crash.";
             UtilTime.WaitTime(10); 
             try
             {
-                window_CoolerMasterLightingControl = new AT().GetElement(Name: "Cooler Master.*");
+                MainWindow_SW = new AT().GetElement(Name: "Cooler Master.*");
             }
             catch (Exception)
             {
-                return getComment(OpenCM.CRASH, num);
+                return getComment(PORTAL.Log.CRASH, num);
             }
             try
             {
-                AT tab_CONFIGURATION = window_CoolerMasterLightingControl.GetElement(Name: "CONFIGURATION", TreeScope: AT.TreeScope.Descendants, Timeout: 5);
+                AT tab_CONFIGURATION = MainWindow_SW.GetElement(Name: "CONFIGURATION", TreeScope: AT.TreeScope.Descendants, Timeout: 5);
             }
             catch (Exception)
             {
-                return getComment(OpenCM.NOITEMSINUI, num);
+                return getComment(OpenIt.NOITEMSINUI, num);
             }
-            AT button_Close = window_CoolerMasterLightingControl.GetElement(AutomationId: "Close", TreeScope: AT.TreeScope.Descendants);
+            AT button_Close = MainWindow_SW.GetElement(AutomationId: "Close", TreeScope: AT.TreeScope.Descendants);
             button_Close.DoClick();
             Console.Title = num.ToString() + " | Waiting 2s for LC closing.";
             UtilTime.WaitTime(2);
-            if (UtilProcess.IsProcessExistedByName(OpenCM.NameLightingControl))
+            if (UtilProcess.IsProcessExistedByName(OpenIt.NameLightingControl))
             {
-                return getComment(OpenCM.PROCESSSTILLEXISTS, num);
+                return getComment(OpenIt.PROCESSSTILLEXISTS, num);
             }       
             return "";
         }
@@ -76,7 +67,7 @@ namespace OpenIt
             catch (Exception)
             {
             }    
-            UtilProcess.KillProcessByName(OpenCM.NameLightingControl);
+            UtilProcess.KillProcessByName(OpenIt.NameLightingControl);
             for (int i = 1; i < 99999999; i++)
             {
                 tmp = this.RunAndGet(i);
@@ -88,7 +79,7 @@ namespace OpenIt
                         UtilFile.WriteFile(Path.Combine(this.logPath), tmp, true);
                         Console.WriteLine(tmp);
                     }
-                    UtilProcess.KillProcessByName(OpenCM.NameLightingControl);
+                    UtilProcess.KillProcessByName(OpenIt.NameLightingControl);
                     UtilTime.WaitTime(2);
                 }
                 catch (Exception ex)
