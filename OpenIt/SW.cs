@@ -13,14 +13,12 @@ namespace OpenIt
         private string logPath;
         public string LogPath
         {
-            get { return logPath; }
-            set { logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log"); }
+            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log"); }
         }
         private string imagePath;
         public string ImagePath
         {
-            get { return imagePath; }
-            set { imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }
+            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }
         }
         private string swName;
         public string SwName
@@ -62,8 +60,8 @@ namespace OpenIt
             if (comment != "")
             {
                 string tmp = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {Result.FAIL} - Num > [{num}]. Error > [{comment}]";
-                UtilCapturer.Capture(Path.Combine(imagePath, num.ToString()));
-                UtilFile.WriteFile(Path.Combine(this.logPath), tmp, true);
+                UtilCapturer.Capture(Path.Combine(this.ImagePath, num.ToString()));
+                UtilFile.WriteFile(Path.Combine(this.LogPath), tmp, true);
                 Console.WriteLine(tmp);
                 UtilProcess.KillProcessByName(this.SwProcessName);
                 UtilTime.WaitTime(2);
@@ -73,6 +71,23 @@ namespace OpenIt
         public void WriteConsoleTitle(long launchTimes, string s)
         {
             Console.Title = launchTimes.ToString() + " | " + s;
+        }
+        public void Initialize()
+        {
+            UtilFolder.DeleteDirectory(this.ImagePath);
+            UtilTime.WaitTime(1);
+            UtilFolder.CreateDirectory(this.ImagePath);
+            //try
+            //{
+
+            //    UtilFile.WriteFile(Path.Combine(_SW.LogPath), "", false);
+            //}
+            //catch (Exception)
+            //{
+            //}    
+
+            UtilProcess.KillProcessByName(this.SwProcessName);
+            UtilTime.WaitTime(1);
         }
     }
 }

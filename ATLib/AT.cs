@@ -49,7 +49,7 @@ namespace ATLib
         {
             return this.GetElementFromStruct(ATElementStruct, Timeout, AT.TreeScope.Descendants);
         }
-        public AT GetElement(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, int? Index = null, int Timeout = -1, bool IsEnabled = false)
+        public AT GetElement(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, int? Index = null, int Timeout = -1, bool IsEnabled = false, bool CheckExist = false)
         {
             try
             {
@@ -79,6 +79,10 @@ namespace ATLib
             }
             catch (Exception ex)
             {
+                if (CheckExist)
+                {
+                    return null;
+                }
                 throw new Exception("[ERROR]: GetElement. " + ex.Message);
             }
         }
