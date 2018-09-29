@@ -44,8 +44,8 @@ namespace OpenIt.Project.Portal
         public void IsSWCrash()
         {
             timeout = 10;
-            _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting 10s for checking crash. ({timeout}s)");     
-            MainWindow_SW = new AT().GetElement(Name: _Portal.UIA.Name_CrashMainWidow, Timeout: timeout, CheckExist: true);
+            _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for checking crash. ({timeout}s)");     
+            MainWindow_SW = new AT().GetElement(Name: _Portal.UIA.Name_CrashMainWidow, Timeout: timeout, returnNullWhenException: true);
             if (MainWindow_SW != null) {
                 _Portal.HandleStepResult(Portal.Log.CRASH, launchTimes);
                 throw new Exception();
