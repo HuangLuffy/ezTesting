@@ -38,7 +38,6 @@ namespace OpenIt.Project.Portal
             catch (Exception)
             {
                 _Portal.HandleStepResult(Portal.Log.CRASH, launchTimes);
-                throw;
             }
         }
         public void IsSWCrash()

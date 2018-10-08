@@ -13,6 +13,8 @@ namespace OpenIt
     public class OpenIt
     {
         PortalTestFlow _PortalTestFlow = new PortalTestFlow();
+
+
         public void Run()
         {
             for (int i = 1; i < 99999999; i++)
@@ -26,9 +28,11 @@ namespace OpenIt
                 }
                 catch (Exception ex)
                 {
+                    Console.Title = ex.Message;
                     return;
                 }
             }
+            Console.Title += " >>>>> Test Done!";
         }
     }
 }

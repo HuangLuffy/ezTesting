@@ -46,7 +46,6 @@ namespace OpenIt
             //Task.WaitAll();
             OpenIt openIt = new OpenIt();
             openIt.Run();
-            Console.Title += " >>>>> Test Done!";
             Console.ReadKey();
         }
     }
