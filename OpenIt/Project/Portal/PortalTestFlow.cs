@@ -34,6 +34,7 @@ namespace OpenIt.Project.Portal
                 timeout = 11;                            
                 _Portal.WriteConsoleTitle(this.launchTimes,  $"Waiting for launching. ({timeout}s)");
                 this.MainWindow_SW = new AT().GetElement(Name: _Portal.UIA.Name_MainWidow, Timeout: timeout);
+                UtilTime.WaitTime(2);
             }
             catch (Exception)
             {
