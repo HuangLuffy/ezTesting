@@ -18,6 +18,12 @@ namespace OpenIt.Project.Portal
             get { return "PORTAL"; }
             //set { name_MainWidow = value; }
         }
+        public string ClassName_MainWidow
+        {
+            get { return "Qt5QWindowIcon"; }
+            //set { name_MainWidow = value; }
+        }
+        
         public string Btn_CloseMainWindow
         {
             get { return "sw_close"; }

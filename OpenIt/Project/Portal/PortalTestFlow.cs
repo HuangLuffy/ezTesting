@@ -32,8 +32,8 @@ namespace OpenIt.Project.Portal
             {
                 UtilProcess.StartProcess(_Portal.SwLnkPath);
                 timeout = 11;                            
-                _Portal.WriteConsoleTitle(this.launchTimes,  $"Waiting for launching. ({timeout}s)");
-                this.MainWindow_SW = new AT().GetElement(Name: _Portal.UIA.Name_MainWidow, Timeout: timeout);
+                _Portal.WriteConsoleTitle(this.launchTimes,  $"Waiting for launching. ({timeout}s)", timeout);
+                this.MainWindow_SW = new AT().GetElement(Name: _Portal.UIA.Name_MainWidow, ClassName: _Portal.UIA.ClassName_MainWidow, Timeout: timeout);
                 UtilTime.WaitTime(2);
             }
             catch (Exception)
@@ -44,7 +44,7 @@ namespace OpenIt.Project.Portal
         public void IsSWCrash()
         {
             timeout = 10;
-            _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for checking crash. ({timeout}s)");     
+            _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for checking crash. ({timeout}s)", timeout);
             MainWindow_SW = new AT().GetElement(Name: _Portal.UIA.Name_CrashMainWidow, Timeout: timeout, returnNullWhenException: true);
             if (MainWindow_SW != null) {
                 _Portal.HandleStepResult(Portal.Log.CRASH, launchTimes);
@@ -55,10 +55,10 @@ namespace OpenIt.Project.Portal
         {
             try
             {
-                AT button_Close = MainWindow_SW.GetElement(Name: _Portal.UIA.Btn_CloseMainWindow, ControlType: AT.ControlType.Button, TreeScope: AT.TreeScope.Descendants);
+                AT button_Close = this.MainWindow_SW.GetElement(ControlType: AT.ControlType.Button, TreeScope: AT.TreeScope.Descendants);
                 button_Close.DoClick();
                 timeout = 3;
-                _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for closing. ({timeout}s)");
+                _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for closing. ({timeout}s)", timeout);
                 UtilTime.WaitTime(3);
                 //if (UtilProcess.IsProcessExistedByName(_Portal.SwProcessName))
                 //{

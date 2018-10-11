@@ -68,9 +68,14 @@ namespace OpenIt
             }
 
         }
-        public void WriteConsoleTitle(long launchTimes, string s)
+        public void WriteConsoleTitle(long launchTimes, string c, int timeout = 0)
         {
-            Console.Title = launchTimes.ToString() + " | " + s;
+            Console.Title = launchTimes.ToString() + " | " + c;
+            String t = Console.Title;
+            //if (timeout != 0)
+            //{
+            //     UtilTime.CountDown(timeout, (s) => { Console.Title = t + " > " + s.ToString(); });
+            //}
         }
         public void Initialize()
         {

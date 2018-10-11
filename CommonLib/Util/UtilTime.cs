@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace CommonLib.Util
 {
@@ -133,6 +134,52 @@ namespace CommonLib.Util
             if (dVal >= 0)
                 return (long)Math.Floor(dVal);
             return (long)Math.Ceiling(dVal);
+        }
+        #endregion
+
+        #region elapse
+        public static void CountDown(int maxNum, Action<int> action)
+        {
+            Thread counter = new Thread(() => {
+                for (int i = maxNum; i > 0; i--)
+                {
+                    action.DynamicInvoke(i);
+                    Thread.Sleep(1000);
+                    if (i == 1)
+                    {
+                        Thread.CurrentThread.Abort();
+                    }
+                    //Thread currthread = Thread.CurrentThread;
+                }
+                });
+            counter.Start();
+        }
+       
+        private static void TimeElapsedEvent(object source, ElapsedEventArgs e)
+        {
+            Console.WriteLine("The Elapsed event was raised at {0}", e.SignalTime);
+        }
+        public void bbb(Action action)
+        {
+
+            System.Timers.Timer aTimer = new System.Timers.Timer(10000);              
+            aTimer.Elapsed += new ElapsedEventHandler(TimeElapsedEvent);    //添加一个钩子：注册一个函数，在倒计时完成后调用           
+            aTimer.Interval = 2000;               //设置 倒计时 的时间为 2s     
+            aTimer.AutoReset = true;   //设置 是否 循环执行：默认会循环执行             
+            aTimer.Enabled = true;//开启 倒计时  
+            //Console.WriteLine("按下回车结束程序");
+            //Console.ReadLine();
+        }
+        public void aaa()
+        {
+
+            System.Timers.Timer aTimer = new System.Timers.Timer(10000);         //添加一个钩子：注册一个函数，在倒计时完成后调用        
+            aTimer.Elapsed += new ElapsedEventHandler(TimeElapsedEvent);         //设置 倒计时 的时间为 2s        
+            aTimer.Interval = 2000;         //设置 是否 循环执行：默认会循环执行        
+            aTimer.AutoReset = true;         //开启 倒计时       
+            aTimer.Enabled = true;
+            //Console.WriteLine("按下回车结束程序");
+            //Console.ReadLine();
         }
         #endregion
     }
