@@ -55,7 +55,7 @@ namespace OpenIt.Project.Portal
         {
             try
             {
-                AT button_Close = this.MainWindow_SW.GetElement(ControlType: AT.ControlType.Button, TreeScope: AT.TreeScope.Descendants);
+                AT button_Close = this.MainWindow_SW.GetElement(Name:_Portal.UIA.Btn_CloseMainWindow, ControlType: AT.ControlType.Button, TreeScope: AT.TreeScope.Descendants);
                 button_Close.DoClick();
                 timeout = 3;
                 _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for closing. ({timeout}s)", timeout);

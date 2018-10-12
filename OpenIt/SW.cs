@@ -72,10 +72,10 @@ namespace OpenIt
         {
             Console.Title = launchTimes.ToString() + " | " + c;
             String t = Console.Title;
-            //if (timeout != 0)
-            //{
-            //     UtilTime.CountDown(timeout, (s) => { Console.Title = t + " > " + s.ToString(); });
-            //}
+            if (timeout != 0)
+            {
+                UtilTime.CountDown(timeout, (s) => { Console.Title = t + " > " + s.ToString(); });
+            }
         }
         public void Initialize()
         {

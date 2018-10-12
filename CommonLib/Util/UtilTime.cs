@@ -10,6 +10,7 @@ namespace CommonLib.Util
 {
     public class UtilTime
     {
+        public static Thread counterThread = null;
         public static void WaitTime(double timeout)
         {
             Thread.Sleep((int)(timeout * 1000));
@@ -138,21 +139,32 @@ namespace CommonLib.Util
         #endregion
 
         #region elapse
-        public static void CountDown(int maxNum, Action<int> action)
+        public static void CountDown(int maxNum, Action<int> action, bool stopLastThread = true)
         {
-            Thread counter = new Thread(() => {
+            try
+            {
+                if (counterThread != null && counterThread.IsAlive is true)
+                {
+                    counterThread.Abort();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            counterThread = new Thread(() => {
                 for (int i = maxNum; i > 0; i--)
                 {
                     action.DynamicInvoke(i);
                     Thread.Sleep(1000);
                     if (i == 1)
                     {
-                        Thread.CurrentThread.Abort();
+                        counterThread.Abort();
                     }
                     //Thread currthread = Thread.CurrentThread;
                 }
                 });
-            counter.Start();
+            counterThread.Start();
         }
        
         private static void TimeElapsedEvent(object source, ElapsedEventArgs e)
