@@ -44,9 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmd.cs" />
+    <Compile Include="Project\Portal\PortalTestFlows.cs" />
     <Compile Include="Project\Portal\PortalUIA.cs" />
-    <Compile Include="Project\Portal\PortalTestFlow.cs" />
-    <Compile Include="OpenIt.cs" />
+    <Compile Include="Project\Portal\PortalTestActions.cs" />
+    <Compile Include="TestIt.cs" />
     <Compile Include="Project\Portal\Portal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OpenIt.Project.Portal
 {
-    public class PortalTestFlow
+    public class PortalTestActions
     {
         public Portal _Portal;
         private AT MainWindow_SW = null;
@@ -20,7 +20,7 @@ namespace OpenIt.Project.Portal
             set { launchTimes = value; }
         }
 
-        public PortalTestFlow()
+        public PortalTestActions()
         {
             this._Portal = new Portal();
             this._Portal.Initialize();
