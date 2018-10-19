@@ -14,36 +14,40 @@ namespace OpenIt
     {
         PortalTestFlows _PortalTestFlows = new PortalTestFlows();
         Cmd _CMD = new Cmd();
-        public TestIt()
-        {
-            
-        }
         public void Run()
         {
             string[] selected = _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
             while (true)
             {
-                string s = Console.ReadLine();
-                if (s.Trim().Equals("1"))
+                try
                 {
-                    _PortalTestFlows.Run();
-                    break;
+                    string s = Console.ReadLine();
+                    if (s.Trim().Equals("1"))
+                    {
+                        _PortalTestFlows.Flow_LaunchTest();
+                        break;
+                    }
+                    else if (s.Trim().Equals("2"))
+                    {
+                        _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
+                        break;
+                    }
+                    else if (s.Trim().Equals("3"))
+                    {
+                        _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
+                        break;
+                    }
+                    else if (s.Trim().Equals("4"))
+                    {
+                        _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
+                    }
                 }
-                else if (s.Trim().Equals("2"))
+                catch (Exception ex)
                 {
-                    _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
-                    break;
+                    Console.Title = ex.Message;
+                    return;
                 }
-                else if (s.Trim().Equals("3"))
-                {
-                    _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
-                    break;
-                }
-                else if (s.Trim().Equals("4"))
-                {
-                    _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
-                    break;
-                }
+                Console.Title += " >>>>> Tested Done! PASS";
             }
         }
     }

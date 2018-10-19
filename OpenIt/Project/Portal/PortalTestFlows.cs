@@ -19,26 +19,28 @@ namespace OpenIt.Project.Portal
             get { return new string[]{ OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_Server }; }
             set { options_cmd = value; }
         }
-
         PortalTestActions _PortalTestActions = new PortalTestActions();
-        public void Run()
+        public void Flow_PlugInOutTest()
         {
             for (int i = 1; i < 99999999; i++)
             {
                 _PortalTestActions.LaunchTimes = i;
-                try
-                {
-                    _PortalTestActions.LaunchSW();
-                    _PortalTestActions.CloseSW();
-                    _PortalTestActions.IsSWCrash();
-                }
-                catch (Exception ex)
-                {
-                    Console.Title = ex.Message;
-                    return;
-                }
+                _PortalTestActions.IsSWCrash();
             }
-            Console.Title += " >>>>> Test Done!";
+        }
+        public void Flow_PlugInOutServer()
+        {
+
+        }
+        public void Flow_LaunchTest()
+        {
+            for (int i = 1; i < 99999999; i++)
+            {
+                _PortalTestActions.LaunchTimes = i;
+                _PortalTestActions.LaunchSW();
+                _PortalTestActions.CloseSW();
+                _PortalTestActions.IsSWCrash();
+            }
         }
     }
 }
