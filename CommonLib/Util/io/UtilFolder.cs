@@ -49,9 +49,9 @@ namespace CommonLib.Util
                     Thread.Sleep(10);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception(string.Format("Failed to Delete folder [{0}].", folderPath));
+                throw new Exception(string.Format("Failed to Delete folder [{0}]. " + ex.Message, folderPath));
             }
         }
         public static void RecreateDirectory(string folderPath)

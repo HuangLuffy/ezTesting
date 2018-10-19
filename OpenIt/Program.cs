@@ -1,6 +1,5 @@
 ﻿using ATLib;
 using CommonLib.Util;
-using Mono.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,9 +18,20 @@ namespace OpenIt
 
         static void Main(string[] args)
         {
-            //Console.WriteLine("1. \n");
-            //string s = Console.ReadLine();
+            Cmd _CMD = new Cmd();
+            _CMD.WriteOptions(new string[]{ "Launch Test","PlugInOut Test", "Show menu"});
 
+
+            while (true)
+            {
+                string s = Console.ReadLine();
+                if (s.Equals("1".Trim()))
+                {
+                    Console.WriteLine("haa");
+
+                    break;
+                }
+            }
             //string s1 = Console.ReadLine();
 
             //bool showHelp = false;
@@ -48,6 +58,8 @@ namespace OpenIt
             //});
             //keyboardPolling.Start();
             //Task.WaitAll();
+            Console.ReadKey();
+            return;
             OpenIt openIt = new OpenIt();
             openIt.Run();
             Console.ReadKey();
