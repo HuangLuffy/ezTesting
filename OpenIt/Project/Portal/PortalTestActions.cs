@@ -1,4 +1,5 @@
 ﻿using ATLib;
+using ATLib.Input;
 using CommonLib.Util;
 using System;
 using System.Collections.Generic;
@@ -68,6 +69,55 @@ namespace OpenIt.Project.Portal
             catch (Exception)
             {
                 throw;
+            }
+        }
+        public void VMPlugOutDevice()
+        {
+            VM _VM = new VM();
+            try
+            {
+                AT Window_VM = new AT().GetElement(_VM.Window_VM);
+                Window_VM.DoSetFocus();
+                UtilTime.WaitTime(1);
+                AT Tab_TestVM = Window_VM.GetElement(_VM.Tab_TestVM);
+                Tab_TestVM.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.RIGHT);
+                UtilTime.WaitTime(0.5);
+                AT Item_MenuContext = new AT().GetElement(_VM.Menu_Context);
+                //Console.WriteLine(2);
+                AT Item_RemovableDevices = Item_MenuContext.GetElement(_VM.Item_RemovableDevices);
+                Item_RemovableDevices.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
+                UtilTime.WaitTime(0.5);
+               // AT Item_MP860 = new AT().GetElement(_VM.H500M);
+                AT Item_MP860 = new AT().GetElement(_VM.Item_MP860);
+                Item_MP860.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
+                UtilTime.WaitTime(1);
+                AT Item_Con = null;
+                try
+                {
+                    Item_Con = new AT().GetElement(_VM.Item_Connect);
+                }
+                catch (Exception)
+                {
+                    try
+                    {
+                        Item_Con = new AT().GetElement(_VM.Item_Disconnect);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+                if (Item_Con != null)
+                {
+                    Item_Con.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.LEFT);
+                    timeout = 20;
+                    UtilTime.WaitTime(20);
+                    _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for connecting/disconnecting. ({timeout}s)", timeout);
+                }
+            }
+            catch (Exception)
+            {
+                
             }
         }
     }

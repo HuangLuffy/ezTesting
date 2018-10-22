@@ -47,6 +47,7 @@
     <Compile Include="Project\Portal\PortalTestFlows.cs" />
     <Compile Include="Project\Portal\PortalUIA.cs" />
     <Compile Include="Project\Portal\PortalTestActions.cs" />
+    <Compile Include="Project\Portal\VM.cs" />
     <Compile Include="TestIt.cs" />
     <Compile Include="Project\Portal\Portal.cs" />
     <Compile Include="Program.cs" />

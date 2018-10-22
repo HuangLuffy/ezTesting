@@ -29,12 +29,12 @@ namespace OpenIt
                     }
                     else if (s.Trim().Equals("2"))
                     {
-                        _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
+                        _PortalTestFlows.Flow_PlugInOutTest();
                         break;
                     }
                     else if (s.Trim().Equals("3"))
                     {
-                        _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
+                        _PortalTestFlows.Flow_PlugInOutServer();
                         break;
                     }
                     else if (s.Trim().Equals("4"))

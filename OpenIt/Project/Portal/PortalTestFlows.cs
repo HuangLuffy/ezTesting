@@ -30,7 +30,10 @@ namespace OpenIt.Project.Portal
         }
         public void Flow_PlugInOutServer()
         {
-
+            for (int i = 1; i < 99999999; i++)
+            {
+                _PortalTestActions.VMPlugOutDevice();
+            }
         }
         public void Flow_LaunchTest()
         {

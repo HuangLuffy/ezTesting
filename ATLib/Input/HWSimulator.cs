@@ -317,12 +317,19 @@
                 mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTUP;
                 SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
             }
+            public enum MouseKeys
+            {
+                NOTCLICK = 0,
+                LEFT = 1,
+                RIGHT = 2
+            }
             /// <summary>
             /// Move Mouse And Click Left
             /// </summary>
             /// <param name="x"></param>
             /// <param name="y"></param>
-            public static void MoveMouseAndClickLeft(int x, int y)
+            /// 
+            public static void MoveMouseAndClick(int x, int y, MouseKeys mk = MouseKeys.LEFT)
             {
                 INPUT mouseInput = new INPUT();
                 mouseInput.type = SendInputEventType.InputMouse;
@@ -331,9 +338,27 @@
                 mouseInput.mkhi.mi.mouseData = 0;
                 mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE | MouseEventFlags.MOUSEEVENTF_ABSOLUTE;
                 SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
-                mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTDOWN;
+                if (mk == MouseKeys.NOTCLICK)
+                {
+                    return;
+                }
+                if (mk == MouseKeys.RIGHT)
+                {
+                    mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_RIGHTDOWN;
+                }
+                else
+                {
+                    mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTDOWN;
+                }
                 SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
-                mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTUP;
+                if (mk == MouseKeys.RIGHT)
+                {
+                    mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_RIGHTUP;
+                }
+                else
+                {
+                    mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTUP;
+                }   
                 SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
             }
             /// <summary>
@@ -576,6 +601,25 @@
                 KB_DownINPUT.mkhi.ki.wVk = (ushort)VirtualKeys.VK_CONTROL;
                 //KB_DownINPUT.mkhi.ki.dwFlags = (uint)HookStructFlags.KF_EXTENDED;    'KB_DownINPUT.mkhi.ki.dwExtraInfo = (IntPtr)0;  
                 //KB_DownINPUT.mkhi.ki.wScan = 91
+                KB_DownINPUT.mkhi.ki.time = 2777777;
+                SendInput(1, ref KB_DownINPUT, Marshal.SizeOf(new INPUT()));
+                //Thread.Sleep(1000);   'INPUT KB_DownINPUT2 = new INPUT();   'KB_DownINPUT2.type = SendInputEventType.InputKeyboard;   'KB_DownINPUT2.mkhi.ki.wVk = (ushort)VirtualKeys.VK_LWIN;   'KB_DownINPUT2.mkhi.ki.dwFlags = (uint)WParamFlags.WM_KEYUP;   'SendInput(2, ref KB_DownINPUT2, Marshal.SizeOf(new INPUT()));  End Sub 
+            }
+            public static void KBDo(ushort whickKey)
+            {
+                INPUT KB_DownINPUT = new INPUT();
+                KB_DownINPUT.type = SendInputEventType.InputKeyboard;
+
+                KB_DownINPUT.mkhi.ki.wVk = (ushort)VirtualKeys.VK_C;
+
+                KB_DownINPUT.mkhi.ki.time = 2777777;
+                SendInput(1, ref KB_DownINPUT, Marshal.SizeOf(new INPUT()));
+
+                
+                KB_DownINPUT.type = SendInputEventType.InputKeyboard;
+                KB_DownINPUT.mkhi.ki.dwFlags = (uint)KeyboardEventFlags.KEYEVENTF_KEYUP;
+                KB_DownINPUT.mkhi.ki.wVk = (ushort)VirtualKeys.VK_C;
+
                 KB_DownINPUT.mkhi.ki.time = 2777777;
                 SendInput(1, ref KB_DownINPUT, Marshal.SizeOf(new INPUT()));
                 //Thread.Sleep(1000);   'INPUT KB_DownINPUT2 = new INPUT();   'KB_DownINPUT2.type = SendInputEventType.InputKeyboard;   'KB_DownINPUT2.mkhi.ki.wVk = (ushort)VirtualKeys.VK_LWIN;   'KB_DownINPUT2.mkhi.ki.dwFlags = (uint)WParamFlags.WM_KEYUP;   'SendInput(2, ref KB_DownINPUT2, Marshal.SizeOf(new INPUT()));  End Sub 

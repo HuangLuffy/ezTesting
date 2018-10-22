@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using static ATLib.Input.HWSimulator;
+using static ATLib.Input.HWSimulator.HWSend;
 
 namespace ATLib
 {
@@ -80,7 +81,7 @@ namespace ATLib
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="waitTime"></param>
-        public void DoClickPoint(double x = 0, double y = 0, double waitTime = 0.1)
+        public void DoClickPoint(double x = 0, double y = 0, double waitTime = 0.1, MouseKeys mk = MouseKeys.LEFT)
         {
             Point ptClick = new Point();
             if (x == 0 && y == 0)
@@ -114,7 +115,7 @@ namespace ATLib
             }
             try
             {
-                HWSend.MoveMouseAndClickLeft((int)ptClick.X + (int)x, (int)ptClick.Y + (int)y);
+                HWSend.MoveMouseAndClick((int)ptClick.X + (int)x, (int)ptClick.Y + (int)y, mk);
             }
             catch (Exception ex)
             {
