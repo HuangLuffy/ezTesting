@@ -245,6 +245,10 @@ namespace ATLib
             /// <summary>
             /// 
             /// </summary>
+            public const string MenuItem = "MenuItem";
+            /// <summary>
+            /// 
+            /// </summary>
             public const string ToolBar = "ToolBar";
             /// <summary>
             /// 
@@ -486,6 +490,10 @@ namespace ATLib
                 else if (ctrlType.Equals(ATElement.ControlType.Menu))
                 {
                     return System.Windows.Automation.ControlType.Menu;
+                }
+                else if (ctrlType.Equals(ATElement.ControlType.MenuItem))
+                {
+                    return System.Windows.Automation.ControlType.MenuItem;
                 }
                 else if (ctrlType.Equals(ATElement.ControlType.ToolBar))
                 {

@@ -42,12 +42,17 @@ namespace OpenIt.Project.Portal
                 _Portal.HandleStepResult(Portal.Log.CRASH, launchTimes);
             }
         }
-        public void IsSWCrash()
+        public void IsSWCrash(int checkTime = 0, int checkInternal = 0)
         {
-            timeout = 10;
-            _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for checking crash. ({timeout}s)", timeout);
-            MainWindow_SW = new AT().GetElement(Name: _Portal.UIA.Name_CrashMainWidow, Timeout: timeout, returnNullWhenException: true);
-            if (MainWindow_SW != null) {
+            if (checkInternal > 0)
+            {
+                UtilTime.WaitTime(checkInternal);
+                _Portal.WriteConsoleTitle(this.launchTimes, $"Waits ({checkInternal}s)", checkInternal);
+            }
+            checkTime = 10;
+            _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for checking crash. ({checkTime}s)", checkTime);
+            AT Crash_Window = new AT().GetElement(Name: _Portal.UIA.Name_CrashMainWidow, Timeout: checkTime, returnNullWhenException: true);
+            if (Crash_Window != null) {
                 _Portal.HandleStepResult(Portal.Log.CRASH, launchTimes);
                 throw new Exception();
             }
@@ -71,36 +76,34 @@ namespace OpenIt.Project.Portal
                 throw;
             }
         }
-        public void VMPlugOutDevice()
+        public void VMPlugOutDevice(string deviceNameVM)
         {
-            VM _VM = new VM();
             try
             {
-                AT Window_VM = new AT().GetElement(_VM.Window_VM);
+                AT Window_VM = new AT().GetElement(VM.Window_VM);
                 Window_VM.DoSetFocus();
                 UtilTime.WaitTime(1);
-                AT Tab_TestVM = Window_VM.GetElement(_VM.Tab_TestVM);
+                AT Tab_TestVM = Window_VM.GetElement(VM.Tab_TestVM);
                 Tab_TestVM.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.RIGHT);
                 UtilTime.WaitTime(0.5);
-                AT Item_MenuContext = new AT().GetElement(_VM.Menu_Context);
-                //Console.WriteLine(2);
-                AT Item_RemovableDevices = Item_MenuContext.GetElement(_VM.Item_RemovableDevices);
+                //AT Item_MenuContext = new AT().GetElement(VM.Menu_Context);
+                //AT Item_RemovableDevices = Item_MenuContext.GetElement(VM.Item_RemovableDevices);
+                AT Item_RemovableDevices = new AT().GetElement(VM.Item_RemovableDevices);
                 Item_RemovableDevices.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
                 UtilTime.WaitTime(0.5);
-               // AT Item_MP860 = new AT().GetElement(_VM.H500M);
-                AT Item_MP860 = new AT().GetElement(_VM.Item_MP860);
-                Item_MP860.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
+                AT Item_Target = new AT().GetElement(Name: deviceNameVM, TreeScope: AT.TreeScope.Descendants, ControlType: AT.ControlType.MenuItem);
+                Item_Target.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
                 UtilTime.WaitTime(1);
                 AT Item_Con = null;
                 try
                 {
-                    Item_Con = new AT().GetElement(_VM.Item_Connect);
+                    Item_Con = new AT().GetElement(VM.Item_Connect);
                 }
                 catch (Exception)
                 {
                     try
                     {
-                        Item_Con = new AT().GetElement(_VM.Item_Disconnect);
+                        Item_Con = new AT().GetElement(VM.Item_Disconnect);
                     }
                     catch (Exception)
                     {
@@ -115,7 +118,7 @@ namespace OpenIt.Project.Portal
                     _Portal.WriteConsoleTitle(this.launchTimes, $"Waiting for connecting/disconnecting. ({timeout}s)", timeout);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 
             }

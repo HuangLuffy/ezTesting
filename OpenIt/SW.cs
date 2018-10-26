@@ -80,8 +80,9 @@ namespace OpenIt
         public void Initialize()
         {
             UtilFolder.DeleteDirectory(this.ImagePath);
-            UtilTime.WaitTime(1);
+            UtilTime.WaitTime(0.5);
             UtilFolder.CreateDirectory(this.ImagePath);
+            UtilProcess.KillProcessByName(this.SwProcessName);
             //try
             //{
 
@@ -90,9 +91,6 @@ namespace OpenIt
             //catch (Exception)
             //{
             //}    
-
-            UtilProcess.KillProcessByName(this.SwProcessName);
-            UtilTime.WaitTime(1);
         }
     }
 }

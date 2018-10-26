@@ -9,39 +9,54 @@ namespace OpenIt.Project.Portal
 {
     public class VM
     {
-        public ATElementStruct Tab_TestVM = new ATElementStruct() {
+        public static ATElementStruct Tab_TestVM = new ATElementStruct() {
             ClassName = "CNoFlickerButton"
         };
-        public ATElementStruct Window_VM = new ATElementStruct()
+        public static ATElementStruct Window_VM = new ATElementStruct()
         {
             ClassName = "VMUIFrame"
         };
-        public ATElementStruct Item_RemovableDevices = new ATElementStruct()
+        public static ATElementStruct Item_RemovableDevices = new ATElementStruct()
         {
             Name = "Removable Devices"
         };
-        public ATElementStruct H500M = new ATElementStruct()
+        public static ATElementStruct Item_H500M = new ATElementStruct()
         {
-            //Name = "Logitech USB Optical Mouse"
             Name = "H500M"
         };
-        public ATElementStruct Item_MM830 = new ATElementStruct()
+        public static ATElementStruct Item_MP750 = new ATElementStruct()
+        {
+            Name = "RPBU"
+        };
+        public static ATElementStruct Item_LogitechUSBOpticalMouse = new ATElementStruct()
+        {
+            Name = "Logitech USB Optical Mouse"
+        };
+        public static ATElementStruct Item_MM830 = new ATElementStruct()
         {
             Name = "MM830"
         };
-        public ATElementStruct Item_MP860 = new ATElementStruct()
+        public static ATElementStruct Item_MH752 = new ATElementStruct()
+        {
+            Name = "MH752"
+        };
+        public static ATElementStruct Item_MK850 = new ATElementStruct()
+        {
+            Name = "Gaming Keyboard MK850"
+        };
+        public static ATElementStruct Item_MP860 = new ATElementStruct()
         {
             Name = "RGB Mousepad"
         };
-        public ATElementStruct Item_Connect = new ATElementStruct()
+        public static ATElementStruct Item_Connect = new ATElementStruct()
         {
             Name = "Connect (Disconnect from Host)"
         };
-        public ATElementStruct Item_Disconnect = new ATElementStruct()
+        public static ATElementStruct Item_Disconnect = new ATElementStruct()
         {
             Name = "Disconnect (Connect to host)"
         };
-        public ATElementStruct Menu_Context = new ATElementStruct()
+        public static ATElementStruct Menu_Context = new ATElementStruct()
         {
             Name = "Context"
             //Name = "上下文"

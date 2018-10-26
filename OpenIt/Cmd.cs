@@ -9,24 +9,24 @@ namespace OpenIt
     public class Cmd
     {
         public static string OPTION_SHOW_MENU_AGAIN = "Show Menu Again";
-        public string[] WriteOptions(string[] options, bool clear = false, bool lineUpInNumber = true)
+        public static string OPTION_BACK = "Back";
+        public static string STRING_CONNECTOR = " .";
+        public List<string> WriteOptions(List<string> options, bool clear = false, bool lineUpInNumber = true)
         {
+            List<string> t = new List<string>();
             if (clear)
             {
                 Console.Clear();
             }
-            var a = options.ToList();
-            a.Add(OPTION_SHOW_MENU_AGAIN);
-            options = a.ToArray();
-            for (int i = 1; i <= options.Length; i++)
+            for (int i = 1; i <= options.Count; i++)
             {
                 if (lineUpInNumber)
                 {
-                    options[i - 1] = $"{ i.ToString()}. {options[i - 1]}";
+                    t.Add($"{ i.ToString()}{ STRING_CONNECTOR }{options[i - 1]}");
                 }
-                Console.WriteLine(options[i - 1]);
+                Console.WriteLine(t[i - 1]);
             }
-            return options;
+            return t;
         }
     }
 }
