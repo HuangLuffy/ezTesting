@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLib.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,15 @@ namespace OpenIt.Project.Portal
     {
         public static string OPTION_LAUNCH_TEST = "Launch Test";
         public static string OPTION_PLUGIN_OUT_TEST = "PlugInOut Test";
-        public static string OPTION_PLUGIN_OUT_Server = "PlugInOut Server";
+        public static string OPTION_PLUGIN_OUT_SERVER = "PlugInOut Server";
 
-        public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_Server };
+        public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER };
 
         public List<string> Options_Devices_Cmd = new List<string> { VM.Item_MM830.Name, VM.Item_MP860.Name, VM.Item_MK850.Name, VM.Item_MH752.Name, VM.Item_MP750.Name };
 
         PortalTestActions _PortalTestActions = new PortalTestActions();
+
+
         public void Flow_PlugInOutTest()
         {
             _PortalTestActions.LaunchSW();

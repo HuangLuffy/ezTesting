@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenIt
-{
+{//            Dictionary<string, Func<object>> a = new Dictionary<string, Func<object>>();
     public class TestIt
     {
         PortalTestFlows _PortalTestFlows = new PortalTestFlows();
@@ -39,21 +39,25 @@ namespace OpenIt
                 }  
             }
         }
+       private bool IsTestExisted(string testName, string selectedNum, string loopName)
+       {
+            return $"{selectedNum.Trim()}{Cmd.STRING_CONNECTOR}{testName}".Equals(loopName);
+       }
         private bool TestMatcher(string selected, List<string> options)
         {
             for (int i = 0; i < options.Count; i++)
             {
-                if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{PortalTestFlows.OPTION_LAUNCH_TEST}".Equals(options[i]))
+                if (this.IsTestExisted(PortalTestFlows.OPTION_LAUNCH_TEST, selected, options[i]))
                 {
                     _PortalTestFlows.Flow_LaunchTest();
                     return true;
                 }
-                else if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{PortalTestFlows.OPTION_PLUGIN_OUT_TEST}".Equals(options[i]))
+                else if (this.IsTestExisted(PortalTestFlows.OPTION_PLUGIN_OUT_TEST, selected, options[i]))
                 {
                     _PortalTestFlows.Flow_PlugInOutTest();
                     return true;
                 }
-                else if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{PortalTestFlows.OPTION_PLUGIN_OUT_Server}".Equals(options[i]))
+                else if (this.IsTestExisted(PortalTestFlows.OPTION_PLUGIN_OUT_SERVER, selected, options[i]))
                 {  
                     string name = "";
                     while (name.Equals(""))
@@ -67,7 +71,7 @@ namespace OpenIt
                     _PortalTestFlows.Flow_PlugInOutServer(name);
                     return true;
                 }
-                else if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{Cmd.OPTION_SHOW_MENU_AGAIN}".Equals(options[i]))
+                else if (this.IsTestExisted(Cmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
                 {
                     _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
                     return false;
@@ -81,30 +85,30 @@ namespace OpenIt
             string selected = Console.ReadLine();
             for (int i = 0; i < options.Count; i++)
             {
-                if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{VM.Item_MH752.Name}".Equals(options[i]))
+                if (this.IsTestExisted(VM.Item_MH752.Name, selected, options[i]))
                 {
                     return VM.Item_MH752.Name;
                 }
-                else if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{VM.Item_MK850.Name}".Equals(options[i]))
+                else if (this.IsTestExisted(VM.Item_MK850.Name, selected, options[i]))
                 {
                     _PortalTestFlows.Flow_PlugInOutTest();
                     return VM.Item_MK850.Name;
                 }
-                else if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{VM.Item_MM830.Name}".Equals(options[i]))
+                else if (this.IsTestExisted(VM.Item_MM830.Name, selected, options[i]))
                 {
                     List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
                     return VM.Item_MM830.Name;
                 }
-                else if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{VM.Item_MP860.Name}".Equals(options[i]))
+                else if (this.IsTestExisted(VM.Item_MP860.Name, selected, options[i]))
                 {
                     List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
                     return VM.Item_MP860.Name;
                 }
-                else if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{Cmd.OPTION_SHOW_MENU_AGAIN}".Equals(options[i]))
+                else if (this.IsTestExisted(Cmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
                 {
                     _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
                 }
-                else if ($"{selected.Trim()}{Cmd.STRING_CONNECTOR}{Cmd.OPTION_BACK}".Equals(options[i]))
+                else if (this.IsTestExisted(Cmd.OPTION_BACK, selected, options[i]))
                 {
                     _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
                     return Cmd.OPTION_BACK;
