@@ -6,25 +6,24 @@ using System.Threading.Tasks;
 
 namespace OpenIt.Project.Portal
 {
-    public class PortalObj
+    public class PortalObj : ABSSWObj
     {
         //private string name_MainWidow;
         //private string btn_CloseMainWindow;
         ////Personality
         //private string btn_Ok_PlugOut;
 
-        public string Name_MainWidow
+        public override string Name_MainWidow
         {
             get { return "PORTAL"; }
-            //set { name_MainWidow = value; }
         }
-        public string ClassName_MainWidow
+        public override string ClassName_MainWidow
         {
             get { return "Qt5QWindowIcon"; }
             //set { name_MainWidow = value; }
         }
         
-        public string Btn_CloseMainWindow
+        public override string Btn_CloseMainWindow
         {
             get { return "sw_close"; }
         }
@@ -34,9 +33,11 @@ namespace OpenIt.Project.Portal
             get { return "plugout_ok"; }
         }
 
-        public string Name_CrashMainWidow
+        public override string Name_CrashMainWidow
         {
             get { return "PORTAL.exe"; }
         }
+
+ 
     }
 }

@@ -1,4 +1,6 @@
-﻿using CommonLib.Util;
+﻿using ATLib;
+using CommonLib.Util;
+using OpenIt.Project;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +12,11 @@ namespace OpenIt
 {
     public class SW
     {
+        public ABSSWObj Obj;
+        protected AT MainWindow_SW = null;
+        protected int Timeout { get; set; }
+        public long LaunchTimes { get; set; }
+
         public string LogPath
         {
             get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log"); }

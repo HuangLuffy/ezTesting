@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OpenIt.Project.MasterPlus
 {
-    public class MasterPlus :  SW
+    public class MasterPlus : SWCommonActions
     {
         public MasterPlus()
         {

@@ -16,9 +16,9 @@ namespace XunitTest.Handler
 {
     public class TestStepHandler : TestStep
     {
-        private string folderNameProject = "";
-        private string folderNameTest = "";
-        private string folderNameScreenshots = "Shots";
+        //private string folderNameProject = "";
+        //private string folderNameTest = "";
+        //private string folderNameScreenshots = "Shots";
 
         private bool needToBlockAllTests = false;
         private string pathReportFile = "";

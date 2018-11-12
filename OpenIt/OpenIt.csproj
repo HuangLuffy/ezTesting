@@ -44,13 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmd.cs" />
+    <Compile Include="Project\ABSSWObj.cs" />
     <Compile Include="Project\MasterPlus\MasterPlus.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusObj.cs" />
     <Compile Include="Project\Portal\PortalTestFlows.cs" />
     <Compile Include="Project\Portal\PortalObj.cs" />
     <Compile Include="Project\Portal\PortalTestActions.cs" />
     <Compile Include="Project\Portal\VMObj.cs" />
-    <Compile Include="Project\TestApp.cs" />
+    <Compile Include="Project\SWCommonActions.cs" />
     <Compile Include="TestIt.cs" />
     <Compile Include="Project\Portal\Portal.cs" />
     <Compile Include="Program.cs" />
