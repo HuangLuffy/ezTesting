@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace OpenIt.Project.MasterPlus
 {
-    public class MasterPlus : SWCommonActions
+    public class MasterPlus : SW
     {
         public MasterPlus()
         {
             this.SwLnkPath = @"C:\Users\Public\Desktop\MasterPlus.lnk";
-            this.SwName = "PORTAL";
-            this.SwProcessName = "PORTAL";
+            this.SwName = "MasterPlus";
+            this.SwProcessName = "MasterPlusApp";
         }
     }
 }

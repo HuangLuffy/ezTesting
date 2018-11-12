@@ -58,10 +58,6 @@ namespace OpenIt.Project
                 Timeout = 3;
                 this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
                 UtilTime.WaitTime(3);
-                //if (UtilProcess.IsProcessExistedByName(_Portal.SwProcessName))
-                //{
-                //    _Portal.HandleStepResult(Portal.Log.PROCESSSTILLEXISTS, launchTimes);
-                //}
             }
             catch (Exception)
             {

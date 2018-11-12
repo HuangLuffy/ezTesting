@@ -28,5 +28,9 @@ namespace OpenIt
             }
             return t;
         }
+        public void Clear()
+        {
+            Console.Clear();
+        }
     }
 }

@@ -70,7 +70,7 @@ namespace OpenIt
         public void Initialize()
         {
             UtilFolder.DeleteDirectory(this.ImagePath);
-            UtilTime.WaitTime(0.5);
+            //UtilTime.WaitTime(0.5);
             UtilFolder.CreateDirectory(this.ImagePath);
             UtilProcess.KillProcessByName(this.SwProcessName);
             //try

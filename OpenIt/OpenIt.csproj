@@ -46,7 +46,9 @@
     <Compile Include="Cmd.cs" />
     <Compile Include="Project\ABSSWObj.cs" />
     <Compile Include="Project\MasterPlus\MasterPlus.cs" />
+    <Compile Include="Project\MasterPlus\MasterPlusTestActions.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusObj.cs" />
+    <Compile Include="Project\MasterPlus\MasterPlusTestFlows.cs" />
     <Compile Include="Project\Portal\PortalTestFlows.cs" />
     <Compile Include="Project\Portal\PortalObj.cs" />
     <Compile Include="Project\Portal\PortalTestActions.cs" />

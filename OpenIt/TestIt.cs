@@ -1,5 +1,6 @@
 ﻿using ATLib;
 using CommonLib.Util;
+using OpenIt.Project.MasterPlus;
 using OpenIt.Project.Portal;
 using System;
 using System.Collections.Generic;
@@ -9,41 +10,90 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenIt
-{//            Dictionary<string, Func<object>> a = new Dictionary<string, Func<object>>();
+{
     public class TestIt
     {
-        PortalTestFlows _PortalTestFlows = new PortalTestFlows();
+        public static string OPTION_MasterPlus = "MasterPlus";
+        public static string OPTION_PORTAL = "PORTAL";
+
+        public List<string> Options_Projects = new List<string> { OPTION_PORTAL, OPTION_MasterPlus };
+
+        PortalTestFlows _PortalTestFlows;
+        MasterPlusTestFlows _MasterPlusTestFlows;
+
         Cmd _CMD = new Cmd();
         public void Run()
         {
-            _PortalTestFlows.Options_Cmd.Add(Cmd.OPTION_SHOW_MENU_AGAIN);
-            _PortalTestFlows.Options_Devices_Cmd.Add(Cmd.OPTION_SHOW_MENU_AGAIN);
-            _PortalTestFlows.Options_Devices_Cmd.Add(Cmd.OPTION_BACK);
-            List<string> testOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
+            List<string> projectOptions = _CMD.WriteOptions(Options_Projects);
             while (true)
             {
                 try
                 {
                     string s = Console.ReadLine();
-                    bool result = this.TestMatcher(s, testOptions);
-                    if (result)
+                    bool? result = this.ProjectMatcher(s, projectOptions);
+                    if (result == true)
                     {
-                        Console.Title += " >>>>> Tested Done! PASS";
+                        Console.WriteLine (" >>>>>>>>>>>>>> Tested Done! PASS");
                         return;
+                    }
+                    projectOptions = _CMD.WriteOptions(Options_Projects, true);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"{ex.Message} >>>>>>>>>>>>>> Tested Done! PASS");
+                    return;
+                }
+            }
+        }
+        public bool MasterPlusTestRun()
+        {
+            _MasterPlusTestFlows.Options_Cmd.Add(Cmd.OPTION_SHOW_MENU_AGAIN);
+            _MasterPlusTestFlows.Options_Cmd.Add(Cmd.OPTION_BACK);
+            List<string> testOptions = _CMD.WriteOptions(_MasterPlusTestFlows.Options_Cmd);
+            while (true)
+            {
+                try
+                {
+                    string s = Console.ReadLine();
+                    bool? result = this.MasterPlusTestMatcher(s, testOptions);
+                    if (result == true)
+                    {
+                        return true;
+                    }
+                    else if (result == null)
+                    {
+                        return false;
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.Title = ex.Message;
-                    return;
-                }  
+                }
             }
         }
-       private bool IsTestExisted(string testName, string selectedNum, string loopName)
-       {
-            return $"{selectedNum.Trim()}{Cmd.STRING_CONNECTOR}{testName}".Equals(loopName);
-       }
-        private bool TestMatcher(string selected, List<string> options)
+        
+        private bool? MasterPlusTestMatcher(string selected, List<string> options)
+        {
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (this.IsTestExisted(PortalTestFlows.OPTION_LAUNCH_TEST, selected, options[i]))
+                {
+                    this._MasterPlusTestFlows.Flow_LaunchTest();
+                    return true;
+                }
+                else if (this.IsTestExisted(Cmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
+                {
+                    _CMD.WriteOptions(this._MasterPlusTestFlows.Options_Cmd);
+                    return false;
+                }
+                else if (this.IsTestExisted(Cmd.OPTION_BACK, selected, options[i]))
+                {
+                    return null;
+                }
+            }
+            return false;
+        }
+        private bool PortalTestMatcher(string selected, List<string> options)
         {
             for (int i = 0; i < options.Count; i++)
             {
@@ -94,14 +144,19 @@ namespace OpenIt
                     _PortalTestFlows.Flow_PlugInOutTest();
                     return VMObj.Item_MK850.Name;
                 }
+                else if (this.IsTestExisted(VMObj.Item_MP750.Name, selected, options[i]))
+                {
+                    //List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
+                    return VMObj.Item_MP750.Name;
+                }
                 else if (this.IsTestExisted(VMObj.Item_MM830.Name, selected, options[i]))
                 {
-                    List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
+                    //List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
                     return VMObj.Item_MM830.Name;
                 }
                 else if (this.IsTestExisted(VMObj.Item_MP860.Name, selected, options[i]))
                 {
-                    List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
+                    //List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
                     return VMObj.Item_MP860.Name;
                 }
                 else if (this.IsTestExisted(Cmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
@@ -115,6 +170,54 @@ namespace OpenIt
                 }
             }
             return "";
+        }
+        public bool PortalTestRun()
+        {
+            _PortalTestFlows.Options_Cmd.Add(Cmd.OPTION_SHOW_MENU_AGAIN);
+            _PortalTestFlows.Options_Devices_Cmd.Add(Cmd.OPTION_SHOW_MENU_AGAIN);
+            _PortalTestFlows.Options_Devices_Cmd.Add(Cmd.OPTION_BACK);
+            List<string> testOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
+            while (true)
+            {
+                try
+                {
+                    string s = Console.ReadLine();
+                    bool? result = this.PortalTestMatcher(s, testOptions);
+                    if (result == true)
+                    {
+                        return true;
+                    }
+                    else if (result == null)
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Title = ex.Message;
+                }
+            }
+        }
+        private bool? ProjectMatcher(string selected, List<string> options)
+        {
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (this.IsTestExisted(TestIt.OPTION_MasterPlus, selected, options[i]))
+                {
+                    this._MasterPlusTestFlows = new MasterPlusTestFlows();
+                    return this.MasterPlusTestRun();
+                }
+                else if (this.IsTestExisted(TestIt.OPTION_PORTAL, selected, options[i]))
+                {
+                    this._PortalTestFlows = new PortalTestFlows();
+                    return this.PortalTestRun();
+                }
+            }
+            return null;
+        }
+        private bool IsTestExisted(string testName, string selectedNum, string loopName)
+        {
+            return $"{selectedNum.Trim()}{Cmd.STRING_CONNECTOR}{testName}".Equals(loopName);
         }
     }
 }
