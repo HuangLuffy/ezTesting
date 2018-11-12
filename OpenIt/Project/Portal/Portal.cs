@@ -8,13 +8,13 @@ namespace OpenIt.Project.Portal
 {
     public class Portal : SW
     {
-        public PortalUIA UIA = new PortalUIA();
+        public PortalObj UIA = new PortalObj();
         public Portal()
         {
             this.SwLnkPath = @"C:\Program Files (x86)\CoolerMaster\PORTAL\PORTAL.exe";
             this.SwName = "PORTAL";
             this.SwProcessName = "PORTAL";
-            this.MainWindowName = "PORTAL";
+            //this.MainWindowName = "PORTAL";
         }
     }
 }

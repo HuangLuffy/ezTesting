@@ -85,24 +85,24 @@ namespace OpenIt
             string selected = Console.ReadLine();
             for (int i = 0; i < options.Count; i++)
             {
-                if (this.IsTestExisted(VM.Item_MH752.Name, selected, options[i]))
+                if (this.IsTestExisted(VMObj.Item_MH752.Name, selected, options[i]))
                 {
-                    return VM.Item_MH752.Name;
+                    return VMObj.Item_MH752.Name;
                 }
-                else if (this.IsTestExisted(VM.Item_MK850.Name, selected, options[i]))
+                else if (this.IsTestExisted(VMObj.Item_MK850.Name, selected, options[i]))
                 {
                     _PortalTestFlows.Flow_PlugInOutTest();
-                    return VM.Item_MK850.Name;
+                    return VMObj.Item_MK850.Name;
                 }
-                else if (this.IsTestExisted(VM.Item_MM830.Name, selected, options[i]))
+                else if (this.IsTestExisted(VMObj.Item_MM830.Name, selected, options[i]))
                 {
                     List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
-                    return VM.Item_MM830.Name;
+                    return VMObj.Item_MM830.Name;
                 }
-                else if (this.IsTestExisted(VM.Item_MP860.Name, selected, options[i]))
+                else if (this.IsTestExisted(VMObj.Item_MP860.Name, selected, options[i]))
                 {
                     List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
-                    return VM.Item_MP860.Name;
+                    return VMObj.Item_MP860.Name;
                 }
                 else if (this.IsTestExisted(Cmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
                 {

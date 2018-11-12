@@ -13,17 +13,18 @@ namespace OpenIt.Project.Portal
         public static string OPTION_PLUGIN_OUT_TEST = "PlugInOut Test";
         public static string OPTION_PLUGIN_OUT_SERVER = "PlugInOut Server";
 
+        public static long TEST_TIMES = 99999999;
+
         public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER };
 
-        public List<string> Options_Devices_Cmd = new List<string> { VM.Item_MM830.Name, VM.Item_MP860.Name, VM.Item_MK850.Name, VM.Item_MH752.Name, VM.Item_MP750.Name };
+        public List<string> Options_Devices_Cmd = new List<string> { VMObj.Item_MM830.Name, VMObj.Item_MP860.Name, VMObj.Item_MK850.Name, VMObj.Item_MH752.Name, VMObj.Item_MP750.Name };
 
         PortalTestActions _PortalTestActions = new PortalTestActions();
-
 
         public void Flow_PlugInOutTest()
         {
             _PortalTestActions.LaunchSW();
-            for (int i = 1; i < 99999999; i++)
+            for (int i = 1; i < TEST_TIMES; i++)
             {
                 _PortalTestActions.LaunchTimes = i;
                 _PortalTestActions.IsSWCrash(1,3);
@@ -31,7 +32,7 @@ namespace OpenIt.Project.Portal
         }
         public void Flow_PlugInOutServer(string deviceNameVM)
         {
-            for (int i = 1; i < 99999999; i++)
+            for (int i = 1; i < TEST_TIMES; i++)
             {
                 _PortalTestActions.LaunchTimes = i;
                 _PortalTestActions.VMPlugOutDevice(deviceNameVM);
@@ -39,7 +40,7 @@ namespace OpenIt.Project.Portal
         }
         public void Flow_LaunchTest()
         {
-            for (int i = 1; i < 99999999; i++)
+            for (int i = 1; i < TEST_TIMES; i++)
             {
                 _PortalTestActions.LaunchTimes = i;
                 _PortalTestActions.LaunchSW();

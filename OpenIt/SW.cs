@@ -10,51 +10,34 @@ namespace OpenIt
 {
     public class SW
     {
-        private string logPath;
         public string LogPath
         {
             get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log"); }
         }
-        private string imagePath;
+
         public string ImagePath
         {
             get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }
         }
-        private string swName;
-        public string SwName
-        {
-            get { return swName; }
-            set { swName = value; }
-        }
-        private string swProcessName;
-        public string SwProcessName
-        {
-            get { return swProcessName; }
-            set { swProcessName = value; }
-        }
-        private string swLnkPath;
-        public string SwLnkPath
-        {
-            get { return swLnkPath; }
-            set { swLnkPath = value; }
-        }
+
+        public string SwName { get; set; }
+        public string SwProcessName { get; set; }
+        public string SwLnkPath { get; set; }
+
         public struct Result
         {
             public const string FAIL = "Failed";
             public const string PASS = "Passed";
         }
-        public struct Log
+        public struct msg
         {
             public const string PROCESSSTILLEXISTS = "This SW's process still exists after closing it.";
             public const string NOITEMSINUI = "No Items in UI.";
             public const string CRASH = "Crashed.";
         }
-        private string mainWindowName;
-        public string MainWindowName
-        {
-            get { return mainWindowName; }
-            set { mainWindowName = value; }
-        }
+
+        //public string MainWindowName { get; set; }
+
         public void HandleStepResult(string comment, long num)
         {
             if (comment != "")

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OpenIt.Project.Portal
 {
-    public class VM
+    public class VMObj
     {
         public static ATElementStruct Tab_TestVM = new ATElementStruct() {
             ClassName = "CNoFlickerButton"

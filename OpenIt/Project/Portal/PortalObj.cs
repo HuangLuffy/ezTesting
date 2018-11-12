@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OpenIt.Project.Portal
 {
-    public class PortalUIA
+    public class PortalObj
     {
         //private string name_MainWidow;
         //private string btn_CloseMainWindow;
