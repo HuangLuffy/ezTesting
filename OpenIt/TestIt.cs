@@ -140,7 +140,7 @@ namespace OpenIt
                     {
                         _PortalTestFlows.Options_Devices_Cmd.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
                         _PortalTestFlows.Options_Devices_Cmd.Add(UtilCmd.OPTION_BACK);
-                        name = this.DeviceMatcher();
+                        name = this.DeviceMatcher(_CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd));
                         if (UtilCmd.OPTION_BACK.Equals(name))
                         {
                             _PortalTestFlows.Options_Devices_Cmd.Remove(UtilCmd.OPTION_SHOW_MENU_AGAIN);
@@ -156,13 +156,16 @@ namespace OpenIt
                     _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
                     return false;
                 }
+                else if (this.IsTestExisted(UtilCmd.OPTION_BACK, selected, options[i]))
+                {
+                    return null;
+                }
             }
             return false;
         }
 
-        private string DeviceMatcher()
+        private string DeviceMatcher(List<string> options)
         {
-            List<string> options = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
             string selected = Console.ReadLine();
             for (int i = 0; i < options.Count; i++)
             {
