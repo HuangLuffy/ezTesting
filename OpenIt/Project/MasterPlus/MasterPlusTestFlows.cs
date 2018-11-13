@@ -13,15 +13,15 @@ namespace OpenIt.Project.MasterPlus
 
         public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST };
 
-        MasterPlusTestActions _PortalTestActions = new MasterPlusTestActions();
+        MasterPlusTestActions _MasterPlusTestActions = new MasterPlusTestActions();
 
         public void Flow_LaunchTest()
         {
             for (int i = 1; i < TEST_TIMES; i++)
             {
-                _PortalTestActions.LaunchTimes = i;
-                _PortalTestActions.LaunchSW();
-                _PortalTestActions.CloseSW();
+                _MasterPlusTestActions.LaunchTimes = i;
+                _MasterPlusTestActions.LaunchSW();
+                _MasterPlusTestActions.CloseSW();
             }
         }
     }

@@ -24,9 +24,9 @@ namespace OpenIt.Project.MasterPlus
                 this.MainWindow_SW = new AT().GetElement(ATElementStruct: MasterPlusObj.MainWindow_SW, Timeout: this.Timeout);
                 UtilTime.WaitTime(2);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                this.HandleStepResult(SW.msg.CRASH, this.LaunchTimes);
+                this.HandleStepResult(ex.Message, this.LaunchTimes);
             }
         }
         public void CloseSW()
@@ -43,9 +43,9 @@ namespace OpenIt.Project.MasterPlus
                 //    _Portal.HandleStepResult(Portal.Log.PROCESSSTILLEXISTS, launchTimes);
                 //}
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                this.HandleStepResult(ex.Message, this.LaunchTimes);
             }
         }
     }
