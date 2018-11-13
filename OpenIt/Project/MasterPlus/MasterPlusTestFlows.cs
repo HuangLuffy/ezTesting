@@ -14,7 +14,9 @@ namespace OpenIt.Project.MasterPlus
         public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST };
 
         MasterPlusTestActions _MasterPlusTestActions = new MasterPlusTestActions();
-
+        /// <summary>
+        /// haha
+        /// </summary>
         public void Flow_LaunchTest()
         {
             for (int i = 1; i < TEST_TIMES; i++)
