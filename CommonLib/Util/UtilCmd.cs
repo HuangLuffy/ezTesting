@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenIt
+namespace CommonLib.Util
 {
-    public class Cmd
+    public class UtilCmd
     {
         public static string OPTION_SHOW_MENU_AGAIN = "Show Menu Again";
         public static string OPTION_BACK = "Back";

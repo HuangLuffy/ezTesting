@@ -21,7 +21,7 @@ namespace OpenIt
         PortalTestFlows _PortalTestFlows;
         MasterPlusTestFlows _MasterPlusTestFlows;
 
-        Cmd _CMD = new Cmd();
+        UtilCmd _CMD = new UtilCmd();
         public void Run()
         {
             List<string> projectOptions = _CMD.WriteOptions(Options_Projects);
@@ -47,8 +47,8 @@ namespace OpenIt
         }
         public bool MasterPlusTestRun()
         {
-            _MasterPlusTestFlows.Options_Cmd.Add(Cmd.OPTION_SHOW_MENU_AGAIN);
-            _MasterPlusTestFlows.Options_Cmd.Add(Cmd.OPTION_BACK);
+            _MasterPlusTestFlows.Options_Cmd.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
+            _MasterPlusTestFlows.Options_Cmd.Add(UtilCmd.OPTION_BACK);
             List<string> testOptions = _CMD.WriteOptions(_MasterPlusTestFlows.Options_Cmd);
             while (true)
             {
@@ -81,12 +81,12 @@ namespace OpenIt
                     this._MasterPlusTestFlows.Flow_LaunchTest();
                     return true;
                 }
-                else if (this.IsTestExisted(Cmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
+                else if (this.IsTestExisted(UtilCmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
                 {
                     _CMD.WriteOptions(this._MasterPlusTestFlows.Options_Cmd);
                     return false;
                 }
-                else if (this.IsTestExisted(Cmd.OPTION_BACK, selected, options[i]))
+                else if (this.IsTestExisted(UtilCmd.OPTION_BACK, selected, options[i]))
                 {
                     return null;
                 }
@@ -113,7 +113,7 @@ namespace OpenIt
                     while (name.Equals(""))
                     {
                         name = this.DeviceMatcher();
-                        if (Cmd.OPTION_BACK.Equals(name))
+                        if (UtilCmd.OPTION_BACK.Equals(name))
                         {
                             return false;
                         }
@@ -121,7 +121,7 @@ namespace OpenIt
                     _PortalTestFlows.Flow_PlugInOutServer(name);
                     return true;
                 }
-                else if (this.IsTestExisted(Cmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
+                else if (this.IsTestExisted(UtilCmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
                 {
                     _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
                     return false;
@@ -159,23 +159,23 @@ namespace OpenIt
                     //List<string> deviceOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
                     return VMObj.Item_MP860.Name;
                 }
-                else if (this.IsTestExisted(Cmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
+                else if (this.IsTestExisted(UtilCmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
                 {
                     _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
                 }
-                else if (this.IsTestExisted(Cmd.OPTION_BACK, selected, options[i]))
+                else if (this.IsTestExisted(UtilCmd.OPTION_BACK, selected, options[i]))
                 {
                     _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
-                    return Cmd.OPTION_BACK;
+                    return UtilCmd.OPTION_BACK;
                 }
             }
             return "";
         }
         public bool PortalTestRun()
         {
-            _PortalTestFlows.Options_Cmd.Add(Cmd.OPTION_SHOW_MENU_AGAIN);
-            _PortalTestFlows.Options_Devices_Cmd.Add(Cmd.OPTION_SHOW_MENU_AGAIN);
-            _PortalTestFlows.Options_Devices_Cmd.Add(Cmd.OPTION_BACK);
+            _PortalTestFlows.Options_Cmd.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
+            _PortalTestFlows.Options_Devices_Cmd.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
+            _PortalTestFlows.Options_Devices_Cmd.Add(UtilCmd.OPTION_BACK);
             List<string> testOptions = _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
             while (true)
             {
@@ -217,7 +217,7 @@ namespace OpenIt
         }
         private bool IsTestExisted(string testName, string selectedNum, string loopName)
         {
-            return $"{selectedNum.Trim()}{Cmd.STRING_CONNECTOR}{testName}".Equals(loopName);
+            return $"{selectedNum.Trim()}{UtilCmd.STRING_CONNECTOR}{testName}".Equals(loopName);
         }
     }
 }

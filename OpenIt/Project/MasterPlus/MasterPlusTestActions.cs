@@ -35,9 +35,9 @@ namespace OpenIt.Project.MasterPlus
             {
                 AT button_Close = this.MainWindow_SW.GetElement(ATElementStruct: MasterPlusObj.Btn_CloseMainWindow, TreeScope: AT.TreeScope.Descendants);
                 button_Close.DoClick();
-                Timeout = 3;
-                this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
-                UtilTime.WaitTime(3);
+                this.Timeout = 5;
+                this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing. ({this.Timeout}s)", this.Timeout);
+                UtilTime.WaitTime(this.Timeout);
                 //if (UtilProcess.IsProcessExistedByName(_Portal.SwProcessName))
                 //{
                 //    _Portal.HandleStepResult(Portal.Log.PROCESSSTILLEXISTS, launchTimes);
