@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OpenIt.Project
 {
-    public abstract class ABSSWObj
+    public abstract class AbsSWObj
     {
         public virtual string Name_MainWidow { get; }
         public virtual string ClassName_MainWidow { get; }

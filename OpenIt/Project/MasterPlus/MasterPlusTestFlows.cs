@@ -8,7 +8,7 @@ namespace OpenIt.Project.MasterPlus
 {
     public class MasterPlusTestFlows
     {
-        public static string OPTION_LAUNCH_TEST = "Launch Test";
+        public const string OPTION_LAUNCH_TEST = "Launch Test";
         public static long TEST_TIMES = 99999999;
 
         public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST };

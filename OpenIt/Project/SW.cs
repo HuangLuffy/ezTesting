@@ -12,7 +12,7 @@ namespace OpenIt
 {
     public class SW
     {
-        public ABSSWObj Obj;
+        public AbsSWObj Obj;
         protected AT MainWindow_SW = null;
         protected int Timeout { get; set; }
         public long LaunchTimes { get; set; }

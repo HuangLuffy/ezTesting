@@ -8,9 +8,9 @@ namespace CommonLib.Util
 {
     public class UtilCmd
     {
-        public static string OPTION_SHOW_MENU_AGAIN = "Show Menu Again";
-        public static string OPTION_BACK = "Back";
-        public static string STRING_CONNECTOR = " .";
+        public const string OPTION_SHOW_MENU_AGAIN = "Show Menu Again";
+        public const string OPTION_BACK = "Back";
+        public const string STRING_CONNECTOR = " .";
         public List<string> WriteOptions(List<string> options, bool clear = false, bool lineUpInNumber = true)
         {
             List<string> t = new List<string>();

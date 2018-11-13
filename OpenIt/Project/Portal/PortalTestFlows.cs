@@ -9,9 +9,9 @@ namespace OpenIt.Project.Portal
 {
     public class PortalTestFlows
     {
-        public static string OPTION_LAUNCH_TEST = "Launch Test";
-        public static string OPTION_PLUGIN_OUT_TEST = "PlugInOut Test";
-        public static string OPTION_PLUGIN_OUT_SERVER = "PlugInOut Server";
+        public const string OPTION_LAUNCH_TEST = "Launch Test";
+        public const string OPTION_PLUGIN_OUT_TEST = "PlugInOut Test";
+        public const string OPTION_PLUGIN_OUT_SERVER = "PlugInOut Server";
 
         public static long TEST_TIMES = 99999999;
 

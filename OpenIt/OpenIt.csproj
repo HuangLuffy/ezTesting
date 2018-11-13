@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Project\ABSSWObj.cs" />
+    <Compile Include="Project\AbsSWObj.cs" />
     <Compile Include="Project\MasterPlus\MasterPlus.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusTestActions.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusObj.cs" />
@@ -57,7 +57,7 @@
     <Compile Include="Project\Portal\Portal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SW.cs" />
+    <Compile Include="Project\SW.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
