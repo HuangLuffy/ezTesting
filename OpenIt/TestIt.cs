@@ -59,6 +59,15 @@ namespace OpenIt
                 if (this.IsTestExisted(TestIt.OPTION_MasterPlus, selected, options[i]))
                 {
                     this._MasterPlusTestFlows = new MasterPlusTestFlows();
+
+                    var DicFuncs = new Dictionary<string, System.Reflection.MethodInfo>();
+                    
+                    //DicFuncs.Add("2", (Action<string>)_PortalTestFlows.Flow_PlugInOutServer);
+                    Type _Type = this._MasterPlusTestFlows.GetType();
+                    DicFuncs.Add("1", _Type.GetMethods()[0]);
+                    DicFuncs["1"].Invoke(this._MasterPlusTestFlows, null);
+
+
                     return this.TestRun(_MasterPlusTestFlows.Options_Cmd, this.MasterPlusTestMatcher);
                 }
                 else if (this.IsTestExisted(TestIt.OPTION_PORTAL, selected, options[i]))
