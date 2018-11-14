@@ -22,11 +22,12 @@ namespace OpenIt.Project.MasterPlus
                 this.Timeout = 11;
                 this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for launching. ({this.Timeout}s)", this.Timeout);
                 this.MainWindow_SW = new AT().GetElement(ATElementStruct: MasterPlusObj.MainWindow_SW, Timeout: this.Timeout);
-                UtilTime.WaitTime(2);
+                UtilTime.WaitTime(4);
             }
             catch (Exception ex)
             {
                 this.HandleStepResult(ex.Message, this.LaunchTimes);
+                throw;
             }
         }
         public void CloseSW()
@@ -35,7 +36,7 @@ namespace OpenIt.Project.MasterPlus
             {
                 AT button_Close = this.MainWindow_SW.GetElement(ATElementStruct: MasterPlusObj.Btn_CloseMainWindow, TreeScope: AT.TreeScope.Descendants);
                 button_Close.DoClick();
-                this.Timeout = 5;
+                this.Timeout = 6;
                 this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing. ({this.Timeout}s)", this.Timeout);
                 UtilTime.WaitTime(this.Timeout);
                 //if (UtilProcess.IsProcessExistedByName(_Portal.SwProcessName))
@@ -46,6 +47,7 @@ namespace OpenIt.Project.MasterPlus
             catch (Exception ex)
             {
                 this.HandleStepResult(ex.Message, this.LaunchTimes);
+                throw;
             }
         }
     }
