@@ -11,6 +11,11 @@ namespace CommonLib.Util.os
 {
     public class UtilOS
     {
+        public struct Name {
+            public const string Win7 = "Win7";
+            public const string Win10 = "Win10";
+        }
+
         public static string GetOsIeVersion()
         {
             string name = "";
@@ -41,11 +46,11 @@ namespace CommonLib.Util.os
                     //try { name = Convert.ToString(mo["caption"]); }
                     //catch (exception) { name = const.name_os_caption_win7; }
                     name = Convert.ToString(mo["caption"]);
-                    if (name.IndexOf(" 7") != -1) name = "Win7";
+                    if (name.IndexOf(" 7") != -1) name = Name.Win7;
                     else if (name.IndexOf("xp") != -1) name = "XP";
                     else if (name.IndexOf(" 8 ") != -1) name = "Win8";
                     else if (name.IndexOf(" 8.1 ") != -1) name = "Win81";
-                    else if (name.IndexOf(" 10") != -1) name = "Win10";
+                    else if (name.IndexOf(" 10") != -1) name = Name.Win10;
                     else if (name.IndexOf("2003") != -1) name = "Win2003";
                     else if (name.IndexOf("2008") != -1) name = "Win2008";
                     else if (name.IndexOf("2012") != -1) name = "Win2012";

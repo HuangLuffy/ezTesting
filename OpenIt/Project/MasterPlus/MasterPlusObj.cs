@@ -1,4 +1,5 @@
 ﻿using ATLib;
+using CommonLib.Util.os;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,16 @@ namespace OpenIt.Project.MasterPlus
             Name = "Cooler Master.*",
             ClassName = "Qt5QWindowOwnDCIcon"
         };
-        public static ATElementStruct Btn_CloseMainWindow = new ATElementStruct()
+        public static ATElementStruct Btn_CloseMainWindow
         {
-            AutomationId = "Close",
-            ControlType = "Button"
-        };
+            get
+            {
+                if (UtilOS.GetOsVersion().Contains(UtilOS.Name.Win10))
+                {
+                    return new ATElementStruct() { AutomationId = "Close", ControlType = "Button" };
+                }
+                return new ATElementStruct() { Name = "Close", ControlType = "Button" };
+            }
+        }
     }
 }
