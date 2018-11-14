@@ -34,6 +34,7 @@ namespace OpenIt.Project.MasterPlus
         {
             try
             {
+                //this.MainWindow_SW.Spy();
                 AT button_Close = this.MainWindow_SW.GetElement(ATElementStruct: MasterPlusObj.Btn_CloseMainWindow, TreeScope: AT.TreeScope.Descendants);
                 button_Close.DoClick();
                 this.Timeout = 6;
