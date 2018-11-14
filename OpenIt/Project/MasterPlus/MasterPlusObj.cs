@@ -21,10 +21,15 @@ namespace OpenIt.Project.MasterPlus
             {
                 if (UtilOS.GetOsVersion().Contains(UtilOS.Name.Win10))
                 {
-                    return new ATElementStruct() { AutomationId = "Close", ControlType = "Button" };
+                    return new ATElementStruct() { AutomationId = "Close", ControlType = AT.ControlType.Button };
                 }
                 return new ATElementStruct() { Name = "Close", ControlType = "Button" };
             }
         }
+        public static ATElementStruct Dialog_WARNING = new ATElementStruct()
+        {
+            Name = "WARNING",
+            ControlType = AT.ControlType.TabItem
+        };
     }
 }
