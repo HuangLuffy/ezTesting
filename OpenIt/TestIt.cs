@@ -93,6 +93,7 @@ namespace OpenIt
                 catch (Exception ex)
                 {
                     Console.Title = ex.Message;
+                    throw;
                 }
             }
         }
