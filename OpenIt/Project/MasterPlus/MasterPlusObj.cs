@@ -26,6 +26,11 @@ namespace OpenIt.Project.MasterPlus
                 return new ATElementStruct() { Name = "Close", ControlType = AT.ControlType.Button };
             }
         }
+        public static ATElementStruct TabItem_OVERVIEW = new ATElementStruct()
+        {
+            Name = "OVERVIEW",
+            ControlType = AT.ControlType.TabItem
+        };
         public static ATElementStruct Dialog_WARNING = new ATElementStruct()
         {
             Name = "WARNING",

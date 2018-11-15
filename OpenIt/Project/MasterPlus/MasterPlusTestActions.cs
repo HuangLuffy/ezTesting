@@ -21,8 +21,9 @@ namespace OpenIt.Project.MasterPlus
                 UtilProcess.StartProcess(this.SwLnkPath);
                 this.Timeout = 11;
                 this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for launching. ({this.Timeout}s)", this.Timeout);
+                var TabItem_OVERVIEW = new AT().GetElement(ATElementStruct: MasterPlusObj.TabItem_OVERVIEW, Timeout: this.Timeout);
                 this.MainWindow_SW = new AT().GetElement(ATElementStruct: MasterPlusObj.MainWindow_SW, Timeout: this.Timeout);
-                UtilTime.WaitTime(4);
+                //UtilTime.WaitTime(4);
             }
             catch (Exception ex)
             {
