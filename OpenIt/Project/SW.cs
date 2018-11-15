@@ -10,32 +10,18 @@ using System.Threading.Tasks;
 
 namespace OpenIt
 {
-    public class SW
+    public class SW : AbsResult
     {
         public AbsSWObj Obj;
         protected AT MainWindow_SW = null;
         protected int Timeout { get; set; }
         public long LaunchTimes { get; set; }
 
-        public string LogPath
-        {
-            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log"); }
-        }
-
-        public string ImagePath
-        {
-            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }
-        }
-
         public string SwName { get; set; }
         public string SwProcessName { get; set; }
         public string SwLnkPath { get; set; }
 
-        public struct Result
-        {
-            public const string FAIL = "Failed";
-            public const string PASS = "Passed";
-        }
+
         public struct msg
         {
             public const string PROCESSSTILLEXISTS = "This SW's process still exists after closing it.";
@@ -43,21 +29,6 @@ namespace OpenIt
             public const string CRASH = "Crashed.";
         }
 
-        //public string MainWindowName { get; set; }
-
-        public void HandleStepResult(string comment, long num)
-        {
-            if (comment != "")
-            {
-                string tmp = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {Result.FAIL} - Num > [{num}]. Error > [{comment}]";
-                UtilCapturer.Capture(Path.Combine(this.ImagePath, num.ToString()));
-                UtilFile.WriteFile(Path.Combine(this.LogPath), tmp, true);
-                Console.WriteLine(tmp);
-                UtilProcess.KillProcessByName(this.SwProcessName);
-                UtilTime.WaitTime(2);
-            }
-
-        }
         public void WriteConsoleTitle(long launchTimes, string c, int timeout = 0)
         {
             Console.Title = launchTimes.ToString() + " | " + c;

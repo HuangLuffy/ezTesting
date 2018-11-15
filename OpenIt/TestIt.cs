@@ -1,5 +1,6 @@
 ﻿using ATLib;
 using CommonLib.Util;
+using OpenIt.Project;
 using OpenIt.Project.MasterPlus;
 using OpenIt.Project.Portal;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OpenIt
 {
-    public class TestIt
+    public class TestIt : AbsResult
     {
         public const string OPTION_MasterPlus = "MasterPlus";
         public const string OPTION_PORTAL = "PORTAL";
@@ -46,8 +47,7 @@ namespace OpenIt
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"{ex.Message} >>>>>>>>>>>>>> Tested Done! PASS");
-                    return;
+                    this.HandleWrongStepResult(ex.Message);
                 }
             }
         }
@@ -77,23 +77,15 @@ namespace OpenIt
             List<string> testOptions = _CMD.WriteOptions(options);
             while (true)
             {
-                try
+                string s = Console.ReadLine();
+                bool? result = func(s, testOptions);
+                if (result == true)
                 {
-                    string s = Console.ReadLine();
-                    bool? result = func(s, testOptions);
-                    if (result == true)
-                    {
-                        return true;
-                    }
-                    else if (result == null)
-                    {
-                        return false;
-                    }
+                    return true;
                 }
-                catch (Exception ex)
+                else if (result == null)
                 {
-                    Console.Title = ex.Message;
-                    throw;
+                    return false;
                 }
             }
         }

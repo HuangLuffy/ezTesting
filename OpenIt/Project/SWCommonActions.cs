@@ -29,7 +29,7 @@ namespace OpenIt.Project
             }
             catch (Exception)
             {
-                this.HandleStepResult(SW.msg.CRASH, this.LaunchTimes);
+                this.HandleWrongStepResult(SW.msg.CRASH, this.LaunchTimes);
             }
         }
 
@@ -45,7 +45,7 @@ namespace OpenIt.Project
             AT Crash_Window = new AT().GetElement(Name: this.Obj.Name_CrashMainWidow, Timeout: checkTime, returnNullWhenException: true);
             if (Crash_Window != null)
             {
-                this.HandleStepResult(SW.msg.CRASH, this.LaunchTimes);
+                this.HandleWrongStepResult(SW.msg.CRASH, this.LaunchTimes);
                 throw new Exception();
             }
         }

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Project\AbsResult.cs" />
     <Compile Include="Project\AbsSWObj.cs" />
     <Compile Include="Project\MasterPlus\MasterPlus.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusTestActions.cs" />
