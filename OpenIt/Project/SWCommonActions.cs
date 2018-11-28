@@ -25,11 +25,12 @@ namespace OpenIt.Project
                 this.Timeout = 11;
                 this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for launching. ({this.Timeout}s)", this.Timeout);
                 this.MainWindow_SW = new AT().GetElement(Name: this.Obj.Name_MainWidow, ClassName: this.Obj.ClassName_MainWidow, Timeout: this.Timeout);
+                //Qt5QWindowIcon
                 UtilTime.WaitTime(2);
             }
             catch (Exception)
             {
-                this.HandleWrongStepResult(SW.msg.CRASH, this.LaunchTimes);
+                this.HandleWrongStepResult("Cannot find App.", this.LaunchTimes);
             }
         }
 
@@ -63,7 +64,8 @@ namespace OpenIt.Project
                     Timeout = 3;
                     this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing2. ({Timeout}s)", Timeout);
                     button_Close = this.MainWindow_SW.GetElement(Name: this.Obj.Btn_CloseMainWindow, ControlType: AT.ControlType.Button, TreeScope: AT.TreeScope.Descendants);
-                    button_Close.DoClick();
+                    button_Close.DoClickWithNewThread();
+                    button_Close.DoClickPoint();
                     UtilTime.WaitTime(Timeout);
                 }
                 catch (Exception)
