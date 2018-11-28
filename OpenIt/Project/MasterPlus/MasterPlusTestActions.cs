@@ -15,7 +15,7 @@ namespace OpenIt.Project.MasterPlus
             this.Initialize();
         }
         public void LaunchSW()
-        {
+        { 
             UtilProcess.StartProcess(this.SwLnkPath);
             this.Timeout = 11;
             this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for launching. ({this.Timeout}s)", this.Timeout);

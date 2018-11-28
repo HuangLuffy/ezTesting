@@ -46,7 +46,7 @@ namespace OpenIt.Project
             if (Crash_Window != null)
             {
                 this.HandleWrongStepResult(SW.msg.CRASH, this.LaunchTimes);
-                throw new Exception();
+                throw new Exception(SW.msg.CRASH);
             }
         }
         public void CloseSW()
@@ -56,8 +56,21 @@ namespace OpenIt.Project
                 AT button_Close = this.MainWindow_SW.GetElement(Name: this.Obj.Btn_CloseMainWindow, ControlType: AT.ControlType.Button, TreeScope: AT.TreeScope.Descendants);
                 button_Close.DoClick();
                 Timeout = 3;
-                this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
-                UtilTime.WaitTime(3);
+                this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing1. ({Timeout}s)", Timeout);
+                UtilTime.WaitTime(Timeout);
+                try
+                {
+                    Timeout = 3;
+                    this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing2. ({Timeout}s)", Timeout);
+                    button_Close = this.MainWindow_SW.GetElement(Name: this.Obj.Btn_CloseMainWindow, ControlType: AT.ControlType.Button, TreeScope: AT.TreeScope.Descendants);
+                    button_Close.DoClick();
+                    UtilTime.WaitTime(Timeout);
+                }
+                catch (Exception)
+                {
+
+                }
+          
             }
             catch (Exception)
             {

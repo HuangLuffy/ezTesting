@@ -40,7 +40,7 @@ namespace OpenIt
                     bool? result = this.ProjectMatcher(s, projectOptions);
                     if (result == true)
                     {
-                        Console.WriteLine (" >>>>>>>>>>>>>> Tested Done! PASS");
+                        Console.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
                         return;
                     }
                     projectOptions = _CMD.WriteOptions(Options_Projects, true);
