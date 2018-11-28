@@ -22,7 +22,7 @@ namespace OpenIt.Project
             try
             {
                 UtilProcess.StartProcess(this.SwLnkPath);
-                this.Timeout = 11;
+                this.Timeout = 15;
                 this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for launching. ({this.Timeout}s)", this.Timeout);
                 this.MainWindow_SW = new AT().GetElement(Name: this.Obj.Name_MainWidow, ClassName: this.Obj.ClassName_MainWidow, Timeout: this.Timeout);
                 //Qt5QWindowIcon
