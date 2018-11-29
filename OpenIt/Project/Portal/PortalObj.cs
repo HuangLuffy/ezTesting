@@ -39,6 +39,12 @@ namespace OpenIt.Project.Portal
             get { return "PORTAL.exe"; }
         }
 
+        public static ATElementStruct Window_Main = new ATElementStruct()
+        {
+            Name = "PORTAL",
+            ClassName = "Qt5QWindowIcon"
+        };
+
         public static ATElementStruct TabItem_PROFILES = new ATElementStruct()
         {
             Name = "TAB_PROFILES",

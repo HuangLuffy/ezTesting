@@ -45,7 +45,7 @@ namespace OpenIt.Project
             }
             checkTime = 10;
             this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for checking crash. ({checkTime}s)", checkTime);
-            AT Crash_Window = new AT().GetElement(Name: this.Obj.Name_CrashMainWidow, Timeout: checkTime, returnNullWhenException: true);
+            AT Crash_Window = new AT().GetElement(Name: this.Obj.Name_CrashMainWidow, Timeout: checkTime, ReturnNullWhenException: true);
             if (Crash_Window != null)
             {
                 this.HandleWrongStepResult(SW.msg.CRASH, this.LaunchTimes);

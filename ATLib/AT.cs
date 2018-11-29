@@ -25,31 +25,47 @@ namespace ATLib
         {
             return new AT(AutomationElement.RootElement);
         }
+        public ATS GetElementsFromChild(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
+        {
+            return this.GetElements(ATElementStruct, Timeout, AT.TreeScope.Children, ReturnNullWhenException);
+        }
+        public ATS GetElementsFromDescendants(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
+        {
+            return this.GetElements(ATElementStruct, Timeout, AT.TreeScope.Descendants, ReturnNullWhenException);
+        }
+        public AT GetElementFromChild(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
+        {
+            return this.GetElement(ATElementStruct, Timeout, AT.TreeScope.Children, CheckEnabled, ReturnNullWhenException);
+        }
+        public AT GetElementFromDescendants(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
+        {
+            return this.GetElement(ATElementStruct, Timeout, AT.TreeScope.Descendants, CheckEnabled, ReturnNullWhenException);
+        }
+
         public ATS GetElements(ATElementStruct ATElementStruct, int Timeout = -1, string treeScope = AT.TreeScope.Children, bool ReturnNullWhenException = false)
         {
             return this.GetElements(treeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ReturnNullWhenException);
         }
-        public ATS GetElementsFromChild(ATElementStruct ATElementStruct, int Timeout = -1, bool IsEnabled = false, bool ReturnNullWhenException = false)
+        public AT GetElement(ATElementStruct ATElementStruct, int Timeout = -1, string TreeScope = AT.TreeScope.Descendants, bool CheckEnabled = false, bool ReturnNullWhenException = false)
         {
-            return this.GetElements(ATElementStruct, Timeout, AT.TreeScope.Children, ReturnNullWhenException);
+            return this.GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, Timeout, CheckEnabled, ReturnNullWhenException);
         }
-        public ATS GetElementsFromDescendants(ATElementStruct ATElementStruct, int Timeout = -1, bool IsEnabled = false, bool ReturnNullWhenException = false)
+        public void WaitForDisappearedBySearch(ATElementStruct ATElementStruct, int Timeout = -1, string TreeScope = AT.TreeScope.Descendants)
         {
-            return this.GetElements(ATElementStruct, Timeout, AT.TreeScope.Descendants, ReturnNullWhenException);
+            try
+            {
+                UtilWait.ForTrue(() =>
+                {
+                    return (this.GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, -1, false, true) == null);
+
+                }, Timeout);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"This element still exists. {ex.Message}" );
+            }
         }
-        public AT GetElement(ATElementStruct ATElementStruct, int Timeout = -1, string TreeScope = AT.TreeScope.Descendants, bool IsEnabled = false, bool ReturnNullWhenException = false)
-        {
-            return this.GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, Timeout, IsEnabled, ReturnNullWhenException);
-        }
-        public AT GetElementFromChild(ATElementStruct ATElementStruct, int Timeout = -1, bool IsEnabled = false, bool ReturnNullWhenException = false)
-        {
-            return this.GetElement(ATElementStruct, Timeout, AT.TreeScope.Children, IsEnabled, ReturnNullWhenException);
-        }
-        public AT GetElementFromDescendants(ATElementStruct ATElementStruct, int Timeout = -1, bool IsEnabled = false, bool ReturnNullWhenException = false)
-        {
-            return this.GetElement(ATElementStruct, Timeout, AT.TreeScope.Descendants, IsEnabled, ReturnNullWhenException);
-        }
-        public AT GetElement(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, int? Index = null, int Timeout = -1, bool IsEnabled = false, bool returnNullWhenException = false)
+        public AT GetElement(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, int? Index = null, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
         {
             try
             {
@@ -68,7 +84,7 @@ namespace ATLib
                         return GetElementByHandler(this.AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index);
                     }, Timeout);
                 }
-                if (IsEnabled == true)
+                if (CheckEnabled == true)
                 {
                     if (!(atObj.GetElementInfo().IsEnabled()))
                     {
@@ -79,7 +95,7 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                if (returnNullWhenException)
+                if (ReturnNullWhenException)
                 {
                     return null;
                 }
