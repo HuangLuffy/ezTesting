@@ -48,5 +48,11 @@ namespace OpenIt.Project.Portal
                 _PortalTestActions.IsSWCrash(10);
             }
         }
+        public void Flow_ProfilesSimpleSwitch()
+        {
+            _PortalTestActions.LaunchTimes = 1;
+            _PortalTestActions.LaunchSW();
+            _PortalTestActions.ProfilesSimpleSwitch(TEST_TIMES);
+        }
     }
 }

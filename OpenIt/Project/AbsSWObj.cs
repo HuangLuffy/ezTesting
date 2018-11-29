@@ -11,6 +11,6 @@ namespace OpenIt.Project
         public virtual string Name_MainWidow { get; }
         public virtual string ClassName_MainWidow { get; }
         public virtual string Name_CrashMainWidow { get; }
-        public virtual string Btn_CloseMainWindow { get; }
+        public virtual string Button_CloseMainWindow { get; }
     }
 }

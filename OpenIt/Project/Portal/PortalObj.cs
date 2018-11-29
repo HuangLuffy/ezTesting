@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ATLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,12 +24,12 @@ namespace OpenIt.Project.Portal
             //set { name_MainWidow = value; }
         }
         
-        public override string Btn_CloseMainWindow
+        public override string Button_CloseMainWindow
         {
             get { return "sw_close"; }
         }
 
-        public string Btn_OK_PlugOut
+        public string Button_OK_PlugOut
         {
             get { return "plugout_ok"; }
         }
@@ -38,6 +39,66 @@ namespace OpenIt.Project.Portal
             get { return "PORTAL.exe"; }
         }
 
- 
+        public static ATElementStruct TabItem_PROFILES = new ATElementStruct()
+        {
+            Name = "TAB_PROFILES",
+            ControlType = AT.ControlType.CheckBox
+        };
+
+        public static ATElementStruct Lable_LOADING = new ATElementStruct()
+        {
+            Name = "LOADING",
+            ControlType = AT.ControlType.Custom
+        };
+        public static ATElementStruct Profile_1 = new ATElementStruct()
+        {
+            Name = "PROFILE1",
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Profile_2 = new ATElementStruct()
+        {
+            Name = "PROFILE2",
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Profile_3 = new ATElementStruct()
+        {
+            Name = "PROFILE3",
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Profile_4 = new ATElementStruct()
+        {
+            Name = "PROFILE4",
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Profile_RESET = new ATElementStruct()
+        {
+            Name = "PROFILE_RESET",
+            ControlType = AT.ControlType.Button
+        };
+        public static ATElementStruct Profile_RENAME = new ATElementStruct()
+        {
+            Name = "PROFILE_RENAME",
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Profile_IMPORT = new ATElementStruct()
+        {
+            Name = "PROFILE_IMPORT",
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Profile_EXPORT = new ATElementStruct()
+        {
+            Name = "PROFILE_EXPORT",
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Profile_OPENWITHEXE = new ATElementStruct()
+        {
+            Name = "PROFILE_OPEN",
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Profile_EDIT = new ATElementStruct()
+        {
+            Name = "PROFILE_EDIT",
+            ControlType = AT.ControlType.Edit
+        };
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ATLib;
 using CommonLib.Util;
+using OpenIt.Project.Portal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,8 @@ namespace OpenIt
     {
         static void Main(string[] args)
         {
+            PortalTestFlows _PortalTestFlows = new PortalTestFlows();
+            _PortalTestFlows.Flow_ProfilesSimpleSwitch();
             TestIt _TestIt = new TestIt();
             _TestIt.Run();
             Console.ReadKey();

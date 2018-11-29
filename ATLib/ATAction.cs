@@ -191,6 +191,24 @@ namespace ATLib
         /// 
         /// </summary>
         /// <param name="waitTime"></param>
+        public void DoToggle(double waitTime = 0.1)
+        {
+            //try { DoSetFocus(ele); }catch (Exception) { }
+            try
+            {
+                TogglePattern t = (TogglePattern)this.AutomationElement.GetCurrentPattern(TogglePattern.Pattern);
+                t.Toggle();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DoToggle error. " + ex);
+            }
+            Thread.Sleep((int)(waitTime * 1000));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="waitTime"></param>
         public void DoClick(double waitTime = 0.1)
         {
             //try { DoSetFocus(ele); }catch (Exception) { }
