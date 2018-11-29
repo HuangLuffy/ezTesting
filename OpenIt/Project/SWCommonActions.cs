@@ -88,6 +88,7 @@ namespace OpenIt.Project
             UtilTime.WaitTime(1);
             AT Profile_tmp = null;
             AT Loading_tmp = null;
+            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to switch. ({Timeout}s)", Timeout);
             for (int i = 1; i < TEST_TIMES; i++)
             {
                 this.ProfilesSimpleSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp);

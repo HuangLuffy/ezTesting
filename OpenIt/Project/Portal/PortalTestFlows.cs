@@ -12,8 +12,9 @@ namespace OpenIt.Project.Portal
         public const string OPTION_LAUNCH_TEST = "Launch Test";
         public const string OPTION_PLUGIN_OUT_TEST = "PlugInOut Test";
         public const string OPTION_PLUGIN_OUT_SERVER = "PlugInOut Server";
+        public const string OPTION_SIMPLE_PROFILES_SWITCH = "Profiles Simple Switch Test";
 
-        public static long TEST_TIMES = 99999999;
+        public static long TEST_TIMES = 9999999;
 
         public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER };
 
