@@ -55,5 +55,11 @@ namespace OpenIt.Project.Portal
             _PortalTestActions.LaunchSW();
             _PortalTestActions.ProfilesSimpleSwitch(TEST_TIMES);
         }
+        public void Flow_ProfilesComplexSwitch()
+        {
+            _PortalTestActions.LaunchTimes = 1;
+            _PortalTestActions.LaunchSW();
+            _PortalTestActions.ProfilesComplexSwitch(TEST_TIMES);
+        }
     }
 }

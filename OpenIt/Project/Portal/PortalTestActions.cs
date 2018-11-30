@@ -65,6 +65,59 @@ namespace OpenIt.Project.Portal
                 
             }
         }
+
+        public void ProfilesComplexSwitch(long TEST_TIMES)
+        {
+            AT TabItem_Profiles = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: AT.TreeScope.Descendants);
+            TabItem_Profiles.DoClickPoint();//"DoClick();" does not work
+            UtilTime.WaitTime(2);
+            AT Profile_tmp = null;
+            AT Loading_tmp = null;
+            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to complex switch. ({Timeout}s)", Timeout);
+            for (int i = 1; i < TEST_TIMES; i++)
+            {
+                this.ProfilesComplexSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "IMPORT");
+                this.ProfilesComplexSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "EXPORT");
+                //this.ProfilesComplexSwitch(PortalObj.Profile_3, Profile_tmp, Loading_tmp, "");
+                this.ProfilesComplexSwitch(PortalObj.Profile_4, Profile_tmp, Loading_tmp, "");
+            }
+        }
+
+        private void ProfilesComplexSwitch(ATElementStruct WhichProfile, AT Profile, AT Loading, string WhereToClick)
+        {
+            Profile = this.MainWindow_SW.GetElement(ATElementStruct: WhichProfile, TreeScope: AT.TreeScope.Descendants);
+            if (WhereToClick.Equals("EXPORT"))
+            {
+                Profile.GetElement(ATElementStruct: PortalObj.Profile_EXPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
+                AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout: 5);
+                //dialog.DoWindowEvents().Close();
+                AT Button_Save = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
+                Button_Save.DoClickPoint();
+                dialog.GetElement(ATElementStruct: PortalObj.Button_Exist_Yes, TreeScope: AT.TreeScope.Descendants, Timeout: 2).DoClickPoint();
+            }
+            else if(WhereToClick.Equals("IMPORT"))
+            {
+                Profile.GetElement(ATElementStruct: PortalObj.Profile_IMPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
+                AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout:5);
+                //dialog.DoWindowEvents().Close();
+                dialog = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
+                dialog.DoClickPoint();
+            }
+            Profile.DoClickPoint();
+            UtilTime.WaitTime(3);
+            try
+            {
+                while (true)
+                {
+                    Loading = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants);
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
         public void ProfilesSimpleSwitch(long TEST_TIMES)
         {
             AT TabItem_Profiles = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: AT.TreeScope.Descendants);
@@ -72,7 +125,7 @@ namespace OpenIt.Project.Portal
             UtilTime.WaitTime(1);
             AT Profile_tmp = null;
             AT Loading_tmp = null;
-            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to switch. ({Timeout}s)", Timeout);
+            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to simple switch. ({Timeout}s)", Timeout);
             for (int i = 1; i < TEST_TIMES; i++)
             {
                 this.ProfilesSimpleSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp);

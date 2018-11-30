@@ -84,27 +84,46 @@ namespace OpenIt.Project.Portal
         public static ATElementStruct Profile_RENAME = new ATElementStruct()
         {
             Name = "PROFILE_RENAME",
-            ControlType = AT.ControlType.CheckBox
+            ControlType = AT.ControlType.Button
         };
         public static ATElementStruct Profile_IMPORT = new ATElementStruct()
         {
             Name = "PROFILE_IMPORT",
-            ControlType = AT.ControlType.CheckBox
+            ControlType = AT.ControlType.Button
         };
         public static ATElementStruct Profile_EXPORT = new ATElementStruct()
         {
             Name = "PROFILE_EXPORT",
-            ControlType = AT.ControlType.CheckBox
+            ControlType = AT.ControlType.Button
         };
         public static ATElementStruct Profile_OPENWITHEXE = new ATElementStruct()
         {
             Name = "PROFILE_OPEN",
-            ControlType = AT.ControlType.CheckBox
+            ControlType = AT.ControlType.Button
         };
         public static ATElementStruct Profile_EDIT = new ATElementStruct()
         {
             Name = "PROFILE_EDIT",
             ControlType = AT.ControlType.Edit
         };
+        public static ATElementStruct Window_OpenFIle = new ATElementStruct()
+        {
+            ControlType = AT.ControlType.Window
+        };
+        public static ATElementStruct Button_Reset_Yes = new ATElementStruct()
+        {
+            Name = "Yes_Enter",
+            ControlType = AT.ControlType.Button
+        };
+        public static ATElementStruct Button_Save = new ATElementStruct()
+        {
+            ControlType = AT.ControlType.Button
+        };
+        public static ATElementStruct Button_Exist_Yes = new ATElementStruct()
+        {
+            AutomationId = "CommandButton_6"
+        };
+        
+
     }
 }
