@@ -16,7 +16,7 @@ namespace OpenIt.Project.Portal
 
         public static long TEST_TIMES = 9999999;
 
-        public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER };
+        public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER, OPTION_SIMPLE_PROFILES_SWITCH };
 
         public List<string> Options_Devices_Cmd = new List<string> { VMObj.Item_MM830.Name, VMObj.Item_MP860.Name, VMObj.Item_MK850.Name, VMObj.Item_MH752.Name, VMObj.Item_MP750.Name };
 

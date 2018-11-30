@@ -126,6 +126,11 @@ namespace OpenIt
                     _PortalTestFlows.Flow_PlugInOutTest();
                     return true;
                 }
+                else if (this.IsTestExisted(PortalTestFlows.OPTION_SIMPLE_PROFILES_SWITCH, selected, options[i]))
+                {
+                    _PortalTestFlows.Flow_ProfilesSimpleSwitch();
+                    return true;
+                }
                 else if (this.IsTestExisted(PortalTestFlows.OPTION_PLUGIN_OUT_SERVER, selected, options[i]))
                 {  
                     string name = "";

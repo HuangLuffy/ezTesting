@@ -81,38 +81,5 @@ namespace OpenIt.Project
                 throw;
             }
         }
-        public void ProfilesSimpleSwitch(long TEST_TIMES)
-        {
-            AT TabItem_Profiles = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: AT.TreeScope.Descendants);
-            TabItem_Profiles.DoClickPoint();//"DoClick();" does not work
-            UtilTime.WaitTime(1);
-            AT Profile_tmp = null;
-            AT Loading_tmp = null;
-            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to switch. ({Timeout}s)", Timeout);
-            for (int i = 1; i < TEST_TIMES; i++)
-            {
-                this.ProfilesSimpleSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp);
-                this.ProfilesSimpleSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp);
-                this.ProfilesSimpleSwitch(PortalObj.Profile_3, Profile_tmp, Loading_tmp);
-                this.ProfilesSimpleSwitch(PortalObj.Profile_4, Profile_tmp, Loading_tmp);
-            }
-        }
-        private void ProfilesSimpleSwitch(ATElementStruct WhichProfile, AT Profile, AT Loading)
-        {
-            Profile = this.MainWindow_SW.GetElement(ATElementStruct: WhichProfile, TreeScope: AT.TreeScope.Descendants);
-            Profile.DoClickPoint();
-            UtilTime.WaitTime(3);
-            try
-            {
-                while (true)
-                {
-                    Loading = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants);
-                }
-            }
-            catch (Exception)
-            {
-                return;
-            }
-        }
     }
 }
