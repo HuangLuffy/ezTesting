@@ -131,9 +131,9 @@ namespace OpenIt
                     _PortalTestFlows.Flow_ProfilesSimpleSwitch();
                     return true;
                 }
-                else if (this.IsTestExisted(PortalTestFlows.OPTION_COMPLEX_PROFILES_SWITCH, selected, options[i]))
+                else if (this.IsTestExisted(PortalTestFlows.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, selected, options[i]))
                 {
-                    _PortalTestFlows.Flow_ProfilesComplexSwitch();
+                    _PortalTestFlows.Flow_ProfilesImExSwitch();
                     return true;
                 }
                 else if (this.IsTestExisted(PortalTestFlows.OPTION_PLUGIN_OUT_SERVER, selected, options[i]))

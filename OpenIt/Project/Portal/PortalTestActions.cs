@@ -65,53 +65,32 @@ namespace OpenIt.Project.Portal
                 
             }
         }
-
-        public void ProfilesComplexSwitch(long TEST_TIMES)
+        public void ProfilesImExSwitch(long TEST_TIMES)
         {
             AT TabItem_Profiles = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: AT.TreeScope.Descendants);
             TabItem_Profiles.DoClickPoint();//"DoClick();" does not work
             UtilTime.WaitTime(2);
             AT Profile_tmp = null;
             AT Loading_tmp = null;
-            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to complex switch. ({Timeout}s)", Timeout);
+            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to Import Export switch. ({Timeout}s)", Timeout);
             for (int i = 1; i < TEST_TIMES; i++)
             {
-                this.ProfilesComplexSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "IMPORT");
-                this.ProfilesComplexSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "EXPORT");
-                this.ProfilesComplexSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "");
-                this.ProfilesComplexSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "");
-                this.ProfilesComplexSwitch(PortalObj.Profile_3, Profile_tmp, Loading_tmp, "");
-                this.ProfilesComplexSwitch(PortalObj.Profile_4, Profile_tmp, Loading_tmp, "");
+                this.ProfilesImExSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "EXPORT");
+                this.ProfilesImExSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "IMPORT");
+                this.ProfilesImExSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "");
+                this.ProfilesImExSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "");
+                this.ProfilesImExSwitch(PortalObj.Profile_3, Profile_tmp, Loading_tmp, "");
+                this.ProfilesImExSwitch(PortalObj.Profile_4, Profile_tmp, Loading_tmp, "");
             }
         }
-
-        private void ProfilesComplexSwitch(ATElementStruct WhichProfile, AT Profile, AT Loading, string WhereToClick)
+        private void WaitForLoading(AT Loading_tmp)
         {
-            Profile = this.MainWindow_SW.GetElement(ATElementStruct: WhichProfile, TreeScope: AT.TreeScope.Descendants);
-            if (WhereToClick.Equals("EXPORT"))
-            {
-                Profile.GetElement(ATElementStruct: PortalObj.Profile_EXPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
-                AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout: 5);
-                //dialog.DoWindowEvents().Close();
-                AT Button_Save = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
-                Button_Save.DoClickPoint();
-                dialog.GetElement(ATElementStruct: PortalObj.Button_Exist_Yes, TreeScope: AT.TreeScope.Descendants, Timeout: 2).DoClickPoint();
-            }
-            else if(WhereToClick.Equals("IMPORT"))
-            {
-                Profile.GetElement(ATElementStruct: PortalObj.Profile_IMPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
-                AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout:5);
-                //dialog.DoWindowEvents().Close();
-                dialog = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
-                dialog.DoClickPoint();
-            }
-            Profile.DoClickPoint();
             UtilTime.WaitTime(3);
             try
             {
                 while (true)
                 {
-                    Loading = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants);
+                    Loading_tmp = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants);
                 }
             }
             catch (Exception)
@@ -119,6 +98,87 @@ namespace OpenIt.Project.Portal
                 return;
             }
         }
+        private void ProfilesImExSwitch(ATElementStruct WhichProfile, AT Profile_tmp, AT Loading_tmp, string WhereToClick)
+        {
+            Profile_tmp = this.MainWindow_SW.GetElement(ATElementStruct: WhichProfile, TreeScope: AT.TreeScope.Descendants);
+            Profile_tmp.DoClickPoint();
+            this.WaitForLoading(Loading_tmp);
+            if (WhereToClick.Equals("EXPORT"))
+            {
+                Profile_tmp.GetElement(ATElementStruct: PortalObj.Profile_EXPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
+                AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout: 5);
+                AT Button_Save = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
+                Button_Save.DoClickPoint();
+                try
+                {
+                    dialog.GetElement(ATElementStruct: PortalObj.Button_Exist_Yes, TreeScope: AT.TreeScope.Descendants, Timeout: 1).DoClickPoint();
+                }
+                catch (Exception)
+                {
+
+                }
+                this.WaitForLoading(Loading_tmp);
+            }
+            else if (WhereToClick.Equals("IMPORT"))
+            {
+                Profile_tmp.GetElement(ATElementStruct: PortalObj.Profile_IMPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
+                AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout: 5);
+                dialog = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
+                dialog.DoClickPoint();
+                this.WaitForLoading(Loading_tmp);
+            }
+        }
+        //public void ProfilesImExSwitch(long TEST_TIMES)
+        //{
+        //    AT TabItem_Profiles = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: AT.TreeScope.Descendants);
+        //    TabItem_Profiles.DoClickPoint();//"DoClick();" does not work
+        //    UtilTime.WaitTime(2);
+        //    AT Profile_tmp = null;
+        //    AT Loading_tmp = null;
+        //    this.WriteConsoleTitle(this.LaunchTimes, $"Starting to Import Export switch. ({Timeout}s)", Timeout);
+        //    for (int i = 1; i < TEST_TIMES; i++)
+        //    {
+        //        this.ProfilesComplexSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "IMPORT");
+        //        this.ProfilesComplexSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "EXPORT");
+        //        this.ProfilesComplexSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "");
+        //        this.ProfilesComplexSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "");
+        //        this.ProfilesComplexSwitch(PortalObj.Profile_3, Profile_tmp, Loading_tmp, "");
+        //        this.ProfilesComplexSwitch(PortalObj.Profile_4, Profile_tmp, Loading_tmp, "");
+        //    }
+        //}
+
+        //private void ProfilesComplexSwitch(ATElementStruct WhichProfile, AT Profile, AT Loading, string WhereToClick)
+        //{
+        //    Profile = this.MainWindow_SW.GetElement(ATElementStruct: WhichProfile, TreeScope: AT.TreeScope.Descendants);
+        //    if (WhereToClick.Equals("EXPORT"))
+        //    {
+        //        Profile.GetElement(ATElementStruct: PortalObj.Profile_EXPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
+        //        AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout: 5);
+        //        AT Button_Save = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
+        //        Button_Save.DoClickPoint();
+        //        dialog.GetElement(ATElementStruct: PortalObj.Button_Exist_Yes, TreeScope: AT.TreeScope.Descendants, Timeout: 2).DoClickPoint();
+        //    }
+        //    else if(WhereToClick.Equals("IMPORT"))
+        //    {
+        //        Profile.GetElement(ATElementStruct: PortalObj.Profile_IMPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
+        //        AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout:5);
+        //        dialog = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
+        //        dialog.DoClickPoint();
+        //    }
+        //    Profile.DoClickPoint();
+        //    UtilTime.WaitTime(3);
+        //    try
+        //    {
+        //        while (true)
+        //        {
+        //            Loading = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants);
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return;
+        //    }
+        //}
 
         public void ProfilesSimpleSwitch(long TEST_TIMES)
         {
@@ -136,22 +196,11 @@ namespace OpenIt.Project.Portal
                 this.ProfilesSimpleSwitch(PortalObj.Profile_4, Profile_tmp, Loading_tmp);
             }
         }
-        private void ProfilesSimpleSwitch(ATElementStruct WhichProfile, AT Profile, AT Loading)
+        private void ProfilesSimpleSwitch(ATElementStruct WhichProfile, AT Profile_tmp, AT Loading_tmp)
         {
-            Profile = this.MainWindow_SW.GetElement(ATElementStruct: WhichProfile, TreeScope: AT.TreeScope.Descendants);
-            Profile.DoClickPoint();
-            UtilTime.WaitTime(3);
-            try
-            {
-                while (true)
-                {
-                    Loading = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants);
-                }
-            }
-            catch (Exception)
-            {
-                return;
-            }
+            Profile_tmp = this.MainWindow_SW.GetElement(ATElementStruct: WhichProfile, TreeScope: AT.TreeScope.Descendants);
+            Profile_tmp.DoClickPoint();
+            this.WaitForLoading(Loading_tmp);
         }
     }
 }
