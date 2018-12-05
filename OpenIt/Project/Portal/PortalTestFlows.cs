@@ -14,11 +14,12 @@ namespace OpenIt.Project.Portal
         public const string OPTION_PLUGIN_OUT_SERVER = "PlugInOut Server";
         public const string OPTION_SIMPLE_PROFILES_SWITCH = "Profiles Simple Switch Test";
         public const string OPTION_IMPORT_EXPORT_PROFILES_SWITCH = "Profiles Import Export Switch Test";
+        public const string OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH = "Profiles Import Export Switch AIMPAD Test";
 
 
         public static long TEST_TIMES = 9999999;
 
-        public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER, OPTION_SIMPLE_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_PROFILES_SWITCH };
+        public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER, OPTION_SIMPLE_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH };
 
         public List<string> Options_Devices_Cmd = new List<string> { VMObj.Item_MM830.Name, VMObj.Item_MP860.Name, VMObj.Item_MK850.Name, VMObj.Item_MH752.Name, VMObj.Item_MP750.Name };
 
@@ -62,6 +63,12 @@ namespace OpenIt.Project.Portal
             _PortalTestActions.LaunchTimes = 1;
             _PortalTestActions.LaunchSW();
             _PortalTestActions.ProfilesImExSwitch(TEST_TIMES);
+        }
+        public void Flow_ProfilesImExAimpadSwitch()
+        {
+            _PortalTestActions.LaunchTimes = 1;
+            _PortalTestActions.LaunchSW();
+            _PortalTestActions.ProfilesImExAimpadSwitch(TEST_TIMES);
         }
     }
 }
