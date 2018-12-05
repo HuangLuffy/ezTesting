@@ -119,7 +119,7 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                throw new Exception("[ERROR]: GetElements. " + ex.Message);
+                throw new Exception("[ERROR]: GetElement. " + ex.Message + $"TreeScope: {(TreeScope == null ? "" : TreeScope)} Name: {(Name == null ? "" : Name)} ControlType: {(ControlType == null ? "" : Name)} ClassName: {(ClassName == null ? "" : Name)} AutomationId: {(AutomationId == null ? "" : AutomationId)}");
             }
         }
         /// <summary>
