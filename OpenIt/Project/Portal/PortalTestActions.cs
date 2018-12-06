@@ -144,7 +144,7 @@ namespace OpenIt.Project.Portal
         }
         private void WaitForLoading(AT Loading_tmp)
         {
-            UtilTime.WaitTime(3);
+            UtilTime.WaitTime(2);
             try
             {
                 while (true)
