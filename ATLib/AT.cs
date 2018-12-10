@@ -70,7 +70,7 @@ namespace ATLib
             try
             {
                 AT atObj = null;
-                this.AutomationElement = (this.AutomationElement == null) ? AutomationElement.RootElement : this.AutomationElement;
+                this.AutomationElement = this.AutomationElement ?? AutomationElement.RootElement;
                 System.Windows.Automation.TreeScope treeScope = GetTreeScope(TreeScope);
                 System.Windows.Automation.Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
                 if (Timeout <= 0)
@@ -108,7 +108,7 @@ namespace ATLib
             {
                 System.Windows.Automation.TreeScope treeScope = GetTreeScope(TreeScope);
                 System.Windows.Automation.Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
-                this.AutomationElement = this.AutomationElement == null ? AutomationElement.RootElement : this.AutomationElement;
+                this.AutomationElement = this.AutomationElement ?? AutomationElement.RootElement;
                 AutomationElementCollection aec = this.AutomationElement.FindAll(treeScope, condition);
                 AT[] at = new AT[aec.Count];
                 for (int i = 0; i < aec.Count; i++)
@@ -131,7 +131,7 @@ namespace ATLib
             try
             {
                 AT atObj = null;
-                this.AutomationElement = (this.AutomationElement == null) ? AutomationElement.RootElement : this.AutomationElement;  //System.Windows.Automation.Condition.TrueCondition
+                this.AutomationElement = this.AutomationElement ?? AutomationElement.RootElement;  //System.Windows.Automation.Condition.TrueCondition
                 AutomationElementCollection t = this.AutomationElement.FindAll(System.Windows.Automation.TreeScope.Descendants, System.Windows.Automation.Condition.TrueCondition);
                 //AutomationElementCollection t = this.me.FindAll(System.Windows.Automation.TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, System.Windows.Automation.ControlType.Pane));
                 foreach (AutomationElement item in t)
@@ -163,7 +163,7 @@ namespace ATLib
         {
             try
             {
-                elePara = elePara == null ? this : elePara;
+                elePara = elePara ?? (this);
                 //AT eleName = elePara.GetCurrentPropertyValue(AutomationElement.NameProperty).ToString();
                 return new CurrentElement(elePara);
             }

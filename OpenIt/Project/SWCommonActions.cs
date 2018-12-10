@@ -48,8 +48,8 @@ namespace OpenIt.Project
             AT Crash_Window = new AT().GetElement(Name: this.Obj.Name_CrashMainWidow, Timeout: checkTime, ReturnNullWhenException: true);
             if (Crash_Window != null)
             {
-                this.HandleWrongStepResult(SW.msg.CRASH, this.LaunchTimes);
-                throw new Exception(SW.msg.CRASH);
+                this.HandleWrongStepResult(SW.Msg.CRASH, this.LaunchTimes);
+                throw new Exception(SW.Msg.CRASH);
             }
         }
         public void CloseSW()

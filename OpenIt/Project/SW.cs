@@ -22,7 +22,7 @@ namespace OpenIt
         public string SwLnkPath { get; set; }
 
 
-        public struct msg
+        public struct Msg
         {
             public const string PROCESSSTILLEXISTS = "This SW's process still exists after closing it.";
             public const string NOITEMSINUI = "No Items in UI.";
@@ -32,7 +32,7 @@ namespace OpenIt
         public void WriteConsoleTitle(long launchTimes, string c, int timeout = 0)
         {
             Console.Title = launchTimes.ToString() + " | " + c;
-            String t = Console.Title;
+            string t = Console.Title;
             if (timeout != 0)
             {
                 UtilTime.CountDown(timeout, (s) => { Console.Title = t + " > " + s.ToString(); });

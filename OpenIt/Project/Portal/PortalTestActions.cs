@@ -73,9 +73,9 @@ namespace OpenIt.Project.Portal
             UtilTime.WaitTime(2);
             AT Profile_tmp = null;
             AT Loading_tmp = null;
-            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to Import Export switch (Support Aimpad Mode). ({Timeout}s)", Timeout);
             for (int i = 1; i < TEST_TIMES; i++)
             {
+                this.WriteConsoleTitle(i, $"Starting to Import Export switch (Support Aimpad Mode). ({Timeout}s)", Timeout);
                 this.ProfilesImExSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "EXPORT", true);
                 this.ProfilesImExSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "IMPORT", true);
                 this.ProfilesImExSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "", true);
@@ -92,9 +92,9 @@ namespace OpenIt.Project.Portal
             UtilTime.WaitTime(2);
             AT Profile_tmp = null;
             AT Loading_tmp = null;
-            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to Import Export switch. ({Timeout}s)", Timeout);
             for (int i = 1; i < TEST_TIMES; i++)
             {
+                this.WriteConsoleTitle(i, $"Starting to Import Export switch. ({Timeout}s)", Timeout);
                 this.ProfilesImExSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "EXPORT");
                 this.ProfilesImExSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "IMPORT");
                 this.ProfilesImExSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp, "");
@@ -247,9 +247,9 @@ namespace OpenIt.Project.Portal
             UtilTime.WaitTime(1);
             AT Profile_tmp = null;
             AT Loading_tmp = null;
-            this.WriteConsoleTitle(this.LaunchTimes, $"Starting to simple switch. ({Timeout}s)", Timeout);
             for (int i = 1; i < TEST_TIMES; i++)
             {
+                this.WriteConsoleTitle(i, $"Starting to simple switch. ({Timeout}s)", Timeout);
                 this.ProfilesSimpleSwitch(PortalObj.Profile_1, Profile_tmp, Loading_tmp);
                 this.ProfilesSimpleSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp);
                 this.ProfilesSimpleSwitch(PortalObj.Profile_3, Profile_tmp, Loading_tmp);
