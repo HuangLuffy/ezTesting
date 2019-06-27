@@ -49,7 +49,7 @@ namespace OpenIt.Project.Portal
                 _PortalTestActions.LaunchTimes = i;
                 _PortalTestActions.LaunchSW();
                 _PortalTestActions.CloseSW();
-                _PortalTestActions.IsSWCrash(10);
+                _PortalTestActions.IsSWCrash(1);
             }
         }
         public void Flow_ProfilesSimpleSwitch()

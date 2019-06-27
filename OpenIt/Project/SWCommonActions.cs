@@ -43,7 +43,6 @@ namespace OpenIt.Project
                 UtilTime.WaitTime(checkInternal);
                 this.WriteConsoleTitle(this.LaunchTimes, $"Waits ({checkInternal}s)", checkInternal);
             }
-            checkTime = 10;
             this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for checking crash. ({checkTime}s)", checkTime);
             AT Crash_Window = new AT().GetElement(Name: this.Obj.Name_CrashMainWidow, Timeout: checkTime, ReturnNullWhenException: true);
             if (Crash_Window != null)
@@ -58,12 +57,11 @@ namespace OpenIt.Project
             {
                 AT button_Close = this.MainWindow_SW.GetElement(Name: this.Obj.Button_CloseMainWindow, ControlType: AT.ControlType.Button, TreeScope: AT.TreeScope.Descendants);
                 button_Close.DoClick();
-                Timeout = 3;
+                Timeout = 2;
                 this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing1. ({Timeout}s)", Timeout);
                 UtilTime.WaitTime(Timeout);
                 try
                 {
-                    Timeout = 3;
                     this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing2. ({Timeout}s)", Timeout);
                     button_Close = this.MainWindow_SW.GetElement(Name: this.Obj.Button_CloseMainWindow, ControlType: AT.ControlType.Button, TreeScope: AT.TreeScope.Descendants);
                     //button_Close.DoClickWithNewThread();
