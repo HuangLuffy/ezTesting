@@ -21,7 +21,7 @@ namespace OpenIt.Project.Portal
 
         public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER, OPTION_SIMPLE_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH };
 
-        public List<string> Options_Devices_Cmd = new List<string> { VMObj.Item_MM830.Name, VMObj.Item_MP860.Name, VMObj.Item_MK850.Name, VMObj.Item_MH752.Name, VMObj.Item_MP750.Name };
+        public List<string> Options_Devices_Cmd = new List<string> { VMObj.Item_MM830.Name, VMObj.Item_MP860.Name, VMObj.Item_MK850.Name, VMObj.Item_MH752.Name, VMObj.Item_MP750.Name, VMObj.Item_MH650.Name };
 
         PortalTestActions _PortalTestActions = new PortalTestActions();
 
@@ -30,7 +30,7 @@ namespace OpenIt.Project.Portal
             _PortalTestActions.LaunchSW();
             for (int i = 1; i < TEST_TIMES; i++)
             {
-                _PortalTestActions.LaunchTimes = i;
+                _PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
                 _PortalTestActions.IsSWCrash(1,3);
             }
         }
@@ -38,15 +38,22 @@ namespace OpenIt.Project.Portal
         {
             for (int i = 1; i < TEST_TIMES; i++)
             {
-                _PortalTestActions.LaunchTimes = i;
-                _PortalTestActions.VMPlugOutDevice(deviceNameVM);
+                _PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
+                if (deviceNameVM.Equals(VMObj.Item_MH650.Name)) // Show 2 identical devices in VM.
+                {
+                    _PortalTestActions.VMPlugOutDeviceForShowingTwoidentical(deviceNameVM);
+                }
+                else
+                {
+                    _PortalTestActions.VMPlugOutDevice(deviceNameVM);
+                }
             }
         }
         public void Flow_LaunchTest()
         {
             for (int i = 1; i < TEST_TIMES; i++)
             {
-                _PortalTestActions.LaunchTimes = i;
+                _PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
                 _PortalTestActions.LaunchSW();
                 _PortalTestActions.CloseSW();
                 _PortalTestActions.IsSWCrash(1);
@@ -54,19 +61,19 @@ namespace OpenIt.Project.Portal
         }
         public void Flow_ProfilesSimpleSwitch()
         {
-            _PortalTestActions.LaunchTimes = 1;
+            _PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
             _PortalTestActions.LaunchSW();
             _PortalTestActions.ProfilesSimpleSwitch(TEST_TIMES);
         }
         public void Flow_ProfilesImExSwitch()
         {
-            _PortalTestActions.LaunchTimes = 1;
+            _PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
             _PortalTestActions.LaunchSW();
             _PortalTestActions.ProfilesImExSwitch(TEST_TIMES);
         }
         public void Flow_ProfilesImExAimpadSwitch()
         {
-            _PortalTestActions.LaunchTimes = 1;
+            _PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
             _PortalTestActions.LaunchSW();
             _PortalTestActions.ProfilesImExAimpadSwitch(TEST_TIMES);
         }

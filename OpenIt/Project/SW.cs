@@ -29,7 +29,13 @@ namespace OpenIt
             public const string CRASH = "Crashed.";
         }
 
-        public void WriteConsoleTitle(long launchTimes, string c, int timeout = 0)
+        public void SetlaunchTimesAndWriteTestTitle(long launchTimes, string c = "")
+        {
+            this.LaunchTimes = launchTimes;
+            this.WriteConsoleTitle(launchTimes, c);
+        }
+
+        public void WriteConsoleTitle(long launchTimes, string c = "", int timeout = 0)
         {
             Console.Title = launchTimes.ToString() + " | " + c;
             string t = Console.Title;
@@ -37,6 +43,7 @@ namespace OpenIt
             {
                 UtilTime.CountDown(timeout, (s) => { Console.Title = t + " > " + s.ToString(); });
             }
+            UtilTime.WaitTime(timeout);
         }
         public void Initialize()
         {

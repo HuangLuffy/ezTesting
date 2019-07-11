@@ -48,6 +48,10 @@ namespace OpenIt.Project.Portal
         {
             Name = "RGB Mousepad"
         };
+        public static ATElementStruct Item_MH650 = new ATElementStruct()
+        {
+            Name = "MH650"
+        };
         public static ATElementStruct Item_Connect = new ATElementStruct()
         {
             Name = "Connect (Disconnect from Host)"
@@ -61,5 +65,6 @@ namespace OpenIt.Project.Portal
             Name = "Context"
             //Name = "上下文"
         };
+        //also need to add related device to > private string DeviceMatcher(List<string> options)
     }
 }

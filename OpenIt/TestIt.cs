@@ -198,6 +198,10 @@ namespace OpenIt
                 {
                     return VMObj.Item_MP860.Name;
                 }
+                else if (this.IsTestExisted(VMObj.Item_MH650.Name, selected, options[i]))
+                {
+                    return VMObj.Item_MH650.Name;
+                }
                 else if (this.IsTestExisted(UtilCmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
                 {
                     _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);

@@ -19,25 +19,91 @@ namespace OpenIt.Project.Portal
             this._PortalObj = (PortalObj)this.Obj;
         }
 
-        public void VMPlugOutDevice(string deviceNameVM)
+        private void OpenRemovableDevices()
         {
+            AT Window_VM = new AT().GetElement(VMObj.Window_VM);
+            AT Tab_TestVM = Window_VM.GetElement(VMObj.Tab_TestVM);
+            Tab_TestVM.DoSetFocus();
+            UtilTime.WaitTime(1);
+            Tab_TestVM.DoClickPoint(10, 10, mk: HWSimulator.HWSend.MouseKeys.RIGHT);
+            UtilTime.WaitTime(0.5);
+            AT Item_RemovableDevices = new AT().GetElement(VMObj.Item_RemovableDevices);
+            Item_RemovableDevices.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
+            UtilTime.WaitTime(0.5);
+        }
+        public void VMPlugOutDeviceForShowingTwoidentical(string deviceNameVM)
+        {   //Using admin to run VM in win10 otherwise rightclick would no work.
+            bool? connectShows = null;
             try
             {
-                AT Window_VM = new AT().GetElement(VMObj.Window_VM);
-                Window_VM.DoSetFocus();
+                OpenRemovableDevices();
+                ATS Item_Targets = new AT().GetElements(Name: deviceNameVM, TreeScope: AT.TreeScope.Descendants, ControlType: AT.ControlType.MenuItem);
+                AT Item_Target = Item_Targets.GetATCollection()[0];
+                Item_Target.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
+                AT Item_Con = null;
                 UtilTime.WaitTime(1);
-                AT Tab_TestVM = Window_VM.GetElement(VMObj.Tab_TestVM);
-                Tab_TestVM.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.RIGHT);
-                UtilTime.WaitTime(0.5);
-                //AT Item_MenuContext = new AT().GetElement(VM.Menu_Context);
-                //AT Item_RemovableDevices = Item_MenuContext.GetElement(VM.Item_RemovableDevices);
-                AT Item_RemovableDevices = new AT().GetElement(VMObj.Item_RemovableDevices);
-                Item_RemovableDevices.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
-                UtilTime.WaitTime(0.5);
+                try
+                {
+                    Item_Con = new AT().GetElement(VMObj.Item_Connect);
+                    connectShows = true;
+                }
+                catch (Exception)
+                {
+                    try
+                    {
+                        Item_Con = new AT().GetElement(VMObj.Item_Disconnect);
+                        connectShows = false;
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+                if (Item_Con != null)
+                {
+                    Item_Con.DoClickPoint(10, 10, mk: HWSimulator.HWSend.MouseKeys.LEFT);
+                }
+                Item_Target = Item_Targets.GetATCollection()[1];
+                Item_Target.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
+                Item_Con = null;
+                UtilTime.WaitTime(1);
+                Item_Con = null;
+                if (connectShows != null)
+                {
+                    ATElementStruct target = connectShows == true ? VMObj.Item_Connect : VMObj.Item_Disconnect;
+                    if (connectShows == true)
+                    {
+                        try
+                        {
+                            Item_Con = new AT().GetElement(target);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+                }   
+                if (Item_Con != null)
+                {
+                    Item_Con.DoClickPoint(10, 10, mk: HWSimulator.HWSend.MouseKeys.LEFT);
+                    Timeout = 20;
+                    this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for connecting/disconnecting. ({Timeout}s)", this.Timeout);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        public void VMPlugOutDevice(string deviceNameVM)
+        {   //Using admin to run VM in win10 otherwise rightclick would no work.
+            try
+            {
+                OpenRemovableDevices();
                 AT Item_Target = new AT().GetElement(Name: deviceNameVM, TreeScope: AT.TreeScope.Descendants, ControlType: AT.ControlType.MenuItem);
                 Item_Target.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
-                UtilTime.WaitTime(1);
                 AT Item_Con = null;
+                UtilTime.WaitTime(1);
                 try
                 {
                     Item_Con = new AT().GetElement(VMObj.Item_Connect);
@@ -55,9 +121,8 @@ namespace OpenIt.Project.Portal
                 }
                 if (Item_Con != null)
                 {
-                    Item_Con.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.LEFT);
+                    Item_Con.DoClickPoint(10, 10, mk: HWSimulator.HWSend.MouseKeys.LEFT);
                     Timeout = 20;
-                    UtilTime.WaitTime(20);
                     this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for connecting/disconnecting. ({Timeout}s)", this.Timeout);
                 }
             }

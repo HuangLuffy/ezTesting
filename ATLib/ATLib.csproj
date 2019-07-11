@@ -104,6 +104,7 @@
     <Compile Include="Input\ATGTestInput.cs" />
     <Compile Include="Input\NativeMethods.cs" />
     <Compile Include="Input\SafeNativeMethods.cs" />
+    <Compile Include="Input\test1.cs" />
     <Compile Include="Input\UnsafeNativeMethods.cs" />
     <Compile Include="Invoke\BaseInvoker.cs" />
     <Compile Include="Invoke\Invoker.cs" />
