@@ -45,7 +45,7 @@ namespace OpenIt.Project.Portal
                 }
                 else
                 {
-                    _PortalTestActions.VMPlugOutDevice(deviceNameVM);
+                    _PortalTestActions.PlugOutDeviceFromVM(deviceNameVM);
                 }
             }
         }
