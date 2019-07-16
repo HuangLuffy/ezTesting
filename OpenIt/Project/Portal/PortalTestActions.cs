@@ -26,7 +26,7 @@ namespace OpenIt.Project.Portal
         {   //Using admin to run VM in win10 otherwise rightclick would not work.
             try
             {
-                if (deviceNameVM.Equals(VMObj.Item_MH650.Name)) // Show 2 identical devices in VM.
+                if (deviceNameVM.Equals(VMObj.DeviceItem.Item_MH650.Name)) // Show 2 identical devices in VM.
                 {
                     this._VmOps.PlugOutInDeviceFromVM(deviceNameVM, 1);
                     this.Timeout = 5;

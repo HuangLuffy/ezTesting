@@ -21,7 +21,8 @@ namespace OpenIt.Project.Portal
 
         public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER, OPTION_SIMPLE_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH };
 
-        public List<string> Options_Devices_Cmd = new List<string> { VMObj.Item_MM830.Name, VMObj.Item_MP860.Name, VMObj.Item_MK850.Name, VMObj.Item_MH752.Name, VMObj.Item_MP750.Name, VMObj.Item_MH650.Name };
+        public List<string> Options_Devices_Cmd = VMObj.GetDevicesItemList();
+            //new List<string> { VMObj.DeviceItem.Item_MM830.Name, VMObj.DeviceItem.Item_MP860.Name, VMObj.DeviceItem.Item_MK850.Name, VMObj.DeviceItem.Item_MH752.Name, VMObj.DeviceItem.Item_MP750.Name, VMObj.DeviceItem.Item_MH650.Name };
 
         PortalTestActions _PortalTestActions = new PortalTestActions();
 
@@ -31,7 +32,7 @@ namespace OpenIt.Project.Portal
             for (int i = 1; i < TEST_TIMES; i++)
             {
                 _PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
-                _PortalTestActions.IsSWCrash(1,3);
+                _PortalTestActions.IsSWCrash(1, 3);
             }
         }
         public void Flow_PlugInOutServer(string deviceNameVM)
@@ -39,14 +40,7 @@ namespace OpenIt.Project.Portal
             for (int i = 1; i < TEST_TIMES; i++)
             {
                 _PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
-                if (deviceNameVM.Equals(VMObj.Item_MH650.Name)) // Show 2 identical devices in VM.
-                {
-                    _PortalTestActions.VMPlugOutDeviceForShowingTwoidentical(deviceNameVM);
-                }
-                else
-                {
-                    _PortalTestActions.PlugOutDeviceFromVM(deviceNameVM);
-                }
+                _PortalTestActions.PlugOutDeviceFromVM(deviceNameVM);
             }
         }
         public void Flow_LaunchTest()

@@ -52,7 +52,8 @@
     <Compile Include="Project\Portal\PortalTestFlows.cs" />
     <Compile Include="Project\Portal\PortalObj.cs" />
     <Compile Include="Project\Portal\PortalTestActions.cs" />
-    <Compile Include="Project\Portal\VMObj.cs" />
+    <Compile Include="Project\Vm\VMObj.cs" />
+    <Compile Include="Project\Vm\VmOps.cs" />
     <Compile Include="Project\SWCommonActions.cs" />
     <Compile Include="TestIt.cs" />
     <Compile Include="Project\Portal\Portal.cs" />

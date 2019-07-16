@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,8 +17,6 @@ namespace OpenIt
     {
         static void Main(string[] args)
         {
-            //PortalTestFlows _PortalTestFlows = new PortalTestFlows();
-            //_PortalTestFlows.Flow_ProfilesComplexSwitch();
             TestIt _TestIt = new TestIt();
             _TestIt.Run();
             Console.ReadKey();

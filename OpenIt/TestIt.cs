@@ -177,30 +177,29 @@ namespace OpenIt
             string selected = Console.ReadLine();
             for (int i = 0; i < options.Count; i++)
             {
-                if (this.IsTestExisted(VMObj.Item_MH752.Name, selected, options[i]))
+                if (this.IsTestExisted(VMObj.DeviceItem.Item_MH752.Name, selected, options[i]))
                 {
-                    return VMObj.Item_MH752.Name;
+                    return VMObj.DeviceItem.Item_MH752.Name;
                 }
-                else if (this.IsTestExisted(VMObj.Item_MK850.Name, selected, options[i]))
+                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MK850.Name, selected, options[i]))
                 {
-                    _PortalTestFlows.Flow_PlugInOutTest();
-                    return VMObj.Item_MK850.Name;
+                    return VMObj.DeviceItem.Item_MK850.Name;
                 }
-                else if (this.IsTestExisted(VMObj.Item_MP750.Name, selected, options[i]))
+                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MP750.Name, selected, options[i]))
                 {
-                    return VMObj.Item_MP750.Name;
+                    return VMObj.DeviceItem.Item_MP750.Name;
                 }
-                else if (this.IsTestExisted(VMObj.Item_MM830.Name, selected, options[i]))
+                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MM830.Name, selected, options[i]))
                 {
-                    return VMObj.Item_MM830.Name;
+                    return VMObj.DeviceItem.Item_MM830.Name;
                 }
-                else if (this.IsTestExisted(VMObj.Item_MP860.Name, selected, options[i]))
+                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MP860.Name, selected, options[i]))
                 {
-                    return VMObj.Item_MP860.Name;
+                    return VMObj.DeviceItem.Item_MP860.Name;
                 }
-                else if (this.IsTestExisted(VMObj.Item_MH650.Name, selected, options[i]))
+                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MH650.Name, selected, options[i]))
                 {
-                    return VMObj.Item_MH650.Name;
+                    return VMObj.DeviceItem.Item_MH650.Name;
                 }
                 else if (this.IsTestExisted(UtilCmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
                 {

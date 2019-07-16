@@ -21,7 +21,6 @@ namespace OpenIt
         public string SwProcessName { get; set; }
         public string SwLnkPath { get; set; }
 
-
         public struct Msg
         {
             public const string PROCESSSTILLEXISTS = "This SW's process still exists after closing it.";
@@ -48,17 +47,8 @@ namespace OpenIt
         public void Initialize()
         {
             UtilFolder.DeleteDirectory(this.ImagePath);
-            //UtilTime.WaitTime(0.5);
             UtilFolder.CreateDirectory(this.ImagePath);
-            UtilProcess.KillProcessByName(this.SwProcessName);
-            //try
-            //{
-
-            //    UtilFile.WriteFile(Path.Combine(_SW.LogPath), "", false);
-            //}
-            //catch (Exception)
-            //{
-            //}    
+            UtilProcess.KillProcessByName(this.SwProcessName); 
         }
     }
 }

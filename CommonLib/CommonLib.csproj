@@ -82,6 +82,7 @@
     <Compile Include="Util\net\share\ShareFolderProperties.cs" />
     <Compile Include="Util\os\UtilOS.cs" />
     <Compile Include="Util\project\BaseProject.cs" />
+    <Compile Include="Util\UtilReflect.cs" />
     <Compile Include="Util\UtilRegistry.cs" />
     <Compile Include="Util\UtilCloner.cs" />
     <Compile Include="Util\UtilIEnumerable.cs" />
