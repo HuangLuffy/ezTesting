@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenIt.Project.Portal.VmOerations
+namespace CMTest.Project.Portal.VmOerations
 {
     public class VmOps
     {

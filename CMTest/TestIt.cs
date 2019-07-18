@@ -1,8 +1,8 @@
 ﻿using ATLib;
 using CommonLib.Util;
-using OpenIt.Project;
-using OpenIt.Project.MasterPlus;
-using OpenIt.Project.Portal;
+using CMTest.Project;
+using CMTest.Project.MasterPlus;
+using CMTest.Project.Portal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,14 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenIt
+namespace CMTest
 {
     public class TestIt : AbsResult
     {
-        public const string OPTION_MasterPlus = "MasterPlus";
-        public const string OPTION_PORTAL = "PORTAL";
+        private const string OPTION_MasterPlus = "MasterPlus";
+        private const string OPTION_PORTAL = "PORTAL";
 
-        public List<string> Options_Projects = new List<string> { OPTION_PORTAL, OPTION_MasterPlus };
+        private List<string> Options_Projects = new List<string> { OPTION_PORTAL, OPTION_MasterPlus };
 
         PortalTestFlows _PortalTestFlows;
         MasterPlusTestFlows _MasterPlusTestFlows;

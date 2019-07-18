@@ -17,4 +17,6 @@ XunitTest/obj/*
 XunitTest/bin/*
 OpenIt/obj/*
 OpenIt/bin/*
+CMTest/obj/*
+CMTest/bin/*
 packages/*

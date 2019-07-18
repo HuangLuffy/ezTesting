@@ -1,6 +1,6 @@
 ﻿using ATLib;
 using CommonLib.Util;
-using OpenIt.Project.Portal;
+using CMTest.Project.Portal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace OpenIt
+namespace CMTest
 {
     class Program
     {

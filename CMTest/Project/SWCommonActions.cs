@@ -1,13 +1,13 @@
 ﻿using ATLib;
 using CommonLib.Util;
-using OpenIt.Project.Portal;
+using CMTest.Project.Portal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenIt.Project
+namespace CMTest.Project
 {
     public class SWCommonActions : SW
     {

@@ -2,14 +2,14 @@
 using ATLib.Input;
 using CommonLib.Util;
 using CommonLib.Util.os;
-using OpenIt.Project.Portal.VmOerations;
+using CMTest.Project.Portal.VmOerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenIt.Project.Portal
+namespace CMTest.Project.Portal
 {
     public class PortalTestActions : Portal
     {

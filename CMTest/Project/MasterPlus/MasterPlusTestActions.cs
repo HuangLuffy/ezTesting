@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenIt.Project.MasterPlus
+namespace CMTest.Project.MasterPlus
 {
     public class MasterPlusTestActions : MasterPlus
     {

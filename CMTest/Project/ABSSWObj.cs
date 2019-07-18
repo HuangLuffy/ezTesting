@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenIt.Project
+namespace CMTest.Project
 {
     public abstract class AbsSWObj
     {

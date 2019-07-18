@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenIt.Project.Portal
+namespace CMTest.Project.Portal
 {
     public class PortalTestFlows
     {
@@ -20,6 +20,10 @@ namespace OpenIt.Project.Portal
         public static long TEST_TIMES = 9999999;
 
         public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER, OPTION_SIMPLE_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH };
+
+
+
+
 
         public List<string> Options_Devices_Cmd = VMObj.GetDevicesItemList();
             //new List<string> { VMObj.DeviceItem.Item_MM830.Name, VMObj.DeviceItem.Item_MP860.Name, VMObj.DeviceItem.Item_MK850.Name, VMObj.DeviceItem.Item_MH752.Name, VMObj.DeviceItem.Item_MP750.Name, VMObj.DeviceItem.Item_MH650.Name };

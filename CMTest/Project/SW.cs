@@ -1,6 +1,6 @@
 ﻿using ATLib;
 using CommonLib.Util;
-using OpenIt.Project;
+using CMTest.Project;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenIt
+namespace CMTest
 {
     public class SW : AbsResult
     {
