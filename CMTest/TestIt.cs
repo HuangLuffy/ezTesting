@@ -50,7 +50,7 @@ namespace CMTest
                 {
                     projectOptions = _CMD.WriteOptions(projectOptions, true, false);
                     string s = Console.ReadLine();
-                    string result = this.ProjectMatcher(s, projectOptions);
+                    string result = this.MatchProject(s, projectOptions);
                     if (result.Equals(FOUND_TEST))
                     {
                         Console.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
@@ -66,7 +66,7 @@ namespace CMTest
                 }
             }
         }
-        private string ProjectMatcher(string selected, List<string> options)
+        private string MatchProject(string selected, List<string> options)
         {
             for (int i = 0; i < options.Count; i++)
             {
@@ -74,18 +74,18 @@ namespace CMTest
                 {
                     _MasterPlusTestFlows = new MasterPlusTestFlows();
                     AssembleMasterPlusPlugInOutTests();
-                    return ShowTestMenuAndRun(Options_MasterPlus_Tests_With_Funcs);
+                    return ShowCmdTests(Options_MasterPlus_Tests_With_Funcs);
                 }
                 else if (IsTestExisted(TestIt.OPTION_PORTAL, selected, options[i]))
                 {
                     _PortalTestFlows = new PortalTestFlows();
                     AssemblePortalPlugInOutTests();
-                    return ShowTestMenuAndRun(Options_Portal_Tests_With_Funcs);
+                    return ShowCmdTests(Options_Portal_Tests_With_Funcs);
                 }
             }
             return DO_NOTHING;
         }
-        private string ShowTestMenuAndRun(IDictionary<string, Func<dynamic>> testFuncsByTestName)
+        private string ShowCmdTests(IDictionary<string, Func<dynamic>> testFuncsByTestName)
         {
             List<string> testOptions = _CMD.WriteOptions(testFuncsByTestName.Keys.ToList());
             while (true)
@@ -107,7 +107,7 @@ namespace CMTest
                 }
             }
         }
-        private string DeviceMatcher(List<string> options)
+        private string MatchDevice(List<string> options)
         {
             string selected = Console.ReadLine();
             string deviceName = "";

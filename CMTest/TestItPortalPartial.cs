@@ -62,7 +62,7 @@ namespace CMTest
             string name = "";
             while (true)
             {
-                name = DeviceMatcher(_CMD.WriteOptions(Options_Portal_PlugInOut_Devices_Name));
+                name = MatchDevice(_CMD.WriteOptions(Options_Portal_PlugInOut_Devices_Name));
                 if (name != null)
                 {
                     if (UtilCmd.OPTION_BACK.Equals(name))
