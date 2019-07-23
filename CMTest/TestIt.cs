@@ -27,7 +27,7 @@ namespace CMTest
 
         private dynamic Flow_CMD_SHOW_MENU_AGAIN()
         {
-            _CMD.WriteOptions(_CMD.List_Current_Menu, lineUpWithNumber:false);
+            _CMD.WriteOptions(_CMD.List_Current_Menu, lineUpWithNumber: false);
             return UtilCmd.OPTION_SHOW_MENU_AGAIN;
         }
         private dynamic Flow_CMD_Back()
@@ -41,13 +41,14 @@ namespace CMTest
             return $"{selectedNum.Trim()}{UtilCmd.STRING_CONNECTOR}{testName}".Equals(loopName);
         }
 
-        public void Run()
+        public void OpenCMD()
         {
             List<string> projectOptions = _CMD.WriteOptions(Options_Projects);
             while (true)
             {
                 try
                 {
+                    projectOptions = _CMD.WriteOptions(projectOptions, true, false);
                     string s = Console.ReadLine();
                     string result = this.ProjectMatcher(s, projectOptions);
                     if (result.Equals(FOUND_TEST))
@@ -60,37 +61,43 @@ namespace CMTest
                 catch (Exception ex)
                 {
                     this.HandleWrongStepResult(ex.Message);
+                    Console.WriteLine("Please press any key to continue.");
+                    Console.ReadLine();
                 }
             }
         }
-
         private string ProjectMatcher(string selected, List<string> options)
         {
             for (int i = 0; i < options.Count; i++)
             {
-                if (this.IsTestExisted(TestIt.OPTION_MasterPlus, selected, options[i]))
+                if (IsTestExisted(TestIt.OPTION_MasterPlus, selected, options[i]))
                 {
-                    this._MasterPlusTestFlows = new MasterPlusTestFlows();
-                    return this.TestRun(_MasterPlusTestFlows.Options_Cmd, this.MasterPlusTestMatcher);
+                    _MasterPlusTestFlows = new MasterPlusTestFlows();
+                    AssembleMasterPlusPlugInOutTests();
+                    return ShowTestMenuAndRun(Options_MasterPlus_Tests_With_Funcs);
                 }
-                else if (this.IsTestExisted(TestIt.OPTION_PORTAL, selected, options[i]))
+                else if (IsTestExisted(TestIt.OPTION_PORTAL, selected, options[i]))
                 {
-                    this._PortalTestFlows = new PortalTestFlows();
-                    this.AssemblePortalPlugInOutTests();
-                    return this.TestRun(this.Options_Portal_PlugInOut_Tests_With_Funcs.Keys.ToList(), this.PortalTestMatcher);
+                    _PortalTestFlows = new PortalTestFlows();
+                    AssemblePortalPlugInOutTests();
+                    return ShowTestMenuAndRun(Options_Portal_Tests_With_Funcs);
                 }
             }
             return DO_NOTHING;
         }
-
-        private string TestRun(List<string> options, Func<string, List<string>, string> func)
+        private string ShowTestMenuAndRun(IDictionary<string, Func<dynamic>> testFuncsByTestName)
         {
-            List<string> testOptions = _CMD.WriteOptions(options);
+            List<string> testOptions = _CMD.WriteOptions(testFuncsByTestName.Keys.ToList());
             while (true)
             {
-                string s = Console.ReadLine();
-                string result = func(s, testOptions);
-                if (result.Equals(FOUND_TEST))
+                testOptions = _CMD.WriteOptions(testOptions, true, false);
+                string input = Console.ReadLine();
+                string result = MatchTestAndRun(testFuncsByTestName, input, testOptions);
+                if (result == null)
+                {
+                    //Back from submenu, so it should stay here.
+                }
+                else if (result.Equals(FOUND_TEST))
                 {
                     return FOUND_TEST;
                 }
@@ -100,29 +107,6 @@ namespace CMTest
                 }
             }
         }
-        
-        private string MasterPlusTestMatcher(string selected, List<string> options)
-        {
-            for (int i = 0; i < options.Count; i++)
-            {
-                if (this.IsTestExisted(MasterPlusTestFlows.OPTION_LAUNCH_TEST, selected, options[i]))
-                {
-                    this._MasterPlusTestFlows.Flow_LaunchTest();
-                    return "";
-                }
-                else if (this.IsTestExisted(UtilCmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
-                {
-                    _CMD.WriteOptions(this._MasterPlusTestFlows.Options_Cmd);
-                    return "";
-                }
-                else if (this.IsTestExisted(UtilCmd.OPTION_BACK, selected, options[i]))
-                {
-                    return null;
-                }
-            }
-            return "";
-        }
-
         private string DeviceMatcher(List<string> options)
         {
             string selected = Console.ReadLine();
@@ -148,18 +132,18 @@ namespace CMTest
             }
             return null;
         }
-        private string PortalTestMatcher(string selected, List<string> options)
+        private string MatchTestAndRun(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, List<string> options)
         {
             string testName = "";
             for (int i = 0; i < options.Count; i++)
             {
-                testName = GetSelectedName(Options_Portal_PlugInOut_Tests_With_Funcs.Keys.ToList<string>(), selected, options[i]);
+                testName = GetSelectedName(testFuncsByTestName.Keys.ToList<string>(), selected, options[i]);
                 if (testName != null)
                 {
-                    return this.Options_Portal_PlugInOut_Tests_With_Funcs[testName].Invoke();
+                    return testFuncsByTestName[testName].Invoke();
                 }
             }
             return testName;
-        }
+        } 
     }
 }

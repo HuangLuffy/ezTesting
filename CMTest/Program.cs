@@ -18,7 +18,7 @@ namespace CMTest
         static void Main(string[] args)
         {
             TestIt _TestIt = new TestIt();
-            _TestIt.Run();
+            _TestIt.OpenCMD();
             Console.ReadKey();
         }
     }

@@ -8,10 +8,12 @@ namespace CMTest.Project.MasterPlus
 {
     public class MasterPlusTestFlows
     {
-        public const string OPTION_LAUNCH_TEST = "Launch Test";
+        public struct Test_Names
+        {
+            public const string OPTION_LAUNCH_TEST = "Launch Test";
+        }
+        
         public static long TEST_TIMES = 99999999;
-
-        public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST };
 
         MasterPlusTestActions _MasterPlusTestActions = new MasterPlusTestActions();
         /// <summary>
