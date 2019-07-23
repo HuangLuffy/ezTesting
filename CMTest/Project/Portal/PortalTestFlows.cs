@@ -9,23 +9,18 @@ namespace CMTest.Project.Portal
 {
     public class PortalTestFlows
     {
-        public const string OPTION_LAUNCH_TEST = "Launch Test";
-        public const string OPTION_PLUGIN_OUT_TEST = "PlugInOut Test";
-        public const string OPTION_PLUGIN_OUT_SERVER = "PlugInOut Server";
-        public const string OPTION_SIMPLE_PROFILES_SWITCH = "Profiles Simple Switch Test";
-        public const string OPTION_IMPORT_EXPORT_PROFILES_SWITCH = "Profiles Import Export Switch Test";
-        public const string OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH = "Profiles Import Export Switch AIMPAD Test";
-
+        public struct Test_Names{
+            public const string OPTION_LAUNCH_TEST = "Launch Test";
+            public const string OPTION_PLUGIN_OUT_TEST = "PlugInOut Test";
+            public const string OPTION_PLUGIN_OUT_SERVER = "PlugInOut Server";
+            public const string OPTION_SIMPLE_PROFILES_SWITCH = "Profiles Simple Switch Test";
+            public const string OPTION_IMPORT_EXPORT_PROFILES_SWITCH = "Profiles Import Export Switch Test";
+            public const string OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH = "Profiles Import Export Switch AIMPAD Test";
+        }
 
         public static long TEST_TIMES = 9999999;
 
-        public List<string> Options_Cmd = new List<string> { OPTION_LAUNCH_TEST, OPTION_PLUGIN_OUT_TEST, OPTION_PLUGIN_OUT_SERVER, OPTION_SIMPLE_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_PROFILES_SWITCH, OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH };
-
-
-
-
-
-        public List<string> Options_Devices_Cmd = VMObj.GetDevicesItemList();
+        public List<string> Options_Portal_PlugInOut_Devices_Name = VMObj.GetDevicesItemList();
             //new List<string> { VMObj.DeviceItem.Item_MM830.Name, VMObj.DeviceItem.Item_MP860.Name, VMObj.DeviceItem.Item_MK850.Name, VMObj.DeviceItem.Item_MH752.Name, VMObj.DeviceItem.Item_MP750.Name, VMObj.DeviceItem.Item_MH650.Name };
 
         PortalTestActions _PortalTestActions = new PortalTestActions();

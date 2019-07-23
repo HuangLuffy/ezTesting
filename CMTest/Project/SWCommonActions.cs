@@ -32,7 +32,7 @@ namespace CMTest.Project
             catch (Exception ex)
             {
                 this.MainWindow_SW = new AT().GetElement(Name: this.Obj.Name_MainWidow, ClassName: this.Obj.ClassName_MainWidow, Timeout: this.Timeout);
-                this.HandleWrongStepResult("Cannot find App.", this.LaunchTimes);
+                this.HandleWrongStepResult("Cannot find the App.", this.LaunchTimes);
             }
         }
 
@@ -41,7 +41,7 @@ namespace CMTest.Project
             if (checkInternal > 0)
             {
                 UtilTime.WaitTime(checkInternal);
-                this.WriteConsoleTitle(this.LaunchTimes, $"Waits ({checkInternal}s)", checkInternal);
+                this.WriteConsoleTitle(this.LaunchTimes, $"Wait ({checkInternal}s)", checkInternal);
             }
             this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for checking crash. ({checkTime}s)", checkTime);
             AT Crash_Window = new AT().GetElement(Name: this.Obj.Name_CrashMainWidow, Timeout: checkTime, ReturnNullWhenException: true);

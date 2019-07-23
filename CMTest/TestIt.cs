@@ -12,17 +12,29 @@ using System.Threading.Tasks;
 
 namespace CMTest
 {
-    public class TestIt : AbsResult
+    public partial class TestIt : AbsResult
     {
         private const string OPTION_MasterPlus = "MasterPlus";
         private const string OPTION_PORTAL = "PORTAL";
-
+        private const string FOUND_TEST = "FOUND_TEST";
+        private const string DO_NOTHING = "DO_NOTHING";
         private List<string> Options_Projects = new List<string> { OPTION_PORTAL, OPTION_MasterPlus };
 
         PortalTestFlows _PortalTestFlows;
         MasterPlusTestFlows _MasterPlusTestFlows;
 
         UtilCmd _CMD = new UtilCmd();
+
+        private dynamic Flow_CMD_SHOW_MENU_AGAIN()
+        {
+            _CMD.WriteOptions(_CMD.List_Current_Menu, lineUpWithNumber:false);
+            return UtilCmd.OPTION_SHOW_MENU_AGAIN;
+        }
+        private dynamic Flow_CMD_Back()
+        {
+            _CMD.WriteOptions(_CMD.List_Last_Menu, lineUpWithNumber: false);
+            return UtilCmd.OPTION_BACK;
+        }
 
         private bool IsTestExisted(string testName, string selectedNum, string loopName)
         {
@@ -37,8 +49,8 @@ namespace CMTest
                 try
                 {
                     string s = Console.ReadLine();
-                    bool? result = this.ProjectMatcher(s, projectOptions);
-                    if (result == true)
+                    string result = this.ProjectMatcher(s, projectOptions);
+                    if (result.Equals(FOUND_TEST))
                     {
                         Console.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
                         return;
@@ -52,7 +64,7 @@ namespace CMTest
             }
         }
 
-        private bool? ProjectMatcher(string selected, List<string> options)
+        private string ProjectMatcher(string selected, List<string> options)
         {
             for (int i = 0; i < options.Count; i++)
             {
@@ -64,154 +76,90 @@ namespace CMTest
                 else if (this.IsTestExisted(TestIt.OPTION_PORTAL, selected, options[i]))
                 {
                     this._PortalTestFlows = new PortalTestFlows();
-                    return this.TestRun(_PortalTestFlows.Options_Cmd, this.PortalTestMatcher);
+                    this.AssemblePortalPlugInOutTests();
+                    return this.TestRun(this.Options_Portal_PlugInOut_Tests_With_Funcs.Keys.ToList(), this.PortalTestMatcher);
                 }
             }
-            return null;
+            return DO_NOTHING;
         }
 
-        private bool TestRun(List<string> options, Func<string, List<string>, bool?> func)
+        private string TestRun(List<string> options, Func<string, List<string>, string> func)
         {
-            options.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
-            options.Add(UtilCmd.OPTION_BACK);
             List<string> testOptions = _CMD.WriteOptions(options);
             while (true)
             {
                 string s = Console.ReadLine();
-                bool? result = func(s, testOptions);
-                if (result == true)
+                string result = func(s, testOptions);
+                if (result.Equals(FOUND_TEST))
                 {
-                    return true;
+                    return FOUND_TEST;
                 }
-                else if (result == null)
+                else if (result.Equals(UtilCmd.OPTION_BACK))
                 {
-                    return false;
+                    return UtilCmd.OPTION_BACK;
                 }
             }
         }
         
-        private bool? MasterPlusTestMatcher(string selected, List<string> options)
+        private string MasterPlusTestMatcher(string selected, List<string> options)
         {
             for (int i = 0; i < options.Count; i++)
             {
-                if (this.IsTestExisted(PortalTestFlows.OPTION_LAUNCH_TEST, selected, options[i]))
+                if (this.IsTestExisted(MasterPlusTestFlows.OPTION_LAUNCH_TEST, selected, options[i]))
                 {
                     this._MasterPlusTestFlows.Flow_LaunchTest();
-                    return true;
+                    return "";
                 }
                 else if (this.IsTestExisted(UtilCmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
                 {
                     _CMD.WriteOptions(this._MasterPlusTestFlows.Options_Cmd);
-                    return false;
+                    return "";
                 }
                 else if (this.IsTestExisted(UtilCmd.OPTION_BACK, selected, options[i]))
                 {
                     return null;
                 }
             }
-            return false;
-        }
-
-        private bool? PortalTestMatcher(string selected, List<string> options)
-        {
-            for (int i = 0; i < options.Count; i++)
-            {
-                if (this.IsTestExisted(PortalTestFlows.OPTION_LAUNCH_TEST, selected, options[i]))
-                {
-                    _PortalTestFlows.Flow_LaunchTest();
-                    return true;
-                }
-                else if (this.IsTestExisted(PortalTestFlows.OPTION_PLUGIN_OUT_TEST, selected, options[i]))
-                {
-                    _PortalTestFlows.Flow_PlugInOutTest();
-                    return true;
-                }
-                else if (this.IsTestExisted(PortalTestFlows.OPTION_SIMPLE_PROFILES_SWITCH, selected, options[i]))
-                {
-                    _PortalTestFlows.Flow_ProfilesSimpleSwitch();
-                    return true;
-                }
-                else if (this.IsTestExisted(PortalTestFlows.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, selected, options[i]))
-                {
-                    _PortalTestFlows.Flow_ProfilesImExSwitch();
-                    return true;
-                }
-                else if (this.IsTestExisted(PortalTestFlows.OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH, selected, options[i]))
-                {
-                    _PortalTestFlows.Flow_ProfilesImExAimpadSwitch();
-                    return true;
-                }
-                else if (this.IsTestExisted(PortalTestFlows.OPTION_PLUGIN_OUT_SERVER, selected, options[i]))
-                {  
-                    string name = "";
-                    while (name.Equals(""))
-                    {
-                        _PortalTestFlows.Options_Devices_Cmd.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
-                        _PortalTestFlows.Options_Devices_Cmd.Add(UtilCmd.OPTION_BACK);
-                        name = this.DeviceMatcher(_CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd));
-                        if (UtilCmd.OPTION_BACK.Equals(name))
-                        {
-                            _PortalTestFlows.Options_Devices_Cmd.Remove(UtilCmd.OPTION_SHOW_MENU_AGAIN);
-                            _PortalTestFlows.Options_Devices_Cmd.Remove(UtilCmd.OPTION_BACK);
-                            return false;
-                        }
-                    }
-                    _PortalTestFlows.Flow_PlugInOutServer(name);
-                    return true;
-                }
-                else if (this.IsTestExisted(UtilCmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
-                {
-                    _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
-                    return false;
-                }
-                else if (this.IsTestExisted(UtilCmd.OPTION_BACK, selected, options[i]))
-                {
-                    return null;
-                }
-            }
-            return false;
+            return "";
         }
 
         private string DeviceMatcher(List<string> options)
         {
             string selected = Console.ReadLine();
+            string deviceName = "";
             for (int i = 0; i < options.Count; i++)
             {
-                if (this.IsTestExisted(VMObj.DeviceItem.Item_MH752.Name, selected, options[i]))
+                deviceName = GetSelectedName(Options_Portal_PlugInOut_Devices_Name, selected, options[i]);
+                if (deviceName != null)
                 {
-                    return VMObj.DeviceItem.Item_MH752.Name;
-                }
-                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MK850.Name, selected, options[i]))
-                {
-                    return VMObj.DeviceItem.Item_MK850.Name;
-                }
-                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MP750.Name, selected, options[i]))
-                {
-                    return VMObj.DeviceItem.Item_MP750.Name;
-                }
-                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MM830.Name, selected, options[i]))
-                {
-                    return VMObj.DeviceItem.Item_MM830.Name;
-                }
-                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MP860.Name, selected, options[i]))
-                {
-                    return VMObj.DeviceItem.Item_MP860.Name;
-                }
-                else if (this.IsTestExisted(VMObj.DeviceItem.Item_MH650.Name, selected, options[i]))
-                {
-                    return VMObj.DeviceItem.Item_MH650.Name;
-                }
-                else if (this.IsTestExisted(UtilCmd.OPTION_SHOW_MENU_AGAIN, selected, options[i]))
-                {
-                    _CMD.WriteOptions(_PortalTestFlows.Options_Devices_Cmd);
-                }
-                else if (this.IsTestExisted(UtilCmd.OPTION_BACK, selected, options[i]))
-                {
-                    _CMD.WriteOptions(_PortalTestFlows.Options_Cmd);
-                    return UtilCmd.OPTION_BACK;
+                    return deviceName;
                 }
             }
-            return "";
-        }  
+            return null;
+        }
+        private string GetSelectedName(List<string> list_all, string selected_num, string compared_option)
+        {
+            for (int j = 0; j < list_all.Count(); j++)
+            {
+                if (this.IsTestExisted(list_all[j], selected_num, compared_option))
+                {
+                    return list_all[j];
+                }
+            }
+            return null;
+        }
+        private string PortalTestMatcher(string selected, List<string> options)
+        {
+            string testName = "";
+            for (int i = 0; i < options.Count; i++)
+            {
+                testName = GetSelectedName(Options_Portal_PlugInOut_Tests_With_Funcs.Keys.ToList<string>(), selected, options[i]);
+                if (testName != null)
+                {
+                    return this.Options_Portal_PlugInOut_Tests_With_Funcs[testName].Invoke();
+                }
+            }
+            return testName;
+        }
     }
 }
