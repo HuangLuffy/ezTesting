@@ -18,13 +18,13 @@ namespace CMTest
             if (Options_Portal_Tests_With_Funcs.Count() == 0)
             {
                 //Select Back that will trigger this function again, so try-catch.
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_LAUNCH_TEST, this.Flow_Portal_LaunchTest);
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_PLUGIN_OUT_SERVER, this.Flow_PlugInOutServer);
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_SIMPLE_PROFILES_SWITCH, this.Flow_ProfilesSimpleSwitch);
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, this.Flow_ProfilesImExAimpadSwitch);
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH, this.Flow_ProfilesImExAimpadSwitch);
-                Options_Portal_Tests_With_Funcs.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN, this.Flow_CMD_SHOW_MENU_AGAIN);
-                Options_Portal_Tests_With_Funcs.Add(UtilCmd.OPTION_BACK, this.Flow_CMD_Back);
+                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_LAUNCH_TEST, Flow_Portal_LaunchTest);
+                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_PLUGIN_OUT_SERVER, Flow_PlugInOutServer);
+                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_SIMPLE_PROFILES_SWITCH, Flow_ProfilesSimpleSwitch);
+                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
+                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
+                Options_Portal_Tests_With_Funcs.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN, _CMD.MenuShowAgain);
+                Options_Portal_Tests_With_Funcs.Add(UtilCmd.OPTION_BACK, _CMD.MenuGoback);
             }
         }
         private void AssemblePortalPlugInOutDevices()
@@ -62,7 +62,7 @@ namespace CMTest
             string name = "";
             while (true)
             {
-                name = MatchDevice(_CMD.WriteOptions(Options_Portal_PlugInOut_Devices_Name));
+                name = FindMatchedDevice(_CMD.WriteCmdMenu(Options_Portal_PlugInOut_Devices_Name));
                 if (name != null)
                 {
                     if (UtilCmd.OPTION_BACK.Equals(name))

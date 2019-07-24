@@ -21,9 +21,9 @@ namespace CMTest.Project.Portal
         public static long TEST_TIMES = 9999999;
 
         public List<string> Options_Portal_PlugInOut_Devices_Name = VMObj.GetDevicesItemList();
-            //new List<string> { VMObj.DeviceItem.Item_MM830.Name, VMObj.DeviceItem.Item_MP860.Name, VMObj.DeviceItem.Item_MK850.Name, VMObj.DeviceItem.Item_MH752.Name, VMObj.DeviceItem.Item_MP750.Name, VMObj.DeviceItem.Item_MH650.Name };
+        //new List<string> { VMObj.DeviceItem.Item_MM830.Name, VMObj.DeviceItem.Item_MP860.Name, VMObj.DeviceItem.Item_MK850.Name, VMObj.DeviceItem.Item_MH752.Name, VMObj.DeviceItem.Item_MP750.Name, VMObj.DeviceItem.Item_MH650.Name };
 
-        PortalTestActions _PortalTestActions = new PortalTestActions();
+        public PortalTestActions _PortalTestActions = new PortalTestActions();
 
         public void Flow_PlugInOutTest()
         {

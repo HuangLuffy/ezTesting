@@ -15,7 +15,7 @@ namespace CMTest.Project.MasterPlus
         
         public static long TEST_TIMES = 99999999;
 
-        MasterPlusTestActions _MasterPlusTestActions = new MasterPlusTestActions();
+        public MasterPlusTestActions _MasterPlusTestActions = new MasterPlusTestActions();
         /// <summary>
         /// haha
         /// </summary>

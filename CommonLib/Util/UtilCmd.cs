@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommonLib.Util
 {
@@ -14,7 +12,19 @@ namespace CommonLib.Util
         public List<string> List_Last_Menu = new List<string>();
         public List<string> List_Current_Menu = new List<string>();
 
-        public List<string> WriteOptions(List<string> options, bool clear = false, bool lineUpWithNumber = true)
+        public string MenuShowAgain()
+        {
+            WriteCmdMenu(List_Current_Menu, lineUpWithNumber: false);
+            return UtilCmd.OPTION_SHOW_MENU_AGAIN;
+        }
+
+        public string MenuGoback()
+        {
+            WriteCmdMenu(List_Last_Menu, lineUpWithNumber: false);
+            return UtilCmd.OPTION_BACK;
+        }
+
+        public List<string> WriteCmdMenu(List<string> options, bool clear = false, bool lineUpWithNumber = true)
         {
             List<string> t = new List<string>();
             if (clear)
@@ -43,7 +53,19 @@ namespace CommonLib.Util
         {
             Console.Clear();
         }
-
+        public void PressAnyContinue(string s = "Please press any key to continue.")
+        {
+            Console.WriteLine(s);
+            ReadLine();
+        }
+        public void WriteLine(string s)
+        {
+            Console.WriteLine(s);
+        }
+        public string ReadLine()
+        {
+            return Console.ReadLine();
+        }
         private bool IsMenuChanged(List<string> a, List<string> b)
         {
             if (a.Count() != b.Count())

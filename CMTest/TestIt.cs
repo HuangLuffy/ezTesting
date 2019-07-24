@@ -14,28 +14,20 @@ namespace CMTest
 {
     public partial class TestIt : AbsResult
     {
-        private const string OPTION_MasterPlus = "MasterPlus";
-        private const string OPTION_PORTAL = "PORTAL";
         private const string FOUND_TEST = "FOUND_TEST";
         private const string DO_NOTHING = "DO_NOTHING";
-        private List<string> Options_Projects = new List<string> { OPTION_PORTAL, OPTION_MasterPlus };
 
-        PortalTestFlows _PortalTestFlows;
+        PortalTestFlows _PortalTestFlows ;
         MasterPlusTestFlows _MasterPlusTestFlows;
-
+        private List<string> Options_Projects = new List<string>();
         UtilCmd _CMD = new UtilCmd();
 
-        private dynamic Flow_CMD_SHOW_MENU_AGAIN()
+        public TestIt()
         {
-            _CMD.WriteOptions(_CMD.List_Current_Menu, lineUpWithNumber: false);
-            return UtilCmd.OPTION_SHOW_MENU_AGAIN;
+            _MasterPlusTestFlows = new MasterPlusTestFlows();
+            _PortalTestFlows = new PortalTestFlows();
+            Options_Projects = new List<string> { _PortalTestFlows._PortalTestActions.SwName, _MasterPlusTestFlows._MasterPlusTestActions.SwName };
         }
-        private dynamic Flow_CMD_Back()
-        {
-            _CMD.WriteOptions(_CMD.List_Last_Menu, lineUpWithNumber: false);
-            return UtilCmd.OPTION_BACK;
-        }
-
         private bool IsTestExisted(string testName, string selectedNum, string loopName)
         {
             return $"{selectedNum.Trim()}{UtilCmd.STRING_CONNECTOR}{testName}".Equals(loopName);
@@ -43,56 +35,53 @@ namespace CMTest
 
         public void OpenCMD()
         {
-            List<string> projectOptions = _CMD.WriteOptions(Options_Projects);
+            List<string> projectOptions = _CMD.WriteCmdMenu(Options_Projects);
             while (true)
             {
                 try
                 {
-                    projectOptions = _CMD.WriteOptions(projectOptions, true, false);
-                    string s = Console.ReadLine();
-                    string result = this.MatchProject(s, projectOptions);
+                    projectOptions = _CMD.WriteCmdMenu(projectOptions, true, false);
+                    string s = _CMD.ReadLine();
+                    string result = this.ShowCmdProjects(s, projectOptions);
                     if (result.Equals(FOUND_TEST))
                     {
-                        Console.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
+                        _CMD.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
                         return;
                     }
-                    projectOptions = _CMD.WriteOptions(Options_Projects, true);
+                    projectOptions = _CMD.WriteCmdMenu(Options_Projects, true);
                 }
                 catch (Exception ex)
                 {
-                    this.HandleWrongStepResult(ex.Message);
-                    Console.WriteLine("Please press any key to continue.");
-                    Console.ReadLine();
+                    HandleWrongStepResult(ex.Message);
+                    _CMD.PressAnyContinue();
                 }
             }
         }
-        private string MatchProject(string selected, List<string> options)
+        private string ShowCmdProjects(string selected, List<string> options)
         {
             for (int i = 0; i < options.Count; i++)
             {
-                if (IsTestExisted(TestIt.OPTION_MasterPlus, selected, options[i]))
+                if (IsTestExisted(_MasterPlusTestFlows._MasterPlusTestActions.SwName, selected, options[i]))
                 {
-                    _MasterPlusTestFlows = new MasterPlusTestFlows();
                     AssembleMasterPlusPlugInOutTests();
-                    return ShowCmdTests(Options_MasterPlus_Tests_With_Funcs);
+                    return ShowCmdTestsBySelectedProject(Options_MasterPlus_Tests_With_Funcs);
                 }
-                else if (IsTestExisted(TestIt.OPTION_PORTAL, selected, options[i]))
+                else if (IsTestExisted(_PortalTestFlows._PortalTestActions.SwName, selected, options[i]))
                 {
-                    _PortalTestFlows = new PortalTestFlows();
                     AssemblePortalPlugInOutTests();
-                    return ShowCmdTests(Options_Portal_Tests_With_Funcs);
+                    return ShowCmdTestsBySelectedProject(Options_Portal_Tests_With_Funcs);
                 }
             }
             return DO_NOTHING;
         }
-        private string ShowCmdTests(IDictionary<string, Func<dynamic>> testFuncsByTestName)
+        private string ShowCmdTestsBySelectedProject(IDictionary<string, Func<dynamic>> testFuncsByTestName)
         {
-            List<string> testOptions = _CMD.WriteOptions(testFuncsByTestName.Keys.ToList());
+            List<string> testOptions = _CMD.WriteCmdMenu(testFuncsByTestName.Keys.ToList());
             while (true)
             {
-                testOptions = _CMD.WriteOptions(testOptions, true, false);
-                string input = Console.ReadLine();
-                string result = MatchTestAndRun(testFuncsByTestName, input, testOptions);
+                testOptions = _CMD.WriteCmdMenu(testOptions, true, false);
+                string input = _CMD.ReadLine();
+                string result = FindMatchedTest(testFuncsByTestName, input, testOptions);
                 if (result == null)
                 {
                     //Back from submenu, so it should stay here.
@@ -107,9 +96,9 @@ namespace CMTest
                 }
             }
         }
-        private string MatchDevice(List<string> options)
+        private string FindMatchedDevice(List<string> options)
         {
-            string selected = Console.ReadLine();
+            string selected = _CMD.ReadLine();
             string deviceName = "";
             for (int i = 0; i < options.Count; i++)
             {
@@ -132,7 +121,7 @@ namespace CMTest
             }
             return null;
         }
-        private string MatchTestAndRun(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, List<string> options)
+        private string FindMatchedTest(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, List<string> options)
         {
             string testName = "";
             for (int i = 0; i < options.Count; i++)
