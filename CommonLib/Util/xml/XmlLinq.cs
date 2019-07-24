@@ -17,15 +17,9 @@ namespace CommonLib.Util.xml
         }
         public XmlLinq(string xmlFullPath)
         {
-            try
-            {
-                this.xmlFullPath = xmlFullPath;
-                _XElement = XElement.Load(xmlFullPath);
-            }
-            catch (Exception ex)
-            {
-                Logger.LogThrowException(String.Format("Failed to get xml from [{0}].", xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
-            }
+            this.xmlFullPath = xmlFullPath;
+            _XElement = XElement.Load(xmlFullPath);
+            //Logger.LogThrowException(String.Format("Failed to get xml from [{0}].", xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
         }
 
         public T GetXmlLoad<T>(string xmlFullPath)
@@ -77,11 +71,12 @@ namespace CommonLib.Util.xml
                 //return _XDocument;
                 return (T)Convert.ChangeType(_XDocument, typeof(T));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger.LogThrowException(String.Format("Failed to create Xml doc. RootNode is [{0}].", rootNode), new StackFrame(0).GetMethod().Name, ex.Message);
+                return default(T);
+                //Logger.LogThrowException(String.Format("Failed to create Xml doc. RootNode is [{0}].", rootNode), new StackFrame(0).GetMethod().Name, ex.Message);
             }
-            return default(T);
+            
         }
         public void SetClassFromXml<T>(T _T)
         {
@@ -92,9 +87,9 @@ namespace CommonLib.Util.xml
                 {
                     _PropertyInfo.SetValue(_T, this.GetValue(_PropertyInfo.GetValue((_T)).ToString()));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Logger.LogThrowMessage(String.Format("Failed to find xml node {0} in [{1}].", _PropertyInfo.GetValue(_T).ToString(), xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                    //Logger.LogThrowMessage(String.Format("Failed to find xml node {0} in [{1}].", _PropertyInfo.GetValue(_T).ToString(), xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
                 }
             }
         }
@@ -105,9 +100,9 @@ namespace CommonLib.Util.xml
                 XDocument _XDocument = ((XDocument)Convert.ChangeType(_T, typeof(T)));
                 _XDocument.Save(xmlFullPath);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger.LogThrowMessage(String.Format("Failed to save xml [{0}].", xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                //Logger.LogThrowMessage(String.Format("Failed to save xml [{0}].", xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
             }
         }
         public void SetClassFromXmlDoc<T, C>(T _T, C _C, string node = "")
@@ -121,9 +116,9 @@ namespace CommonLib.Util.xml
                 {    
                     _PropertyInfo.SetValue(_C, _XElement.Element(_PropertyInfo.GetValue((_C)).ToString()).Value);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Logger.LogThrowMessage(String.Format("Failed to find xml node {0} in [{1}].", _PropertyInfo.GetValue(_C).ToString(), xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                    //Logger.LogThrowMessage(String.Format("Failed to find xml node {0} in [{1}].", _PropertyInfo.GetValue(_C).ToString(), xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
                 }
             }
         }
@@ -138,9 +133,9 @@ namespace CommonLib.Util.xml
                 {
                     _XElement.Add(new XElement(_FieldInfo.Name, _FieldInfo.GetValue(_C)));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Logger.LogThrowMessage(String.Format("Failed to Set Xml From Class."), new StackFrame(0).GetMethod().Name, ex.Message);
+                    //Logger.LogThrowMessage(String.Format("Failed to Set Xml From Class."), new StackFrame(0).GetMethod().Name, ex.Message);
                 }
             }
         }
@@ -156,9 +151,9 @@ namespace CommonLib.Util.xml
             {
                 return this.GetElementsIEnumerable(nodeName).ToArray<string>();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger.LogThrowException(String.Format("Failed to get values array."), new StackFrame(0).GetMethod().Name, ex.Message);
+                //Logger.LogThrowException(String.Format("Failed to get values array."), new StackFrame(0).GetMethod().Name, ex.Message);
                 return null;
             }
         }
@@ -168,9 +163,9 @@ namespace CommonLib.Util.xml
             {
                 return this.GetElementsIEnumerable(nodeName).ToList<string>();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger.LogThrowException(String.Format("Failed to get values List."), new StackFrame(0).GetMethod().Name, ex.Message);
+                //Logger.LogThrowException(String.Format("Failed to get values List."), new StackFrame(0).GetMethod().Name, ex.Message);
                 return null;
             }
         }
@@ -189,9 +184,9 @@ namespace CommonLib.Util.xml
                     return from x in _XElement.Elements(nodeName) select x.Value;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger.LogThrowException(String.Format("Failed to get elements IEnumerable."), new StackFrame(0).GetMethod().Name, ex.Message);
+                //Logger.LogThrowException(String.Format("Failed to get elements IEnumerable."), new StackFrame(0).GetMethod().Name, ex.Message);
                 return null;
             }
         }
@@ -204,9 +199,9 @@ namespace CommonLib.Util.xml
                 XElement _XElement = nodeName.Equals("") ? _XDocument.Root : _XDocument.Descendants(nodeName).Where(a => a.Name.LocalName.Equals(nodeName)).First();
                 _XElement.Value = nodeValue;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger.LogThrowException(String.Format("Failed to set node value."), new StackFrame(0).GetMethod().Name, ex.Message);
+               //Logger.LogThrowException(String.Format("Failed to set node value."), new StackFrame(0).GetMethod().Name, ex.Message);
             }
         }
         public string GetValue(string nodeName = null)
@@ -215,9 +210,9 @@ namespace CommonLib.Util.xml
             {
                 return _XElement.Element(nodeName).Value ;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger.LogThrowException(String.Format("Failed to get node value."), new StackFrame(0).GetMethod().Name, ex.Message);
+                //Logger.LogThrowException(String.Format("Failed to get node value."), new StackFrame(0).GetMethod().Name, ex.Message);
                 return null;
             }
         }

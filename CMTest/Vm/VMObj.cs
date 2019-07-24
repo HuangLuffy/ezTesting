@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMTest.Project.Portal
+namespace CMTest.Vm
 {
     public class VMObj
     {

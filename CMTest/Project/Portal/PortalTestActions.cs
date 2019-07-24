@@ -2,7 +2,7 @@
 using ATLib.Input;
 using CommonLib.Util;
 using CommonLib.Util.os;
-using CMTest.Project.Portal.VmOerations;
+using CMTest.Vm;
 using System;
 using System.Collections.Generic;
 using System.Linq;

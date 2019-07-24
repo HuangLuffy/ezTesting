@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMTest.Project.Portal.VmOerations
+namespace CMTest.Vm
 {
     public class VmOps
     {

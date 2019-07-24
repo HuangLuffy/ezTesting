@@ -67,8 +67,8 @@
     <Compile Include="Project\Portal\PortalTestFlows.cs" />
     <Compile Include="Project\Portal\PortalObj.cs" />
     <Compile Include="Project\Portal\PortalTestActions.cs" />
-    <Compile Include="Project\Vm\VMObj.cs" />
-    <Compile Include="Project\Vm\VmOps.cs" />
+    <Compile Include="Vm\VMObj.cs" />
+    <Compile Include="Vm\VmOps.cs" />
     <Compile Include="Project\SWCommonActions.cs" />
     <Compile Include="TestIt.cs" />
     <Compile Include="Project\Portal\Portal.cs" />
@@ -103,6 +103,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Conf.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

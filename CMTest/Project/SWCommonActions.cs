@@ -29,7 +29,7 @@ namespace CMTest.Project
                 //Qt5QWindowIcon
                 UtilTime.WaitTime(2);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.MainWindow_SW = new AT().GetElement(Name: this.Obj.Name_MainWidow, ClassName: this.Obj.ClassName_MainWidow, Timeout: this.Timeout);
                 this.HandleWrongStepResult("Cannot find the App.", this.LaunchTimes);

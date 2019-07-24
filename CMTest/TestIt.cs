@@ -16,11 +16,10 @@ namespace CMTest
     {
         private const string FOUND_TEST = "FOUND_TEST";
         private const string DO_NOTHING = "DO_NOTHING";
-
-        PortalTestFlows _PortalTestFlows ;
-        MasterPlusTestFlows _MasterPlusTestFlows;
-        private List<string> Options_Projects = new List<string>();
-        UtilCmd _CMD = new UtilCmd();
+        private PortalTestFlows _PortalTestFlows ;
+        private MasterPlusTestFlows _MasterPlusTestFlows;
+        private List<string> Options_Projects;
+        private UtilCmd _CMD = new UtilCmd();
 
         public TestIt()
         {
@@ -42,7 +41,7 @@ namespace CMTest
                 {
                     projectOptions = _CMD.WriteCmdMenu(projectOptions, true, false);
                     string s = _CMD.ReadLine();
-                    string result = this.ShowCmdProjects(s, projectOptions);
+                    string result = ShowCmdProjects(s, projectOptions);
                     if (result.Equals(FOUND_TEST))
                     {
                         _CMD.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");

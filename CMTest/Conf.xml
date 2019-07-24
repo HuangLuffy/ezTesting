@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<conf>
+  <vmPlugInOutDevices vmName="MH650">
+    <device vmName ="H500M" index="0">
+      H500M
+    </device>
+    <device vmName ="RPBU" index="0">
+      RPBU
+    </device>
+    <device vmName ="MM830" index="0">
+      MM830
+    </device>
+    <device vmName ="Gaming Keyboard MK850" index="0">
+      MK850
+    </device>
+    <device vmName ="MH752" index="0">
+      MH752
+    </device>
+    <device vmName ="RGB Mousepad" index="0">
+      RGB Mousepad
+    </device>
+    <device vmName ="MH650" index="1">
+      MH650
+    </device>
+  </vmPlugInOutDevices>
+</conf>
