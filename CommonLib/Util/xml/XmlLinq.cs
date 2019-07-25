@@ -21,8 +21,11 @@ namespace CommonLib.Util.xml
             _XElement = XElement.Load(xmlFullPath);
             //Logger.LogThrowException(String.Format("Failed to get xml from [{0}].", xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
         }
-
-        public T GetXmlLoad<T>(string xmlFullPath)
+        public XElement GetXElement()
+        {
+            return _XElement;
+        }
+        public T GetXmlLoad<T>(string xmlFullPath = "")
         {
             try
             {
@@ -33,11 +36,11 @@ namespace CommonLib.Util.xml
                 //return _T; 
                 return (T)Convert.ChangeType(XDocument.Load(xmlFullPath, LoadOptions.SetBaseUri | LoadOptions.SetLineInfo), typeof(T));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger.LogThrowException(String.Format("Failed to Get Xml Load from [{0}].", xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                return default(T);
             }
-            return default(T);
+            
             //return null;
         }
         public void CreateXmlWithSameNodeNameList(string rootName, string nodeName, IEnumerable<string> nodeValueList)

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using CMTest.Xml;
 
 namespace CMTest
 {
@@ -17,6 +18,9 @@ namespace CMTest
     {
         static void Main(string[] args)
         {
+            XmlOps _XmlOps = new XmlOps();
+            _XmlOps.GetVmPlugInOutRunDevice();
+
             TestIt _TestIt = new TestIt();
             _TestIt.OpenCMD();
             Console.ReadKey();

@@ -77,6 +77,7 @@
     <Compile Include="Project\SW.cs" />
     <Compile Include="TestItMasterPlusPartial.cs" />
     <Compile Include="TestItPortalPartial.cs" />
+    <Compile Include="Xml\XmlOps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
