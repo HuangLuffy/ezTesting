@@ -1,13 +1,9 @@
 ﻿using ATLib;
-using ATLib.Input;
 using CommonLib.Util;
 using CommonLib.Util.os;
 using CMTest.Vm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CMTest.Project.Portal
 {
@@ -22,20 +18,23 @@ namespace CMTest.Project.Portal
             this._VmOps = new VmOps();
         }
 
-        public void PlugOutDeviceFromVM(string deviceNameVM)
+        public void PlugOutDeviceFromVM(string deviceNameVM, string waitTime = "5", string index = "0")
         {   //Using admin to run VM in win10 otherwise rightclick would not work.
+            AT VM_Window = _VmOps.GetVM();
             try
             {
-                if (deviceNameVM.Equals(VMObj.DeviceItem.Item_MH650.Name)) // Show 2 identical devices in VM.
-                {
-                    this._VmOps.PlugOutInDeviceFromVM(deviceNameVM, 1);
-                    this.Timeout = 5;
-                }
-                else
-                {
-                    this._VmOps.PlugOutInDeviceFromVM(deviceNameVM);
-                    this.Timeout = 20;
-                }
+                _VmOps.PlugOutInDeviceFromVM(deviceNameVM, Convert.ToInt16(index), VM_Window);
+                this.Timeout = Convert.ToInt16(waitTime);
+                //if (deviceNameVM.Equals(VMObj.DeviceItem.Item_MH650.Name)) // Show 2 identical devices in VM.
+                //{
+                //    this._VmOps.PlugOutInDeviceFromVM(deviceNameVM, 1);
+                //    this.Timeout = 5;
+                //}
+                //else
+                //{
+                //    this._VmOps.PlugOutInDeviceFromVM(deviceNameVM);
+                //    this.Timeout = 20;
+                //}
                 this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for connecting/disconnecting. ({this.Timeout}s)", this.Timeout);
             }
             catch (Exception)

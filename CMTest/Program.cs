@@ -18,9 +18,6 @@ namespace CMTest
     {
         static void Main(string[] args)
         {
-            XmlOps _XmlOps = new XmlOps();
-            _XmlOps.GetVmPlugInOutRunDevice();
-
             TestIt _TestIt = new TestIt();
             _TestIt.OpenCMD();
             Console.ReadKey();

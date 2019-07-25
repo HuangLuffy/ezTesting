@@ -11,9 +11,12 @@ namespace CMTest.Vm
 {
     public class VmOps
     {
-        private void OpenRemovableDevices()
+        public AT GetVM()
         {
-            AT Window_VM = new AT().GetElement(VMObj.Window_VM);
+            return new AT().GetElement(VMObj.Window_VM);
+        }
+        private void OpenRemovableDevices(AT Window_VM)
+        {
             AT Tab_TestVM = Window_VM.GetElement(VMObj.Tab_TestVM);
             Tab_TestVM.DoSetFocus();
             UtilTime.WaitTime(1);
@@ -61,9 +64,9 @@ namespace CMTest.Vm
             itemCon.DoClickPoint(10, 10, mk: HWSimulator.HWSend.MouseKeys.LEFT);
         }
 
-        public void PlugOutInDeviceFromVM(string deviceNameVM, int itemIndex = 0)
+        public void PlugOutInDeviceFromVM(string deviceNameVM, int itemIndex = 0, AT VM_Window = null)
         {   //Using admin to run VM in win10 otherwise rightclick would no work.
-            this.OpenRemovableDevices();
+            this.OpenRemovableDevices(VM_Window);
             AT Item_Target = this.GetTargetItem(deviceNameVM, itemIndex);
             Item_Target.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
             this.PlugoutOrIn();

@@ -101,7 +101,7 @@ namespace CMTest
             string deviceName = "";
             for (int i = 0; i < options.Count; i++)
             {
-                deviceName = GetSelectedName(Options_Portal_PlugInOut_Devices_Name, selected, options[i]);
+                deviceName = GetSelectedName(Options_Portal_PlugInOut_Device_Names, selected, options[i]);
                 if (deviceName != null)
                 {
                     return deviceName;

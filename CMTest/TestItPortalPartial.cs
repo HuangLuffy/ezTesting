@@ -1,5 +1,6 @@
 ﻿using CMTest.Project.Portal;
 using CMTest.Vm;
+using CMTest.Xml;
 using CommonLib.Util;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace CMTest
     public partial class TestIt
     {
         IDictionary<string, Func<dynamic>> Options_Portal_Tests_With_Funcs = new Dictionary<string, Func<dynamic>>();
-        public List<string> Options_Portal_PlugInOut_Devices_Name = new List<string>();
-
+        public List<string> Options_Portal_PlugInOut_Device_Names = new List<string>();
+        XmlOps _XmlOps = new XmlOps();
         private void AssemblePortalPlugInOutTests()
         {
             if (Options_Portal_Tests_With_Funcs.Count() == 0)
@@ -26,13 +27,14 @@ namespace CMTest
                 Options_Portal_Tests_With_Funcs.Add(UtilCmd.OPTION_BACK, _CMD.MenuGoback);
             }
         }
-        private void AssemblePortalPlugInOutDevices()
+        private void AssemblePortalPlugInOutDevices(bool fromConf = true)
         {
-            if (Options_Portal_PlugInOut_Devices_Name.Count() == 0)
+            if (Options_Portal_PlugInOut_Device_Names.Count() == 0)
             {
-                Options_Portal_PlugInOut_Devices_Name = UtilCloner.CloneList(VMObj.GetDevicesItemList());
-                Options_Portal_PlugInOut_Devices_Name.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
-                Options_Portal_PlugInOut_Devices_Name.Add(UtilCmd.OPTION_BACK);
+                Options_Portal_PlugInOut_Device_Names = UtilCloner.CloneList(_XmlOps.GetDeviceNameList());
+                //Options_Portal_PlugInOut_Device_Names = UtilCloner.CloneList(VMObj.GetDevicesItemList());
+                Options_Portal_PlugInOut_Device_Names.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
+                Options_Portal_PlugInOut_Device_Names.Add(UtilCmd.OPTION_BACK);
             }
         }
         private dynamic Flow_Portal_LaunchTest()
@@ -58,23 +60,23 @@ namespace CMTest
         private dynamic Flow_PlugInOutServer()
         {
             AssemblePortalPlugInOutDevices();
-            string name = "";
+            string deviceName = "";
             while (true)
             {
-                name = FindMatchedDevice(_CMD.WriteCmdMenu(Options_Portal_PlugInOut_Devices_Name));
-                if (name != null)
+                deviceName = FindMatchedDevice(_CMD.WriteCmdMenu(Options_Portal_PlugInOut_Device_Names));
+                if (deviceName != null)
                 {
-                    if (UtilCmd.OPTION_BACK.Equals(name))
+                    if (UtilCmd.OPTION_BACK.Equals(deviceName))
                     {
                         return null; //cannot return "back" since it needs to stand at previous level.
                     }
-                    else if (UtilCmd.OPTION_SHOW_MENU_AGAIN.Equals(name))
+                    else if (UtilCmd.OPTION_SHOW_MENU_AGAIN.Equals(deviceName))
                     {
                         _CMD.Clear();
                     }
                     else
                     {
-                        _PortalTestFlows.Flow_PlugInOutServer(name);
+                        _PortalTestFlows.Flow_PlugInOutServer(deviceName, _XmlOps.GetWaitTime(deviceName), _XmlOps.GetIndex(deviceName));
                         return FOUND_TEST;
                     }
                 }      

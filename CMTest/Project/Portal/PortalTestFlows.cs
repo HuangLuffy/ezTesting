@@ -30,12 +30,12 @@ namespace CMTest.Project.Portal
                 _PortalTestActions.IsSWCrash(1, 3);
             }
         }
-        public void Flow_PlugInOutServer(string deviceNameVM)
+        public void Flow_PlugInOutServer(string deviceNameVM, string waitTime, string index)
         {
             for (int i = 1; i < TEST_TIMES; i++)
             {
                 _PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
-                _PortalTestActions.PlugOutDeviceFromVM(deviceNameVM);
+                _PortalTestActions.PlugOutDeviceFromVM(deviceNameVM, waitTime, index);
             }
         }
         public void Flow_LaunchTest()
