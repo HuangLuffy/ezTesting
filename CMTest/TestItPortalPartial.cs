@@ -61,9 +61,13 @@ namespace CMTest
         {
             AssemblePortalPlugInOutDevices();
             string deviceName = "";
+            string input = "";
+            List<string> options = _CMD.WriteCmdMenu(Options_Portal_PlugInOut_Device_Names);
             while (true)
             {
-                deviceName = FindMatchedDevice(_CMD.WriteCmdMenu(Options_Portal_PlugInOut_Device_Names));
+                options = _CMD.WriteCmdMenu(options, true, false);
+                input = _CMD.ReadLine();
+                deviceName = FindMatchedDevice(Options_Portal_PlugInOut_Device_Names, input, options);
                 if (deviceName != null)
                 {
                     if (UtilCmd.OPTION_BACK.Equals(deviceName))
