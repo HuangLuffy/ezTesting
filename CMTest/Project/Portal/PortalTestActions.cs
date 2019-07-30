@@ -9,7 +9,7 @@ namespace CMTest.Project.Portal
 {
     public class PortalTestActions : Portal
     {
-        PortalObj _PortalObj;
+        private readonly PortalObj _PortalObj;
         VmOps _VmOps;
         public PortalTestActions()
         {
