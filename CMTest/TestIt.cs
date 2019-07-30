@@ -27,10 +27,7 @@ namespace CMTest
             _PortalTestFlows = new PortalTestFlows();
             Options_Projects = new List<string> { _PortalTestFlows._PortalTestActions.SwName, _MasterPlusTestFlows._MasterPlusTestActions.SwName };
         }
-        private bool IsTestExisted(string testName, string selectedNum, string loopName)
-        {
-            return $"{selectedNum.Trim()}{UtilCmd.STRING_CONNECTOR}{testName}".Equals(loopName);
-        }
+
         public void OpenCMD()
         {
             List<string> projectOptions = _CMD.WriteCmdMenu(Options_Projects);
@@ -131,6 +128,10 @@ namespace CMTest
                 }
             }
             return null;
+        }
+        private bool IsTestExisted(string testName, string selectedNum, string loopName)
+        {
+            return $"{selectedNum.Trim()}{UtilCmd.STRING_CONNECTOR}{testName}".Equals(loopName);
         }
     }
 }
