@@ -27,7 +27,11 @@ namespace CMTest
             _PortalTestFlows = new PortalTestFlows();
             Options_Projects = new List<string> { _PortalTestFlows._PortalTestActions.SwName, _MasterPlusTestFlows._MasterPlusTestActions.SwName };
         }
-
+        public struct RunDirectly
+        {
+            public bool run;
+            public string device;
+        }
         public void OpenCMD()
         {
             List<string> projectOptions = _CMD.WriteCmdMenu(Options_Projects);

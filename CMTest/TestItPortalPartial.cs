@@ -10,10 +10,10 @@ namespace CMTest
 {
     public partial class TestIt
     {
-        IDictionary<string, Func<dynamic>> Options_Portal_Tests_With_Funcs = new Dictionary<string, Func<dynamic>>();
+        public IDictionary<string, Func<dynamic>> Options_Portal_Tests_With_Funcs = new Dictionary<string, Func<dynamic>>();
         public List<string> Options_Portal_PlugInOut_Device_Names = new List<string>();
-        XmlOps _XmlOps = new XmlOps();
-        private void AssemblePortalPlugInOutTests()
+        public XmlOps _XmlOps = new XmlOps();
+        public void AssemblePortalPlugInOutTests()
         {
             if (Options_Portal_Tests_With_Funcs.Count() == 0)
             {
@@ -80,11 +80,15 @@ namespace CMTest
                     }
                     else
                     {
-                        _PortalTestFlows.Flow_PlugInOutServer(deviceName, _XmlOps.GetWaitTime(deviceName), _XmlOps.GetIndex(deviceName));
+                        RunDirectly_Flow_PlugInOutServer(deviceName);
                         return FOUND_TEST;
                     }
                 }      
             }
+        }
+        public void RunDirectly_Flow_PlugInOutServer(string deviceName)
+        {
+            _PortalTestFlows.Flow_PlugInOutServer(deviceName, _XmlOps.GetWaitTime(deviceName), _XmlOps.GetIndex(deviceName));
         }
     }
 }

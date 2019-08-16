@@ -78,6 +78,6 @@ namespace CMTest.Vm
             Name = "Context"
             //Name = "上下文"
         };
-        //also need to add related device to TestIt.cs > private string DeviceMatcher(List<string> options)
+        //also need to add related device to xml.
     }
 }
