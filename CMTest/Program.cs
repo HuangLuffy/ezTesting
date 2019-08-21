@@ -19,10 +19,11 @@ namespace CMTest
         static void Main(string[] args)
         {
             TestIt _TestIt = new TestIt();
-            if (args.Length >= 2 && args[0].Trim().Equals("-d", StringComparison.CurrentCultureIgnoreCase) && !args[1].Trim().Equals(""))
+            string args1 = args[1].Trim();
+            if (args.Length >= 2 && args[0].Trim().Equals("-d", StringComparison.CurrentCultureIgnoreCase) && !args1.Equals(""))
             {
-                TestIt.RunDirectly _RunDirectly = new TestIt.RunDirectly() { run = true, device = args[1].Trim() };
-                _TestIt.RunDirectly_Flow_PlugInOutServer(args[1].Trim());
+                //TestIt.RunDirectly _RunDirectly = new TestIt.RunDirectly() { run = true, device = args1 };
+                _TestIt.RunDirectly_Flow_PlugInOutServer(args1);
             }
             else
             {

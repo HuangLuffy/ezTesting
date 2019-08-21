@@ -20,7 +20,7 @@ namespace CMTest.Xml
             XmlLinq _XmlLinq = new XmlLinq(Path.Combine(Directory.GetCurrentDirectory(), "Conf.xml"));
             vmPlugInOutDevicesRoot = _XmlLinq.GetXElement().Element("vmPlugInOutDevices");
             //vmPlugInOutDevicesRoot = _XmlLinq.GetXElement().Descendants("device").Select(p => p.Elements());
-            GetDevicesInfo();
+            LoadDevicesDictInfo();
         }
         public string GetVmPlugInOutDeviceNeedToRun()
         {
@@ -33,7 +33,7 @@ namespace CMTest.Xml
                 return "";
             }  
         }
-        private void GetDevicesInfo()
+        private void LoadDevicesDictInfo()
         {
             var devices = vmPlugInOutDevicesRoot.Elements(NODE_DEVICE);
             devices.ToList().ForEach(item => Devices_Dict.Add(item.Attribute(ATTRIBUTE_VMNAME).Value, new Dictionary<string, string>() { { ATTRIBUTE_INDEX, item.Attribute(ATTRIBUTE_INDEX).Value }, { ATTRIBUTE_WAITTIME, item.Attribute(ATTRIBUTE_WAITTIME).Value } }));
