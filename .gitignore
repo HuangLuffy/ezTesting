@@ -18,6 +18,7 @@ XunitTest/bin/*
 OpenIt/obj/*
 OpenIt/bin/*
 CMTest/obj/*
-CMTest/bin/*
-!CMTest\bin\Debug\Conf.xml
+CMTest/bin/Debug/*
+!/CMTest/bin/Debug/Conf.xml
+CMTest/bin/Release
 packages/*
