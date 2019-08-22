@@ -5,10 +5,10 @@
 	<device vmName ="ARGB2 LED Controller" waitTime="5" index="0">ARGB2</device>
     <device vmName ="RPBU" waitTime="5" index="0">RPBU</device>
     <device vmName ="MM830" waitTime="5" index="0">MM830</device>
-    <device vmName ="Gaming Keyboard MK850" waitTime="5" index="0">MK850</device>
+    <device vmName ="Gaming Keyboard MK850" waitTime="8" index="0">MK850</device>
     <device vmName ="MH752" waitTime="5" index="0">MH752</device>
     <device vmName ="RGB Mousepad" waitTime="5" index="0">RGB Mousepad</device>
     <device vmName ="MH650" waitTime="5" index="1">MH650</device>
-	    <device vmName ="MH670" waitTime="5" index="0">MH670</device>
+	<device vmName ="MH670" waitTime="5" index="0">MH670</device>
   </vmPlugInOutDevices>
 </conf>
