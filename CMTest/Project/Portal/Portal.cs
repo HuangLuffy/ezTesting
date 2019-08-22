@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CMTest.Project.Portal
+﻿namespace CMTest.Project.Portal
 {
     public class Portal : SWCommonActions
     {
