@@ -9,11 +9,11 @@ namespace CMTest.Xml
 {
     public class XmlOps
     {
-        public const string ATTRIBUTE_INDEX = "index";
-        public const string ATTRIBUTE_VMNAME = "vmName";
-        public const string ATTRIBUTE_WAITTIME = "waitTime";
-        public const string NODE_DEVICE = "device";
-        private XElement vmPlugInOutDevicesRoot;
+        private const string ATTRIBUTE_INDEX = "index";
+        private const string ATTRIBUTE_VMNAME = "vmName";
+        private const string ATTRIBUTE_WAITTIME = "waitTime";
+        private const string NODE_DEVICE = "device";
+        private readonly XElement vmPlugInOutDevicesRoot;
         private Dictionary<string, Dictionary<string, string>> Devices_Dict = new Dictionary<string, Dictionary<string, string>>();
         public XmlOps()
         {
