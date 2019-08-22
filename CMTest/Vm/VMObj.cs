@@ -10,7 +10,7 @@ namespace CMTest.Vm
         public static List<string> GetDevicesItemList()
         {
             List<string> tmpList = new List<string>();
-            FieldInfo[] f = typeof(VMObj.DeviceItem).GetFields();
+            FieldInfo[] f = typeof(DeviceItem).GetFields();
             f.ToList().ForEach(a => tmpList.Add(((ATElementStruct)a.GetValue("Name")).Name));
             return tmpList;
         }

@@ -18,7 +18,7 @@ namespace ATLib
             {
                 try
                 {
-                    AT IE = new AT().GetElement(ClassName: AT.ClassName.IEFrame);
+                    AT IE = new AT().GetElement(ClassName: ATElement.ClassName.IEFrame);
                     IE.DoWindowEvents().Close();
                 }
                 catch (Exception)
@@ -38,7 +38,7 @@ namespace ATLib
             _Point.X = Control.MousePosition.X; 
             _Point.Y = Control.MousePosition.Y;
             AT at = new AT(AutomationElement.FromPoint(_Point));
-            ATS items = at.GetElements(TreeScope: AT.TreeScope.Descendants, ControlType: AT.ControlType.ListItem);
+            ATS items = at.GetElements(TreeScope: ATElement.TreeScope.Descendants, ControlType: ATElement.ControlType.ListItem);
             List<string> list = new List<string>();
             foreach (AT item in items.GetATCollection())
             {

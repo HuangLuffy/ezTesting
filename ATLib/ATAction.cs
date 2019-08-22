@@ -16,7 +16,7 @@ namespace ATLib
         }
         protected ATAction(AutomationElement elePara)
         {
-            this.AutomationElement = elePara;
+            AutomationElement = elePara;
         }
 
         public void DoByMode(string DoMode, double waitTime = 0.1)
@@ -47,7 +47,7 @@ namespace ATLib
         {
             try
             {
-                ExpandCollapsePattern t = this.AutomationElement.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
+                ExpandCollapsePattern t = AutomationElement.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
                 t.Expand();
                 Thread.Sleep((int)(waitTime * 1000));
             }
@@ -60,7 +60,7 @@ namespace ATLib
         {
             try
             {
-                SelectionItemPattern t = (SelectionItemPattern)this.AutomationElement.GetCurrentPattern(SelectionItemPattern.Pattern);
+                SelectionItemPattern t = (SelectionItemPattern)AutomationElement.GetCurrentPattern(SelectionItemPattern.Pattern);
                 t.Select();
                 Thread.Sleep((int)(waitTime * 1000));
             }
@@ -83,13 +83,13 @@ namespace ATLib
             {
                 try
                 {
-                    ptClick = this.AutomationElement.GetClickablePoint();
+                    ptClick = AutomationElement.GetClickablePoint();
                 }
                 catch
                 {
                     try
                     {
-                        ptClick = new Point((this.AutomationElement.Current.BoundingRectangle.Left + 2), (this.AutomationElement.Current.BoundingRectangle.Top + 2));
+                        ptClick = new Point((AutomationElement.Current.BoundingRectangle.Left + 2), (AutomationElement.Current.BoundingRectangle.Top + 2));
                     }
                     catch (Exception ex)
                     {
@@ -101,7 +101,7 @@ namespace ATLib
             {
                 try
                 {
-                    ptClick = new Point((this.AutomationElement.Current.BoundingRectangle.Left), (this.AutomationElement.Current.BoundingRectangle.Top));
+                    ptClick = new Point((AutomationElement.Current.BoundingRectangle.Left), (AutomationElement.Current.BoundingRectangle.Top));
                 }
                 catch (Exception ex)
                 {
@@ -110,7 +110,7 @@ namespace ATLib
             }
             try
             {
-                HWSend.MoveMouseAndClick((int)ptClick.X + (int)x, (int)ptClick.Y + (int)y, mk);
+                MoveMouseAndClick((int)ptClick.X + (int)x, (int)ptClick.Y + (int)y, mk);
             }
             catch (Exception ex)
             {
@@ -126,7 +126,7 @@ namespace ATLib
         {
             try
             {
-                return new ScrollEvents(new AT(this.AutomationElement));
+                return new ScrollEvents(new AT(AutomationElement));
             }
             catch (Exception ex)
             {
@@ -152,7 +152,7 @@ namespace ATLib
             /// <param name="atObj"></param>
             public ScrollEvents(AT atObj)
             {
-                this.elePara = atObj;
+                elePara = atObj;
                 try
                 {
                     scrollPattern = (ScrollPattern)atObj.AutomationElement.GetCurrentPattern(ScrollPattern.Pattern);
@@ -191,7 +191,7 @@ namespace ATLib
             //try { DoSetFocus(ele); }catch (Exception) { }
             try
             {
-                TogglePattern t = (TogglePattern)this.AutomationElement.GetCurrentPattern(TogglePattern.Pattern);
+                TogglePattern t = (TogglePattern)AutomationElement.GetCurrentPattern(TogglePattern.Pattern);
                 t.Toggle();
             }
             catch (Exception ex)
@@ -209,7 +209,7 @@ namespace ATLib
             //try { DoSetFocus(ele); }catch (Exception) { }
             try
             {
-                InvokePattern t = (InvokePattern)this.AutomationElement.GetCurrentPattern(InvokePattern.Pattern);
+                InvokePattern t = (InvokePattern)AutomationElement.GetCurrentPattern(InvokePattern.Pattern);
                 t.Invoke();
             }
             catch (Exception ex)
@@ -226,7 +226,7 @@ namespace ATLib
         {
             try
             {
-                InvokePattern t = (InvokePattern)this.AutomationElement.GetCurrentPattern(InvokePattern.Pattern);
+                InvokePattern t = (InvokePattern)AutomationElement.GetCurrentPattern(InvokePattern.Pattern);
                 Thread invokeThread = new Thread(t.Invoke);
                 invokeThread.Start();
                 invokeThread.Join();
@@ -246,7 +246,7 @@ namespace ATLib
         {
             try
             {
-                this.AutomationElement.SetFocus();
+                AutomationElement.SetFocus();
                 Thread.Sleep((int)(waitTime * 1000));
             }
             catch (Exception ex)
@@ -262,7 +262,7 @@ namespace ATLib
         {
             try
             {
-                return new WindowEvents(new AT(this.AutomationElement));
+                return new WindowEvents(new AT(AutomationElement));
             }
             catch (Exception ex)
             {
@@ -374,7 +374,7 @@ namespace ATLib
             catch (Exception) { }
             try
             {
-                ValuePattern tbTestBox = this.AutomationElement.GetCurrentPattern(ValuePattern.Pattern) as ValuePattern;
+                ValuePattern tbTestBox = AutomationElement.GetCurrentPattern(ValuePattern.Pattern) as ValuePattern;
                 tbTestBox.SetValue("");
                 Thread.Sleep((int)(0.3 * 1000));
                 //PublicClass.Sendkeys(strValue);
@@ -402,7 +402,7 @@ namespace ATLib
             public CurrentElement(AT elePara)
             {
                 this.elePara = elePara;
-                this.current = elePara.AutomationElement.Current;
+                current = elePara.AutomationElement.Current;
             }
             /// <summary>
             /// 
@@ -427,7 +427,7 @@ namespace ATLib
             {
                 try
                 {
-                    string t = this.ProcessId();
+                    string t = ProcessId();
                     return true;
                 }
                 catch (Exception)

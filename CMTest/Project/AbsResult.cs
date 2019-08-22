@@ -26,8 +26,8 @@ namespace CMTest.Project
             {
                 //string tmp = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {Result.FAIL} - Num > [{num}]. Error > [{comment}]";
                 string tmp = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {Result.FAIL}. Error > [{comment}]";
-                UtilCapturer.Capture(Path.Combine(this.ImagePath, num.ToString()));
-                UtilFile.WriteFile(Path.Combine(this.LogPath), tmp, true);
+                UtilCapturer.Capture(Path.Combine(ImagePath, num.ToString()));
+                UtilFile.WriteFile(Path.Combine(LogPath), tmp, true);
                 Console.WriteLine(tmp);
                 //UtilProcess.KillProcessByName(this.SwProcessName);
                 UtilTime.WaitTime(2);

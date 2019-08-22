@@ -15,7 +15,7 @@ namespace ATLib
         /// <param name="elePara"></param>
         public AT(AutomationElement elePara)
         {
-            this.AutomationElement = elePara;
+            AutomationElement = elePara;
         }
         public AT GetRootElement()
         {
@@ -23,36 +23,36 @@ namespace ATLib
         }
         public ATS GetElementsFromChild(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
         {
-            return this.GetElements(ATElementStruct, Timeout, AT.TreeScope.Children, ReturnNullWhenException);
+            return GetElements(ATElementStruct, Timeout, TreeScope.Children, ReturnNullWhenException);
         }
         public ATS GetElementsFromDescendants(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
         {
-            return this.GetElements(ATElementStruct, Timeout, AT.TreeScope.Descendants, ReturnNullWhenException);
+            return GetElements(ATElementStruct, Timeout, TreeScope.Descendants, ReturnNullWhenException);
         }
         public AT GetElementFromChild(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
         {
-            return this.GetElement(ATElementStruct, Timeout, AT.TreeScope.Children, CheckEnabled, ReturnNullWhenException);
+            return GetElement(ATElementStruct, Timeout, TreeScope.Children, CheckEnabled, ReturnNullWhenException);
         }
         public AT GetElementFromDescendants(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
         {
-            return this.GetElement(ATElementStruct, Timeout, AT.TreeScope.Descendants, CheckEnabled, ReturnNullWhenException);
+            return GetElement(ATElementStruct, Timeout, TreeScope.Descendants, CheckEnabled, ReturnNullWhenException);
         }
 
-        public ATS GetElements(ATElementStruct ATElementStruct, int Timeout = -1, string treeScope = AT.TreeScope.Children, bool ReturnNullWhenException = false)
+        public ATS GetElements(ATElementStruct ATElementStruct, int Timeout = -1, string treeScope = TreeScope.Children, bool ReturnNullWhenException = false)
         {
-            return this.GetElements(treeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ReturnNullWhenException);
+            return GetElements(treeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ReturnNullWhenException);
         }
-        public AT GetElement(ATElementStruct ATElementStruct, int Timeout = -1, string TreeScope = AT.TreeScope.Descendants, bool CheckEnabled = false, bool ReturnNullWhenException = false)
+        public AT GetElement(ATElementStruct ATElementStruct, int Timeout = -1, string TreeScope = TreeScope.Descendants, bool CheckEnabled = false, bool ReturnNullWhenException = false)
         {
-            return this.GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, Timeout, CheckEnabled, ReturnNullWhenException);
+            return GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, Timeout, CheckEnabled, ReturnNullWhenException);
         }
-        public void WaitForDisappearedBySearch(ATElementStruct ATElementStruct, int Timeout = -1, string TreeScope = AT.TreeScope.Descendants)
+        public void WaitForDisappearedBySearch(ATElementStruct ATElementStruct, int Timeout = -1, string TreeScope = TreeScope.Descendants)
         {
             try
             {
                 UtilWait.ForTrue(() =>
                 {
-                    return (this.GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, -1, false, true) == null);
+                    return (GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, -1, false, true) == null);
 
                 }, Timeout);
             }
@@ -66,18 +66,18 @@ namespace ATLib
             try
             {
                 AT atObj = null;
-                this.AutomationElement = this.AutomationElement ?? AutomationElement.RootElement;
+                AutomationElement = AutomationElement ?? AutomationElement.RootElement;
                 System.Windows.Automation.TreeScope treeScope = GetTreeScope(TreeScope);
-                System.Windows.Automation.Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
+                Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
                 if (Timeout <= 0)
                 {
-                    atObj = this.GetElementByHandler(this.AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index);
+                    atObj = GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index);
                 }
                 else
                 {
                     atObj = UtilWait.ForResult(() =>
                     {
-                        return GetElementByHandler(this.AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index);
+                        return GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index);
                     }, Timeout);
                 }
                 if (CheckEnabled == true)
@@ -103,9 +103,9 @@ namespace ATLib
             try
             {
                 System.Windows.Automation.TreeScope treeScope = GetTreeScope(TreeScope);
-                System.Windows.Automation.Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
-                this.AutomationElement = this.AutomationElement ?? AutomationElement.RootElement;
-                AutomationElementCollection aec = this.AutomationElement.FindAll(treeScope, condition);
+                Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
+                AutomationElement = AutomationElement ?? AutomationElement.RootElement;
+                AutomationElementCollection aec = AutomationElement.FindAll(treeScope, condition);
                 AT[] at = new AT[aec.Count];
                 for (int i = 0; i < aec.Count; i++)
                 {
@@ -127,8 +127,8 @@ namespace ATLib
             try
             {
                 AT atObj = null;
-                this.AutomationElement = this.AutomationElement ?? AutomationElement.RootElement;  //System.Windows.Automation.Condition.TrueCondition
-                AutomationElementCollection t = this.AutomationElement.FindAll(System.Windows.Automation.TreeScope.Descendants, System.Windows.Automation.Condition.TrueCondition);
+                AutomationElement = AutomationElement ?? AutomationElement.RootElement;  //System.Windows.Automation.Condition.TrueCondition
+                AutomationElementCollection t = AutomationElement.FindAll(System.Windows.Automation.TreeScope.Descendants, Condition.TrueCondition);
                 //AutomationElementCollection t = this.me.FindAll(System.Windows.Automation.TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, System.Windows.Automation.ControlType.Pane));
                 foreach (AutomationElement item in t)
                 {
@@ -176,7 +176,7 @@ namespace ATLib
         {
             UtilWait.ForTrue(() =>
             {
-               return !this.GetElementInfo().Exists();
+               return !GetElementInfo().Exists();
             }, timeout, interval);
         }
         //public void WaitForExisted(int timeout = 1)
@@ -190,7 +190,7 @@ namespace ATLib
         {
             UtilWait.ForTrue(() =>
             {
-                return this.GetElementInfo().IsEnabled();
+                return GetElementInfo().IsEnabled();
             }, timeout, interval);
         }
         private Boolean ContainsAndOrWildcard(String which)
@@ -204,7 +204,7 @@ namespace ATLib
             }
             return false;
         }
-        private AT GetElementByHandler(AutomationElement parentElement, System.Windows.Automation.TreeScope TreeScope = System.Windows.Automation.TreeScope.Children, System.Windows.Automation.Condition Condition = null, string Name = null, string AutomationId = null, string ClassName = null, int? Index = null)
+        private AT GetElementByHandler(AutomationElement parentElement, System.Windows.Automation.TreeScope TreeScope = System.Windows.Automation.TreeScope.Children, Condition Condition = null, string Name = null, string AutomationId = null, string ClassName = null, int? Index = null)
         {
             try
             {
@@ -217,11 +217,11 @@ namespace ATLib
                 }
                 else
                 {
-                    if (this.ContainsAndOrWildcard(Name) || this.ContainsAndOrWildcard(ClassName) || this.ContainsAndOrWildcard(AutomationId) || Index != null)
+                    if (ContainsAndOrWildcard(Name) || ContainsAndOrWildcard(ClassName) || ContainsAndOrWildcard(AutomationId) || Index != null)
                     {
                         if (Condition == null)
                         {
-                            Condition = System.Windows.Automation.Condition.TrueCondition;
+                            Condition = Condition.TrueCondition;
                         }
                         resultEles = parentElement.FindAll(TreeScope, Condition);
                     }
@@ -246,7 +246,7 @@ namespace ATLib
                         {
                             foreach (AutomationElement item in resultEles)
                             {
-                                if (ATElement.IsElementsMatch(atObj: new AT(item), Name: Name, ClassName: ClassName, AutomationId: AutomationId))
+                                if (IsElementsMatch(atObj: new AT(item), Name: Name, ClassName: ClassName, AutomationId: AutomationId))
                                 {
                                     return new AT(item);
                                 }

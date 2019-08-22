@@ -8,7 +8,7 @@ namespace CommonLib.Util
         //private string REGULAR_URL = @"[a-zA-z]+://[^\s]*";
         public static bool IsNumeric(string str)
         {
-            Regex _Regex = new System.Text.RegularExpressions.Regex(@"^[0-9]\d*$");
+            Regex _Regex = new Regex(@"^[0-9]\d*$");
             return _Regex.IsMatch(str);
         }
         public static bool IsIP(string ip)

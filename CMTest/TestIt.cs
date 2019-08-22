@@ -116,7 +116,7 @@ namespace CMTest
         {
             for (var j = 0; j < listAll.Count(); j++)
             {
-                if (this.IsTestExisted(listAll[j], selectedNum, comparedOptions))
+                if (IsTestExisted(listAll[j], selectedNum, comparedOptions))
                 {
                     return listAll[j];
                 }

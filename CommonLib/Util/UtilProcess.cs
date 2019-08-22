@@ -118,7 +118,7 @@ namespace CommonLib.Util
                         errormsg = p.StandardError.ReadToEnd();
                         if (!string.IsNullOrEmpty(errormsg))
                         {
-                            throw new Exception(errormsg.Replace(System.Environment.NewLine, " "));
+                            throw new Exception(errormsg.Replace(Environment.NewLine, " "));
                         }        
                     }
                     p.StandardError.Close();
@@ -136,8 +136,8 @@ namespace CommonLib.Util
         {
             try
             {
-                string strlist = UtilProcess.StartProcessGetString(targetFullPath, para);
-                return strlist.Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                string strlist = StartProcessGetString(targetFullPath, para);
+                return strlist.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             }
             catch (Exception ex)
             {

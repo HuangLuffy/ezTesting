@@ -45,7 +45,7 @@ namespace XunitTest.Handler
 
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
-            this.pathReportFile = pathReportXml;
+            pathReportFile = pathReportXml;
         }
 
         public void Capture(string pathSave, string comment = "Shot", ImageType ImageType = ImageType.PNG)
@@ -57,11 +57,11 @@ namespace XunitTest.Handler
         {
             try
             {
-                if (this.needToBlockAllTests)
+                if (needToBlockAllTests)
                     return default(T);
                 DateTime dt = DateTime.Now;
-                T result = base.Execute(action);
-                return base.Execute(action);
+                T result = Execute(action);
+                return Execute(action);
             }
             catch (Exception)
             {
@@ -81,30 +81,30 @@ namespace XunitTest.Handler
             {
                 if (_StepInfo.DoNotBlock == true)
                 {
-                    this.needToBlockAllTests = false;
+                    needToBlockAllTests = false;
                 }
-                if (this.needToBlockAllTests)
+                if (needToBlockAllTests)
                 {
-                    result = Reporter.Result.BLOCK;
+                    result = Result.BLOCK;
                     _Result_TestInfo.Attribute_blocks += 1;
                 }
                 else
                 {
-                    base.Execute(action);
-                    result = Reporter.Result.PASS;
+                    Execute(action);
+                    result = Result.PASS;
                     _Result_TestInfo.Attribute_passes += 1;
                 }
             }
             catch (Exception ex)
             {
-                result = Reporter.Result.FAIL;
+                result = Result.FAIL;
                 _Result_TestInfo.Attribute_failures += 1;
-                this.needToBlockAllTests = true;
+                needToBlockAllTests = true;
                 throw ex;
             }
             finally
             {
-                this.Capture("End Shot", "");
+                Capture("End Shot", "");
 
                 _Result_TestInfo.Attribute_tests += 1;
 
@@ -114,7 +114,7 @@ namespace XunitTest.Handler
                 _Result_TestCase.Node_stepNumber = stepNumber++;
                 _Result_TestCase.Node_description = _StepInfo.Descriptions;
                 _Result_TestCase.Node_expectedResult = _StepInfo.ExpectedResults;
-                _Result_TestCase.Node_needToCheck = this.ManualCheckLink;
+                _Result_TestCase.Node_needToCheck = ManualCheckLink;
                 _Result_TestCase.Node_result = result;
 
                 _IReporter.AddTestStep(_Result_TestCase);
@@ -140,22 +140,22 @@ namespace XunitTest.Handler
             public TestFunctionInfo(int level, IReporter _IReporter)
             {
                 StackFrame frame = new StackTrace().GetFrame(level);
-                this.ClassName = frame.GetMethod().ReflectedType.Name;
-                this.ClassFullName = frame.GetMethod().ReflectedType.FullName;
-                this.FunctionName = frame.GetMethod().Name;
+                ClassName = frame.GetMethod().ReflectedType.Name;
+                ClassFullName = frame.GetMethod().ReflectedType.FullName;
+                FunctionName = frame.GetMethod().Name;
                 foreach (var attri in frame.GetMethod().CustomAttributes)
                 {
                     if (attri.AttributeType.Name.Equals(typeof(Descriptions).Name))
                     {
-                        this.Descriptions = this.AssembleStepInstructions(attri.ConstructorArguments[0].Value, _IReporter);
+                        Descriptions = AssembleStepInstructions(attri.ConstructorArguments[0].Value, _IReporter);
                     }
                     else if (attri.AttributeType.Name.Equals(typeof(ExpectedResults).Name))
                     {
-                        this.ExpectedResults = this.AssembleStepInstructions(attri.ConstructorArguments[0].Value, _IReporter);
+                        ExpectedResults = AssembleStepInstructions(attri.ConstructorArguments[0].Value, _IReporter);
                     }
                     else if (attri.AttributeType.Name.Equals(typeof(DoNotBlock).Name))
                     {
-                        this.DoNotBlock = true;
+                        DoNotBlock = true;
                     }
                 }
             }

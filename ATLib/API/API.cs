@@ -10,19 +10,21 @@ namespace ATLib.API
         /// <summary>
         /// 
         /// </summary>
-        IntPtr container = new IntPtr(0);
+        private IntPtr _container;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="container"></param>
         public API(IntPtr container)
         {
-            this.container = container;
+            //container = new IntPtr(0);
+            _container = container;
         }
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="intPtr"></param>
+        /// <param name="listIntPtr"></param>
         /// <param name="Name"></param>
         /// <param name="AutomationId"></param>
         /// <param name="ClassName"></param>
@@ -32,7 +34,7 @@ namespace ATLib.API
         /// <param name="Timeout"></param>
         /// <param name="IsEnabled"></param>
         /// <returns></returns>
-        public IntPtr GetHwnd(List<IntPtr> List_IntPtr = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string Timeout = null, string IsEnabled = null)
+        public IntPtr GetHwnd(List<IntPtr> listIntPtr = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string Timeout = null, string IsEnabled = null)
         {
             try
             {
@@ -40,19 +42,18 @@ namespace ATLib.API
                 {
                     ClassName = null;
                 }
-                IntPtr intPtrLoop = IntPtr.Zero;
                 int num = 1;
-                if (List_IntPtr != null)
+                if (listIntPtr != null)
                 {
-                    num = List_IntPtr.Count;
+                    num = listIntPtr.Count;
                 }
                 for (int i = 0; i < num; i++)
                 {
-                    intPtrLoop = IntPtr.Zero;
+                    IntPtr intPtrLoop = IntPtr.Zero;
                     do
                     {
-                        this.container = List_IntPtr[i];
-                        intPtrLoop = FindWindowEx(this.container, intPtrLoop, ClassName, null);
+                        _container = listIntPtr[i];
+                        intPtrLoop = FindWindowEx(_container, intPtrLoop, ClassName, null);
                         if (IsHWNDMatched(intPtrLoop, Name, AutomationId))
                         {
                             return intPtrLoop;
@@ -117,7 +118,7 @@ namespace ATLib.API
                 IntPtr intPtr = IntPtr.Zero;
                 do
                 {
-                    intPtr = FindWindowEx(container, intPtr, ClassName, null);
+                    intPtr = FindWindowEx(_container, intPtr, ClassName, null);
                     if (IsHWNDMatched(intPtr, Name, AutomationId))
                     {
                         list_IntPtr.Add(intPtr);
@@ -210,8 +211,8 @@ namespace ATLib.API
         /// <returns></returns>
         public bool IsChecked(IntPtr intPtr)
         {
-            int ret = SendMessage(intPtr, API.Status.BM_GETCHECK, 0, IntPtr.Zero);
-            if (ret == API.Status.BST_CHECKED)
+            int ret = SendMessage(intPtr, Status.BM_GETCHECK, 0, IntPtr.Zero);
+            if (ret == Status.BST_CHECKED)
             {
                 return true;
             }

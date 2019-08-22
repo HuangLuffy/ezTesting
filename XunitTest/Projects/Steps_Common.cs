@@ -2,12 +2,13 @@
 
 namespace XunitTest.Projects
 {
-    public abstract class Steps_Common
+    public abstract class StepsCommon
     {
-        public TestStepHandler _TestStepHandler;
-        public Steps_Common(string pathReportXml = "")
+        protected readonly TestStepHandler _TestStepHandler;
+
+        protected StepsCommon(string pathReportXml = "")
         {
-            this._TestStepHandler = new TestStepHandler(pathReportXml);
+            _TestStepHandler = new TestStepHandler(pathReportXml);
         }
         public void  End()
         {

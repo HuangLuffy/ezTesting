@@ -7,7 +7,7 @@ namespace CommonLib.Util
     {
         public static FieldInfo[] GetFieldsInfoBy<T>(object obj)
         {
-            Type t = obj.GetType();
+            var t = obj.GetType();
             //Type t = typeof();
             return t.GetFields();
         }

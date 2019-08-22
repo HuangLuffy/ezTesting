@@ -13,7 +13,7 @@ namespace ReportLib
             this.pathReportXml = pathReportXml;
             if (!File.Exists(this.pathReportXml))
             {
-                this.CreateResultXml();
+                CreateResultXml();
             }
         }
         public void SetEnvBlockMsg(string envBlockMsg)
@@ -22,7 +22,7 @@ namespace ReportLib
         }
         public string SetAsLink(string link)
         {
-            return $"#$#{link}#$#{this.SetNewLine("")}";
+            return $"#$#{link}#$#{SetNewLine("")}";
         }
         public string SetNewLine(string line)
         {
@@ -66,7 +66,7 @@ namespace ReportLib
                 )
             );
             this.xDoc = xDoc;
-            xDoc.Save(this.pathReportXml);
+            xDoc.Save(pathReportXml);
         }
         private XElement AssembleElement(Result_TestCase _Result_TestCase)
             //(string classname, string stepTime, string functionName, string stepNumber, string description, string expectedResult, string needToCheck, string result)
@@ -91,7 +91,7 @@ namespace ReportLib
         }
         public void AddTestStep(Result_TestCase _Result_TestCase)
         {
-            XDocument xDoc = this.xDoc == null ? XDocument.Load(this.pathReportXml) : this.xDoc;
+            XDocument xDoc = this.xDoc == null ? XDocument.Load(pathReportXml) : this.xDoc;
             var testcases = xDoc.Root.Elements(Node_testcase);
             XElement xElement = AssembleElement(_Result_TestCase);
             if (testcases.Count() == 0)
@@ -102,14 +102,14 @@ namespace ReportLib
             {
                 testcases.Last().AddAfterSelf(xElement);
             }
-            xDoc.Save(this.pathReportXml);
+            xDoc.Save(pathReportXml);
         }
 
         public void ModifyTestInfo(Result_TestInfo _Result_TestInfo)
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
         {
-            XDocument xDoc = this.xDoc == null ? XDocument.Load(this.pathReportXml) : this.xDoc;
+            XDocument xDoc = this.xDoc == null ? XDocument.Load(pathReportXml) : this.xDoc;
             XElement rootElement = this.xDoc.Root;
             rootElement.Attribute(Attribute_project).Value = _Result_TestInfo.Attribute_project;
             rootElement.Attribute(Attribute_testName).Value = _Result_TestInfo.Attribute_testName;
@@ -133,7 +133,7 @@ namespace ReportLib
             rootElement.Attribute(Attribute_passesPercent).Value = _Result_TestInfo.Attribute_passesPercent;
             rootElement.Attribute(Attribute_tbds).Value = _Result_TestInfo.Attribute_tbds.ToString();
             rootElement.Attribute(Attribute_tbdsPercent).Value = _Result_TestInfo.Attribute_tbdsPercent;
-            xDoc.Save(this.pathReportXml);
+            xDoc.Save(pathReportXml);
         }
     }
 }

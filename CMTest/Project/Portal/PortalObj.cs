@@ -27,76 +27,76 @@ namespace CMTest.Project.Portal
         public static ATElementStruct TabItem_PROFILES = new ATElementStruct()
         {
             Name = "TAB_PROFILES",
-            ControlType = AT.ControlType.CheckBox
+            ControlType = ATElement.ControlType.CheckBox
         };
 
         public static ATElementStruct Lable_LOADING = new ATElementStruct()
         {
             Name = "LOADING",
-            ControlType = AT.ControlType.Custom
+            ControlType = ATElement.ControlType.Custom
         };
         public static ATElementStruct Profile_1 = new ATElementStruct()
         {
             Name = "PROFILE1",
-            ControlType = AT.ControlType.CheckBox
+            ControlType = ATElement.ControlType.CheckBox
         };
         public static ATElementStruct Profile_2 = new ATElementStruct()
         {
             Name = "PROFILE2",
-            ControlType = AT.ControlType.CheckBox
+            ControlType = ATElement.ControlType.CheckBox
         };
         public static ATElementStruct Profile_3 = new ATElementStruct()
         {
             Name = "PROFILE3",
-            ControlType = AT.ControlType.CheckBox
+            ControlType = ATElement.ControlType.CheckBox
         };
         public static ATElementStruct Profile_4 = new ATElementStruct()
         {
             Name = "PROFILE4",
-            ControlType = AT.ControlType.CheckBox
+            ControlType = ATElement.ControlType.CheckBox
         };
         public static ATElementStruct Profile_RESET = new ATElementStruct()
         {
             Name = "PROFILE_RESET",
-            ControlType = AT.ControlType.Button
+            ControlType = ATElement.ControlType.Button
         };
         public static ATElementStruct Profile_RENAME = new ATElementStruct()
         {
             Name = "PROFILE_RENAME",
-            ControlType = AT.ControlType.Button
+            ControlType = ATElement.ControlType.Button
         };
         public static ATElementStruct Profile_IMPORT = new ATElementStruct()
         {
             Name = "PROFILE_IMPORT",
-            ControlType = AT.ControlType.Button
+            ControlType = ATElement.ControlType.Button
         };
         public static ATElementStruct Profile_EXPORT = new ATElementStruct()
         {
             Name = "PROFILE_EXPORT",
-            ControlType = AT.ControlType.Button
+            ControlType = ATElement.ControlType.Button
         };
         public static ATElementStruct Profile_OPENWITHEXE = new ATElementStruct()
         {
             Name = "PROFILE_OPEN",
-            ControlType = AT.ControlType.Button
+            ControlType = ATElement.ControlType.Button
         };
         public static ATElementStruct Profile_EDIT = new ATElementStruct()
         {
             Name = "PROFILE_EDIT",
-            ControlType = AT.ControlType.Edit
+            ControlType = ATElement.ControlType.Edit
         };
         public static ATElementStruct Window_OpenFIle = new ATElementStruct()
         {
-            ControlType = AT.ControlType.Window
+            ControlType = ATElement.ControlType.Window
         };
         public static ATElementStruct Button_Reset_Yes = new ATElementStruct()
         {
             Name = "Yes_Enter",
-            ControlType = AT.ControlType.Button
+            ControlType = ATElement.ControlType.Button
         };
         public static ATElementStruct Button_Save = new ATElementStruct()
         {
-            ControlType = AT.ControlType.Button
+            ControlType = ATElement.ControlType.Button
         };
         public static ATElementStruct Button_Exist_Yes = new ATElementStruct()
         {

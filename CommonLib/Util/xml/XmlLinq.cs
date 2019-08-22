@@ -88,7 +88,7 @@ namespace CommonLib.Util.xml
             {
                 try
                 {
-                    _PropertyInfo.SetValue(_T, this.GetValue(_PropertyInfo.GetValue((_T)).ToString()));
+                    _PropertyInfo.SetValue(_T, GetValue(_PropertyInfo.GetValue((_T)).ToString()));
                 }
                 catch (Exception)
                 {
@@ -152,7 +152,7 @@ namespace CommonLib.Util.xml
         {
             try
             {
-                return this.GetElementsIEnumerable(nodeName).ToArray<string>();
+                return GetElementsIEnumerable(nodeName).ToArray<string>();
             }
             catch (Exception)
             {
@@ -164,7 +164,7 @@ namespace CommonLib.Util.xml
         {
             try
             {
-                return this.GetElementsIEnumerable(nodeName).ToList<string>();
+                return GetElementsIEnumerable(nodeName).ToList<string>();
             }
             catch (Exception)
             {

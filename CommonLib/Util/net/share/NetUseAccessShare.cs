@@ -20,7 +20,7 @@ namespace CommonLib.Util.net
             {
                 persistentValue = "NO";
             }
-            string para = string.Format(@"use {0} {1} {2} /PERSISTENT:{3}", this.ShareFolderFullPath, UserName.Equals("") ? "" : "/User:" + this.UserName, this.Password, persistentValue);
+            string para = string.Format(@"use {0} {1} {2} /PERSISTENT:{3}", ShareFolderFullPath, UserName.Equals("") ? "" : "/User:" + UserName, Password, persistentValue);
             try
             {
                 UtilProcess.StartProcessGetString("net", para);
@@ -34,7 +34,7 @@ namespace CommonLib.Util.net
 
         public void DeleteShareConnect(string ipOrName, string folderName = "")
         {
-            string para = string.Format(@"use /delete {0}", this.ShareFolderFullPath);
+            string para = string.Format(@"use /delete {0}", ShareFolderFullPath);
             try
             {
                 UtilProcess.StartProcessGetString("net", para);
@@ -48,7 +48,7 @@ namespace CommonLib.Util.net
 
         public string GetShareFolderFullPath()
         {
-            return this.ShareFolderFullPath;
+            return ShareFolderFullPath;
         }
     } 
 }

@@ -53,15 +53,15 @@ namespace CommonLib.Util.net
         {
             ManagementClass _ManagementClass = null;
             ConnectionOptions _ConnectionOptions = new ConnectionOptions();
-            _ConnectionOptions.Username = this.UserName;
-            _ConnectionOptions.Password = this.Password;
-            DirectoryInfo di = new DirectoryInfo(this.ShareFolderFullPath);
-            ManagementScope scope = new ManagementScope(string.Format(@"\\{0}\root\cimv2", this.IpOrName), _ConnectionOptions);
+            _ConnectionOptions.Username = UserName;
+            _ConnectionOptions.Password = Password;
+            DirectoryInfo di = new DirectoryInfo(ShareFolderFullPath);
+            ManagementScope scope = new ManagementScope(string.Format(@"\\{0}\root\cimv2", IpOrName), _ConnectionOptions);
             scope.Connect();
             
             try
             {
-                DirectoryInfo di1 = new DirectoryInfo(this.ShareFolderFullPath);
+                DirectoryInfo di1 = new DirectoryInfo(ShareFolderFullPath);
             }
             catch (UnauthorizedAccessException)
             {
@@ -79,11 +79,11 @@ namespace CommonLib.Util.net
         }
         public void GetShareFolderProperties1()
         {
-            ManagementPath _ManagementPath = new ManagementPath(string.Format(@"\\{0}\root\cimv2", this.IpOrName));
+            ManagementPath _ManagementPath = new ManagementPath(string.Format(@"\\{0}\root\cimv2", IpOrName));
              ManagementClass _ManagementClass = null;
             ConnectionOptions _ConnectionOptions = new ConnectionOptions();
-            _ConnectionOptions.Username = this.UserName;
-            _ConnectionOptions.Password = this.Password;
+            _ConnectionOptions.Username = UserName;
+            _ConnectionOptions.Password = Password;
             // co.Authority = "kerberos:celeb"; // use kerberos authentication
             // co.Authority = "NTLMDOMAIN:celeb"; // or NTLM
             //_ManagementPath.Server = @"\\10.10.53.26"; // use . for local server, else server name
@@ -97,13 +97,13 @@ namespace CommonLib.Util.net
                 ManagementObjectCollection moc = _ManagementClass.GetInstances();
                 foreach (ManagementObject mo in moc)
                 {
-                    this._ShareFolderProperties = new ShareFolderProperties();
-                    this._ShareFolderProperties.Name = mo["Name"].ToString();
-                    this._ShareFolderProperties.ParentPath = string.Format(@"\\{0}", this.IpOrName);
-                    this._ShareFolderProperties.LocalPath = mo["Path"].ToString();
-                    this._ShareFolderProperties.FullPath = Path.Combine(this._ShareFolderProperties.ParentPath, this._ShareFolderProperties.Name);
-                    this._ShareFolderPropertiesList.Add(this._ShareFolderProperties);
-                    if (this._ShareFolderProperties.Name.Equals("TP_GhostShare"))
+                    _ShareFolderProperties = new ShareFolderProperties();
+                    _ShareFolderProperties.Name = mo["Name"].ToString();
+                    _ShareFolderProperties.ParentPath = string.Format(@"\\{0}", IpOrName);
+                    _ShareFolderProperties.LocalPath = mo["Path"].ToString();
+                    _ShareFolderProperties.FullPath = Path.Combine(_ShareFolderProperties.ParentPath, _ShareFolderProperties.Name);
+                    _ShareFolderPropertiesList.Add(_ShareFolderProperties);
+                    if (_ShareFolderProperties.Name.Equals("TP_GhostShare"))
                     {
                         Console.WriteLine("{0}", (string)mo["Caption"]);
                 

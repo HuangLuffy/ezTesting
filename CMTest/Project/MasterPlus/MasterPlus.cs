@@ -4,9 +4,9 @@
     {
         public MasterPlus()
         {
-            this.SwLnkPath = @"C:\Users\Public\Desktop\MasterPlus.lnk";
-            this.SwName = "MasterPlus";
-            this.SwProcessName = "MasterPlusApp";
+            SwLnkPath = @"C:\Users\Public\Desktop\MasterPlus.lnk";
+            SwName = "MasterPlus";
+            SwProcessName = "MasterPlusApp";
         }
     }
 }

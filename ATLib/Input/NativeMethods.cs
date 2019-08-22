@@ -315,10 +315,10 @@ namespace MS.Win32
 
             internal Win32Rect(Win32Rect rcSrc)
             {
-                this.left = rcSrc.left;
-                this.top = rcSrc.top;
-                this.right = rcSrc.right;
-                this.bottom = rcSrc.bottom;
+                left = rcSrc.left;
+                top = rcSrc.top;
+                right = rcSrc.right;
+                bottom = rcSrc.bottom;
             }
 
             internal bool IsEmpty

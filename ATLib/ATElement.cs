@@ -348,7 +348,7 @@ namespace ATLib
         {
             try
             {
-                string t = "";
+                var t = "";
                 try
                 {
                     t = atObj.GetElementInfo().Name();
@@ -384,7 +384,7 @@ namespace ATLib
         /// </summary>
         /// <param name="targetName"></param>
         /// <param name="matchName"></param>
-        protected static bool IsElementMatch(string targetName, string matchName)
+        private static bool IsElementMatch(string targetName, string matchName)
         {
             if (!String.IsNullOrEmpty(matchName))
             {
@@ -400,118 +400,111 @@ namespace ATLib
         /// </summary>
         /// <param name="ctrlType"></param>
         /// <returns></returns>
-        protected static System.Windows.Automation.ControlType GetControlType(string ctrlType)
+        private static System.Windows.Automation.ControlType GetControlType(string ctrlType)
         {
-            try
+            if (ctrlType.Equals(ControlType.ListItem))
             {
-                if (ctrlType.Equals(ATElement.ControlType.ListItem))
-                {
-                    return System.Windows.Automation.ControlType.ListItem;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.List))
-                {
-                    return System.Windows.Automation.ControlType.List;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.TreeItem))
-                {
-                    return System.Windows.Automation.ControlType.TreeItem;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Button))
-                {
-                    return System.Windows.Automation.ControlType.Button;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Hyperlink))
-                {
-                    return System.Windows.Automation.ControlType.Hyperlink;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Custom))
-                {
-                    return System.Windows.Automation.ControlType.Custom;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Pane))
-                {
-                    return System.Windows.Automation.ControlType.Pane;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Edit))
-                {
-                    return System.Windows.Automation.ControlType.Edit;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Tab))
-                {
-                    return System.Windows.Automation.ControlType.Tab;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.TabItem))
-                {
-                    return System.Windows.Automation.ControlType.TabItem;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Window))
-                {
-                    return System.Windows.Automation.ControlType.Window;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Text))
-                {
-                    return System.Windows.Automation.ControlType.Text;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Tree))
-                {
-                    return System.Windows.Automation.ControlType.Tree;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.ComboBox))
-                {
-                    return System.Windows.Automation.ControlType.ComboBox;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.DataItem))
-                {
-                    return System.Windows.Automation.ControlType.DataItem;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.DataGrid))
-                {
-                    return System.Windows.Automation.ControlType.DataGrid;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.RadioButton))
-                {
-                    return System.Windows.Automation.ControlType.RadioButton;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Hyperlink))
-                {
-                    return System.Windows.Automation.ControlType.Hyperlink;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.CheckBox))
-                {
-                    return System.Windows.Automation.ControlType.CheckBox;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Text))
-                {
-                    return System.Windows.Automation.ControlType.Text;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.Menu))
-                {
-                    return System.Windows.Automation.ControlType.Menu;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.MenuItem))
-                {
-                    return System.Windows.Automation.ControlType.MenuItem;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.ToolBar))
-                {
-                    return System.Windows.Automation.ControlType.ToolBar;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.ToolTip))
-                {
-                    return System.Windows.Automation.ControlType.ToolTip;
-                }
-                else if (ctrlType.Equals(ATElement.ControlType.MenuBar))
-                {
-                    return System.Windows.Automation.ControlType.MenuBar;
-                }
-                else
-                {
-                    throw new Exception("Failed to get ControlType " + ctrlType + ".");
-                }
+                return System.Windows.Automation.ControlType.ListItem;
             }
-            catch (Exception)
+            else if (ctrlType.Equals(ControlType.List))
             {
-                throw;
+                return System.Windows.Automation.ControlType.List;
+            }
+            else if (ctrlType.Equals(ControlType.TreeItem))
+            {
+                return System.Windows.Automation.ControlType.TreeItem;
+            }
+            else if (ctrlType.Equals(ControlType.Button))
+            {
+                return System.Windows.Automation.ControlType.Button;
+            }
+            else if (ctrlType.Equals(ControlType.Hyperlink))
+            {
+                return System.Windows.Automation.ControlType.Hyperlink;
+            }
+            else if (ctrlType.Equals(ControlType.Custom))
+            {
+                return System.Windows.Automation.ControlType.Custom;
+            }
+            else if (ctrlType.Equals(ControlType.Pane))
+            {
+                return System.Windows.Automation.ControlType.Pane;
+            }
+            else if (ctrlType.Equals(ControlType.Edit))
+            {
+                return System.Windows.Automation.ControlType.Edit;
+            }
+            else if (ctrlType.Equals(ControlType.Tab))
+            {
+                return System.Windows.Automation.ControlType.Tab;
+            }
+            else if (ctrlType.Equals(ControlType.TabItem))
+            {
+                return System.Windows.Automation.ControlType.TabItem;
+            }
+            else if (ctrlType.Equals(ControlType.Window))
+            {
+                return System.Windows.Automation.ControlType.Window;
+            }
+            else if (ctrlType.Equals(ControlType.Text))
+            {
+                return System.Windows.Automation.ControlType.Text;
+            }
+            else if (ctrlType.Equals(ControlType.Tree))
+            {
+                return System.Windows.Automation.ControlType.Tree;
+            }
+            else if (ctrlType.Equals(ControlType.ComboBox))
+            {
+                return System.Windows.Automation.ControlType.ComboBox;
+            }
+            else if (ctrlType.Equals(ControlType.DataItem))
+            {
+                return System.Windows.Automation.ControlType.DataItem;
+            }
+            else if (ctrlType.Equals(ControlType.DataGrid))
+            {
+                return System.Windows.Automation.ControlType.DataGrid;
+            }
+            else if (ctrlType.Equals(ControlType.RadioButton))
+            {
+                return System.Windows.Automation.ControlType.RadioButton;
+            }
+            else if (ctrlType.Equals(ControlType.Hyperlink))
+            {
+                return System.Windows.Automation.ControlType.Hyperlink;
+            }
+            else if (ctrlType.Equals(ControlType.CheckBox))
+            {
+                return System.Windows.Automation.ControlType.CheckBox;
+            }
+            else if (ctrlType.Equals(ControlType.Text))
+            {
+                return System.Windows.Automation.ControlType.Text;
+            }
+            else if (ctrlType.Equals(ControlType.Menu))
+            {
+                return System.Windows.Automation.ControlType.Menu;
+            }
+            else if (ctrlType.Equals(ControlType.MenuItem))
+            {
+                return System.Windows.Automation.ControlType.MenuItem;
+            }
+            else if (ctrlType.Equals(ControlType.ToolBar))
+            {
+                return System.Windows.Automation.ControlType.ToolBar;
+            }
+            else if (ctrlType.Equals(ControlType.ToolTip))
+            {
+                return System.Windows.Automation.ControlType.ToolTip;
+            }
+            else if (ctrlType.Equals(ControlType.MenuBar))
+            {
+                return System.Windows.Automation.ControlType.MenuBar;
+            }
+            else
+            {
+                throw new Exception("Failed to get ControlType " + ctrlType + ".");
             }
         }
         /// <summary>
@@ -527,27 +520,27 @@ namespace ATLib
                 {
                     return System.Windows.Automation.TreeScope.Children;
                 }
-                else if(treeScope.Equals(ATElement.TreeScope.Children))
+                else if(treeScope.Equals(TreeScope.Children))
                 {
                     return System.Windows.Automation.TreeScope.Children;
                 }
-                else if (treeScope.Equals(ATElement.TreeScope.Descendants))
+                else if (treeScope.Equals(TreeScope.Descendants))
                 {
                     return System.Windows.Automation.TreeScope.Descendants;
                 }
-                else if (treeScope.Equals(ATElement.TreeScope.Parent))
+                else if (treeScope.Equals(TreeScope.Parent))
                 {
                     return System.Windows.Automation.TreeScope.Parent;
                 }
-                else if (treeScope.Equals(ATElement.TreeScope.Element))
+                else if (treeScope.Equals(TreeScope.Element))
                 {
                     return System.Windows.Automation.TreeScope.Element;
                 }
-                else if (treeScope.Equals(ATElement.TreeScope.Subtree))
+                else if (treeScope.Equals(TreeScope.Subtree))
                 {
                     return System.Windows.Automation.TreeScope.Subtree;
                 }
-                else if (treeScope.Equals(ATElement.TreeScope.Ancestors))
+                else if (treeScope.Equals(TreeScope.Ancestors))
                 {
                     return System.Windows.Automation.TreeScope.Ancestors;
                 }
@@ -570,7 +563,7 @@ namespace ATLib
         /// <param name="FrameworkId"></param>
         /// <param name="ControlType"></param>
         /// <returns></returns>
-        protected static System.Windows.Automation.Condition GetCondition(string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null)
+        protected static Condition GetCondition(string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null)
         {
             List<Condition> conditionList = new List<Condition>();
             try

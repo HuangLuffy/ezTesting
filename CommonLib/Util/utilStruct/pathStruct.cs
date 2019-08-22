@@ -35,7 +35,7 @@ namespace CommonLib.Util.utilStruct
         {
             get
             {
-                return Path.Combine(this.parentFolderPath, this.name);
+                return Path.Combine(parentFolderPath, name);
             }
 
             set

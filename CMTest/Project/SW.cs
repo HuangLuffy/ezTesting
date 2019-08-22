@@ -28,8 +28,8 @@ namespace CMTest
 
         public void SetLaunchTimesAndWriteTestTitle(long launchTimes, string c = "")
         {
-            this.LaunchTimes = launchTimes;
-            this.WriteConsoleTitle(launchTimes, c);
+            LaunchTimes = launchTimes;
+            WriteConsoleTitle(launchTimes, c);
         }
 
         protected void WriteConsoleTitle(long launchTimes, string c = "", int timeout = 0)
@@ -45,9 +45,9 @@ namespace CMTest
 
         protected void Initialize()
         {
-            UtilFolder.DeleteDirectory(this.ImagePath);
-            UtilFolder.CreateDirectory(this.ImagePath);
-            UtilProcess.KillProcessByName(this.SwProcessName); 
+            UtilFolder.DeleteDirectory(ImagePath);
+            UtilFolder.CreateDirectory(ImagePath);
+            UtilProcess.KillProcessByName(SwProcessName); 
         }
     }
 }

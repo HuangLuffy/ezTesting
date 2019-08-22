@@ -14,16 +14,16 @@ namespace CommonLib.Util.msg
             this.logFolderPath = logFolderPath;
             this.logName = logName;
             this.logFolderPath = logFolderPath.Equals("") ? ProjectPath.getProjectFullPath() : logFolderPath;
-            this.logFileFullPath = this.logFolderPath + @"\" + this.logName + ".log";
+            logFileFullPath = this.logFolderPath + @"\" + this.logName + ".log";
         }
         public LogSimple(string logFolderPath)
         {
             this.logFolderPath = logFolderPath;
-            this.logFileFullPath = this.logFolderPath + @"\" + this.logName + ".log";
+            logFileFullPath = this.logFolderPath + @"\" + logName + ".log";
         }
         public LogSimple()
         {
-            this.logFileFullPath = Path.Combine(ProjectPath.getProjectFullPath(), logName + ".log");
+            logFileFullPath = Path.Combine(ProjectPath.getProjectFullPath(), logName + ".log");
         }
         private struct LogLevel
         {
@@ -59,7 +59,7 @@ namespace CommonLib.Util.msg
                 fileStream.Close();
                 if (fileInfo.Length >= 1024 * 1024 * 200)
                 {
-                    string NewName = logFileFullPath + @"\" + logName + this.time() + ".txt";
+                    string NewName = logFileFullPath + @"\" + logName + time() + ".txt";
                     File.Move(logFileFullPath, NewName);
                 }
             }

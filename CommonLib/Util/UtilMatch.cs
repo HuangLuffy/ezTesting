@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.String;
 
 namespace CommonLib.Util
 {
@@ -10,7 +11,7 @@ namespace CommonLib.Util
             for (int i = 0; i < arrString.Length; i++)
             {
                 t += arrString[i];
-                if (!String.IsNullOrEmpty(wildcard) && !arrString[i].Contains(Var.Mark.Wildcard))
+                if (!IsNullOrEmpty(wildcard) && !arrString[i].Contains(Var.Mark.Wildcard))
                 {
                     t += Var.Mark.Wildcard;
                 }
@@ -29,9 +30,9 @@ namespace CommonLib.Util
         /// <returns></returns>
         public static bool NameMatch(string strTargetString, string strMatchStrings)
         {
-            string mode = strMatchStrings.Contains(Var.Mark.Or) ? Var.Mark.Or : Var.Mark.And;
-            string[] names = strMatchStrings.Split(new string[] { mode }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string n in names)
+            var mode = strMatchStrings.Contains(Var.Mark.Or) ? Var.Mark.Or : Var.Mark.And;
+            var names = strMatchStrings.Split(new[] { mode }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var n in names)
             {
                 if (strMatchStrings.Contains(Var.Mark.And))
                 {
@@ -56,7 +57,7 @@ namespace CommonLib.Util
                     }
                 }
             }
-            return strMatchStrings.Contains(Var.Mark.And) ? true : false;
+            return strMatchStrings.Contains(Var.Mark.And);
         }
     }
 }

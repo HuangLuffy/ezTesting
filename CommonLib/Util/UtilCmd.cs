@@ -15,13 +15,13 @@ namespace CommonLib.Util
         public string MenuShowAgain()
         {
             WriteCmdMenu(List_Current_Menu, lineUpWithNumber: false);
-            return UtilCmd.OPTION_SHOW_MENU_AGAIN;
+            return OPTION_SHOW_MENU_AGAIN;
         }
 
         public string MenuGoback()
         {
             WriteCmdMenu(List_Last_Menu, lineUpWithNumber: false);
-            return UtilCmd.OPTION_BACK;
+            return OPTION_BACK;
         }
 
         public List<string> WriteCmdMenu(List<string> options, bool clear = false, bool lineUpWithNumber = true)
@@ -42,10 +42,10 @@ namespace CommonLib.Util
                 }
                 Console.WriteLine(t[i - 1]);
             }
-            if (this.IsMenuChanged(this.List_Current_Menu, t))
+            if (IsMenuChanged(List_Current_Menu, t))
             {
-                this.List_Last_Menu = this.List_Current_Menu;
-                this.List_Current_Menu = t;
+                List_Last_Menu = List_Current_Menu;
+                List_Current_Menu = t;
             }
             return t;
         }

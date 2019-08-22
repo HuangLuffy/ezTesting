@@ -7,23 +7,23 @@ namespace CMTest.Project.MasterPlus
     {
         public MasterPlusTestActions()
         {
-            this.Initialize();
+            Initialize();
         }
         public void LaunchSW()
         { 
-            UtilProcess.StartProcess(this.SwLnkPath);
-            this.Timeout = 11;
-            this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for launching. ({this.Timeout}s)", this.Timeout);
-            var TabItem_OVERVIEW = new AT().GetElement(ATElementStruct: MasterPlusObj.TabItem_OVERVIEW, Timeout: this.Timeout);
-            this.MainWindow_SW = new AT().GetElement(ATElementStruct: MasterPlusObj.MainWindow_SW, Timeout: this.Timeout);
+            UtilProcess.StartProcess(SwLnkPath);
+            Timeout = 11;
+            WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
+            var TabItem_OVERVIEW = new AT().GetElement(ATElementStruct: MasterPlusObj.TabItem_OVERVIEW, Timeout: Timeout);
+            MainWindow_SW = new AT().GetElement(ATElementStruct: MasterPlusObj.MainWindow_SW, Timeout: Timeout);
         }
         public void CloseSW()
         {
-            AT button_Close = this.MainWindow_SW.GetElement(ATElementStruct: MasterPlusObj.Btn_CloseMainWindow, TreeScope: AT.TreeScope.Descendants);
+            AT button_Close = MainWindow_SW.GetElement(ATElementStruct: MasterPlusObj.Btn_CloseMainWindow, TreeScope: ATElement.TreeScope.Descendants);
             button_Close.DoClick();
-            this.Timeout = 6;
-            this.WriteConsoleTitle(this.LaunchTimes, $"Waiting for closing. ({this.Timeout}s)", this.Timeout);
-            UtilTime.WaitTime(this.Timeout);
+            Timeout = 6;
+            WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
+            UtilTime.WaitTime(Timeout);
             //if (UtilProcess.IsProcessExistedByName(_Portal.SwProcessName))
             //{
             //    _Portal.HandleStepResult(Portal.Log.PROCESSSTILLEXISTS, launchTimes);

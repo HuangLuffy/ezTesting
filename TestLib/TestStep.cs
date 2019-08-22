@@ -16,7 +16,7 @@ namespace TestLib
         }
         public String getTestFullPath()
         {
-            return this.GetType().Assembly.Location;
+            return GetType().Assembly.Location;
         }
         public String getTestParentPath()
         {

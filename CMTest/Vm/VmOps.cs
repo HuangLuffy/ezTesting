@@ -28,12 +28,12 @@ namespace CMTest.Vm
             AT itemTarget = null;
             if (targetIndex > 0) // Show 2 identical devices in VM.
             {
-                ATS Item_Targets = new AT().GetElements(Name: deviceNameVM, TreeScope: AT.TreeScope.Descendants, ControlType: AT.ControlType.MenuItem);
+                ATS Item_Targets = new AT().GetElements(Name: deviceNameVM, TreeScope: ATElement.TreeScope.Descendants, ControlType: ATElement.ControlType.MenuItem);
                 itemTarget = Item_Targets.GetATCollection()[targetIndex];
             }
             else
             {
-                itemTarget = new AT().GetElement(Name: deviceNameVM, TreeScope: AT.TreeScope.Descendants, ControlType: AT.ControlType.MenuItem);
+                itemTarget = new AT().GetElement(Name: deviceNameVM, TreeScope: ATElement.TreeScope.Descendants, ControlType: ATElement.ControlType.MenuItem);
             }
             return itemTarget;
         }
@@ -62,10 +62,10 @@ namespace CMTest.Vm
 
         public void PlugOutInDeviceFromVM(string deviceNameVM, int itemIndex = 0, AT VM_Window = null)
         {   //Using admin to run VM in win10 otherwise rightclick would no work.
-            this.OpenRemovableDevices(VM_Window);
-            AT Item_Target = this.GetTargetItem(deviceNameVM, itemIndex);
+            OpenRemovableDevices(VM_Window);
+            AT Item_Target = GetTargetItem(deviceNameVM, itemIndex);
             Item_Target.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
-            this.PlugoutOrIn();
+            PlugoutOrIn();
         }
     }
 }

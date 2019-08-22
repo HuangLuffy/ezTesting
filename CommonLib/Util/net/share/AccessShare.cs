@@ -68,25 +68,25 @@ namespace CommonLib.Util.net.share
         {
             if (shareFolderFullPath.Contains("@"))
             {
-                this.ShareFolderFullPath = shareFolderFullPath.Split('@')[1].Trim();
-                this.IpOrName = alterPath(this.ShareFolderFullPath).Split('\\')[0].Trim();
+                ShareFolderFullPath = shareFolderFullPath.Split('@')[1].Trim();
+                IpOrName = alterPath(ShareFolderFullPath).Split('\\')[0].Trim();
                 string userAndPass = alterPath(shareFolderFullPath.Split('@')[0]).Trim();
-                this.UserName = userAndPass.Split(':')[0].Trim();
-                this.Password = userAndPass.Split(':')[1].Trim();
-                this.ShareFolderFullPath = @"\\" + alterPath(this.ShareFolderFullPath);
+                UserName = userAndPass.Split(':')[0].Trim();
+                Password = userAndPass.Split(':')[1].Trim();
+                ShareFolderFullPath = @"\\" + alterPath(ShareFolderFullPath);
             }
             else
             {
-                this.ShareFolderFullPath = @"\\" + alterPath(shareFolderFullPath).Trim();
-                this.IpOrName = alterPath(this.ShareFolderFullPath).Split('\\')[0].Trim();
+                ShareFolderFullPath = @"\\" + alterPath(shareFolderFullPath).Trim();
+                IpOrName = alterPath(ShareFolderFullPath).Split('\\')[0].Trim();
             }
         }
         public AccessShare(string shareFolderFullPath, string userName, string password)
         {
-            this.ShareFolderFullPath = @"\\" + alterPath(shareFolderFullPath).Trim();
-            this.IpOrName = alterPath(this.ShareFolderFullPath).Split('\\')[0].Trim();
-            this.UserName = userName.Trim();
-            this.Password = password.Trim();
+            ShareFolderFullPath = @"\\" + alterPath(shareFolderFullPath).Trim();
+            IpOrName = alterPath(ShareFolderFullPath).Split('\\')[0].Trim();
+            UserName = userName.Trim();
+            Password = password.Trim();
         }
         private string alterPath(string ipOrName)
         {
@@ -103,13 +103,13 @@ namespace CommonLib.Util.net.share
         {
             try
             {
-                if (Path.HasExtension(this.ShareFolderFullPath))
+                if (Path.HasExtension(ShareFolderFullPath))
                 {
-                    return File.Exists(this.ShareFolderFullPath);
+                    return File.Exists(ShareFolderFullPath);
                 }
                 else
                 {
-                    return Directory.Exists(this.ShareFolderFullPath);
+                    return Directory.Exists(ShareFolderFullPath);
                 }
             }
             catch (Exception)

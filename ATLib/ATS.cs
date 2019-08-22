@@ -12,7 +12,7 @@ namespace ATLib
         }
         public AT[] GetATCollection()
         {
-            return this.ats;
+            return ats;
         }
         public int Length()
         {
@@ -25,14 +25,14 @@ namespace ATLib
                 return 0;
             }
         }
-        public ATS GetMatchedElements(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string SelectNum = AT.SelectNum.Single)
+        public ATS GetMatchedElements(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string SelectNum = SelectNum.Single)
         {
             List<AT> eleList = new List<AT>();
             foreach (AT item in GetATCollection())
             {
                 try
                 {
-                    if (ATElement.IsElementsMatch(atObj: item, Name: Name, ClassName: ClassName, AutomationId: AutomationId))
+                    if (IsElementsMatch(atObj: item, Name: Name, ClassName: ClassName, AutomationId: AutomationId))
                     {
                         item.GetElement(TreeScope: TreeScope, Name: Name, AutomationId: AutomationId, ClassName: ClassName, FrameworkId: FrameworkId, ControlType: ControlType);
                         eleList.Add(item);
@@ -49,7 +49,7 @@ namespace ATLib
             AT[] arrAutomationElement = eleList.ToArray();
             return new ATS(arrAutomationElement);
         }
-        public string SelectItemFromCollection(string strIndex = null, string name = null, string strDoMode = ATElement.SelectMode.Point)
+        public string SelectItemFromCollection(string strIndex = null, string name = null, string strDoMode = SelectMode.Point)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace ATLib
                 {
                     try
                     {
-                        ele = this.GetMatchedElements(Name: name, TreeScope: AT.TreeScope.Element).GetATCollection()[0];
+                        ele = GetMatchedElements(Name: name, TreeScope: TreeScope.Element).GetATCollection()[0];
                     }
                     catch (Exception ex)
                     {
@@ -69,7 +69,7 @@ namespace ATLib
                 {
                     try
                     {
-                        ele = this.GetATCollection()[Convert.ToInt16(strIndex)];
+                        ele = GetATCollection()[Convert.ToInt16(strIndex)];
                     }
                     catch (Exception ex)
                     {

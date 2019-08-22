@@ -16,12 +16,12 @@ namespace CommonLib.Util.zip
         {
             get
             {
-                return this.tool_7z;
+                return tool_7z;
             }
 
             set
             {
-                this.tool_7z = value;
+                tool_7z = value;
             }
         }
 

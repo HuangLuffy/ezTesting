@@ -546,7 +546,7 @@ namespace ATLib.ATGTestInput
         /// </outside_see>
         public static void MoveTo(Point pt)
         {
-            Input.SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.Move | SendMouseInputFlags.Absolute);
+            SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.Move | SendMouseInputFlags.Absolute);
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace ATLib.ATGTestInput
         /// </outside_see>
         public static void MoveToAndClick(Point pt)
         {
-            Input.SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.Move | SendMouseInputFlags.Absolute);
+            SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.Move | SendMouseInputFlags.Absolute);
 
             // send SendMouseInput works in term of the phisical mouse buttons, therefore we need
             // to check to see if the mouse buttons are swapped because this method need to use the primary
@@ -590,14 +590,14 @@ namespace ATLib.ATGTestInput
             if (SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_SWAPBUTTON) == 0)
             {
                 // the mouse buttons are not swaped the primary is the left
-                Input.SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.LeftDown | SendMouseInputFlags.Absolute);
-                Input.SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.LeftUp | SendMouseInputFlags.Absolute);
+                SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.LeftDown | SendMouseInputFlags.Absolute);
+                SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.LeftUp | SendMouseInputFlags.Absolute);
             }
             else
             {
                 // the mouse buttons are swaped so click the right button which as actually the primary
-                Input.SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.RightDown | SendMouseInputFlags.Absolute);
-                Input.SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.RightUp | SendMouseInputFlags.Absolute);
+                SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.RightDown | SendMouseInputFlags.Absolute);
+                SendMouseInput(pt.X, pt.Y, 0, SendMouseInputFlags.RightUp | SendMouseInputFlags.Absolute);
             }
         }
 
@@ -757,7 +757,7 @@ namespace ATLib.ATGTestInput
                 if (++counter == sleepFrequency)
                 {
                     counter = 0;
-                    System.Threading.Thread.Sleep(sleepLength);
+                    Thread.Sleep(sleepLength);
                 }
 
                 SendUnicodeKeyboardInput(c, true);

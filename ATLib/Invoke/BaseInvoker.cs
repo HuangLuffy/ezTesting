@@ -14,9 +14,9 @@ namespace ATLib.Invoke
         }
         protected void InitParameters()
         {
-            try { this.functionName = this.args[0].Replace("\"", ""); } catch (Exception) { }
-            try { this.targetPropertyValue = this.args[1].Replace("\"", ""); } catch (Exception) { }
-            try { this.containerPropertyValue = this.args[2].Replace("\"", ""); } catch (Exception) { }
+            try { functionName = args[0].Replace("\"", ""); } catch (Exception) { }
+            try { targetPropertyValue = args[1].Replace("\"", ""); } catch (Exception) { }
+            try { containerPropertyValue = args[2].Replace("\"", ""); } catch (Exception) { }
         }
         protected struct ReturnResult
         {
@@ -40,15 +40,15 @@ namespace ATLib.Invoke
         { 
             if (propertyType.Equals(StructPropertyType.index))
             {
-                return parent.GetElement(TreeScope: AT.TreeScope.Descendants, Index: int.Parse(propertyValue), ControlType: controlTypeValue);
+                return parent.GetElement(TreeScope: ATElement.TreeScope.Descendants, Index: int.Parse(propertyValue), ControlType: controlTypeValue);
             }
             else if (propertyType.Equals(StructPropertyType.name))
             {
-                return parent.GetElement(TreeScope: AT.TreeScope.Descendants, Name: propertyValue, ControlType: controlTypeValue);
+                return parent.GetElement(TreeScope: ATElement.TreeScope.Descendants, Name: propertyValue, ControlType: controlTypeValue);
             }
             else if (propertyType.Equals(StructPropertyType.className))
             {
-                return parent.GetElement(TreeScope: AT.TreeScope.Descendants, ClassName: propertyValue, ControlType: controlTypeValue);
+                return parent.GetElement(TreeScope: ATElement.TreeScope.Descendants, ClassName: propertyValue, ControlType: controlTypeValue);
             }
             else if (propertyType.Equals(StructPropertyType.id))
             {
@@ -65,7 +65,7 @@ namespace ATLib.Invoke
             try
             {
                 parent = parent == null ? new AT().GetRootElement() : parent;
-                return this.GetInvokerElementByPropertyType(parent, propertyType, propertyValue, controlTypeValue);
+                return GetInvokerElementByPropertyType(parent, propertyType, propertyValue, controlTypeValue);
             }
             catch (Exception)
             {

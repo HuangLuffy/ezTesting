@@ -5,9 +5,9 @@ using XunitTest.Projects.TestPro.PO.Models;
 
 namespace XunitTest.Projects.TestPro.Cases
 {
-    public class Steps_VirtualBox : Steps_Common
+    public class StepsVirtualBox : StepsCommon
     {
-        public Steps_VirtualBox(string pathReportXml = "") : base(pathReportXml)
+        public StepsVirtualBox(string pathReportXml = "") : base(pathReportXml)
         {
         }
 

@@ -11,7 +11,7 @@ namespace TestLib
         public string[] des { set; get; }
         public Descriptions(params string[] list)
         {
-            this.des = list;
+            des = list;
         }
     }
     public class ExpectedResults : Attribute
@@ -19,7 +19,7 @@ namespace TestLib
         public string[] er { set; get; }
         public ExpectedResults(params string[] list)
         {
-            this.er = list;
+            er = list;
         }
     }
     public class DoNotBlock : Attribute
