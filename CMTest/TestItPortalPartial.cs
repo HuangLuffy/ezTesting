@@ -10,32 +10,28 @@ namespace CMTest
 {
     public partial class TestIt
     {
-        public IDictionary<string, Func<dynamic>> Options_Portal_Tests_With_Funcs = new Dictionary<string, Func<dynamic>>();
-        public List<string> Options_Portal_PlugInOut_Device_Names = new List<string>();
-        public XmlOps _XmlOps = new XmlOps();
-        public void AssemblePortalPlugInOutTests()
+        private readonly IDictionary<string, Func<dynamic>> _optionsPortalTestsWithFuncs = new Dictionary<string, Func<dynamic>>();
+        private List<string> _optionsPortalPlugInOutDeviceNames = new List<string>();
+        private readonly XmlOps _xmlOps = new XmlOps();
+        private void AssemblePortalPlugInOutTests()
         {
-            if (Options_Portal_Tests_With_Funcs.Count() == 0)
-            {
-                //Select Back that will trigger this function again, so try-catch.
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_LAUNCH_TEST, Flow_Portal_LaunchTest);
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_PLUGIN_OUT_SERVER, Flow_PlugInOutServer);
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_SIMPLE_PROFILES_SWITCH, Flow_ProfilesSimpleSwitch);
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
-                Options_Portal_Tests_With_Funcs.Add(PortalTestFlows.Test_Names.OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
-                Options_Portal_Tests_With_Funcs.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN, _CMD.MenuShowAgain);
-                Options_Portal_Tests_With_Funcs.Add(UtilCmd.OPTION_BACK, _CMD.MenuGoback);
-            }
+            if (_optionsPortalTestsWithFuncs.Any()) return;
+            //Select Back that will trigger this function again, so try-catch.
+            _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_LAUNCH_TEST, Flow_Portal_LaunchTest);
+            _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_PLUGIN_OUT_SERVER, Flow_PlugInOutServer);
+            _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_SIMPLE_PROFILES_SWITCH, Flow_ProfilesSimpleSwitch);
+            _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
+            _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
+            _optionsPortalTestsWithFuncs.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN, _CMD.MenuShowAgain);
+            _optionsPortalTestsWithFuncs.Add(UtilCmd.OPTION_BACK, _CMD.MenuGoback);
         }
         private void AssemblePortalPlugInOutDevices(bool fromConf = true)
         {
-            if (Options_Portal_PlugInOut_Device_Names.Count() == 0)
-            {
-                Options_Portal_PlugInOut_Device_Names = UtilCloner.CloneList(_XmlOps.GetDeviceNameList());
-                //Options_Portal_PlugInOut_Device_Names = UtilCloner.CloneList(VMObj.GetDevicesItemList());
-                Options_Portal_PlugInOut_Device_Names.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
-                Options_Portal_PlugInOut_Device_Names.Add(UtilCmd.OPTION_BACK);
-            }
+            if (_optionsPortalPlugInOutDeviceNames.Any()) return;
+            _optionsPortalPlugInOutDeviceNames = UtilCloner.CloneList(_xmlOps.GetDeviceNameList());
+            //Options_Portal_PlugInOut_Device_Names = UtilCloner.CloneList(VMObj.GetDevicesItemList());
+            _optionsPortalPlugInOutDeviceNames.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
+            _optionsPortalPlugInOutDeviceNames.Add(UtilCmd.OPTION_BACK);
         }
         private dynamic Flow_Portal_LaunchTest()
         {
@@ -60,35 +56,30 @@ namespace CMTest
         private dynamic Flow_PlugInOutServer()
         {
             AssemblePortalPlugInOutDevices();
-            string deviceName = "";
-            string input = "";
-            List<string> options = _CMD.WriteCmdMenu(Options_Portal_PlugInOut_Device_Names);
+            var options = _CMD.WriteCmdMenu(_optionsPortalPlugInOutDeviceNames);
             while (true)
             {
                 options = _CMD.WriteCmdMenu(options, true, false);
-                input = _CMD.ReadLine();
-                deviceName = FindMatchedDevice(Options_Portal_PlugInOut_Device_Names, input, options);
-                if (deviceName != null)
+                var input = _CMD.ReadLine();
+                var deviceName = FindMatchedDevice(_optionsPortalPlugInOutDeviceNames, input, options);
+                switch (deviceName)
                 {
-                    if (UtilCmd.OPTION_BACK.Equals(deviceName))
-                    {
+                    case null:
+                        continue;
+                    case UtilCmd.OPTION_BACK:
                         return null; //cannot return "back" since it needs to stand at previous level.
-                    }
-                    else if (UtilCmd.OPTION_SHOW_MENU_AGAIN.Equals(deviceName))
-                    {
+                    case UtilCmd.OPTION_SHOW_MENU_AGAIN:
                         _CMD.Clear();
-                    }
-                    else
-                    {
+                        break;
+                    default:
                         RunDirectly_Flow_PlugInOutServer(deviceName);
                         return FOUND_TEST;
-                    }
-                }      
+                }
             }
         }
         public void RunDirectly_Flow_PlugInOutServer(string deviceName)
         {
-            _PortalTestFlows.Flow_PlugInOutServer(deviceName, _XmlOps.GetWaitTime(deviceName), _XmlOps.GetIndex(deviceName));
+            _PortalTestFlows.Flow_PlugInOutServer(deviceName, _xmlOps.GetWaitTime(deviceName), _xmlOps.GetIndex(deviceName));
         }
     }
 }

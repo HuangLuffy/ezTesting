@@ -10,7 +10,7 @@ namespace CMTest.Project.Portal
     public class PortalTestActions : Portal
     {
         private readonly PortalObj _PortalObj;
-        VmOps _VmOps;
+        readonly VmOps _VmOps;
         public PortalTestActions()
         {
             this.Initialize();
@@ -33,14 +33,14 @@ namespace CMTest.Project.Portal
                 
             }
         }
-        public void ProfilesImExAimpadSwitch(long TEST_TIMES)
+        public void ProfilesImExAimpadSwitch(long testTimes)
         {
             AT TabItem_Profiles = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: AT.TreeScope.Descendants);
             TabItem_Profiles.DoClickPoint();
             UtilTime.WaitTime(2);
             AT Profile_tmp = null;
             AT Loading_tmp = null;
-            for (int i = 1; i < TEST_TIMES; i++)
+            for (int i = 1; i < testTimes; i++)
             {
                 this.WriteConsoleTitle(i, $"Starting to Import Export switch (Support Aimpad Mode). ({Timeout}s)", Timeout);
                 this.ProfilesImExSwitch(PortalObj.Profile_2, Profile_tmp, Loading_tmp, "EXPORT", true);
@@ -54,8 +54,8 @@ namespace CMTest.Project.Portal
 
         public void ProfilesImExSwitch(long TEST_TIMES)
         {
-            AT TabItem_Profiles = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: AT.TreeScope.Descendants);
-            TabItem_Profiles.DoClickPoint();//"DoClick();" does not work
+            AT tabItemProfiles = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: AT.TreeScope.Descendants);
+            tabItemProfiles.DoClickPoint();//"DoClick();" does not work
             UtilTime.WaitTime(2);
             AT Profile_tmp = null;
             AT Loading_tmp = null;
@@ -70,18 +70,18 @@ namespace CMTest.Project.Portal
                 this.ProfilesImExSwitch(PortalObj.Profile_4, Profile_tmp, Loading_tmp, "");
             }
         }
-        private void WaitForEvent(AT Profile_tmp, AT Loading_tmp, bool IsAimpad = false)
+        private void WaitForEvent(AT profileTmp, AT loadingTmp, bool isAimpad = false)
         {
-            if (IsAimpad)
+            if (isAimpad)
             {
-                this.WaitForLoadingOrReconnecting(Profile_tmp, Loading_tmp);
+                this.WaitForLoadingOrReconnecting(profileTmp, loadingTmp);
             }
             else
             {
-                this.WaitForLoading(Loading_tmp);
+                this.WaitForLoading(loadingTmp);
             }
         }
-        private void WaitForLoadingOrReconnecting(AT Profile_tmp, AT Loading_tmp)
+        private void WaitForLoadingOrReconnecting(AT profileTmp, AT loadingTmp)
         {
             if (UtilOS.GetOsVersion().Contains(UtilOS.Name.Win10))
             {
@@ -93,66 +93,67 @@ namespace CMTest.Project.Portal
             }
             try
             {
-                Profile_tmp = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Profile_1, TreeScope: AT.TreeScope.Descendants, ReturnNullWhenException: true);
-                if (Profile_tmp == null)
+                profileTmp = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Profile_1, TreeScope: AT.TreeScope.Descendants, ReturnNullWhenException: true);
+                if (profileTmp == null)
                 {
                     this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
                     return;
                 }
                 do
                 {
-                    Loading_tmp = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants, ReturnNullWhenException: true);
-                } while (Loading_tmp != null);
+                    loadingTmp = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants, ReturnNullWhenException: true);
+                } while (loadingTmp != null);
             }
             catch (Exception)
             {
-
+                // ignored
             }
         }
-        private void WaitForLoading(AT Loading_tmp)
+        private void WaitForLoading(AT loadingTmp)
         {
             UtilTime.WaitTime(2);
             try
             {
                 while (true)
                 {
-                    Loading_tmp = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants);
+                    loadingTmp = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: AT.TreeScope.Descendants);
                 }
             }
             catch (Exception)
             {
-
+                // ignored
             }
         }
-        private void ProfilesImExSwitch(ATElementStruct WhichProfile, AT Profile_tmp, AT Loading_tmp, string WhereToClick, bool IsAimpad = false)
+        private void ProfilesImExSwitch(ATElementStruct whichProfile, AT profileTmp, AT loadingTmp, string whereToClick, bool isAimpad = false)
         {
-            Profile_tmp = this.MainWindow_SW.GetElement(ATElementStruct: WhichProfile, TreeScope: AT.TreeScope.Descendants);
-            Profile_tmp.DoClickPoint();
-            this.WaitForEvent(Profile_tmp, Loading_tmp, IsAimpad);
-            Profile_tmp = this.MainWindow_SW.GetElement(ATElementStruct: WhichProfile, TreeScope: AT.TreeScope.Descendants);
-            if (WhereToClick.Equals("EXPORT"))
+            profileTmp = this.MainWindow_SW.GetElement(ATElementStruct: whichProfile, TreeScope: AT.TreeScope.Descendants);
+            profileTmp.DoClickPoint();
+            this.WaitForEvent(profileTmp, loadingTmp, isAimpad);
+            profileTmp = this.MainWindow_SW.GetElement(ATElementStruct: whichProfile, TreeScope: AT.TreeScope.Descendants);
+            if (whereToClick.Equals("EXPORT"))
             {
-                Profile_tmp.GetElement(ATElementStruct: PortalObj.Profile_EXPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
+                profileTmp.GetElement(ATElementStruct: PortalObj.Profile_EXPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
                 AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout: 5);
-                AT Button_Save = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
-                Button_Save.DoClickPoint();
+                AT buttonSave = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
+                buttonSave.DoClickPoint();
                 try
                 {
                     dialog.GetElement(ATElementStruct: PortalObj.Button_Exist_Yes, TreeScope: AT.TreeScope.Descendants, Timeout: 1).DoClickPoint();
                 }
                 catch (Exception)
                 {
-
+                    // ignored
                 }
-                this.WaitForEvent(Profile_tmp, Loading_tmp, IsAimpad);
+
+                this.WaitForEvent(profileTmp, loadingTmp, isAimpad);
             }
-            else if (WhereToClick.Equals("IMPORT"))
+            else if (whereToClick.Equals("IMPORT"))
             {
-                Profile_tmp.GetElement(ATElementStruct: PortalObj.Profile_IMPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
+                profileTmp.GetElement(ATElementStruct: PortalObj.Profile_IMPORT, TreeScope: AT.TreeScope.Descendants).DoClickPoint();
                 AT dialog = this.MainWindow_SW.GetElement(ATElementStruct: PortalObj.Window_OpenFIle, TreeScope: AT.TreeScope.Children, Timeout: 5);
                 dialog = dialog.GetElement(ATElementStruct: PortalObj.Button_Save, TreeScope: AT.TreeScope.Children, Timeout: 1);
                 dialog.DoClickPoint();
-                this.WaitForEvent(Profile_tmp, Loading_tmp, IsAimpad);
+                this.WaitForEvent(profileTmp, loadingTmp, isAimpad);
             }
         }
         //public void ProfilesImExSwitch(long TEST_TIMES)

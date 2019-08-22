@@ -5,7 +5,7 @@ namespace CMTest.Project.Portal
 {
     public class PortalTestFlows
     {
-        public struct Test_Names{
+        public struct TestNames{
             public const string OPTION_LAUNCH_TEST = "Launch Test";
             public const string OPTION_PLUGIN_OUT_TEST = "PlugInOut Test";
             public const string OPTION_PLUGIN_OUT_SERVER = "PlugInOut Server";
@@ -14,57 +14,57 @@ namespace CMTest.Project.Portal
             public const string OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH = "Profiles Import Export Switch AIMPAD Test";
         }
 
-        public static long TEST_TIMES = 9999999;
+        private static readonly long TestTimes = 9999999;
 
-        public List<string> Options_Portal_PlugInOut_Devices_Name = VMObj.GetDevicesItemList();
+        public List<string> OptionsPortalPlugInOutDevicesName = VMObj.GetDevicesItemList();
         //new List<string> { VMObj.DeviceItem.Item_MM830.Name, VMObj.DeviceItem.Item_MP860.Name, VMObj.DeviceItem.Item_MK850.Name, VMObj.DeviceItem.Item_MH752.Name, VMObj.DeviceItem.Item_MP750.Name, VMObj.DeviceItem.Item_MH650.Name };
 
-        public PortalTestActions _PortalTestActions = new PortalTestActions();
+        public readonly PortalTestActions PortalTestActions = new PortalTestActions();
 
         public void Flow_PlugInOutTest()
         {
-            _PortalTestActions.LaunchSW();
-            for (int i = 1; i < TEST_TIMES; i++)
+            PortalTestActions.LaunchSW();
+            for (var i = 1; i < TestTimes; i++)
             {
-                _PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
-                _PortalTestActions.IsSWCrash(1, 3);
+                PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
+                PortalTestActions.IsSWCrash(1, 3);
             }
         }
-        public void Flow_PlugInOutServer(string deviceNameVM, string waitTime, string index)
+        public void Flow_PlugInOutServer(string deviceNameVm, string waitTime, string index)
         {
-            for (int i = 1; i < TEST_TIMES; i++)
+            for (var i = 1; i < TestTimes; i++)
             {
-                _PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
-                _PortalTestActions.PlugOutDeviceFromVM(deviceNameVM, waitTime, index);
+                PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
+                PortalTestActions.PlugOutDeviceFromVM(deviceNameVm, waitTime, index);
             }
         }
         public void Flow_LaunchTest()
         {
-            for (int i = 1; i < TEST_TIMES; i++)
+            for (var i = 1; i < TestTimes; i++)
             {
-                _PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
-                _PortalTestActions.LaunchSW();
-                _PortalTestActions.CloseSW();
-                _PortalTestActions.IsSWCrash(1);
+                PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
+                PortalTestActions.LaunchSW();
+                PortalTestActions.CloseSW();
+                PortalTestActions.IsSWCrash(1);
             }
         }
         public void Flow_ProfilesSimpleSwitch()
         {
-            _PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
-            _PortalTestActions.LaunchSW();
-            _PortalTestActions.ProfilesSimpleSwitch(TEST_TIMES);
+            PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
+            PortalTestActions.LaunchSW();
+            PortalTestActions.ProfilesSimpleSwitch(TestTimes);
         }
         public void Flow_ProfilesImExSwitch()
         {
-            _PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
-            _PortalTestActions.LaunchSW();
-            _PortalTestActions.ProfilesImExSwitch(TEST_TIMES);
+            PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
+            PortalTestActions.LaunchSW();
+            PortalTestActions.ProfilesImExSwitch(TestTimes);
         }
         public void Flow_ProfilesImExAimpadSwitch()
         {
-            _PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
-            _PortalTestActions.LaunchSW();
-            _PortalTestActions.ProfilesImExAimpadSwitch(TEST_TIMES);
+            PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
+            PortalTestActions.LaunchSW();
+            PortalTestActions.ProfilesImExAimpadSwitch(TestTimes);
         }
     }
 }
