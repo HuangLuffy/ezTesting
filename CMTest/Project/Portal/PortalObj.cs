@@ -9,35 +9,19 @@ namespace CMTest.Project.Portal
 {
     public class PortalObj : AbsSWObj
     {
-        //private string name_MainWidow;
-        //private string btn_CloseMainWindow;
-        ////Personality
-        //private string btn_Ok_PlugOut;
+        //public override string Name_MainWidow
+        //{
+        //    get { return "PORTAL"; }
+        //}
+        public override string Name_MainWidow => "PORTAL";
 
-        public override string Name_MainWidow
-        {
-            get { return "PORTAL"; }
-        }
-        public override string ClassName_MainWidow
-        {
-            get { return "Qt5QWindowIcon"; }
-            //set { name_MainWidow = value; }
-        }
-        
-        public override string Button_CloseMainWindow
-        {
-            get { return "sw_close"; }
-        }
+        public override string ClassName_MainWidow => "Qt5QWindowIcon";
 
-        public string Button_OK_PlugOut
-        {
-            get { return "plugout_ok"; }
-        }
+        public override string Button_CloseMainWindow => "sw_close";
 
-        public override string Name_CrashMainWidow
-        {
-            get { return "PORTAL.exe"; }
-        }
+        public string Button_OK_PlugOut => "plugout_ok";
+
+        public override string Name_CrashMainWidow => "PORTAL.exe";
 
         public static ATElementStruct Window_Main = new ATElementStruct()
         {

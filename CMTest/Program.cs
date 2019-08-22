@@ -30,7 +30,7 @@ namespace CMTest
             }
             else
             {
-                _TestIt.OpenCMD();
+                _TestIt.OpenCmd();
             }
             Console.ReadKey();
         }

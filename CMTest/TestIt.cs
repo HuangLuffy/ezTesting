@@ -32,16 +32,16 @@ namespace CMTest
             public bool run;
             public string device;
         }
-        public void OpenCMD()
+        public void OpenCmd()
         {
-            List<string> projectOptions = _CMD.WriteCmdMenu(Options_Projects);
+            var projectOptions = _CMD.WriteCmdMenu(Options_Projects);
             while (true)
             {
                 try
                 {
                     projectOptions = _CMD.WriteCmdMenu(projectOptions, true, false);
-                    string s = _CMD.ReadLine();
-                    string result = ShowCmdProjects(s, projectOptions);
+                    var s = _CMD.ReadLine();
+                    var result = ShowCmdProjects(s, projectOptions);
                     if (result.Equals(FOUND_TEST))
                     {
                         _CMD.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
@@ -56,16 +56,16 @@ namespace CMTest
                 }
             }
         }
-        private string ShowCmdProjects(string selected, List<string> options)
+        private string ShowCmdProjects(string selected, IEnumerable<string> options)
         {
-            for (int i = 0; i < options.Count; i++)
+            foreach (var option in options)
             {
-                if (IsTestExisted(_MasterPlusTestFlows._MasterPlusTestActions.SwName, selected, options[i]))
+                if (IsTestExisted(_MasterPlusTestFlows._MasterPlusTestActions.SwName, selected, option))
                 {
                     AssembleMasterPlusPlugInOutTests();
                     return ShowCmdTestsBySelectedProject(Options_MasterPlus_Tests_With_Funcs);
                 }
-                else if (IsTestExisted(_PortalTestFlows._PortalTestActions.SwName, selected, options[i]))
+                else if (IsTestExisted(_PortalTestFlows._PortalTestActions.SwName, selected, option))
                 {
                     AssemblePortalPlugInOutTests();
                     return ShowCmdTestsBySelectedProject(Options_Portal_Tests_With_Funcs);
@@ -75,12 +75,11 @@ namespace CMTest
         }
         private string ShowCmdTestsBySelectedProject(IDictionary<string, Func<dynamic>> testFuncsByTestName)
         {
-            List<string> options = _CMD.WriteCmdMenu(testFuncsByTestName.Keys.ToList());
-            string input = "";
+            var options = _CMD.WriteCmdMenu(testFuncsByTestName.Keys.ToList());
             while (true)
             {
                 options = _CMD.WriteCmdMenu(options, true, false);
-                input = _CMD.ReadLine();
+                string input = _CMD.ReadLine();
                 string result = FindMatchedTest(testFuncsByTestName, input, options);
                 if (result == null)
                 {
@@ -96,12 +95,11 @@ namespace CMTest
                 }
             }
         }
-        private T FindMatchedOption<T>(List<string> list_all, string selected, List<string> compared_options)
+        private T FindMatchedOption<T>(IReadOnlyList<string> listAll, string selected, List<string> comparedOptions)
         {
-            string deviceName = "";
-            for (int i = 0; i < compared_options.Count; i++)
+            foreach (var comparedOption in comparedOptions)
             {
-                deviceName = GetSelectedName(list_all, selected, compared_options[i]);
+                string deviceName = GetSelectedName(listAll, selected, comparedOption);
                 if (deviceName != null)
                 {
                     return (T)Convert.ChangeType(deviceName, typeof(T));
@@ -109,26 +107,22 @@ namespace CMTest
             }
             return default(T);
         }
-        private string FindMatchedDevice(List<string> Options_Portal_PlugInOut_Device_Names, string selected, List<string> compared_options)
+        private string FindMatchedDevice(IReadOnlyList<string> Options_Portal_PlugInOut_Device_Names, string selected, List<string> comparedOptions)
         {
-            return FindMatchedOption<string>(Options_Portal_PlugInOut_Device_Names, selected, compared_options);
+            return FindMatchedOption<string>(Options_Portal_PlugInOut_Device_Names, selected, comparedOptions);
         }
-        private string FindMatchedTest(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, List<string> compared_options)
+        private string FindMatchedTest(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, List<string> comparedOptions)
         {
-            var t = FindMatchedOption<string>(testFuncsByTestName.Keys.ToList(), selected, compared_options);
-            if (t == null)
-            {
-                return null;
-            }
-            return testFuncsByTestName[t].Invoke();
+            var t = FindMatchedOption<string>(testFuncsByTestName.Keys.ToList(), selected, comparedOptions);
+            return t == null ? null : testFuncsByTestName[t].Invoke();
         }
-        private string GetSelectedName(List<string> list_all, string selected_num, string compared_option)
+        private string GetSelectedName(IReadOnlyList<string> listAll, string selectedNum, string comparedOptions)
         {
-            for (int j = 0; j < list_all.Count(); j++)
+            for (var j = 0; j < listAll.Count(); j++)
             {
-                if (this.IsTestExisted(list_all[j], selected_num, compared_option))
+                if (this.IsTestExisted(listAll[j], selectedNum, comparedOptions))
                 {
-                    return list_all[j];
+                    return listAll[j];
                 }
             }
             return null;
