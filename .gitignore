@@ -19,4 +19,5 @@ OpenIt/obj/*
 OpenIt/bin/*
 CMTest/obj/*
 CMTest/bin/*
+!CMTest\bin\Debug\Conf.xml
 packages/*
