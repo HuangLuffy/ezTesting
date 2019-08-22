@@ -11,8 +11,7 @@ namespace CMTest.Project
 {
     public class SWCommonActions : SW
     {
-
-        public SWCommonActions()
+        protected SWCommonActions()
         {
             this.Initialize();
         }
@@ -36,7 +35,7 @@ namespace CMTest.Project
             }
         }
 
-        public void IsSWCrash(int checkTime = 0, int checkInternal = 0)
+        public void IsSwCrash(int checkTime = 0, int checkInternal = 0)
         {
             if (checkInternal > 0)
             {
@@ -70,9 +69,8 @@ namespace CMTest.Project
                 }
                 catch (Exception)
                 {
-
+                    // ignored
                 }
-
             }
             catch (Exception)
             {

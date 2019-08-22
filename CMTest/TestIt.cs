@@ -63,7 +63,7 @@ namespace CMTest
                 if (IsTestExisted(_MasterPlusTestFlows._MasterPlusTestActions.SwName, selected, option))
                 {
                     AssembleMasterPlusPlugInOutTests();
-                    return ShowCmdTestsBySelectedProject(Options_MasterPlus_Tests_With_Funcs);
+                    return ShowCmdTestsBySelectedProject(_optionsMasterPlusTestsWithFuncs);
                 }
                 else if (IsTestExisted(_PortalTestFlows.PortalTestActions.SwName, selected, option))
                 {

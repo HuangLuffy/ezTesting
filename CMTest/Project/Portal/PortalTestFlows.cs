@@ -26,15 +26,15 @@ namespace CMTest.Project.Portal
             PortalTestActions.LaunchSW();
             for (var i = 1; i < TestTimes; i++)
             {
-                PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
-                PortalTestActions.IsSWCrash(1, 3);
+                PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
+                PortalTestActions.IsSwCrash(1, 3);
             }
         }
         public void Flow_PlugInOutServer(string deviceNameVm, string waitTime, string index)
         {
             for (var i = 1; i < TestTimes; i++)
             {
-                PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
+                PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
                 PortalTestActions.PlugOutDeviceFromVM(deviceNameVm, waitTime, index);
             }
         }
@@ -42,27 +42,27 @@ namespace CMTest.Project.Portal
         {
             for (var i = 1; i < TestTimes; i++)
             {
-                PortalTestActions.SetlaunchTimesAndWriteTestTitle(i);
+                PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
                 PortalTestActions.LaunchSW();
                 PortalTestActions.CloseSW();
-                PortalTestActions.IsSWCrash(1);
+                PortalTestActions.IsSwCrash(1);
             }
         }
         public void Flow_ProfilesSimpleSwitch()
         {
-            PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
+            PortalTestActions.SetLaunchTimesAndWriteTestTitle(1);
             PortalTestActions.LaunchSW();
             PortalTestActions.ProfilesSimpleSwitch(TestTimes);
         }
         public void Flow_ProfilesImExSwitch()
         {
-            PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
+            PortalTestActions.SetLaunchTimesAndWriteTestTitle(1);
             PortalTestActions.LaunchSW();
             PortalTestActions.ProfilesImExSwitch(TestTimes);
         }
         public void Flow_ProfilesImExAimpadSwitch()
         {
-            PortalTestActions.SetlaunchTimesAndWriteTestTitle(1);
+            PortalTestActions.SetLaunchTimesAndWriteTestTitle(1);
             PortalTestActions.LaunchSW();
             PortalTestActions.ProfilesImExAimpadSwitch(TestTimes);
         }
