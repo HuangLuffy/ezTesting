@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace CommonLib.Util
+namespace CommonLib.Util.msg
 {
     public class Dlg : Msg
     {
@@ -20,7 +20,7 @@ namespace CommonLib.Util
         }
         public static void ShowErrorDialog(string content)
         {
-            ShowDialog(content, CaptionName.captionError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            ShowDialog(content, CaptionName.captionError);
         }
         public static void ShowWarningDialog(string content)
         {

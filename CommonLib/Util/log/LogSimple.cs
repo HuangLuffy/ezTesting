@@ -1,37 +1,39 @@
-﻿using CommonLib.Util.project;
-using System;
+﻿using System;
+using System.Globalization;
 using System.IO;
+using CommonLib.Util.msg;
+using CommonLib.Util.project;
 
-namespace CommonLib.Util.msg
+namespace CommonLib.Util.log
 {
     public class LogSimple : ILog
     {
-        private string logName = "Log";
-        private string logFolderPath;
-        private string logFileFullPath;
+        private readonly string _logName = "Log";
+        public readonly string LogFolderPath;
+        private readonly string _logFileFullPath;
         public LogSimple(string logFolderPath, string logName )
         {
-            this.logFolderPath = logFolderPath;
-            this.logName = logName;
-            this.logFolderPath = logFolderPath.Equals("") ? ProjectPath.getProjectFullPath() : logFolderPath;
-            logFileFullPath = this.logFolderPath + @"\" + this.logName + ".log";
+            LogFolderPath = logFolderPath;
+            _logName = logName;
+            LogFolderPath = logFolderPath.Equals("") ? ProjectPath.getProjectFullPath() : logFolderPath;
+            _logFileFullPath = LogFolderPath + @"\" + _logName + ".log";
         }
         public LogSimple(string logFolderPath)
         {
-            this.logFolderPath = logFolderPath;
-            logFileFullPath = this.logFolderPath + @"\" + logName + ".log";
+            LogFolderPath = logFolderPath;
+            _logFileFullPath = LogFolderPath + @"\" + _logName + ".log";
         }
         public LogSimple()
         {
-            logFileFullPath = Path.Combine(ProjectPath.getProjectFullPath(), logName + ".log");
+            _logFileFullPath = Path.Combine(ProjectPath.getProjectFullPath(), _logName + ".log");
         }
         private struct LogLevel
         {
-            public const string INFO = "Info";
-            public const string ERROR = "Error";
-            public const string LOG = "Log";
-            public const string DEBUG = "Debug";
-            public const string EXCEPTION = "Exception";
+            public const string Info = "Info";
+            public const string Error = "Error";
+            public const string Log = "Log";
+            public const string Debug = "Debug";
+            public const string Exception = "Exception";
         }
         private struct LogLevelRecord
         {
@@ -44,62 +46,53 @@ namespace CommonLib.Util.msg
 
         private void Log(string message, string logLevel = "", string methodName = "", string exception = "")
         {
-            try
-            {
-                if (LogLevelRecord.Log == false) return;
-                methodName = methodName.Equals("") ? "- {NA}" : "- {" + methodName + "}";
-                FileInfo fileInfo = new FileInfo(logFileFullPath);
-                FileMode fileMode;
-                fileMode = File.Exists(logFileFullPath) ? FileMode.Append : FileMode.Create;
-                FileStream fileStream = new FileStream(logFileFullPath, fileMode);
-                //content = streamReader.ReadToEnd();
-                StreamWriter streamWriter = new StreamWriter(fileStream);
-                streamWriter.WriteLine(
-                    $"{DateTime.Now.ToString("yyyy_MM_dd hh:mm:ss")} > [{logLevel}] {message} {methodName} {exception}");
-                streamWriter.Close();
-                fileStream.Close();
-                if (fileInfo.Length >= 1024 * 1024 * 200)
-                {
-                    string NewName = logFileFullPath + @"\" + logName + time() + ".txt";
-                    File.Move(logFileFullPath, NewName);
-                }
-            }
-            catch (Exception ex)
-            {
-                //Dlg.ShowErrorDialog(Dlg.INFO.UnknowError); 
-                throw ex;
-            }
+
+            if (LogLevelRecord.Log == false) return;
+            methodName = methodName.Equals("") ? "- {NA}" : "- {" + methodName + "}";
+            var fileInfo = new FileInfo(_logFileFullPath);
+            var fileMode = File.Exists(_logFileFullPath) ? FileMode.Append : FileMode.Create;
+            var fileStream = new FileStream(_logFileFullPath, fileMode);
+            //content = streamReader.ReadToEnd();
+            var streamWriter = new StreamWriter(fileStream);
+            streamWriter.WriteLine(
+                $"{DateTime.Now:yyyy_MM_dd hh:mm:ss} > [{logLevel}] {message} {methodName} {exception}");
+            streamWriter.Close();
+            fileStream.Close();
+            if (fileInfo.Length < 1024 * 1024 * 200) return;
+            var newName = _logFileFullPath + @"\" + _logName + Time() + ".txt";
+            File.Move(_logFileFullPath, newName);
+
         }
         public void LogDebug(string message, string methodName = "")
         {
-            if (LogLevelRecord.Debug) Log(message, LogLevel.DEBUG, methodName);
+            if (LogLevelRecord.Debug) Log(message, LogLevel.Debug, methodName);
         }
         public void LogInfo(string message, string methodName = "")
         {
-            if (LogLevelRecord.Info) Log(message, LogLevel.INFO, methodName);
+            if (LogLevelRecord.Info) Log(message, LogLevel.Info, methodName);
         }
         public void LogError(string message, string methodName = "", string exception = "")
         {
-            if (LogLevelRecord.Error) Log(message, LogLevel.ERROR, methodName, exception);
+            if (LogLevelRecord.Error) Log(message, LogLevel.Error, methodName, exception);
         }
         public void LogThrowMessage(string message, string methodName = "", string exception = "")
         {
-            if (LogLevelRecord.Exception) Log(message, LogLevel.EXCEPTION, methodName, exception);
+            if (LogLevelRecord.Exception) Log(message, LogLevel.Exception, methodName, exception);
             throw new Exception(message);
         }
         public void LogThrowException(string message, string methodName = "", string exception = "")
         {
-            if (LogLevelRecord.Exception) Log(message, LogLevel.EXCEPTION, methodName, exception);
+            if (LogLevelRecord.Exception) Log(message, LogLevel.Exception, methodName, exception);
             throw new Exception(exception);
         }
         /// <summary>
         /// time
         /// </summary>
         /// <returns></returns>
-        private string time()
+        private string Time()
         {
-            string dNow = DateTime.Now.ToString().Trim().Replace("/", "").Replace(":", "");
-            string logFullPath = dNow.ToString();
+            var dNow = DateTime.Now.ToString(CultureInfo.InvariantCulture).Trim().Replace("/", "").Replace(":", "");
+            var logFullPath = dNow;
             return logFullPath;
         }
     }
