@@ -17,127 +17,121 @@ namespace XunitTest.Handler
         //private string folderNameTest = "";
         //private string folderNameScreenshots = "Shots";
 
-        private bool needToBlockAllTests = false;
-        private string pathReportFile = "";
-        private int stepNumber = 1;
-        private const string blockedDescription = "This step is blocked since the previous step was failed.";
+        private bool _needToBlockAllTests = false;
+        private string _pathReportFile;
+        private int _stepNumber = 1;
+        private const string BlockedDescription = "This step is blocked since the previous step was failed.";
 
-        private const string DEFAULTCONTENT = "NA";
-        private IReporter _IReporter;
-        private Result_TestInfo _Result_TestInfo;
-        private string ManualCheckLink = DEFAULTCONTENT;
+        private const string DefaultContent = "NA";
+        private readonly IReporter _iReporter;
+        private readonly ResultTestInfo _resultTestInfo;
+        private string _manualCheckLink = DefaultContent;
         public TestStepHandler(string pathReportXml = "")
         {
-            _IReporter = ReporterManager.GeReporter(pathReportXml);
-            _Result_TestInfo = new Result_TestInfo();
-            _Result_TestInfo.Attribute_project = "CM";
-            _Result_TestInfo.Attribute_os = UtilOS.GetOsVersion();
-            _Result_TestInfo.Attribute_language = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-","_");
-            _Result_TestInfo.Attribute_region = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1];
-            _Result_TestInfo.Attribute_deviceModel = DEFAULTCONTENT;
-            _Result_TestInfo.Attribute_deviceName = DEFAULTCONTENT;
-            _Result_TestInfo.Attribute_version = DEFAULTCONTENT;
-            _Result_TestInfo.Attribute_tests = 0;
-            _Result_TestInfo.Attribute_passes = 0;
-            _Result_TestInfo.Attribute_failures = 0;
-            _Result_TestInfo.Attribute_tbds = 0;
-            _Result_TestInfo.Attribute_blocks = 0;
+            _iReporter = ReporterManager.GeReporter(pathReportXml);
+            _resultTestInfo = new ResultTestInfo
+            {
+                AttrProject = "CM",
+                AttrOs = UtilOS.GetOsVersion(),
+                AttrLanguage = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-", "_"),
+                AttrRegion = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1],
+                AttrDeviceModel = DefaultContent,
+                AttrDeviceName = DefaultContent,
+                AttrVersion = DefaultContent,
+                AttrTests = 0,
+                AttrPasses = 0,
+                AttrFailures = 0,
+                AttrTbds = 0,
+                AttrBlocks = 0
+            };
 
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
-            pathReportFile = pathReportXml;
+            _pathReportFile = pathReportXml;
         }
 
-        public void Capture(string pathSave, string comment = "Shot", ImageType ImageType = ImageType.PNG)
+        public void Capture(string pathSave, string comment = "Shot", ImageType imageType = ImageType.PNG)
         {
-            ManualCheckLink += _IReporter.setManualCheck(comment, pathSave);
-            UtilCapturer.Capture(pathSave, ImageType);
+            _manualCheckLink += _iReporter.setManualCheck(comment, pathSave);
+            UtilCapturer.Capture(pathSave, imageType);
         }
         private T Exec<T>(Func<T> action)
         {
-            try
-            {
-                if (needToBlockAllTests)
-                    return default(T);
-                DateTime dt = DateTime.Now;
-                T result = Execute(action);
-                return Execute(action);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            if (_needToBlockAllTests)
+                return default(T);
+            var dt = DateTime.Now;
+            T result = Execute(action);
+            return Execute(action);
         }
         public void Exec(Action action)
         {
-            TestFunctionInfo _XunitInfo = new TestFunctionInfo(3, _IReporter);
-            _Result_TestInfo.Attribute_name = _XunitInfo.ClassName;
-            TestFunctionInfo _StepInfo = new TestFunctionInfo(2, _IReporter);
-            Result_TestCase _Result_TestCase = new Result_TestCase();
-            string result = string.Empty;
-            DateTime dt = DateTime.Now;
+            var xunitInfo = new TestFunctionInfo(3, _iReporter);
+            _resultTestInfo.AttrName = xunitInfo.ClassName;
+            var stepInfo = new TestFunctionInfo(2, _iReporter);
+            var resultTestCase = new ResultTestCase();
+            var result = string.Empty;
+            var dt = DateTime.Now;
             try
             {
-                if (_StepInfo.DoNotBlock == true)
+                if (stepInfo.DoNotBlock == true)
                 {
-                    needToBlockAllTests = false;
+                    _needToBlockAllTests = false;
                 }
-                if (needToBlockAllTests)
+                if (_needToBlockAllTests)
                 {
                     result = Result.BLOCK;
-                    _Result_TestInfo.Attribute_blocks += 1;
+                    _resultTestInfo.AttrBlocks += 1;
                 }
                 else
                 {
                     Execute(action);
                     result = Result.PASS;
-                    _Result_TestInfo.Attribute_passes += 1;
+                    _resultTestInfo.AttrPasses += 1;
                 }
             }
             catch (Exception ex)
             {
                 result = Result.FAIL;
-                _Result_TestInfo.Attribute_failures += 1;
-                needToBlockAllTests = true;
+                _resultTestInfo.AttrFailures += 1;
+                _needToBlockAllTests = true;
                 throw ex;
             }
             finally
             {
                 Capture("End Shot", "");
 
-                _Result_TestInfo.Attribute_tests += 1;
+                _resultTestInfo.AttrTests += 1;
 
-                _Result_TestCase.Attribute_classname = _XunitInfo.ClassFullName;
-                _Result_TestCase.Attribute_name = _XunitInfo.FunctionName;
-                _Result_TestCase.Attribute_time = UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second);
-                _Result_TestCase.Node_stepNumber = stepNumber++;
-                _Result_TestCase.Node_description = _StepInfo.Descriptions;
-                _Result_TestCase.Node_expectedResult = _StepInfo.ExpectedResults;
-                _Result_TestCase.Node_needToCheck = ManualCheckLink;
-                _Result_TestCase.Node_result = result;
+                resultTestCase.AttrClassname = xunitInfo.ClassFullName;
+                resultTestCase.AttrName = xunitInfo.FunctionName;
+                resultTestCase.AttrTime = UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second);
+                resultTestCase.NodeStepNumber = _stepNumber++;
+                resultTestCase.NodeDescription = stepInfo.Descriptions;
+                resultTestCase.NodeExpectedResult = stepInfo.ExpectedResults;
+                resultTestCase.NodeNeedToCheck = _manualCheckLink;
+                resultTestCase.NodeResult = result;
 
-                _IReporter.AddTestStep(_Result_TestCase);
-                _Result_TestInfo.Attribute_testName = _XunitInfo.ClassName;
-                _Result_TestInfo.Attribute_time += _Result_TestCase.Attribute_time;
-                _Result_TestInfo.Attribute_passesPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_passes, _Result_TestInfo.Attribute_tests, 1);
-                _Result_TestInfo.Attribute_failuresPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_failures, _Result_TestInfo.Attribute_tests, 1);
-                _Result_TestInfo.Attribute_errorsPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_errors, _Result_TestInfo.Attribute_tests, 1);
-                _Result_TestInfo.Attribute_blocksPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_blocks, _Result_TestInfo.Attribute_tests, 1);
-                _Result_TestInfo.Attribute_tbdsPercent = _IReporter.GetResultPercent(_Result_TestInfo.Attribute_tbds, _Result_TestInfo.Attribute_tests, 1);
-                _IReporter.ModifyTestInfo(_Result_TestInfo);
+                _iReporter.AddTestStep(resultTestCase);
+                _resultTestInfo.AttrTestName = xunitInfo.ClassName;
+                _resultTestInfo.AttrTime += resultTestCase.AttrTime;
+                _resultTestInfo.AttrPassesPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrPasses, _resultTestInfo.AttrTests, 1);
+                _resultTestInfo.AttrFailuresPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrFailures, _resultTestInfo.AttrTests, 1);
+                _resultTestInfo.AttrErrorsPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrErrors, _resultTestInfo.AttrTests, 1);
+                _resultTestInfo.AttrBlocksPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrBlocks, _resultTestInfo.AttrTests, 1);
+                _resultTestInfo.AttrTbdsPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrTbds, _resultTestInfo.AttrTests, 1);
+                _iReporter.ModifyTestInfo(_resultTestInfo);
             }  
         }
         private class TestFunctionInfo
         {
-            public string ClassName { set; get; }
-            public string ClassFullName { set; get; }
-            public string FunctionName { set; get; }
-            public string Descriptions = DEFAULTCONTENT;
-            public string ExpectedResults = DEFAULTCONTENT;
+            public string ClassName { private set; get; }
+            public string ClassFullName { private set; get; }
+            public string FunctionName { private set; get; }
+            public string Descriptions = DefaultContent;
+            public string ExpectedResults = DefaultContent;
             public bool DoNotBlock = false;
 
-            public TestFunctionInfo(int level, IReporter _IReporter)
+            public TestFunctionInfo(int level, IReporter iReporter)
             {
                 StackFrame frame = new StackTrace().GetFrame(level);
                 ClassName = frame.GetMethod().ReflectedType.Name;
@@ -147,11 +141,11 @@ namespace XunitTest.Handler
                 {
                     if (attri.AttributeType.Name.Equals(typeof(Descriptions).Name))
                     {
-                        Descriptions = AssembleStepInstructions(attri.ConstructorArguments[0].Value, _IReporter);
+                        Descriptions = AssembleStepInstructions(attri.ConstructorArguments[0].Value, iReporter);
                     }
                     else if (attri.AttributeType.Name.Equals(typeof(ExpectedResults).Name))
                     {
-                        ExpectedResults = AssembleStepInstructions(attri.ConstructorArguments[0].Value, _IReporter);
+                        ExpectedResults = AssembleStepInstructions(attri.ConstructorArguments[0].Value, iReporter);
                     }
                     else if (attri.AttributeType.Name.Equals(typeof(DoNotBlock).Name))
                     {
@@ -159,7 +153,7 @@ namespace XunitTest.Handler
                     }
                 }
             }
-            private string AssembleStepInstructions(object cads, IReporter _IReporter)
+            private string AssembleStepInstructions(object cads, IReporter iReporter)
             {
                 string t = "";
                 var list = (IReadOnlyCollection<System.Reflection.CustomAttributeTypedArgument>)cads;
@@ -171,7 +165,7 @@ namespace XunitTest.Handler
                 {
                     foreach (var item in list)
                     {
-                        t += _IReporter.SetNewLine(item.Value.ToString());
+                        t += iReporter.SetNewLine(item.Value.ToString());
                     }
                 }
                 return t;

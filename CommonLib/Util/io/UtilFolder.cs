@@ -38,12 +38,10 @@ namespace CommonLib.Util.io
         {
             try
             {
-                if (Directory.Exists(folderPath))
-                {
-                    DeleteFilesAndFoldersRecursively(folderPath);
-                    // Directory.Delete(folderPath, true);
-                    Thread.Sleep(10);
-                }
+                if (!Directory.Exists(folderPath)) return;
+                DeleteFilesAndFoldersRecursively(folderPath);
+                // Directory.Delete(folderPath, true);
+                Thread.Sleep(10);
             }
             catch (Exception ex)
             {

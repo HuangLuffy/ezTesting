@@ -40,100 +40,100 @@ namespace ReportLib
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XProcessingInstruction("xml-stylesheet", $"type='text/xsl' href='{xslName}'"),
                 new XElement(
-                    Node_testsuite,
-                    new XAttribute(Attribute_project, "project"),
-                    new XAttribute(Attribute_testName, "testName"),
-                    new XAttribute(Attribute_os, "os"),
-                    new XAttribute(Attribute_language, "language"),
-                    new XAttribute(Attribute_time, "time"),
-                    new XAttribute(Attribute_deviceModel, "deviceModel"),
-                    new XAttribute(Attribute_deviceName, "deviceName"),
-                    new XAttribute(Attribute_region, "region"),
-                    new XAttribute(Attribute_tests, "tests"),
-                    new XAttribute(Attribute_version, "version"),
-                    new XAttribute(Attribute_name, "name"),
+                    NodeTestsuite,
+                    new XAttribute(AttrProject, "project"),
+                    new XAttribute(AttrTestName, "testName"),
+                    new XAttribute(AttrOs, "os"),
+                    new XAttribute(AttrLanguage, "language"),
+                    new XAttribute(AttrTime, "time"),
+                    new XAttribute(AttrDeviceModel, "deviceModel"),
+                    new XAttribute(AttrDeviceName, "deviceName"),
+                    new XAttribute(AttrRegion, "region"),
+                    new XAttribute(AttrTests, "tests"),
+                    new XAttribute(AttrVersion, "version"),
+                    new XAttribute(AttrName, "name"),
 
-                    new XAttribute(Attribute_blocks, "blocks"),
-                    new XAttribute(Attribute_blocksPercent, "blocksPercent"),
-                    new XAttribute(Attribute_errors, "errors"),
-                    new XAttribute(Attribute_errorsPercent, "errorsPercent"),
-                    new XAttribute(Attribute_failures, "failures"),
-                    new XAttribute(Attribute_failsPercent, "failsPercent"),
-                    new XAttribute(Attribute_passes, "passes"),
-                    new XAttribute(Attribute_passesPercent, "passesPercent"),
-                    new XAttribute(Attribute_tbds, "tbds"),
-                    new XAttribute(Attribute_tbdsPercent, "tbdsPercent")
+                    new XAttribute(AttrBlocks, "blocks"),
+                    new XAttribute(AttrBlocksPercent, "blocksPercent"),
+                    new XAttribute(AttrErrors, "errors"),
+                    new XAttribute(AttrErrorsPercent, "errorsPercent"),
+                    new XAttribute(AttrFailures, "failures"),
+                    new XAttribute(AttrFailsPercent, "failsPercent"),
+                    new XAttribute(AttrPasses, "passes"),
+                    new XAttribute(AttrPassesPercent, "passesPercent"),
+                    new XAttribute(AttrTbds, "tbds"),
+                    new XAttribute(AttrTbdsPercent, "tbdsPercent")
                 )
             );
             this.xDoc = xDoc;
             xDoc.Save(pathReportXml);
         }
-        private XElement AssembleElement(Result_TestCase _Result_TestCase)
+        private XElement AssembleElement(ResultTestCase resultTestCase)
             //(string classname, string stepTime, string functionName, string stepNumber, string description, string expectedResult, string needToCheck, string result)
         {
             return 
                 new XElement(
-                    Node_testcase,
-                    new XAttribute(Attribute_classname, _Result_TestCase.Attribute_classname),
-                    new XAttribute(Attribute_time, _Result_TestCase.Attribute_time),
-                    new XAttribute(Attribute_name, _Result_TestCase.Attribute_name),
-                    new XElement(Node_step, _Result_TestCase.Node_stepNumber),
-                    new XElement(Node_description, _Result_TestCase.Node_description),
-                    new XElement(Node_expectedResult, _Result_TestCase.Node_expectedResult),
-                    new XElement(Node_needToCheck, _Result_TestCase.Node_needToCheck),
-                    new XElement(Node_result, _Result_TestCase.Node_result),
+                    NodeTestcase,
+                    new XAttribute(AttrClassname, resultTestCase.AttrClassname),
+                    new XAttribute(AttrTime, resultTestCase.AttrTime),
+                    new XAttribute(AttrName, resultTestCase.AttrName),
+                    new XElement(NodeStep, resultTestCase.NodeStepNumber),
+                    new XElement(NodeDescription, resultTestCase.NodeDescription),
+                    new XElement(NodeExpectedResult, resultTestCase.NodeExpectedResult),
+                    new XElement(NodeNeedToCheck, resultTestCase.NodeNeedToCheck),
+                    new XElement(NodeResult, resultTestCase.NodeResult),
                     new XElement(
-                        Node_failure,
-                        new XAttribute(Attribute_message, "na"),
-                        new XAttribute(Attribute_type, "na")
+                        NodeFailure,
+                        new XAttribute(AttrMessage, "na"),
+                        new XAttribute(AttrType, "na")
                     )
             );
         }
-        public void AddTestStep(Result_TestCase _Result_TestCase)
+        public void AddTestStep(ResultTestCase resultTestCase)
         {
-            XDocument xDoc = this.xDoc == null ? XDocument.Load(pathReportXml) : this.xDoc;
-            var testcases = xDoc.Root.Elements(Node_testcase);
-            XElement xElement = AssembleElement(_Result_TestCase);
-            if (testcases.Count() == 0)
+            var thisDoc = xDoc ?? XDocument.Load(pathReportXml);
+            var testCases = xDoc.Root.Elements(NodeTestcase);
+            XElement xElement = AssembleElement(resultTestCase);
+            if (!testCases.Any())
             {
                 xDoc.Root.Add(xElement);
             }
             else
             {
-                testcases.Last().AddAfterSelf(xElement);
+                testCases.Last().AddAfterSelf(xElement);
             }
             xDoc.Save(pathReportXml);
         }
 
-        public void ModifyTestInfo(Result_TestInfo _Result_TestInfo)
+        public void ModifyTestInfo(ResultTestInfo resultTestInfo)
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
         {
-            XDocument xDoc = this.xDoc == null ? XDocument.Load(pathReportXml) : this.xDoc;
-            XElement rootElement = this.xDoc.Root;
-            rootElement.Attribute(Attribute_project).Value = _Result_TestInfo.Attribute_project;
-            rootElement.Attribute(Attribute_testName).Value = _Result_TestInfo.Attribute_testName;
-            rootElement.Attribute(Attribute_os).Value = _Result_TestInfo.Attribute_os;
-            rootElement.Attribute(Attribute_language).Value = _Result_TestInfo.Attribute_language;
-            rootElement.Attribute(Attribute_time).Value = _Result_TestInfo.Attribute_time.ToString();
-            rootElement.Attribute(Attribute_deviceModel).Value = _Result_TestInfo.Attribute_deviceModel;
-            rootElement.Attribute(Attribute_deviceName).Value = _Result_TestInfo.Attribute_deviceName;
-            rootElement.Attribute(Attribute_region).Value = _Result_TestInfo.Attribute_region;
-            rootElement.Attribute(Attribute_tests).Value = _Result_TestInfo.Attribute_tests.ToString();
-            rootElement.Attribute(Attribute_version).Value = _Result_TestInfo.Attribute_version;
-            rootElement.Attribute(Attribute_name).Value = _Result_TestInfo.Attribute_name;
+            var thisDoc = xDoc ?? XDocument.Load(pathReportXml);
+            var rootElement = xDoc.Root;
+            rootElement.Attribute(AttrProject).Value = resultTestInfo.AttrProject;
+            rootElement.Attribute(AttrTestName).Value = resultTestInfo.AttrTestName;
+            rootElement.Attribute(AttrOs).Value = resultTestInfo.AttrOs;
+            rootElement.Attribute(AttrLanguage).Value = resultTestInfo.AttrLanguage;
+            rootElement.Attribute(AttrTime).Value = resultTestInfo.AttrTime.ToString();
+            rootElement.Attribute(AttrDeviceModel).Value = resultTestInfo.AttrDeviceModel;
+            rootElement.Attribute(AttrDeviceName).Value = resultTestInfo.AttrDeviceName;
+            rootElement.Attribute(AttrRegion).Value = resultTestInfo.AttrRegion;
+            rootElement.Attribute(AttrTests).Value = resultTestInfo.AttrTests.ToString();
+            rootElement.Attribute(AttrVersion).Value = resultTestInfo.AttrVersion;
+            rootElement.Attribute(AttrName).Value = resultTestInfo.AttrName;
 
-            rootElement.Attribute(Attribute_blocks).Value = _Result_TestInfo.Attribute_blocks.ToString();
-            rootElement.Attribute(Attribute_blocksPercent).Value = _Result_TestInfo.Attribute_blocksPercent;
-            rootElement.Attribute(Attribute_errors).Value = _Result_TestInfo.Attribute_errors.ToString();
-            rootElement.Attribute(Attribute_errorsPercent).Value = _Result_TestInfo.Attribute_errorsPercent;
-            rootElement.Attribute(Attribute_failures).Value = _Result_TestInfo.Attribute_failures.ToString();
-            rootElement.Attribute(Attribute_failsPercent).Value = _Result_TestInfo.Attribute_failuresPercent;
-            rootElement.Attribute(Attribute_passes).Value = _Result_TestInfo.Attribute_passes.ToString();
-            rootElement.Attribute(Attribute_passesPercent).Value = _Result_TestInfo.Attribute_passesPercent;
-            rootElement.Attribute(Attribute_tbds).Value = _Result_TestInfo.Attribute_tbds.ToString();
-            rootElement.Attribute(Attribute_tbdsPercent).Value = _Result_TestInfo.Attribute_tbdsPercent;
-            xDoc.Save(pathReportXml);
+            rootElement.Attribute(AttrBlocks).Value = resultTestInfo.AttrBlocks.ToString();
+            rootElement.Attribute(AttrBlocksPercent).Value = resultTestInfo.AttrBlocksPercent;
+            rootElement.Attribute(AttrErrors).Value = resultTestInfo.AttrErrors.ToString();
+            rootElement.Attribute(AttrErrorsPercent).Value = resultTestInfo.AttrErrorsPercent;
+            rootElement.Attribute(AttrFailures).Value = resultTestInfo.AttrFailures.ToString();
+            rootElement.Attribute(AttrFailsPercent).Value = resultTestInfo.AttrFailuresPercent;
+            rootElement.Attribute(AttrPasses).Value = resultTestInfo.AttrPasses.ToString();
+            rootElement.Attribute(AttrPassesPercent).Value = resultTestInfo.AttrPassesPercent;
+            rootElement.Attribute(AttrTbds).Value = resultTestInfo.AttrTbds.ToString();
+            rootElement.Attribute(AttrTbdsPercent).Value = resultTestInfo.AttrTbdsPercent;
+            thisDoc.Save(pathReportXml);
         }
     }
 }
