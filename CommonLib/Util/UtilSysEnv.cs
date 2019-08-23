@@ -12,14 +12,13 @@ namespace CommonLib.Util
         /// <returns></returns>
         public static string GetSysEnvironmentByName(string name)
         {
-            string result = string.Empty;
+            string result;
             try
             {
                 result = OpenSysEnvironment().GetValue(name).ToString();//读取
             }
             catch (Exception)
             {
-
                 return string.Empty;
             }
             return result;
@@ -31,12 +30,12 @@ namespace CommonLib.Util
         /// <returns>RegistryKey</returns>
         private static RegistryKey OpenSysEnvironment()
         {
-            RegistryKey regLocalMachine = Registry.LocalMachine;
-            RegistryKey regSYSTEM = regLocalMachine.OpenSubKey("SYSTEM", true);//打开HKEY_LOCAL_MACHINE下的SYSTEM 
-            RegistryKey regControlSet001 = regSYSTEM.OpenSubKey("ControlSet001", true);//打开ControlSet001 
-            RegistryKey regControl = regControlSet001.OpenSubKey("Control", true);//打开Control 
-            RegistryKey regManager = regControl.OpenSubKey("Session Manager", true);//打开Control 
-            RegistryKey regEnvironment = regManager.OpenSubKey("Environment", true);
+            var regLocalMachine = Registry.LocalMachine;
+            var regSystem = regLocalMachine.OpenSubKey("SYSTEM", true);//打开HKEY_LOCAL_MACHINE下的SYSTEM 
+            var regControlSet001 = regSystem.OpenSubKey("ControlSet001", true);//打开ControlSet001 
+            var regControl = regControlSet001.OpenSubKey("Control", true);//打开Control 
+            var regManager = regControl.OpenSubKey("Session Manager", true);//打开Control 
+            var regEnvironment = regManager.OpenSubKey("Environment", true);
             return regEnvironment;
         }
 
@@ -66,56 +65,51 @@ namespace CommonLib.Util
         /// <summary>
         /// 添加到PATH环境变量（会检测路径是否存在，存在就不重复）
         /// </summary>
-        /// <param name="strPath"></param>
+        /// <param name="strHome"></param>
         public static void SetPathAfter(string strHome)
         {
-            string pathlist;
-            pathlist = GetSysEnvironmentByName("PATH");
+            var pathList = GetSysEnvironmentByName("PATH");
             //检测是否以;结尾
-            if (pathlist.Substring(pathlist.Length - 1, 1) != ";")
+            if (pathList.Substring(pathList.Length - 1, 1) != ";")
             {
-                SetSysEnvironment("PATH", pathlist + ";");
-                pathlist = GetSysEnvironmentByName("PATH");
+                SetSysEnvironment("PATH", pathList + ";");
+                pathList = GetSysEnvironmentByName("PATH");
             }
-            string[] list = pathlist.Split(';');
-            bool isPathExist = false;
+            var list = pathList.Split(';');
+            var isPathExist = false;
 
-            foreach (string item in list)
+            foreach (var item in list)
             {
                 if (item == strHome)
                     isPathExist = true;
             }
             if (!isPathExist)
             {
-                SetSysEnvironment("PATH", pathlist + strHome + ";");
+                SetSysEnvironment("PATH", pathList + strHome + ";");
             }
         }
 
         public static void SetPathBefore(string strHome)
         {
-            string pathlist;
-            pathlist = GetSysEnvironmentByName("PATH");
-            string[] list = pathlist.Split(';');
-            bool isPathExist = false;
-            foreach (string item in list)
+            var pathList = GetSysEnvironmentByName("PATH");
+            var list = pathList.Split(';');
+            var isPathExist = false;
+            foreach (var item in list)
             {
                 if (item == strHome)
                     isPathExist = true;
             }
             if (!isPathExist)
             {
-                SetSysEnvironment("PATH", strHome + ";" + pathlist);
+                SetSysEnvironment("PATH", strHome + ";" + pathList);
             }
         }
 
         public static void SetPath(string strHome)
         {
-
-            string pathlist;
-            pathlist = GetSysEnvironmentByName("PATH");
-            string[] list = pathlist.Split(';');
-            bool isPathExist = false;
-
+            var pathList = GetSysEnvironmentByName("PATH");
+            var list = pathList.Split(';');
+            var isPathExist = false;
             foreach (string item in list)
             {
                 if (item == strHome)
@@ -123,7 +117,7 @@ namespace CommonLib.Util
             }
             if (!isPathExist)
             {
-                SetSysEnvironment("PATH", pathlist + strHome + ";");
+                SetSysEnvironment("PATH", pathList + strHome + ";");
             }
         }
     }

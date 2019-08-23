@@ -6,8 +6,8 @@ namespace CommonLib.Util
     {
         private const int MaxWaitTimeInSec = 60;
         private const int IntervalInSec = 1;
-        private static int CompMaxWaitTimeInSec = -1;
-        private static int CompIntervalInSec = -1;
+        private static readonly int CompMaxWaitTimeInSec = -1;
+        private static readonly int CompIntervalInSec = -1;
         private struct ResultType
         {
             public const string NonNullResult = "NON_NULL_RESULT";
@@ -66,7 +66,6 @@ namespace CommonLib.Util
                 {
                     // ignored
                 }
-
                 UtilTime.WaitTime(intervalInSec);
             } while(true);
         }

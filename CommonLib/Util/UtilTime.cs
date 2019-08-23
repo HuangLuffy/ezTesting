@@ -6,7 +6,7 @@ namespace CommonLib.Util
 {
     public class UtilTime
     {
-        public static Thread counterThread = null;
+        private static Thread _counterThread = null;
         public static void WaitTime(double timeout)
         {
             Thread.Sleep((int)(timeout * 1000));
@@ -83,43 +83,37 @@ namespace CommonLib.Util
 
             TimeSpan ts = newTime - oldTime;
 
-            if (interval == DateInterval.Day || interval == DateInterval.DayOfYear)
-                return Round(ts.TotalDays);
-
-            if (interval == DateInterval.Hour)
-                return Round(ts.TotalHours);
-
-            if (interval == DateInterval.Minute)
-                return Round(ts.TotalMinutes);
-
-            if (interval == DateInterval.Second)
-                return Round(ts.TotalSeconds);
-
-            if (interval == DateInterval.Weekday)
+            switch (interval)
             {
-                return Round(ts.TotalDays / 7.0);
+                case DateInterval.Day:
+                case DateInterval.DayOfYear:
+                    return Round(ts.TotalDays);
+                case DateInterval.Hour:
+                    return Round(ts.TotalHours);
+                case DateInterval.Minute:
+                    return Round(ts.TotalMinutes);
+                case DateInterval.Second:
+                    return Round(ts.TotalSeconds);
+                case DateInterval.Weekday:
+                    return Round(ts.TotalDays / 7.0);
+                case DateInterval.WeekOfYear:
+                {
+                    while (newTime.DayOfWeek != eFirstDayOfWeek)
+                        newTime = newTime.AddDays(-1);
+                    while (oldTime.DayOfWeek != eFirstDayOfWeek)
+                        oldTime = oldTime.AddDays(-1);
+                    ts = newTime - oldTime;
+                    return Round(ts.TotalDays / 7.0);
+                }
             }
 
-            if (interval == DateInterval.WeekOfYear)
-            {
-                while (newTime.DayOfWeek != eFirstDayOfWeek)
-                    newTime = newTime.AddDays(-1);
-                while (oldTime.DayOfWeek != eFirstDayOfWeek)
-                    oldTime = oldTime.AddDays(-1);
-                ts = newTime - oldTime;
-                return Round(ts.TotalDays / 7.0);
-            }
+            if (interval != DateInterval.Quarter) return 0;
+            double d1Quarter = GetQuarter(oldTime.Month);
+            double d2Quarter = GetQuarter(newTime.Month);
+            var d1 = d2Quarter - d1Quarter;
+            double d2 = (4 * (newTime.Year - oldTime.Year));
+            return Round(d1 + d2);
 
-            if (interval == DateInterval.Quarter)
-            {
-                double d1Quarter = GetQuarter(oldTime.Month);
-                double d2Quarter = GetQuarter(newTime.Month);
-                double d1 = d2Quarter - d1Quarter;
-                double d2 = (4 * (newTime.Year - oldTime.Year));
-                return Round(d1 + d2);
-            }
-
-            return 0;
         }
         /// <summary>
         /// 
@@ -139,33 +133,34 @@ namespace CommonLib.Util
         {
             try
             {
-                if (counterThread != null && counterThread.IsAlive is true)
+                if (_counterThread != null && _counterThread.IsAlive is true)
                 {
-                    counterThread.Abort();
+                    _counterThread.Abort();
                 }
             }
             catch (Exception)
             {
-
+                // ignored
             }
-            counterThread = new Thread(() => {
+
+            _counterThread = new Thread(() => {
                 for (int i = maxNum; i > 0; i--)
                 {
                     action.DynamicInvoke(i);
                     Thread.Sleep(1000);
                     if (i == 1)
                     {
-                        counterThread.Abort();
+                        _counterThread.Abort();
                     }
                     //Thread currthread = Thread.CurrentThread;
                 }
-                });
-            counterThread.Start();
+            });
+            _counterThread.Start();
         }
        
         private static void TimeElapsedEvent(object source, ElapsedEventArgs e)
         {
-            Console.WriteLine("The Elapsed event was raised at {0}", e.SignalTime);
+            Console.WriteLine($"The Elapsed event was raised at {e.SignalTime}");
         }
         public void bbb(Action action)
         {
