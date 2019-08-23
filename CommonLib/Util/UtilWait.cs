@@ -2,24 +2,24 @@
 
 namespace CommonLib.Util
 {
-    public class UtilWait
+    public static class UtilWait
     {
-        private const int MAXWAITTIMEINSEC = 60;
-        private const int INTERVALINSEC = 1;
-        public static int maxWaitTimeInSec = -1;
-        public static int intervalInSec = -1;
-        private struct ResulType
+        private const int MaxWaitTimeInSec = 60;
+        private const int IntervalInSec = 1;
+        private static int CompMaxWaitTimeInSec = -1;
+        private static int CompIntervalInSec = -1;
+        private struct ResultType
         {
-            public const string NON_NULL_RESULT = "NON_NULL_RESULT";
-            public const string NON_EMPTY_RESULT = "NON_EMPTY";
-            public const string ANY_RESULT = "ANY_RESULT"; // suits for either getting result or getting exception
-            public const string FOR_TRUE = "FOR_TRUE";
+            public const string NonNullResult = "NON_NULL_RESULT";
+            public const string NonEmptyResult = "NON_EMPTY";
+            public const string AnyResult = "ANY_RESULT"; // suits for either getting result or getting exception
+            public const string ForTrue = "FOR_TRUE";
         }
         public static bool ForTrueCatch<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)
         {
             try
             {
-                ForWhat(action, maxWaitTimeInSec, intervalInSec, ResulType.FOR_TRUE);
+                ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.ForTrue);
             }
             catch (Exception)
             {
@@ -29,23 +29,23 @@ namespace CommonLib.Util
         }
         public static T ForTrue<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)
         {
-            return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResulType.FOR_TRUE);
+            return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.ForTrue);
         }
         public static T ForResult<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)
         {
-            return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResulType.ANY_RESULT);
+            return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.AnyResult);
         }
         private static T ForWhat<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1, dynamic expectedResult = null)
         {
             if (maxWaitTimeInSec == -1)
             {
-                maxWaitTimeInSec = UtilWait.maxWaitTimeInSec < 0 ? MAXWAITTIMEINSEC : UtilWait.maxWaitTimeInSec;
+                maxWaitTimeInSec = CompMaxWaitTimeInSec < 0 ? MaxWaitTimeInSec : CompMaxWaitTimeInSec;
             }
             if (intervalInSec == -1)
             {
-                intervalInSec = UtilWait.intervalInSec < 0 ? INTERVALINSEC : UtilWait.intervalInSec;
+                intervalInSec = CompIntervalInSec < 0 ? IntervalInSec : CompIntervalInSec;
             }
-            DateTime dt = DateTime.Now;
+            var dt = DateTime.Now;
             do {
                 if (UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second) > Convert.ToDouble(maxWaitTimeInSec))
                 {
@@ -53,23 +53,20 @@ namespace CommonLib.Util
                 }
                 try
                 {
-                    T actualResult = action.Invoke();
-                    if (expectedResult == ResulType.FOR_TRUE)
+                    var actualResult = action.Invoke();
+                    switch (expectedResult)
                     {
-                        if (actualResult.ToString() == "True")
-                        {
+                        case ResultType.ForTrue when actualResult.ToString() == "True":
                             return actualResult;
-                        }
-                    }
-                    else if (expectedResult == ResulType.ANY_RESULT)
-                    {
-                        return actualResult;
+                        case ResultType.AnyResult:
+                            return actualResult;
                     }
                 }
                 catch (Exception)
                 {
-
+                    // ignored
                 }
+
                 UtilTime.WaitTime(intervalInSec);
             } while(true);
         }

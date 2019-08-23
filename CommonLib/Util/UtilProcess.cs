@@ -31,7 +31,7 @@ namespace CommonLib.Util
                         if (p.Id != currentP.Id)
                         {
                             WinApi.SetForegroundWindow(p.MainWindowHandle);
-                            WinApi.ShowWindowAsync(p.MainWindowHandle, WinApi.SW_RESTORE);
+                            WinApi.ShowWindowAsync(p.MainWindowHandle, WinApi.SwRestore);
                             currentP.Kill();
                         }
                     }

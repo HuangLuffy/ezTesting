@@ -4,15 +4,11 @@ using System.Windows.Forms;
 
 namespace ezTesting
 {
-    public partial class Form_Main : Form
+    public partial class FormMain : Form
     {
-        public Form_Main()
+        public FormMain()
         {
             InitializeComponent();
-        }
-        public bool aaa()
-        {
-            return true;
         }
 
         private void Form_Main_Load(object sender, EventArgs e)

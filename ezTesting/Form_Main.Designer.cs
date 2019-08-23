@@ -1,6 +1,6 @@
 ﻿namespace ezTesting
 {
-    partial class Form_Main
+    partial class FormMain
     {
         /// <summary>
         /// Required designer variable.

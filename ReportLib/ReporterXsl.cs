@@ -6,12 +6,12 @@ namespace ReportLib
 {
     public class ReporterXsl : Reporter, IReporter
     {
-        public XDocument xDoc { get; set; }
-        public string pathReportXml { get; set; }
+        private XDocument XDoc { get; set; }
+        private string PathReportXml { get; }
         public ReporterXsl(string pathReportXml)
         {
-            this.pathReportXml = pathReportXml;
-            if (!File.Exists(this.pathReportXml))
+            PathReportXml = pathReportXml;
+            if (!File.Exists(PathReportXml))
             {
                 CreateResultXml();
             }
@@ -28,15 +28,15 @@ namespace ReportLib
         {
             return $"{line}~!~";
         }
-        public string setManualCheck(string comment, string link)
+        public string SetManualCheck(string comment, string link)
         {
             return $"{comment}@@@{link}";
         }
-        
-        public void CreateResultXml(string xslName = "xmlReport.xsl")
+
+        private void CreateResultXml(string xslName = "xmlReport.xsl")
         {
 
-            XDocument xDoc = new XDocument(
+            var xDoc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XProcessingInstruction("xml-stylesheet", $"type='text/xsl' href='{xslName}'"),
                 new XElement(
@@ -65,8 +65,8 @@ namespace ReportLib
                     new XAttribute(AttrTbdsPercent, "tbdsPercent")
                 )
             );
-            this.xDoc = xDoc;
-            xDoc.Save(pathReportXml);
+            XDoc = xDoc;
+            xDoc.Save(PathReportXml);
         }
         private XElement AssembleElement(ResultTestCase resultTestCase)
             //(string classname, string stepTime, string functionName, string stepNumber, string description, string expectedResult, string needToCheck, string result)
@@ -91,26 +91,30 @@ namespace ReportLib
         }
         public void AddTestStep(ResultTestCase resultTestCase)
         {
-            var thisDoc = xDoc ?? XDocument.Load(pathReportXml);
-            var testCases = xDoc.Root.Elements(NodeTestcase);
-            XElement xElement = AssembleElement(resultTestCase);
-            if (!testCases.Any())
+            var thisDoc = XDoc ?? XDocument.Load(PathReportXml);
+            if (thisDoc?.Root != null)
             {
-                xDoc.Root.Add(xElement);
+                var testCases = thisDoc.Root.Elements(NodeTestcase);
+                var xElement = AssembleElement(resultTestCase);
+                if (!testCases.Any())
+                {
+                    thisDoc.Root.Add(xElement);
+                }
+                else
+                {
+                    testCases.Last().AddAfterSelf(xElement);
+                }
             }
-            else
-            {
-                testCases.Last().AddAfterSelf(xElement);
-            }
-            xDoc.Save(pathReportXml);
+
+            thisDoc?.Save(PathReportXml);
         }
 
         public void ModifyTestInfo(ResultTestInfo resultTestInfo)
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
         {
-            var thisDoc = xDoc ?? XDocument.Load(pathReportXml);
-            var rootElement = xDoc.Root;
+            var thisDoc = XDoc ?? XDocument.Load(PathReportXml);
+            var rootElement = XDoc.Root;
             rootElement.Attribute(AttrProject).Value = resultTestInfo.AttrProject;
             rootElement.Attribute(AttrTestName).Value = resultTestInfo.AttrTestName;
             rootElement.Attribute(AttrOs).Value = resultTestInfo.AttrOs;
@@ -133,7 +137,7 @@ namespace ReportLib
             rootElement.Attribute(AttrPassesPercent).Value = resultTestInfo.AttrPassesPercent;
             rootElement.Attribute(AttrTbds).Value = resultTestInfo.AttrTbds.ToString();
             rootElement.Attribute(AttrTbdsPercent).Value = resultTestInfo.AttrTbdsPercent;
-            thisDoc.Save(pathReportXml);
+            thisDoc.Save(PathReportXml);
         }
     }
 }

@@ -2,9 +2,9 @@
 {
     public interface IVmControl
     {
-        void SetVM(string vmxFullPath);
-        void PowerOn(int waitSecond = 10);
-        void PowerOff(int waitSecond = 10);
+        void SetVm(string vmxFullPath);
+        void PowerOn(int waitSeconds = 10);
+        void PowerOff(int waitSeconds = 10);
         void RevertToSnapshot(string snapshotName);
         void TakeSnapshot(string snapshotName);
         bool IsSnapshotExisting(string snapshotName);

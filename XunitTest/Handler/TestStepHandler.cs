@@ -53,7 +53,7 @@ namespace XUnitTest.Handler
 
         public void Capture(string pathSave, string comment = "Shot", ImageType imageType = ImageType.PNG)
         {
-            _manualCheckLink += _iReporter.setManualCheck(comment, pathSave);
+            _manualCheckLink += _iReporter.SetManualCheck(comment, pathSave);
             UtilCapturer.Capture(pathSave, imageType);
         }
         private T Exec<T>(Func<T> action)

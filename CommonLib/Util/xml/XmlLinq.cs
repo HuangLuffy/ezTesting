@@ -9,21 +9,17 @@ namespace CommonLib.Util.xml
 {
     public class XmlLinq : IXml
     {
-        string xmlFullPath = string.Empty;
-        XElement _XElement = null;
-        public XmlLinq()
-        {
-           
-        }
+        private readonly string _xmlFullPath;
+        private readonly XElement _xElement;
         public XmlLinq(string xmlFullPath)
         {
-            this.xmlFullPath = xmlFullPath;
-            _XElement = XElement.Load(xmlFullPath);
+            _xmlFullPath = xmlFullPath;
+            _xElement = XElement.Load(xmlFullPath);
             //Logger.LogThrowException(String.Format("Failed to get xml from [{0}].", xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
         }
         public XElement GetXElement()
         {
-            return _XElement;
+            return _xElement;
         }
         public T GetXmlLoad<T>(string xmlFullPath = "")
         {
@@ -45,22 +41,22 @@ namespace CommonLib.Util.xml
         }
         public void CreateXmlWithSameNodeNameList(string rootName, string nodeName, IEnumerable<string> nodeValueList)
         {
-            XElement _XElementRoot = new XElement(rootName);
+            var xElementRoot = new XElement(rootName);
             foreach (var item in nodeValueList)
             {
-                _XElementRoot.Add(new XElement(nodeName, item));
+                xElementRoot.Add(new XElement(nodeName, item));
             }
-            _XElementRoot.Save(xmlFullPath);
+            xElementRoot.Save(_xmlFullPath);
         }
-        public String GetXmlFullPathFromXmlLoad<T>(T _T)
+        public string GetXmlFullPathFromXmlLoad<T>(T t)
         {
             try
             {
-                return ((XDocument)Convert.ChangeType(_T, typeof(T))).BaseUri.Replace("file:///", "").Replace("/", "\\");
+                return ((XDocument)Convert.ChangeType(t, typeof(T))).BaseUri.Replace("file:///", "").Replace("/", "\\");
             }
             catch (Exception ex)
             {
-                Logger.LogThrowException(String.Format("Failed to Get BaseUri."), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowException("Failed to Get BaseUri.", new StackFrame(0).GetMethod().Name, ex.Message);
             }
             return "";
         }
@@ -68,11 +64,11 @@ namespace CommonLib.Util.xml
         {
             try
             {
-                XDocument _XDocument = new XDocument(
+                var xDocument = new XDocument(
                     new XElement(rootNode)
                     );
                 //return _XDocument;
-                return (T)Convert.ChangeType(_XDocument, typeof(T));
+                return (T)Convert.ChangeType(xDocument, typeof(T));
             }
             catch (Exception)
             {
@@ -81,14 +77,14 @@ namespace CommonLib.Util.xml
             }
             
         }
-        public void SetClassFromXml<T>(T _T)
+        public void SetClassFromXml<T>(T t)
         {
-            IEnumerable<PropertyInfo> _PropertyInfos = _T.GetType().GetProperties();
-            foreach (PropertyInfo _PropertyInfo in _PropertyInfos)
+            IEnumerable<PropertyInfo> propertyInfos = t.GetType().GetProperties();
+            foreach (var propertyInfo in propertyInfos)
             {
                 try
                 {
-                    _PropertyInfo.SetValue(_T, GetValue(_PropertyInfo.GetValue((_T)).ToString()));
+                    propertyInfo.SetValue(t, GetValue(propertyInfo.GetValue((t)).ToString()));
                 }
                 catch (Exception)
                 {
@@ -96,28 +92,28 @@ namespace CommonLib.Util.xml
                 }
             }
         }
-        public void SaveXmlDocToXml<T>(T _T, string xmlFullPath)
+        public void SaveXmlDocToXml<T>(T t, string xmlFullPath)
         {
             try
             {
-                XDocument _XDocument = ((XDocument)Convert.ChangeType(_T, typeof(T)));
-                _XDocument.Save(xmlFullPath);
+                var xDocument = ((XDocument)Convert.ChangeType(t, typeof(T)));
+                xDocument.Save(xmlFullPath);
             }
             catch (Exception)
             {
                 //Logger.LogThrowMessage(String.Format("Failed to save xml [{0}].", xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
             }
         }
-        public void SetClassFromXmlDoc<T, C>(T _T, C _C, string node = "")
+        public void SetClassFromXmlDoc<T, C>(T t, C c, string node = "")
         {
-            XDocument _XDocument = ((XDocument)Convert.ChangeType(_T, typeof(T)));
-            XElement _XElement = node.Equals("") ? _XDocument.Root : _XDocument.Element(node);
-            IEnumerable<PropertyInfo> _PropertyInfos = _C.GetType().GetProperties();
-            foreach (PropertyInfo _PropertyInfo in _PropertyInfos)
+            var xDocument = ((XDocument)Convert.ChangeType(t, typeof(T)));
+            var xElement = node.Equals("") ? xDocument.Root : xDocument.Element(node);
+            IEnumerable<PropertyInfo> propertyInfos = c.GetType().GetProperties();
+            foreach (var propertyInfo in propertyInfos)
             {
                 try
                 {    
-                    _PropertyInfo.SetValue(_C, _XElement.Element(_PropertyInfo.GetValue((_C)).ToString()).Value);
+                    propertyInfo.SetValue(c, xElement.Element(propertyInfo.GetValue((c)).ToString()).Value);
                 }
                 catch (Exception)
                 {
@@ -125,16 +121,16 @@ namespace CommonLib.Util.xml
                 }
             }
         }
-        public void SetXmlFromClass<T, C>(T _T, C _C, string node = "")
+        public void SetXmlFromClass<T, C>(T t, C c, string node = "")
         {
-            XDocument _XDocument = ((XDocument)Convert.ChangeType(_T, typeof(T)));
-            XElement _XElement = node.Equals("") ? _XDocument.Root : _XDocument.Element(node);
-            IEnumerable <FieldInfo> _FieldInfos = _C.GetType().GetFields();
-            foreach (FieldInfo _FieldInfo in _FieldInfos)
+            var xDocument = ((XDocument)Convert.ChangeType(t, typeof(T)));
+            var xElement = node.Equals("") ? xDocument.Root : xDocument.Element(node);
+            IEnumerable<FieldInfo> fieldInfos = c.GetType().GetFields();
+            foreach (var fieldInfo in fieldInfos)
             {
                 try
                 {
-                    _XElement.Add(new XElement(_FieldInfo.Name, _FieldInfo.GetValue(_C)));
+                    xElement.Add(new XElement(fieldInfo.Name, fieldInfo.GetValue(c)));
                 }
                 catch (Exception)
                 {
@@ -142,17 +138,17 @@ namespace CommonLib.Util.xml
                 }
             }
         }
-        public void SetAttributeToXmlDoc<T>(T _T, string attributeName, string attributeValue, string node = "")
+        public void SetAttributeToXmlDoc<T>(T t, string attributeName, string attributeValue, string node = "")
         {
-            XDocument _XDocument = ((XDocument)Convert.ChangeType(_T, typeof(T)));
-            XElement _XElement = node.Equals("") ? _XDocument.Root : _XDocument.Element(node);
-            _XElement.SetAttributeValue(attributeName, attributeValue);
+            var xDocument = ((XDocument)Convert.ChangeType(t, typeof(T)));
+            var xElement = node.Equals("") ? xDocument.Root : xDocument.Element(node);
+            xElement.SetAttributeValue(attributeName, attributeValue);
         }
         public string [] GetValuesArray(string nodeName = null)
         {
             try
             {
-                return GetElementsIEnumerable(nodeName).ToArray<string>();
+                return GetElementsIEnumerable(nodeName).ToArray();
             }
             catch (Exception)
             {
@@ -164,7 +160,7 @@ namespace CommonLib.Util.xml
         {
             try
             {
-                return GetElementsIEnumerable(nodeName).ToList<string>();
+                return GetElementsIEnumerable(nodeName).ToList();
             }
             catch (Exception)
             {
@@ -180,12 +176,9 @@ namespace CommonLib.Util.xml
             {
                 if (string.IsNullOrEmpty(nodeName))
                 {
-                    return from x in _XElement.Elements() select x.Value;
+                    return from x in _xElement.Elements() select x.Value;
                 }
-                else
-                {
-                    return from x in _XElement.Elements(nodeName) select x.Value;
-                }
+                return from x in _xElement.Elements(nodeName) select x.Value;
             }
             catch (Exception)
             {
@@ -193,14 +186,14 @@ namespace CommonLib.Util.xml
                 return null;
             }
         }
-        public void SetValue<T>(T _T, string nodeName = null, string nodeValue = "")
+        public void SetValue<T>(T t, string nodeName = null, string nodeValue = "")
         {
             try
             {
-                XDocument _XDocument = ((XDocument)Convert.ChangeType(_T, typeof(T)));
+                var xDocument = ((XDocument)Convert.ChangeType(t, typeof(T)));
                 //bookVar = xml.Descendants("book").Where(a => a.Element("title").Value == param.Title);
-                XElement _XElement = nodeName.Equals("") ? _XDocument.Root : _XDocument.Descendants(nodeName).Where(a => a.Name.LocalName.Equals(nodeName)).First();
-                _XElement.Value = nodeValue;
+                var xElement = nodeName.Equals("") ? xDocument.Root : xDocument.Descendants(nodeName).First(a => a.Name.LocalName.Equals(nodeName));
+                xElement.Value = nodeValue;
             }
             catch (Exception)
             {
@@ -211,7 +204,7 @@ namespace CommonLib.Util.xml
         {
             try
             {
-                return _XElement.Element(nodeName).Value ;
+                return _xElement.Element(nodeName)?.Value ;
             }
             catch (Exception)
             {

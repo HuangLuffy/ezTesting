@@ -14,7 +14,7 @@ namespace CommonLib.Util.xml
             }
             catch (Exception ex)
             {
-                Logger.LogThrowException(String.Format("Failed to get Elements List."), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowException("Failed to get Elements List.", new StackFrame(0).GetMethod().Name, ex.Message);
                 return null;
             }
         }

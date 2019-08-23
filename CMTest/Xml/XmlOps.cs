@@ -13,12 +13,12 @@ namespace CMTest.Xml
         private const string AttributeVmName = "vmName";
         private const string AttributeWaitTime = "waitTime";
         private const string NodeDevice = "device";
-        private readonly XElement vmPlugInOutDevicesRoot;
+        private readonly XElement _vmPlugInOutDevicesRoot;
         private readonly Dictionary<string, Dictionary<string, string>> _devicesDict = new Dictionary<string, Dictionary<string, string>>();
         public XmlOps()
         {
-            var _XmlLinq = new XmlLinq(Path.Combine(Directory.GetCurrentDirectory(), "Conf.xml"));
-            vmPlugInOutDevicesRoot = _XmlLinq.GetXElement().Element("vmPlugInOutDevices");
+            var xmlLinq = new XmlLinq(Path.Combine(Directory.GetCurrentDirectory(), "Conf.xml"));
+            _vmPlugInOutDevicesRoot = xmlLinq.GetXElement().Element("vmPlugInOutDevices");
             //vmPlugInOutDevicesRoot = _XmlLinq.GetXElement().Descendants("device").Select(p => p.Elements());
             LoadDevicesDictInfo();
         }
@@ -26,7 +26,7 @@ namespace CMTest.Xml
         {
             try
             {
-                return vmPlugInOutDevicesRoot.Attribute(AttributeVmName)?.Value.Trim();
+                return _vmPlugInOutDevicesRoot.Attribute(AttributeVmName)?.Value.Trim();
             }
             catch (Exception)
             {
@@ -35,7 +35,7 @@ namespace CMTest.Xml
         }
         private void LoadDevicesDictInfo()
         {
-            var devices = vmPlugInOutDevicesRoot.Elements(NodeDevice);
+            var devices = _vmPlugInOutDevicesRoot.Elements(NodeDevice);
             devices.ToList().ForEach(item => _devicesDict.Add(item.Attribute(AttributeVmName).Value, new Dictionary<string, string>() { { AttributeIndex, item.Attribute(AttributeIndex).Value }, { AttributeWaitTime, item.Attribute(AttributeWaitTime).Value } }));
         }
         public string GetWaitTime(string deviceName)

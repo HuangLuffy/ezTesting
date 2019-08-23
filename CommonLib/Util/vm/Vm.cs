@@ -4,20 +4,20 @@ namespace CommonLib.Util.vm
 {
     public class Vm
     {
-        protected static string vmwareInstallFolderPath = @"C:\Program Files (x86)\VMware\VMware Workstation";
-        protected static string vmwareInstallFullPath = vmwareInstallFolderPath + @"\vmware.exe";
-        protected static string vmrunInstallFullPath = vmwareInstallFolderPath + @"\vmrun.exe";
-        public static void getVmwareInstalledPaths()
+        private static string _vmwareInstallFolderPath = @"C:\Program Files (x86)\VMware\VMware Workstation";
+        private static string _vmwareInstallFullPath = _vmwareInstallFolderPath + @"\vmware.exe";
+        protected static readonly string VmrunInstallFullPath = _vmwareInstallFolderPath + @"\vmrun.exe";
+        public static void GetVmwareInstalledPaths()
         {
             try
             {
-                vmwareInstallFolderPath = UtilRegistry.getValue("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\vmware.exe", "Path");
-                vmwareInstallFolderPath = vmwareInstallFolderPath.Remove(vmwareInstallFolderPath.Length - 1, 1);
-                vmwareInstallFullPath = UtilRegistry.getValue("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\vmware.exe", "");
+                _vmwareInstallFolderPath = UtilRegistry.getValue("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\vmware.exe", "Path");
+                _vmwareInstallFolderPath = _vmwareInstallFolderPath.Remove(_vmwareInstallFolderPath.Length - 1, 1);
+                _vmwareInstallFullPath = UtilRegistry.getValue("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\vmware.exe", "");
             }
             catch (Exception)
             {
-
+                // ignored
             }
         }
     }
