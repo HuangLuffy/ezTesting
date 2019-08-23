@@ -35,7 +35,7 @@ namespace CommonLib.Util.zip
             //Shell(constPath7zEXE & " x """ & pathBuildZIP & "\" & fullBuildName & ".zip"" - y - o""" & pathATScript & "\" & strWhichVM & "\" & """")
             try
             {
-                UtilProcess.StartProcessGetInt(Tool_7z, string.Format("x \"{0}\" -y -o\"{1}\"", source, destination));
+                UtilProcess.StartProcessGetInt(Tool_7z, $"x \"{source}\" -y -o\"{destination}\"");
             }
             catch (Exception ex)
             {

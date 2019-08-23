@@ -416,7 +416,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get ProcessId. {0}", ex));
+                    throw new Exception($"Failed to get ProcessId. {ex}");
                 }
             }
             /// <summary>
@@ -447,7 +447,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get IsEnabled status. {0}", ex));
+                    throw new Exception($"Failed to get IsEnabled status. {ex}");
                 }
             }
             /// <summary>
@@ -463,7 +463,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get isSelected status. {0}", ex));
+                    throw new Exception($"Failed to get isSelected status. {ex}");
                 }
             }
             /// <summary>
@@ -479,7 +479,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to GetSelection. {0}", ex));
+                    throw new Exception($"Failed to GetSelection. {ex}");
                 }
             }
             /// <summary>
@@ -495,7 +495,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get Value. {0}", ex));
+                    throw new Exception($"Failed to get Value. {ex}");
                 }
             }
             /// <summary>
@@ -511,7 +511,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get isSelected status. {0}", ex));
+                    throw new Exception($"Failed to get isSelected status. {ex}");
                 }
             }
             /// <summary>
@@ -526,7 +526,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get isSelected status. {0}", ex));
+                    throw new Exception($"Failed to get isSelected status. {ex}");
                 }
             }
             /// <summary>
@@ -542,7 +542,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get isSelected status. {0}", ex));
+                    throw new Exception($"Failed to get isSelected status. {ex}");
                 }
             }
             /// <summary>
@@ -557,7 +557,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get Name. {0}", ex));
+                    throw new Exception($"Failed to get Name. {ex}");
                 }
             }
             /// <summary>
@@ -572,7 +572,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get ClassName. {0}", ex));
+                    throw new Exception($"Failed to get ClassName. {ex}");
                 }
             }
             /// <summary>
@@ -587,7 +587,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get AutomationId. {0}", ex));
+                    throw new Exception($"Failed to get AutomationId. {ex}");
                 }
             }
             /// <summary>
@@ -602,7 +602,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get ControlType. {0}", ex));
+                    throw new Exception($"Failed to get ControlType. {ex}");
                 }
             }
             /// <summary>
@@ -617,7 +617,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get FrameworkId. {0}", ex));
+                    throw new Exception($"Failed to get FrameworkId. {ex}");
                 }
             }
             /// <summary>
@@ -632,7 +632,7 @@ namespace ATLib
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Failed to get BoundingRectangle. {0}", ex));
+                    throw new Exception($"Failed to get BoundingRectangle. {ex}");
                 }
             }
         }

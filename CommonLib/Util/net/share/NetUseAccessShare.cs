@@ -20,7 +20,8 @@ namespace CommonLib.Util.net
             {
                 persistentValue = "NO";
             }
-            string para = string.Format(@"use {0} {1} {2} /PERSISTENT:{3}", ShareFolderFullPath, UserName.Equals("") ? "" : "/User:" + UserName, Password, persistentValue);
+            string para =
+                $@"use {ShareFolderFullPath} {(UserName.Equals("") ? "" : "/User:" + UserName)} {Password} /PERSISTENT:{persistentValue}";
             try
             {
                 UtilProcess.StartProcessGetString("net", para);
@@ -28,13 +29,13 @@ namespace CommonLib.Util.net
             catch (Exception)
             {
                 //Logger.LogThrowMessage(string.Format(@"Failed to execute [net {0}]", para), new StackFrame(0).GetMethod().Name, ex.Message);
-                throw new Exception(string.Format(@"Failed to execute [net {0}]", para));
+                throw new Exception($@"Failed to execute [net {para}]");
             }
         }
 
         public void DeleteShareConnect(string ipOrName, string folderName = "")
         {
-            string para = string.Format(@"use /delete {0}", ShareFolderFullPath);
+            string para = $@"use /delete {ShareFolderFullPath}";
             try
             {
                 UtilProcess.StartProcessGetString("net", para);
@@ -42,7 +43,7 @@ namespace CommonLib.Util.net
             catch (Exception)
             {
                 //Logger.LogThrowMessage(string.Format(@"Failed to execute [net {0}]", para), new StackFrame(0).GetMethod().Name, ex.Message);
-                throw new Exception(string.Format(@"Failed to execute [net {0}]", para));
+                throw new Exception($@"Failed to execute [net {para}]");
             }
         }
 

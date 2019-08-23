@@ -134,11 +134,12 @@ namespace ATLib
                 {
                     try
                     {
-                        Console.WriteLine(string.Format("[{0}] [{1}] [{2}] [{3}]", item.Current.Name.ToString(), item.Current.ControlType.ProgrammaticName.ToString(), item.Current.ClassName.ToString(), item.Current.AutomationId));
+                        Console.WriteLine(
+                            $"[{item.Current.Name.ToString()}] [{item.Current.ControlType.ProgrammaticName.ToString()}] [{item.Current.ClassName.ToString()}] [{item.Current.AutomationId}]");
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(string.Format("[{0}]", ex.Message));
+                        Console.WriteLine($"[{ex.Message}]");
                     }
 
                 }

@@ -54,7 +54,8 @@ namespace CommonLib.Util.msg
                 FileStream fileStream = new FileStream(logFileFullPath, fileMode);
                 //content = streamReader.ReadToEnd();
                 StreamWriter streamWriter = new StreamWriter(fileStream);
-                streamWriter.WriteLine(string.Format("{0} > [{1}] {2} {3} {4}", DateTime.Now.ToString("yyyy_MM_dd hh:mm:ss"), logLevel, message, methodName, exception));
+                streamWriter.WriteLine(
+                    $"{DateTime.Now.ToString("yyyy_MM_dd hh:mm:ss")} > [{logLevel}] {message} {methodName} {exception}");
                 streamWriter.Close();
                 fileStream.Close();
                 if (fileInfo.Length >= 1024 * 1024 * 200)

@@ -160,7 +160,8 @@ namespace ATLib.API
                     intPtr = FindWindowEx(new IntPtr(0x9B0A5A), intPtr, "#32770", null);
                     GetWindowText(intPtr, s, s.Capacity);
                     GetClassName(intPtr, b, b.Capacity);
-                    Console.WriteLine(string.Format("[{0}][{1}][{2}][{3}]", UtilString.ConvertIt.ConvertHex(intPtr.ToString()), GetDlgCtrlID(intPtr), s, b));
+                    Console.WriteLine(
+                        $"[{UtilString.ConvertIt.ConvertHex(intPtr.ToString())}][{GetDlgCtrlID(intPtr)}][{s}][{b}]");
                 }
                 while (!intPtr.Equals(IntPtr.Zero));
             }

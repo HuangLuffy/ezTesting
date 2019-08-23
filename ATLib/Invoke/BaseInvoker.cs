@@ -69,7 +69,8 @@ namespace ATLib.Invoke
             }
             catch (Exception)
             {
-                throw new Exception(string.Format("Failed to get [{0}]. propertyType:[{1}] propertyValue:[{2}]", controlTypeValue, propertyType, propertyValue));
+                throw new Exception(
+                    $"Failed to get [{controlTypeValue}]. propertyType:[{propertyType}] propertyValue:[{propertyValue}]");
             }
         } 
     }

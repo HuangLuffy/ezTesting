@@ -24,16 +24,17 @@ namespace CommonLib.Util.net
                     Conn.Username = "";
                     Conn.Password = "";
                     Conn.Authority = "ntlmdomain:DOMAIN";
-                    Scope = new ManagementScope(String.Format("\\\\{0}\\root\\CIMV2", HostName), Conn);
+                    Scope = new ManagementScope($"\\\\{HostName}\\root\\CIMV2", Conn);
                 }
                 else
-                    Scope = new ManagementScope(String.Format("\\\\{0}\\root\\CIMV2", HostName), null);
+                    Scope = new ManagementScope($"\\\\{HostName}\\root\\CIMV2", null);
 
                 Scope.Connect();
                 string Drive = "c:";
                 //look how the \ char is escaped. 
                 string Path = "\\\\Windows\\\\System32\\\\";
-                ObjectQuery Query = new ObjectQuery(string.Format("SELECT * FROM CIM_DataFile Where Drive='{0}' AND Path='{1}' ", Drive, Path));
+                ObjectQuery Query = new ObjectQuery(
+                    $"SELECT * FROM CIM_DataFile Where Drive='{Drive}' AND Path='{Path}' ");
 
                 ManagementObjectSearcher Searcher = new ManagementObjectSearcher(Scope, Query);
 
@@ -44,7 +45,7 @@ namespace CommonLib.Util.net
             }
             catch (Exception e)
             {
-                Console.WriteLine(String.Format("Exception {0} Trace {1}", e.Message, e.StackTrace));
+                Console.WriteLine($"Exception {e.Message} Trace {e.StackTrace}");
             }
             Console.WriteLine("Press Enter to exit");
             Console.Read();
@@ -56,7 +57,7 @@ namespace CommonLib.Util.net
             _ConnectionOptions.Username = UserName;
             _ConnectionOptions.Password = Password;
             DirectoryInfo di = new DirectoryInfo(ShareFolderFullPath);
-            ManagementScope scope = new ManagementScope(string.Format(@"\\{0}\root\cimv2", IpOrName), _ConnectionOptions);
+            ManagementScope scope = new ManagementScope($@"\\{IpOrName}\root\cimv2", _ConnectionOptions);
             scope.Connect();
             
             try
@@ -79,7 +80,7 @@ namespace CommonLib.Util.net
         }
         public void GetShareFolderProperties1()
         {
-            ManagementPath _ManagementPath = new ManagementPath(string.Format(@"\\{0}\root\cimv2", IpOrName));
+            ManagementPath _ManagementPath = new ManagementPath($@"\\{IpOrName}\root\cimv2");
              ManagementClass _ManagementClass = null;
             ConnectionOptions _ConnectionOptions = new ConnectionOptions();
             _ConnectionOptions.Username = UserName;
@@ -99,7 +100,7 @@ namespace CommonLib.Util.net
                 {
                     _ShareFolderProperties = new ShareFolderProperties();
                     _ShareFolderProperties.Name = mo["Name"].ToString();
-                    _ShareFolderProperties.ParentPath = string.Format(@"\\{0}", IpOrName);
+                    _ShareFolderProperties.ParentPath = $@"\\{IpOrName}";
                     _ShareFolderProperties.LocalPath = mo["Path"].ToString();
                     _ShareFolderProperties.FullPath = Path.Combine(_ShareFolderProperties.ParentPath, _ShareFolderProperties.Name);
                     _ShareFolderPropertiesList.Add(_ShareFolderProperties);
@@ -116,7 +117,8 @@ namespace CommonLib.Util.net
                 //Console.WriteLine("{0} - {1} - {2} ", mo["Name"],
                 //    mo["Description"],
                 //    mo["Path"]);
-                ObjectQuery Query = new ObjectQuery(string.Format("SELECT * FROM CIM_DataFile Where Drive='{0}' AND Path='{1}' ", "D:", "\\\\TP_Test\\\\TP_GhostShare\\\\"));
+                ObjectQuery Query = new ObjectQuery(
+                    $"SELECT * FROM CIM_DataFile Where Drive='{"D:"}' AND Path='{"\\\\TP_Test\\\\TP_GhostShare\\\\"}' ");
 
                 ManagementObjectSearcher Searcher = new ManagementObjectSearcher(scope, Query);
 

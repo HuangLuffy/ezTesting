@@ -22,7 +22,7 @@ namespace CommonLib.Util.vm
             }
             catch (Exception ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to set VM [{0}].", vmxFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to set VM [{vmxFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
             }   
         }
 
@@ -30,7 +30,8 @@ namespace CommonLib.Util.vm
         {
             try
             {
-                string[] snapshots = UtilProcess.StartProcessGetStrings(vmrunInstallFullPath, string.Format("listSnapshots \"{0}\"", vmxFullPath));
+                string[] snapshots = UtilProcess.StartProcessGetStrings(vmrunInstallFullPath,
+                    $"listSnapshots \"{vmxFullPath}\"");
                 foreach (string snapshot in snapshots)
                 {
                     if (snapshot.Equals(snapshotName))
@@ -42,7 +43,7 @@ namespace CommonLib.Util.vm
             }
             catch (Exception ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to find Snapshot [{0}] from VM [{1}].", vmxFullPath, snapshotName), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to find Snapshot [{vmxFullPath}] from VM [{snapshotName}].", new StackFrame(0).GetMethod().Name, ex.Message);
                 return false;
             }
         }
@@ -62,7 +63,7 @@ namespace CommonLib.Util.vm
             }
             catch (Exception ex)
             {
-                Logger.LogError(string.Format("Failed to get if {0} was running.", vmxFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogError($"Failed to get if {vmxFullPath} was running.", new StackFrame(0).GetMethod().Name, ex.Message);
                 return true;
             }
         }
@@ -72,13 +73,14 @@ namespace CommonLib.Util.vm
             {
                 if (IsVmRunning(vmxFullPath))
                 {
-                    string strlist = UtilProcess.StartProcessGetString(vmrunInstallFullPath, string.Format("-T ws stop \"{0}\"", vmxFullPath));
+                    string strlist = UtilProcess.StartProcessGetString(vmrunInstallFullPath,
+                        $"-T ws stop \"{vmxFullPath}\"");
                     UtilTime.WaitTime(waitSecond);
                 }
             }
             catch (Exception ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to power off VM [{0}]", vmxFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to power off VM [{vmxFullPath}]", new StackFrame(0).GetMethod().Name, ex.Message);
             }
         }
 
@@ -86,7 +88,8 @@ namespace CommonLib.Util.vm
         {
             try
             {
-                string result = UtilProcess.StartProcessGetString(vmrunInstallFullPath, string.Format("-T ws start \"{0}\"", vmxFullPath));
+                string result = UtilProcess.StartProcessGetString(vmrunInstallFullPath,
+                    $"-T ws start \"{vmxFullPath}\"");
                 if (!result.Equals(""))
                 {
                     throw new Exception(result);       
@@ -95,7 +98,7 @@ namespace CommonLib.Util.vm
             }
             catch (Exception ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to power on VM [{0}].", vmxFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to power on VM [{vmxFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
             }     
         }
 
@@ -103,7 +106,8 @@ namespace CommonLib.Util.vm
         {
             try
             {
-                string result = UtilProcess.StartProcessGetString(vmrunInstallFullPath, string.Format("revertToSnapshot \"{0}\" \"{1}\"", vmxFullPath, revertSnapshotName));
+                string result = UtilProcess.StartProcessGetString(vmrunInstallFullPath,
+                    $"revertToSnapshot \"{vmxFullPath}\" \"{revertSnapshotName}\"");
                 if (!result.Equals(""))
                 {
                     throw new Exception(result);
@@ -111,7 +115,7 @@ namespace CommonLib.Util.vm
             }
             catch (Exception ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to revert Snapshot [{0}] of VM [{1}].", revertSnapshotName, vmxFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to revert Snapshot [{revertSnapshotName}] of VM [{vmxFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
             }
         }
 
@@ -123,7 +127,8 @@ namespace CommonLib.Util.vm
                 {
                     throw new Exception("Snapshot was invalid.");
                 }
-                string result = UtilProcess.StartProcessGetString(vmrunInstallFullPath, string.Format("snapshot \"{0}\" \"{1}\"", vmxFullPath, takeSnapshotName));
+                string result = UtilProcess.StartProcessGetString(vmrunInstallFullPath,
+                    $"snapshot \"{vmxFullPath}\" \"{takeSnapshotName}\"");
                 if (!result.Equals(""))
                 {
                     throw new Exception(result);
@@ -131,7 +136,7 @@ namespace CommonLib.Util.vm
             }
             catch (Exception ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to take Snapshot [{0}] of VM [{1}].", takeSnapshotName, vmxFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to take Snapshot [{takeSnapshotName}] of VM [{vmxFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
             }
         }
     }

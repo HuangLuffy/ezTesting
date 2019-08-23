@@ -53,7 +53,7 @@ namespace CommonLib.Util
             }
             catch (Exception ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to start process [{0} {1}].", targetFullPath, para), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to start process [{targetFullPath} {para}].", new StackFrame(0).GetMethod().Name, ex.Message);
             }
         }
         public static void StartProcess(string targetFullPath, string para = "")
@@ -67,7 +67,7 @@ namespace CommonLib.Util
             }
             catch (Exception ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to start process [{0} {1}].", targetFullPath, para), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to start process [{targetFullPath} {para}].", new StackFrame(0).GetMethod().Name, ex.Message);
             }
         }
         public static int StartProcessGetInt(string targetFullPath, string para = "")
@@ -90,7 +90,7 @@ namespace CommonLib.Util
             }
             catch (Exception ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to start [{0} {1}].", targetFullPath, para), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to start [{targetFullPath} {para}].", new StackFrame(0).GetMethod().Name, ex.Message);
                 return -1;
             }
         }

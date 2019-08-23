@@ -1,5 +1,5 @@
-﻿namespace ATLib
-{
+﻿//namespace ATLib
+//{
     //public class AT : ATBase
     //{
     //    public class WaitProcessArgs : EventArgs
@@ -7,14 +7,14 @@
     //        /// <summary>
     //        /// 
     //        /// </summary>
-    //        private string messsage = "";
+    //        private string message = "";
     //        /// <summary>
     //        /// 
     //        /// </summary>
-    //        /// <param name="messsage"></param>
-    //        public void setMessage(string messsage)
+    //        /// <param name="message"></param>
+    //        public void setMessage(string message)
     //        {
-    //            this.messsage = messsage;
+    //            this.message = message;
     //        }
     //        /// <summary>
     //        /// 
@@ -22,7 +22,7 @@
     //        /// <returns></returns>
     //        public string getMessage()
     //        {
-    //            return this.messsage;
+    //            return this.message;
     //        }
     //    }
     //    /// <summary>
@@ -393,4 +393,4 @@
     //        return node;
     //    }
     //}
-}
+//}

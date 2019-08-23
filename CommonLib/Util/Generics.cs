@@ -10,8 +10,7 @@ namespace CommonLib.Util
         {
             try
             {
-                data.Any();
-                return false;
+                return data.Any();
             }
             catch (Exception)
             {

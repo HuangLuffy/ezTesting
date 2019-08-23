@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace CommonLib.Util
+namespace CommonLib.Util.io
 {
-    public class UtilFile
+    public static class UtilFile
     {
         public static List<string> GetListByLine(string fileFullPath)
         {
@@ -25,7 +25,7 @@ namespace CommonLib.Util
             }
             catch (Exception ex)
             {
-                Logger.LogThrowException(string.Format("Failed to read file [{0}].", fileFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowException($"Failed to read file [{fileFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
                 return null;
             }
         }
@@ -41,14 +41,14 @@ namespace CommonLib.Util
             try
             {
                 UtilFolder.CreateDirectory(Path.GetDirectoryName(fileFullPath));
-                using (StreamWriter _StreamWriter = new StreamWriter(fileFullPath, append))
+                using (var _StreamWriter = new StreamWriter(fileFullPath, append))
                 {
                     _StreamWriter.WriteLine(content);
                 }
             }
             catch (Exception ex)
             {
-                Logger.LogThrowException(string.Format("Failed to write file [{0}].", fileFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowException($"Failed to write file [{fileFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
             }
         }
         public static List<string> ReadFileByLine(string fileFullPath)
@@ -58,14 +58,13 @@ namespace CommonLib.Util
             //3、FileStream用来操作文件流。可读写，可字符串，也可二进制。
             //重要的区别是，StreamReader是读者，用来读任何输入流；FileStream是文件流，可以被读，被写
             List<string> resultList = new List<string>();
-            string strLine = "";
             FileStream aFile = null;
             StreamReader sr = null;
             try
             {
                 aFile = new FileStream(fileFullPath, FileMode.Open);
                 sr = new StreamReader(aFile);
-                strLine = sr.ReadLine();
+                var strLine = sr.ReadLine();
                 while (strLine != null)
                 {
                     resultList.Add(strLine);
@@ -75,19 +74,19 @@ namespace CommonLib.Util
             }
             catch (IOException ex)
             {
-                Logger.LogThrowMessage(string.Format("Failed to read file [{0}].", fileFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
+                Logger.LogThrowMessage($"Failed to read file [{fileFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
                 return null;
             }
             finally
             {
                 try
                 {
-                    sr.Close();
-                    aFile.Close();
+                    sr?.Close();
+                    aFile?.Close();
                 }
                 catch (Exception)
                 {
-
+                    // ignored
                 }
             }
         }
