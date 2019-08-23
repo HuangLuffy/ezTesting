@@ -1,4 +1,5 @@
-﻿using CommonLib.Util.xml;
+﻿using System;
+using CommonLib.Util.xml;
 using System.IO;
 using System.Xml.Linq;
 using System.Linq;
@@ -8,10 +9,10 @@ namespace CMTest.Xml
 {
     public class XmlOps
     {
-        private const string ATTRIBUTE_INDEX = "index";
-        private const string ATTRIBUTE_VMNAME = "vmName";
-        private const string ATTRIBUTE_WAITTIME = "waitTime";
-        private const string NODE_DEVICE = "device";
+        private const string AttributeIndex = "index";
+        private const string AttributeVmName = "vmName";
+        private const string AttributeWaitTime = "waitTime";
+        private const string NodeDevice = "device";
         private readonly XElement vmPlugInOutDevicesRoot;
         private readonly Dictionary<string, Dictionary<string, string>> _devicesDict = new Dictionary<string, Dictionary<string, string>>();
         public XmlOps()
@@ -25,25 +26,25 @@ namespace CMTest.Xml
         {
             try
             {
-                return vmPlugInOutDevicesRoot.Attribute(ATTRIBUTE_VMNAME).Value.Trim();
+                return vmPlugInOutDevicesRoot.Attribute(AttributeVmName)?.Value.Trim();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return "";
             }  
         }
         private void LoadDevicesDictInfo()
         {
-            var devices = vmPlugInOutDevicesRoot.Elements(NODE_DEVICE);
-            devices.ToList().ForEach(item => _devicesDict.Add(item.Attribute(ATTRIBUTE_VMNAME).Value, new Dictionary<string, string>() { { ATTRIBUTE_INDEX, item.Attribute(ATTRIBUTE_INDEX).Value }, { ATTRIBUTE_WAITTIME, item.Attribute(ATTRIBUTE_WAITTIME).Value } }));
+            var devices = vmPlugInOutDevicesRoot.Elements(NodeDevice);
+            devices.ToList().ForEach(item => _devicesDict.Add(item.Attribute(AttributeVmName).Value, new Dictionary<string, string>() { { AttributeIndex, item.Attribute(AttributeIndex).Value }, { AttributeWaitTime, item.Attribute(AttributeWaitTime).Value } }));
         }
         public string GetWaitTime(string deviceName)
         {
-            return _devicesDict[deviceName][ATTRIBUTE_WAITTIME];
+            return _devicesDict[deviceName][AttributeWaitTime];
         }
         public string GetIndex(string deviceName)
         {
-            return _devicesDict[deviceName][ATTRIBUTE_INDEX];
+            return _devicesDict[deviceName][AttributeIndex];
         }
         public List<string> GetDeviceNameList()
         {
