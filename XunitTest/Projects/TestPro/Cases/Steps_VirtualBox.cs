@@ -1,9 +1,9 @@
 ﻿using ATLib;
 using CommonLib.Util;
 using TestLib;
-using XunitTest.Projects.TestPro.PO.Models;
+using XUnitTest.Projects.TestPro.PO.Models;
 
-namespace XunitTest.Projects.TestPro.Cases
+namespace XUnitTest.Projects.TestPro.Cases
 {
     public class StepsVirtualBox : StepsCommon
     {

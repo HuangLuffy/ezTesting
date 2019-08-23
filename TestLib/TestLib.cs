@@ -2,7 +2,7 @@
 {
     public class TestLib
     {
-        public const string DESCRIPTION = "Description";
-        public const string EXPECTEDRESULT = "ExptectedResult";
+        public const string Description = "Description";
+        public const string ExpectedResult = "ExptectedResult";
     }
 }

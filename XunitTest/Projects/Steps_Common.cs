@@ -1,6 +1,6 @@
-﻿using XunitTest.Handler;
+﻿using XUnitTest.Handler;
 
-namespace XunitTest.Projects
+namespace XUnitTest.Projects
 {
     public abstract class StepsCommon
     {

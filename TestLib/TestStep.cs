@@ -14,13 +14,14 @@ namespace TestLib
         {
             action.Invoke();
         }
-        public String getTestFullPath()
+
+        private string GetTestFullPath()
         {
             return GetType().Assembly.Location;
         }
-        public String getTestParentPath()
+        public string GetTestParentPath()
         {
-            return new DirectoryInfo(getTestFullPath()).Parent.ToString();
+            return new DirectoryInfo(GetTestFullPath()).Parent?.ToString();
         }
         //public T Rec<T>(Func<T> action)
         //{
@@ -54,7 +55,7 @@ namespace TestLib
         //}
         [Descriptions("1","2")]
         [ExpectedResults("3", "4")]
-        public string firstStep()
+        public string FirstStep()
         {
             return "";
         }

@@ -10,7 +10,7 @@ using static CommonLib.Util.UtilCapturer;
 using static CommonLib.Util.UtilTime;
 using static ReportLib.Reporter;
 
-namespace XunitTest.Handler
+namespace XUnitTest.Handler
 {
     public class TestStepHandler : TestStep
     {

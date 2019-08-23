@@ -3,7 +3,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace XunitTest.ExecOrderers
+namespace XUnitTest.ExecOrderers
 {
     public class DisplayNameOrderer : ITestCollectionOrderer
     {

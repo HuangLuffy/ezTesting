@@ -1,10 +1,10 @@
 ﻿using System;
 using Xunit;
 using Xunit.Abstractions;
-using XunitTest.ExecOrderers;
-using XunitTest.Projects.TestPro.Cases;
+using XUnitTest.ExecOrderers;
+using XUnitTest.Projects.TestPro.Cases;
 
-namespace XunitTest.TestCases.TryX
+namespace XUnitTest.TestCases.TryX
 {
     public class TryX
     {

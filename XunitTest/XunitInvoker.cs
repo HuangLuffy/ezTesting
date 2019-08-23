@@ -2,9 +2,9 @@
 using System.Threading;
 using Xunit.Runners;
 
-namespace XunitTest
+namespace XUnitTest
 {
-    public class XunitInvoker
+    public class XUnitInvoker
     {
         static object consoleLock = new object();
         static ManualResetEvent finished = new ManualResetEvent(false);

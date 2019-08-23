@@ -4,7 +4,7 @@ using System.Linq;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace XunitTest.ExecOrderers
+namespace XUnitTest.ExecOrderers
 {
     public class PriorityOrder : ITestCaseOrderer
     {

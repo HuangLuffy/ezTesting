@@ -1,6 +1,6 @@
 ﻿using ATLib;
 
-namespace XunitTest.Projects.TestPro.PO.Models
+namespace XUnitTest.Projects.TestPro.PO.Models
 {
     public class Model_VirtualBox
     {
