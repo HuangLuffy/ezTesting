@@ -4,49 +4,18 @@ namespace CommonLib.Util.utilStruct
 {
     public struct PathStruct
     {
-        string parentFolderPath;
-        string name;
-        public string ParentFolderPath
-        {
-            get
-            {
-                return parentFolderPath;
-            }
-
-            set
-            {
-                parentFolderPath = value;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-
-            set
-            {
-                name = value;
-            }
-        }
+        public string ParentFolderPath { get; set; }
+        public string Name { get; set; }
         public string FullPath
         {
-            get
-            {
-                return Path.Combine(parentFolderPath, name);
-            }
+            get => Path.Combine(ParentFolderPath, Name);
 
-            set
-            {
-                name = value;
-            }
+            set => Name = value;
         }
         public PathStruct(string parentFolderPath, string name)
         {
-            this.parentFolderPath = parentFolderPath;
-            this.name = name;
+            ParentFolderPath = parentFolderPath;
+            Name = name;
         }
     }
 }

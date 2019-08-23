@@ -15,7 +15,7 @@ namespace CommonLib.Util.vm
         {
             _vmxFullPath = vmxFullPath;
         }
-        public void SetVM(string vmxFullPath)
+        public void SetVm(string vmxFullPath)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace CommonLib.Util.vm
         {
             try
             {
-                var snapshots = UtilProcess.StartProcessGetStrings(vmrunInstallFullPath,
+                var snapshots = UtilProcess.StartProcessGetStrings(VmrunInstallFullPath,
                     $"listSnapshots \"{_vmxFullPath}\"");
                 //foreach (var snapshot in snapshots)
                 //{
@@ -53,7 +53,7 @@ namespace CommonLib.Util.vm
         {
             try
             {
-                var runningVMs = UtilProcess.StartProcessGetStrings(vmrunInstallFullPath, "list");
+                var runningVMs = UtilProcess.StartProcessGetStrings(VmrunInstallFullPath, "list");
                 return runningVMs.Any(vm => vm.Equals(vmxFullPath));
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace CommonLib.Util.vm
             try
             {
                 if (!IsVmRunning(_vmxFullPath)) return;
-                UtilProcess.StartProcessGetString(vmrunInstallFullPath,
+                UtilProcess.StartProcessGetString(VmrunInstallFullPath,
                     $"-T ws stop \"{_vmxFullPath}\"");
                 UtilTime.WaitTime(waitSecond);
             }
@@ -81,7 +81,7 @@ namespace CommonLib.Util.vm
         {
             try
             {
-                var result = UtilProcess.StartProcessGetString(vmrunInstallFullPath,
+                var result = UtilProcess.StartProcessGetString(VmrunInstallFullPath,
                     $"-T ws start \"{_vmxFullPath}\"");
                 if (!result.Equals(""))
                 {
@@ -99,7 +99,7 @@ namespace CommonLib.Util.vm
         {
             try
             {
-                var result = UtilProcess.StartProcessGetString(vmrunInstallFullPath,
+                var result = UtilProcess.StartProcessGetString(VmrunInstallFullPath,
                     $"revertToSnapshot \"{_vmxFullPath}\" \"{revertSnapshotName}\"");
                 if (!result.Equals(""))
                 {
@@ -120,7 +120,7 @@ namespace CommonLib.Util.vm
                 {
                     throw new Exception("Snapshot was invalid.");
                 }
-                var result = UtilProcess.StartProcessGetString(vmrunInstallFullPath,
+                var result = UtilProcess.StartProcessGetString(VmrunInstallFullPath,
                     $"snapshot \"{_vmxFullPath}\" \"{takeSnapshotName}\"");
                 if (!result.Equals(""))
                 {

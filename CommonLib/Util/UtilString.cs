@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace CommonLib.Util
 {
@@ -12,14 +13,14 @@ namespace CommonLib.Util
         /// <returns></returns>
         public static string[] GetSplitArray(string value, string rule)
         {
-            string[] ids = value.Split(new string[] { rule }, StringSplitOptions.RemoveEmptyEntries);
+            var ids = value.Split(new[] { rule }, StringSplitOptions.RemoveEmptyEntries);
             return ids;
         }
-        public static string removeLastChar(string ori)
+        public static string RemoveLastChar(string ori)
         {
             return ori.Substring(0, ori.Length - 1);
         }
-        public static string removeFirstChar(string ori)
+        public static string RemoveFirstChar(string ori)
         {
             if (ori.Substring(0, 1) == "1")
             {
@@ -27,9 +28,9 @@ namespace CommonLib.Util
             }
             return ori;
         }
-        public static string removeAllmatchedFirstChar(string ori, string match)
+        public static string RemoveAllMatchedFirstChar(string ori, string match)
         {
-            for (int i = 0; i < ori.Length; i++)
+            for (var i = 0; i < ori.Length; i++)
             {
                 if (ori.StartsWith(match) && ori.Substring(0, 1) == "1")
                 {
@@ -38,13 +39,9 @@ namespace CommonLib.Util
             }
             return ori;
         }
-        public static string getAddressByRemoteFolderPath(string remoteFolderPath)
+        public static string GetAddressByRemoteFolderPath(string remoteFolderPath)
         {
-            if (!remoteFolderPath.StartsWith(@"\\"))
-            {
-                return remoteFolderPath;
-            }
-            return remoteFolderPath.Replace(@"\\", "").Split('\\')[0];
+            return !remoteFolderPath.StartsWith(@"\\") ? remoteFolderPath : remoteFolderPath.Replace(@"\\", "").Split('\\')[0];
         }
         public class ConvertIt
         {///  
@@ -54,7 +51,7 @@ namespace CommonLib.Util
          ///  
             public static string GetHexChar(string value)
             {
-                string sReturn = string.Empty;
+                var sReturn = string.Empty;
                 switch (value)
                 {
                     case "10":
@@ -83,15 +80,15 @@ namespace CommonLib.Util
             }
             public static string ConvertHex(string value)
             {
-                string sReturn = string.Empty;
+                var sReturn = string.Empty;
                 try
                 {
 
                     while (ulong.Parse(value) >= 16)
                     {
-                        ulong v = ulong.Parse(value);
+                        var v = ulong.Parse(value);
                         sReturn = GetHexChar((v % 16).ToString()) + sReturn;
-                        value = Math.Floor(Convert.ToDouble(v / 16)).ToString();
+                        value = Math.Floor(Convert.ToDouble(v / 16)).ToString(CultureInfo.InvariantCulture);
                     }
                     sReturn = GetHexChar(value) + sReturn;
                 }

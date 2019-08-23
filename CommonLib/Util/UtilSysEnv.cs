@@ -56,10 +56,7 @@ namespace CommonLib.Util
         /// <returns></returns>
         public static bool CheckSysEnvironmentExist(string name)
         {
-            if (!string.IsNullOrEmpty(GetSysEnvironmentByName(name)))
-                return true;
-            else
-                return false;
+            return !string.IsNullOrEmpty(GetSysEnvironmentByName(name));
         }
 
         /// <summary>
@@ -110,7 +107,7 @@ namespace CommonLib.Util
             var pathList = GetSysEnvironmentByName("PATH");
             var list = pathList.Split(';');
             var isPathExist = false;
-            foreach (string item in list)
+            foreach (var item in list)
             {
                 if (item == strHome)
                     isPathExist = true;
