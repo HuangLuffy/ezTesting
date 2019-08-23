@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using TestLib;
 using static CommonLib.Util.UtilCapturer;
+using static CommonLib.Util.UtilTime;
 using static ReportLib.Reporter;
 
 namespace XunitTest.Handler
@@ -17,8 +18,8 @@ namespace XunitTest.Handler
         //private string folderNameTest = "";
         //private string folderNameScreenshots = "Shots";
 
-        private bool _needToBlockAllTests = false;
-        private string _pathReportFile;
+        private bool _needToBlockAllTests;
+        //private string _pathReportFile;
         private int _stepNumber = 1;
         private const string BlockedDescription = "This step is blocked since the previous step was failed.";
 
@@ -47,7 +48,7 @@ namespace XunitTest.Handler
 
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
-            _pathReportFile = pathReportXml;
+           // _pathReportFile = pathReportXml;
         }
 
         public void Capture(string pathSave, string comment = "Shot", ImageType imageType = ImageType.PNG)
@@ -59,9 +60,9 @@ namespace XunitTest.Handler
         {
             if (_needToBlockAllTests)
                 return default(T);
-            var dt = DateTime.Now;
-            T result = Execute(action);
-            return Execute(action);
+            //var dt = DateTime.Now;
+            var result = Execute(action);
+            return result;
         }
         public void Exec(Action action)
         {
@@ -73,7 +74,7 @@ namespace XunitTest.Handler
             var dt = DateTime.Now;
             try
             {
-                if (stepInfo.DoNotBlock == true)
+                if (stepInfo.DoNotBlock)
                 {
                     _needToBlockAllTests = false;
                 }
@@ -89,12 +90,12 @@ namespace XunitTest.Handler
                     _resultTestInfo.AttrPasses += 1;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 result = Result.FAIL;
                 _resultTestInfo.AttrFailures += 1;
                 _needToBlockAllTests = true;
-                throw ex;
+                throw;
             }
             finally
             {
@@ -104,7 +105,7 @@ namespace XunitTest.Handler
 
                 resultTestCase.AttrClassname = xunitInfo.ClassFullName;
                 resultTestCase.AttrName = xunitInfo.FunctionName;
-                resultTestCase.AttrTime = UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second);
+                resultTestCase.AttrTime = DateDiff(dt, DateTime.Now);
                 resultTestCase.NodeStepNumber = _stepNumber++;
                 resultTestCase.NodeDescription = stepInfo.Descriptions;
                 resultTestCase.NodeExpectedResult = stepInfo.ExpectedResults;
@@ -127,15 +128,15 @@ namespace XunitTest.Handler
             public string ClassName { private set; get; }
             public string ClassFullName { private set; get; }
             public string FunctionName { private set; get; }
-            public string Descriptions = DefaultContent;
-            public string ExpectedResults = DefaultContent;
-            public bool DoNotBlock = false;
+            public readonly string Descriptions = DefaultContent;
+            public readonly string ExpectedResults = DefaultContent;
+            public readonly bool DoNotBlock;
 
             public TestFunctionInfo(int level, IReporter iReporter)
             {
                 StackFrame frame = new StackTrace().GetFrame(level);
-                ClassName = frame.GetMethod().ReflectedType.Name;
-                ClassFullName = frame.GetMethod().ReflectedType.FullName;
+                ClassName = frame.GetMethod().ReflectedType?.Name;
+                ClassFullName = frame.GetMethod().ReflectedType?.FullName;
                 FunctionName = frame.GetMethod().Name;
                 foreach (var attri in frame.GetMethod().CustomAttributes)
                 {
@@ -155,19 +156,20 @@ namespace XunitTest.Handler
             }
             private string AssembleStepInstructions(object cads, IReporter iReporter)
             {
-                string t = "";
+                var t = "";
                 var list = (IReadOnlyCollection<System.Reflection.CustomAttributeTypedArgument>)cads;
-                if (list.Count() == 1)
-                {
-                    t = list.ElementAt(0).Value.ToString();
-                }
-                else
-                {
-                    foreach (var item in list)
-                    {
-                        t += iReporter.SetNewLine(item.Value.ToString());
-                    }
-                }
+                t = list.Count == 1 ? list.ElementAt(0).Value.ToString() : list.Aggregate(t, (current, item) => current + iReporter.SetNewLine(item.Value.ToString()));
+                //if (list.Count() == 1)
+                //{
+                //    t = list.ElementAt(0).Value.ToString();
+                //}
+                //else
+                //{
+                //    foreach (var item in list)
+                //    {
+                //        t += iReporter.SetNewLine(item.Value.ToString());
+                //    }
+                //}
                 return t;
             }
         }
