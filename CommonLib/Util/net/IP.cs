@@ -2,12 +2,11 @@
 
 namespace CommonLib.Util.net
 {
-    public class IP
+    public class UtilIp
     {
-        public static bool IsIP(string ip)
+        public static bool IsIp(string ip)
         {
-            IPAddress ip1;
-            return IPAddress.TryParse(ip, out ip1);
+            return IPAddress.TryParse(ip, out var ip1);
         }
     }
 }
