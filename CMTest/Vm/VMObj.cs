@@ -1,16 +1,15 @@
 ﻿using ATLib;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace CMTest.Vm
 {
-    public class VMObj
+    public static class VmObj
     {
         public static List<string> GetDevicesItemList()
         {
-            List<string> tmpList = new List<string>();
-            FieldInfo[] f = typeof(DeviceItem).GetFields();
+            var tmpList = new List<string>();
+            var f = typeof(DeviceItem).GetFields();
             f.ToList().ForEach(a => tmpList.Add(((ATElementStruct)a.GetValue("Name")).Name));
             return tmpList;
         }

@@ -16,14 +16,14 @@ namespace CMTest.Project.Portal
 
         private static readonly long TestTimes = 9999999;
 
-        public List<string> OptionsPortalPlugInOutDevicesName = VMObj.GetDevicesItemList();
+        public List<string> OptionsPortalPlugInOutDevicesName = VmObj.GetDevicesItemList();
         //new List<string> { VMObj.DeviceItem.Item_MM830.Name, VMObj.DeviceItem.Item_MP860.Name, VMObj.DeviceItem.Item_MK850.Name, VMObj.DeviceItem.Item_MH752.Name, VMObj.DeviceItem.Item_MP750.Name, VMObj.DeviceItem.Item_MH650.Name };
 
         public readonly PortalTestActions PortalTestActions = new PortalTestActions();
 
         public void Flow_PlugInOutTest()
         {
-            PortalTestActions.LaunchSW();
+            PortalTestActions.LaunchSw();
             for (var i = 1; i < TestTimes; i++)
             {
                 PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
@@ -35,7 +35,7 @@ namespace CMTest.Project.Portal
             for (var i = 1; i < TestTimes; i++)
             {
                 PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
-                PortalTestActions.PlugOutDeviceFromVM(deviceNameVm, waitTime, index);
+                PortalTestActions.PlugOutDeviceFromVm(deviceNameVm, waitTime, index);
             }
         }
         public void Flow_LaunchTest()
@@ -43,27 +43,27 @@ namespace CMTest.Project.Portal
             for (var i = 1; i < TestTimes; i++)
             {
                 PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
-                PortalTestActions.LaunchSW();
-                PortalTestActions.CloseSW();
+                PortalTestActions.LaunchSw();
+                PortalTestActions.CloseSw();
                 PortalTestActions.IsSwCrash(1);
             }
         }
         public void Flow_ProfilesSimpleSwitch()
         {
             PortalTestActions.SetLaunchTimesAndWriteTestTitle(1);
-            PortalTestActions.LaunchSW();
+            PortalTestActions.LaunchSw();
             PortalTestActions.ProfilesSimpleSwitch(TestTimes);
         }
         public void Flow_ProfilesImExSwitch()
         {
             PortalTestActions.SetLaunchTimesAndWriteTestTitle(1);
-            PortalTestActions.LaunchSW();
+            PortalTestActions.LaunchSw();
             PortalTestActions.ProfilesImExSwitch(TestTimes);
         }
         public void Flow_ProfilesImExAimpadSwitch()
         {
             PortalTestActions.SetLaunchTimesAndWriteTestTitle(1);
-            PortalTestActions.LaunchSW();
+            PortalTestActions.LaunchSw();
             PortalTestActions.ProfilesImExAimpadSwitch(TestTimes);
         }
     }

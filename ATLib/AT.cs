@@ -67,27 +67,14 @@ namespace ATLib
         {
             try
             {
-                AT atObj = null;
                 AutomationElement = AutomationElement ?? AutomationElement.RootElement;
-                System.Windows.Automation.TreeScope treeScope = GetTreeScope(TreeScope);
-                Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
-                if (Timeout <= 0)
+                var treeScope = GetTreeScope(TreeScope);
+                var condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
+                var atObj = Timeout <= 0 ? GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index) : UtilWait.ForResult(() => GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index), Timeout);
+                if (CheckEnabled != true) return atObj;
+                if (!atObj.GetElementInfo().IsEnabled())
                 {
-                    atObj = GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index);
-                }
-                else
-                {
-                    atObj = UtilWait.ForResult(() =>
-                    {
-                        return GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index);
-                    }, Timeout);
-                }
-                if (CheckEnabled == true)
-                {
-                    if (!(atObj.GetElementInfo().IsEnabled()))
-                    {
-                        throw new Exception("This element is not enabled. ");
-                    }
+                    throw new Exception("This element is not enabled. ");
                 }
                 return atObj;
             }

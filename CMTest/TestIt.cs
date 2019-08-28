@@ -21,7 +21,7 @@ namespace CMTest
         {
             _MasterPlusTestFlows = new MasterPlusTestFlows();
             _PortalTestFlows = new PortalTestFlows();
-            Options_Projects = new List<string> { _PortalTestFlows.PortalTestActions.SwName, _MasterPlusTestFlows._MasterPlusTestActions.SwName };
+            Options_Projects = new List<string> { _PortalTestFlows.PortalTestActions.SwName, _MasterPlusTestFlows.MasterPlusTestActions.SwName };
         }
         public struct RunDirectly
         {
@@ -56,7 +56,7 @@ namespace CMTest
         {
             foreach (var option in options)
             {
-                if (IsTestExisted(_MasterPlusTestFlows._MasterPlusTestActions.SwName, selected, option))
+                if (IsTestExisted(_MasterPlusTestFlows.MasterPlusTestActions.SwName, selected, option))
                 {
                     AssembleMasterPlusPlugInOutTests();
                     return ShowCmdTestsBySelectedProject(_optionsMasterPlusTestsWithFuncs);

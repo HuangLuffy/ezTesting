@@ -9,7 +9,7 @@
         
         public static long TEST_TIMES = 99999999;
 
-        public MasterPlusTestActions _MasterPlusTestActions = new MasterPlusTestActions();
+        public readonly MasterPlusTestActions MasterPlusTestActions = new MasterPlusTestActions();
         /// <summary>
         /// haha
         /// </summary>
@@ -17,9 +17,9 @@
         {
             for (int i = 1; i < TEST_TIMES; i++)
             {
-                _MasterPlusTestActions.LaunchTimes = i;
-                _MasterPlusTestActions.LaunchSw();
-                _MasterPlusTestActions.CloseSw();
+                MasterPlusTestActions.LaunchTimes = i;
+                MasterPlusTestActions.LaunchSw();
+                MasterPlusTestActions.CloseSw();
             }
         }
     }

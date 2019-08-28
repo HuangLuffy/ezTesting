@@ -24,7 +24,7 @@ namespace CMTest.Project.MasterPlus
             ControlType = ATElement.ControlType.Button
         };
 
-        public static ATElementStruct TabItemOVERVIEW = new ATElementStruct()
+        public static ATElementStruct TabItemOverview = new ATElementStruct()
         {
             Name = "OVERVIEW",
             ControlType = ATElement.ControlType.TabItem

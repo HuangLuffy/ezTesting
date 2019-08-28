@@ -1,6 +1,6 @@
 ﻿namespace CMTest.Project.Portal
 {
-    public class Portal : SWCommonActions
+    public class Portal : SwCommonActions
     {
         public Portal()
         {
