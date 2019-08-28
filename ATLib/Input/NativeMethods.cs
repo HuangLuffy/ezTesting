@@ -17,7 +17,7 @@
 // Only uncomment what you need to avoid code bloat.
 //
 // DO NOT adjust the visibility of anything in these files.  They are marked
-// internal on pupose.
+// internal on purpose.
 //***************************************************************************
 
 using System;

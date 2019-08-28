@@ -38,16 +38,12 @@ namespace ATLib.API
         {
             try
             {
-                if (ClassName.Equals(null))
-                {
-                    ClassName = null;
-                }
                 var num = 1;
                 if (listIntPtr != null)
                 {
                     num = listIntPtr.Count;
                 }
-                for (int i = 0; i < num; i++)
+                for (var i = 0; i < num; i++)
                 {
                     var intPtrLoop = IntPtr.Zero;
                     do
@@ -111,10 +107,6 @@ namespace ATLib.API
             try
             {
                 var listIntPtr = new List<IntPtr>();
-                if (ClassName.Equals(null))
-                {
-                    ClassName = null;
-                }
                 var intPtr = IntPtr.Zero;
                 do
                 {
@@ -181,16 +173,15 @@ namespace ATLib.API
         {
             try
             {
-                if (Name.Equals(null))
-                    return AutomationId.Equals(null) ||
-                           GetDlgCtrlID(intPtr).ToString().ToLower().Equals(AutomationId.ToLower());
+                if (Name == null)
+                    return AutomationId == null || GetDlgCtrlID(intPtr).ToString().ToLower().Equals(AutomationId.ToLower());
                 var s = new StringBuilder(512);
                 GetWindowText(intPtr, s, s.Capacity);
                 if (!s.ToString().ToLower().Equals(Name.ToLower()))
                 {
                     return false;
                 }
-                return AutomationId.Equals(null) || GetDlgCtrlID(intPtr).ToString().ToLower().Equals(AutomationId.ToLower());
+                return AutomationId == null || GetDlgCtrlID(intPtr).ToString().ToLower().Equals(AutomationId.ToLower());
             }
             catch (Exception)
             {
