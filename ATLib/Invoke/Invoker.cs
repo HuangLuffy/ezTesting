@@ -30,7 +30,7 @@ namespace ATLib.Invoke
                 }
                 else if (functionName.ToLower().Equals(StructFunctionName.EXISTContext.ToLower()))
                 {
-                    existElement(StructPropertyType.name, "Context", ATElement.ControlType.Menu);
+                    ExistElement(StructPropertyType.name, "Context", ATElement.ControlType.Menu);
                 }
                 else
                 {
@@ -45,14 +45,14 @@ namespace ATLib.Invoke
         }
         private void ClickElement(string targetPropertyType, string targetPropertyValue, string targetControlType, string containerPropertyType, string containerPropertyValue, string containerControlType)
         {
-            AT _Parent = GetInvokerElement(containerPropertyType, containerPropertyValue, containerControlType);
-            AT _Element = GetInvokerElement(targetPropertyType, targetPropertyValue, targetControlType, _Parent);
-            _Element.DoClick();
+            var parent = GetInvokerElement(containerPropertyType, containerPropertyValue, containerControlType);
+            var element = GetInvokerElement(targetPropertyType, targetPropertyValue, targetControlType, parent);
+            element.DoClick();
         }
-        private Boolean existElement(string targetPropertyType, string targetPropertyValue, string targetControlType)
+        private bool ExistElement(string targetPropertyType, string targetPropertyValue, string targetControlType)
         {
-            AT _Element = GetInvokerElement(targetPropertyType, targetPropertyValue, targetControlType);
-            if (_Element.GetElementInfo().Exists())
+            var element = GetInvokerElement(targetPropertyType, targetPropertyValue, targetControlType);
+            if (element.GetElementInfo().Exists())
             {
                 return true;
             }
