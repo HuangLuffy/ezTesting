@@ -6,47 +6,40 @@ namespace CommonLib.Util
 {
     public class UtilCmd
     {
-        public const string OPTION_SHOW_MENU_AGAIN = "Show Menu Again";
-        public const string OPTION_BACK = "Back";
-        public const string STRING_CONNECTOR = ". ";
-        public List<string> List_Last_Menu = new List<string>();
-        public List<string> List_Current_Menu = new List<string>();
+        public const string OptionShowMenuAgain = "Show Menu Again";
+        public const string OptionBack = "Back";
+        public const string StringConnector = ". ";
+        private List<string> _listLastMenu = new List<string>();
+        private List<string> _listCurrentMenu = new List<string>();
 
         public string MenuShowAgain()
         {
-            WriteCmdMenu(List_Current_Menu, lineUpWithNumber: false);
-            return OPTION_SHOW_MENU_AGAIN;
+            WriteCmdMenu(_listCurrentMenu, lineUpWithNumber: false);
+            return OptionShowMenuAgain;
         }
 
-        public string MenuGoback()
+        public string MenuGoBack()
         {
-            WriteCmdMenu(List_Last_Menu, lineUpWithNumber: false);
-            return OPTION_BACK;
+            WriteCmdMenu(_listLastMenu, lineUpWithNumber: false);
+            return OptionBack;
         }
 
         public List<string> WriteCmdMenu(List<string> options, bool clear = false, bool lineUpWithNumber = true)
         {
-            List<string> t = new List<string>();
+            var t = new List<string>();
             if (clear)
             {
                 Console.Clear();
             }
-            for (int i = 1; i <= options.Count; i++)
+            for (var i = 1; i <= options.Count; i++)
             {
-                if (lineUpWithNumber)
-                {
-                    t.Add($"{ i.ToString()}{ STRING_CONNECTOR }{options[i - 1]}");
-                }
-                else {
-                    t.Add($"{options[i - 1]}");
-                }
+                t.Add(lineUpWithNumber ? $"{i.ToString()}{StringConnector}{options[i - 1]}" : $"{options[i - 1]}");
                 Console.WriteLine(t[i - 1]);
             }
-            if (IsMenuChanged(List_Current_Menu, t))
-            {
-                List_Last_Menu = List_Current_Menu;
-                List_Current_Menu = t;
-            }
+
+            if (!IsMenuChanged(_listCurrentMenu, t)) return t;
+            _listLastMenu = _listCurrentMenu;
+            _listCurrentMenu = t;
             return t;
         }
         public void Clear()
@@ -66,20 +59,19 @@ namespace CommonLib.Util
         {
             return Console.ReadLine();
         }
-        private bool IsMenuChanged(List<string> a, List<string> b)
+        private bool IsMenuChanged(IReadOnlyList<string> a, IReadOnlyList<string> b)
         {
-            if (a.Count() != b.Count())
+            if (a.Count != b.Count)
             {
                 return true;
             }
-            if (a.Count() > 0)
+
+            if (!a.Any()) return false;
+            for (var i = 0; i < a.Count(); i++)
             {
-                for (int i = 0; i < a.Count(); i++)
+                if (!a[i].Equals(b[i]))
                 {
-                    if (!a[i].Equals(b[i]))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;

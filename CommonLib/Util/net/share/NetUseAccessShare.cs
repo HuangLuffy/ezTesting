@@ -1,7 +1,6 @@
-﻿using CommonLib.Util.net.share;
-using System;
+﻿using System;
 
-namespace CommonLib.Util.net
+namespace CommonLib.Util.net.share
 {
     public class NetUseAccessShare : AccessShare, IAccessShare
     {
@@ -15,12 +14,12 @@ namespace CommonLib.Util.net
         }
         public void ConnectShare(bool isPersistent = true)
         {
-            string persistentValue = "YES";
+            var persistentValue = "YES";
             if (!isPersistent)
             {
                 persistentValue = "NO";
             }
-            string para =
+            var para =
                 $@"use {ShareFolderFullPath} {(UserName.Equals("") ? "" : "/User:" + UserName)} {Password} /PERSISTENT:{persistentValue}";
             try
             {
@@ -35,7 +34,7 @@ namespace CommonLib.Util.net
 
         public void DeleteShareConnect(string ipOrName, string folderName = "")
         {
-            string para = $@"use /delete {ShareFolderFullPath}";
+            var para = $@"use /delete {ShareFolderFullPath}";
             try
             {
                 UtilProcess.StartProcessGetString("net", para);

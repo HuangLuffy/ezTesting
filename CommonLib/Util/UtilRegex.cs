@@ -8,10 +8,10 @@ namespace CommonLib.Util
         //private string REGULAR_URL = @"[a-zA-z]+://[^\s]*";
         public static bool IsNumeric(string str)
         {
-            Regex _Regex = new Regex(@"^[0-9]\d*$");
-            return _Regex.IsMatch(str);
+            var regex = new Regex(@"^[0-9]\d*$");
+            return regex.IsMatch(str);
         }
-        public static bool IsIP(string ip)
+        public static bool IsIp(string ip)
         {
             return Regex.IsMatch(ip.Trim(), @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$");
         }
@@ -31,8 +31,8 @@ namespace CommonLib.Util
         /// <returns></returns>
         public static bool IsNumber(string value)
         {
-            Regex reg = new Regex("^[+-]?[0-9]+$");
-            Match match = reg.Match(value);
+            var reg = new Regex("^[+-]?[0-9]+$");
+            var match = reg.Match(value);
             return match.Success;
         }
     }

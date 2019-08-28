@@ -1,33 +1,30 @@
-﻿using Microsoft.Win32;
+﻿using System.Linq;
+using Microsoft.Win32;
 
 namespace CommonLib.Util
 {
-    public class UtilRegistry
+    public static class UtilRegistry
     {
-        private bool IsRegeditKeyExisting()
+        private static bool IsRegeditKeyExisting()
         {
-            string[] subkeyNames;
-            RegistryKey hkml = Registry.LocalMachine;
-            RegistryKey software = hkml.OpenSubKey("SOFTWARE\\test");
+            var hkml = Registry.LocalMachine;
+            var software = hkml.OpenSubKey("SOFTWARE\\test");
             //RegistryKey software = hkml.OpenSubKey("SOFTWARE\\test", true);
-            subkeyNames = software.GetValueNames();
+            var subkeyNames = software.GetValueNames();
             //取得该项下所有键值的名称的序列，并传递给预定的数组中
-            foreach (string keyName in subkeyNames)
+            if (subkeyNames.Any(keyName => keyName == "test"))
             {
-                if (keyName == "test") //判断键值的名称
-                {
-                    hkml.Close();
-                    return true;
-                }
+                hkml.Close();
+                return true;
             }
             hkml.Close();
             return false;
         }
-        public static string getValue(string path, string name)
+        public static string GetValue(string path, string name)
         {
-            RegistryKey Key = Registry.LocalMachine;
-            Key = Key.OpenSubKey(path);
-            return Key.GetValue(name).ToString();
+            var key = Registry.LocalMachine;
+            key = key.OpenSubKey(path);
+            return key.GetValue(name).ToString();
         }
     }
 }

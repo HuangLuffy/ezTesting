@@ -1,18 +1,17 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Forms;
 
 namespace CommonLib.Util.project
 {
-    public class ProjectPath
+    public static class ProjectPath
     {
-        public static String getProjectFullPath()
+        public static string GetProjectFullPath()
         {
             return Application.StartupPath;
         }
-        public static String getProjectParentPath()
+        public static string GetProjectParentPath()
         {
-            return new DirectoryInfo(getProjectFullPath()).Parent.ToString();
+            return new DirectoryInfo(GetProjectFullPath()).Parent.ToString();
         }
         //Process.GetCurrentProcess().MainModule.FileName;    //可获得当前执行的exe的文件名。  
         //Environment.CurrentDirectory;          //获取和设置当前目录（即该进程从中启动的目录）的完全限定路径。

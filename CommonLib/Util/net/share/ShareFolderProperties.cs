@@ -2,60 +2,12 @@
 {
     public class ShareFolderProperties
     {
-        private string name = "";
-        private string parentPath = "";
-        private string fullPath = "";
-        private string localPath = "";
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
+        public string Name { get; set; } = "";
 
-            set
-            {
-                name = value;
-            }
-        }
+        public string ParentPath { get; set; } = "";
 
-        public string ParentPath
-        {
-            get
-            {
-                return parentPath;
-            }
+        public string FullPath { get; set; } = "";
 
-            set
-            {
-                parentPath = value;
-            }
-        }
-
-        public string FullPath
-        {
-            get
-            {
-                return fullPath;
-            }
-
-            set
-            {
-                fullPath = value;
-            }
-        }
-
-        public string LocalPath
-        {
-            get
-            {
-                return localPath;
-            }
-
-            set
-            {
-                localPath = value;
-            }
-        }
+        public string LocalPath { get; set; } = "";
     }
 }

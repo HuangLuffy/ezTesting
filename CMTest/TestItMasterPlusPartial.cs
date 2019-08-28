@@ -15,8 +15,8 @@ namespace CMTest
             if (_optionsMasterPlusTestsWithFuncs.Any()) return;
             //Select Back that will trigger this function again, so try-catch.
             _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_TEST, Flow_MasterPlus_LaunchTest);
-            _optionsMasterPlusTestsWithFuncs.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN, _CMD.MenuShowAgain);
-            _optionsMasterPlusTestsWithFuncs.Add(UtilCmd.OPTION_BACK, _CMD.MenuGoback);
+            _optionsMasterPlusTestsWithFuncs.Add(UtilCmd.OptionShowMenuAgain, _CMD.MenuShowAgain);
+            _optionsMasterPlusTestsWithFuncs.Add(UtilCmd.OptionBack, _CMD.MenuGoBack);
         }
         private dynamic Flow_MasterPlus_LaunchTest()
         {

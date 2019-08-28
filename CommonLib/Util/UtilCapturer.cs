@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace CommonLib.Util
 {
-    public class UtilCapturer
+    public static class UtilCapturer
     {
         public enum ImageType
         {
@@ -13,15 +13,15 @@ namespace CommonLib.Util
             BMP = 2,
             JPG = 3
         }
-        public static void Capture(string pathSave, ImageType ImageType = ImageType.PNG)
+        public static void Capture(string pathSave, ImageType imageType = ImageType.PNG)
         {
-            ImageFormat imgf = ImageFormat.Png;
-            if (ImageType == ImageType.BMP)
+            var imgf = ImageFormat.Png;
+            if (imageType == ImageType.BMP)
             {
                 imgf = ImageFormat.Bmp;
                 pathSave += ".bmp";
             }
-            else if(ImageType == ImageType.JPG)
+            else if(imageType == ImageType.JPG)
             {
                 imgf = ImageFormat.Jpeg;
                 pathSave += ".jpg";
@@ -30,10 +30,10 @@ namespace CommonLib.Util
             {
                 pathSave += ".png";
             }
-            int iWidth = Screen.PrimaryScreen.Bounds.Width;
-            int iHeight = Screen.PrimaryScreen.Bounds.Height;
+            var iWidth = Screen.PrimaryScreen.Bounds.Width;
+            var iHeight = Screen.PrimaryScreen.Bounds.Height;
             Image img = new Bitmap(iWidth, iHeight);
-            Graphics gc = Graphics.FromImage(img);
+            var gc = Graphics.FromImage(img);
             gc.CompositingQuality = CompositingQuality.HighSpeed;
             gc.CopyFromScreen(new Point(0, 0), new Point(0, 0), new Size(iWidth, iHeight));
             img.Save(pathSave, imgf);

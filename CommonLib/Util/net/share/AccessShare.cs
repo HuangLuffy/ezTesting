@@ -6,71 +6,24 @@ namespace CommonLib.Util.net.share
 {
     public abstract class AccessShare
     {
-        private string shareFolderFullPath = "";
-        private string userName = "";
-        private string password = "";
-        private string ipOrName = "";
-        protected List<ShareFolderProperties> _ShareFolderPropertiesList = new List<ShareFolderProperties>();
-        protected ShareFolderProperties _ShareFolderProperties;
+        protected readonly List<ShareFolderProperties> ShareFolderPropertiesList = new List<ShareFolderProperties>();
+        protected ShareFolderProperties ShareFolderProperties;
 
-        public string ShareFolderFullPath
-        {
-            get
-            {
-                return shareFolderFullPath;
-            }
+        protected string ShareFolderFullPath { get; }
 
-            set
-            {
-                shareFolderFullPath = value;
-            }
-        }
+        protected string UserName { get; } = "";
 
-        public string UserName
-        {
-            get
-            {
-                return userName;
-            }
+        protected string Password { get;  } = "";
 
-            set
-            {
-                userName = value;
-            }
-        }
+        protected string IpOrName { get;  }
 
-        public string Password
-        {
-            get
-            {
-                return password;
-            }
-
-            set
-            {
-                password = value;
-            }
-        }
-
-        public string IpOrName
-        {
-            get
-            {
-                return ipOrName;
-            }
-
-            set
-            {
-                ipOrName = value;
-            }
-        }
-        public AccessShare(string shareFolderFullPath)
+        protected AccessShare(string shareFolderFullPath)
         {
             if (shareFolderFullPath.Contains("@"))
             {
                 ShareFolderFullPath = shareFolderFullPath.Split('@')[1].Trim();
                 IpOrName = alterPath(ShareFolderFullPath).Split('\\')[0].Trim();
-                string userAndPass = alterPath(shareFolderFullPath.Split('@')[0]).Trim();
+                var userAndPass = alterPath(shareFolderFullPath.Split('@')[0]).Trim();
                 UserName = userAndPass.Split(':')[0].Trim();
                 Password = userAndPass.Split(':')[1].Trim();
                 ShareFolderFullPath = @"\\" + alterPath(ShareFolderFullPath);
@@ -81,7 +34,7 @@ namespace CommonLib.Util.net.share
                 IpOrName = alterPath(ShareFolderFullPath).Split('\\')[0].Trim();
             }
         }
-        public AccessShare(string shareFolderFullPath, string userName, string password)
+        protected AccessShare(string shareFolderFullPath, string userName, string password)
         {
             ShareFolderFullPath = @"\\" + alterPath(shareFolderFullPath).Trim();
             IpOrName = alterPath(ShareFolderFullPath).Split('\\')[0].Trim();
@@ -90,7 +43,7 @@ namespace CommonLib.Util.net.share
         }
         private string alterPath(string ipOrName)
         {
-            for (int i = 0; i < ipOrName.Length; i++)
+            for (var i = 0; i < ipOrName.Length; i++)
             {
                 if (ipOrName.StartsWith(@"\"))
                 {
@@ -103,14 +56,7 @@ namespace CommonLib.Util.net.share
         {
             try
             {
-                if (Path.HasExtension(ShareFolderFullPath))
-                {
-                    return File.Exists(ShareFolderFullPath);
-                }
-                else
-                {
-                    return Directory.Exists(ShareFolderFullPath);
-                }
+                return Path.HasExtension(ShareFolderFullPath) ? File.Exists(ShareFolderFullPath) : Directory.Exists(ShareFolderFullPath);
             }
             catch (Exception)
             {

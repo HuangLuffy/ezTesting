@@ -21,16 +21,16 @@ namespace CMTest
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_SIMPLE_PROFILES_SWITCH, Flow_ProfilesSimpleSwitch);
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
-            _optionsPortalTestsWithFuncs.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN, _CMD.MenuShowAgain);
-            _optionsPortalTestsWithFuncs.Add(UtilCmd.OPTION_BACK, _CMD.MenuGoback);
+            _optionsPortalTestsWithFuncs.Add(UtilCmd.OptionShowMenuAgain, _CMD.MenuShowAgain);
+            _optionsPortalTestsWithFuncs.Add(UtilCmd.OptionBack, _CMD.MenuGoBack);
         }
         private void AssemblePortalPlugInOutDevices(bool fromConf = true)
         {
             if (_optionsPortalPlugInOutDeviceNames.Any()) return;
             _optionsPortalPlugInOutDeviceNames = UtilCloner.CloneList(_xmlOps.GetDeviceNameList());
             //Options_Portal_PlugInOut_Device_Names = UtilCloner.CloneList(VMObj.GetDevicesItemList());
-            _optionsPortalPlugInOutDeviceNames.Add(UtilCmd.OPTION_SHOW_MENU_AGAIN);
-            _optionsPortalPlugInOutDeviceNames.Add(UtilCmd.OPTION_BACK);
+            _optionsPortalPlugInOutDeviceNames.Add(UtilCmd.OptionShowMenuAgain);
+            _optionsPortalPlugInOutDeviceNames.Add(UtilCmd.OptionBack);
         }
         private dynamic Flow_Portal_LaunchTest()
         {
@@ -65,9 +65,9 @@ namespace CMTest
                 {
                     case null:
                         continue;
-                    case UtilCmd.OPTION_BACK:
+                    case UtilCmd.OptionBack:
                         return null; //cannot return "back" since it needs to stand at previous level.
-                    case UtilCmd.OPTION_SHOW_MENU_AGAIN:
+                    case UtilCmd.OptionShowMenuAgain:
                         _CMD.Clear();
                         break;
                     default:

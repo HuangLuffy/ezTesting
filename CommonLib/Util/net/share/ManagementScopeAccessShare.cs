@@ -1,9 +1,8 @@
-﻿using CommonLib.Util.net.share;
-using System;
+﻿using System;
 using System.IO;
 using System.Management;
 
-namespace CommonLib.Util.net
+namespace CommonLib.Util.net.share
 {
     public class ManagementScopeAccessShare : AccessShare , IAccessShare
     {
@@ -11,36 +10,33 @@ namespace CommonLib.Util.net
         {
 
         }
-        public void test1()
+        public void Test1()
         {
             try
             {
-                string HostName = "localhost";
-                ManagementScope Scope;
+                var hostName = "localhost";
+                ManagementScope scope;
 
-                if (!HostName.Equals("localhost", StringComparison.OrdinalIgnoreCase))
+                if (!hostName.Equals("localhost", StringComparison.OrdinalIgnoreCase))
                 {
-                    ConnectionOptions Conn = new ConnectionOptions();
-                    Conn.Username = "";
-                    Conn.Password = "";
-                    Conn.Authority = "ntlmdomain:DOMAIN";
-                    Scope = new ManagementScope($"\\\\{HostName}\\root\\CIMV2", Conn);
+                    var conn = new ConnectionOptions {Username = "", Password = "", Authority = "ntlmdomain:DOMAIN"};
+                    scope = new ManagementScope($"\\\\{hostName}\\root\\CIMV2", conn);
                 }
                 else
-                    Scope = new ManagementScope($"\\\\{HostName}\\root\\CIMV2", null);
+                    scope = new ManagementScope($"\\\\{hostName}\\root\\CIMV2", null);
 
-                Scope.Connect();
-                string Drive = "c:";
+                scope.Connect();
+                var drive = "c:";
                 //look how the \ char is escaped. 
-                string Path = "\\\\Windows\\\\System32\\\\";
-                ObjectQuery Query = new ObjectQuery(
-                    $"SELECT * FROM CIM_DataFile Where Drive='{Drive}' AND Path='{Path}' ");
+                var path = "\\\\Windows\\\\System32\\\\";
+                var query = new ObjectQuery(
+                    $"SELECT * FROM CIM_DataFile Where Drive='{drive}' AND Path='{path}' ");
 
-                ManagementObjectSearcher Searcher = new ManagementObjectSearcher(Scope, Query);
+                var searcher = new ManagementObjectSearcher(scope, query);
 
-                foreach (ManagementObject WmiObject in Searcher.Get())
+                foreach (var wmiObject in searcher.Get())
                 {
-                    Console.WriteLine("{0}", (string)WmiObject["Name"]);// String
+                    Console.WriteLine("{0}", (string)wmiObject["Name"]);// String
                 }
             }
             catch (Exception e)
@@ -52,62 +48,52 @@ namespace CommonLib.Util.net
         }
         public void GetShareFolderProperties()
         {
-            ManagementClass _ManagementClass = null;
-            ConnectionOptions _ConnectionOptions = new ConnectionOptions();
-            _ConnectionOptions.Username = UserName;
-            _ConnectionOptions.Password = Password;
-            DirectoryInfo di = new DirectoryInfo(ShareFolderFullPath);
-            ManagementScope scope = new ManagementScope($@"\\{IpOrName}\root\cimv2", _ConnectionOptions);
+            ManagementClass managementClass = null;
+            var connectionOptions = new ConnectionOptions {Username = UserName, Password = Password};
+            var di = new DirectoryInfo(ShareFolderFullPath);
+            var scope = new ManagementScope($@"\\{IpOrName}\root\cimv2", connectionOptions);
             scope.Connect();
-            
             try
             {
-                DirectoryInfo di1 = new DirectoryInfo(ShareFolderFullPath);
+                var di1 = new DirectoryInfo(ShareFolderFullPath);
             }
             catch (UnauthorizedAccessException)
             {
                 throw new Exception("Access Denied, wrong username or password.");
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
-                if (_ManagementClass != null)
-                    _ManagementClass.Dispose();
+                if (managementClass != null)
+                    managementClass.Dispose();
             }
         }
         public void GetShareFolderProperties1()
         {
-            ManagementPath _ManagementPath = new ManagementPath($@"\\{IpOrName}\root\cimv2");
-             ManagementClass _ManagementClass = null;
-            ConnectionOptions _ConnectionOptions = new ConnectionOptions();
-            _ConnectionOptions.Username = UserName;
-            _ConnectionOptions.Password = Password;
-            // co.Authority = "kerberos:celeb"; // use kerberos authentication
+            var managementPath = new ManagementPath($@"\\{IpOrName}\root\cimv2");
+             ManagementClass managementClass = null;
+             var connectionOptions = new ConnectionOptions {Username = UserName, Password = Password};
+             // co.Authority = "kerberos:celeb"; // use kerberos authentication
             // co.Authority = "NTLMDOMAIN:celeb"; // or NTLM
             //_ManagementPath.Server = @"\\10.10.53.26"; // use . for local server, else server name
             //_ManagementPath.NamespacePath = @"root\\CIMV2";
-            _ManagementPath.RelativePath = @"Win32_Share";
-            ManagementScope scope = new ManagementScope(_ManagementPath, _ConnectionOptions); // use (path) for local binds
+            managementPath.RelativePath = @"Win32_Share";
+            ManagementScope scope = new ManagementScope(managementPath, connectionOptions); // use (path) for local binds
             ObjectGetOptions options = new ObjectGetOptions(null, new TimeSpan(0, 0, 0, 5), true);
             try
             {
-                _ManagementClass = new ManagementClass(scope, _ManagementPath, options);
-                ManagementObjectCollection moc = _ManagementClass.GetInstances();
-                foreach (ManagementObject mo in moc)
+                managementClass = new ManagementClass(scope, managementPath, options);
+                ManagementObjectCollection moc = managementClass.GetInstances();
+                foreach (var mo in moc)
                 {
-                    _ShareFolderProperties = new ShareFolderProperties();
-                    _ShareFolderProperties.Name = mo["Name"].ToString();
-                    _ShareFolderProperties.ParentPath = $@"\\{IpOrName}";
-                    _ShareFolderProperties.LocalPath = mo["Path"].ToString();
-                    _ShareFolderProperties.FullPath = Path.Combine(_ShareFolderProperties.ParentPath, _ShareFolderProperties.Name);
-                    _ShareFolderPropertiesList.Add(_ShareFolderProperties);
-                    if (_ShareFolderProperties.Name.Equals("TP_GhostShare"))
+                    ShareFolderProperties = new ShareFolderProperties();
+                    ShareFolderProperties.Name = mo["Name"].ToString();
+                    ShareFolderProperties.ParentPath = $@"\\{IpOrName}";
+                    ShareFolderProperties.LocalPath = mo["Path"].ToString();
+                    ShareFolderProperties.FullPath = Path.Combine(ShareFolderProperties.ParentPath, ShareFolderProperties.Name);
+                    ShareFolderPropertiesList.Add(ShareFolderProperties);
+                    if (ShareFolderProperties.Name.Equals("TP_GhostShare"))
                     {
                         Console.WriteLine("{0}", (string)mo["Caption"]);
-                
                         Console.WriteLine("{0}", (string)mo["DriveType"]);
                         Console.WriteLine("{0}", (string)mo["FileSystem"]);
                         Console.WriteLine("{0}", (string)mo["PNPDeviceID"]);
@@ -117,14 +103,15 @@ namespace CommonLib.Util.net
                 //Console.WriteLine("{0} - {1} - {2} ", mo["Name"],
                 //    mo["Description"],
                 //    mo["Path"]);
-                ObjectQuery Query = new ObjectQuery(
+                var query = new ObjectQuery(
                     $"SELECT * FROM CIM_DataFile Where Drive='{"D:"}' AND Path='{"\\\\TP_Test\\\\TP_GhostShare\\\\"}' ");
 
-                ManagementObjectSearcher Searcher = new ManagementObjectSearcher(scope, Query);
+                var searcher = new ManagementObjectSearcher(scope, query);
 
-                foreach (ManagementObject WmiObject in Searcher.Get())
+                foreach (var o in searcher.Get())
                 {
-                    Console.WriteLine("{0}", (string)WmiObject["Name"]);// String
+                    var wmiObject = (ManagementObject) o;
+                    Console.WriteLine("{0}", (string)wmiObject["Name"]);// String
                 }
             }
             catch (UnauthorizedAccessException)
@@ -137,8 +124,8 @@ namespace CommonLib.Util.net
             }
             finally
             {
-                if (_ManagementClass != null)
-                    _ManagementClass.Dispose();
+                if (managementClass != null)
+                    managementClass.Dispose();
             }
         }
 
@@ -147,29 +134,31 @@ namespace CommonLib.Util.net
         //string SourcePath = userdesktop;
         //string DestinationPath = hdrivepath;
         //DirectoryCopy(computer, user, pass, SourcePath, DestinationPath, true);
-        public void DirectoryCopy(string computer, string user, string pass, string SourcePath, string DestinationPath, bool Recursive)
+        public void DirectoryCopy(string computer, string user, string pass, string sourcePath, string destinationPath, bool recursive)
         {
             try
             {
-                ConnectionOptions connection = new ConnectionOptions();
-                connection.Username = user;
-                connection.Password = pass;
-                connection.Impersonation = ImpersonationLevel.Impersonate;
-                connection.EnablePrivileges = true;
-                ManagementScope scope = new ManagementScope(
+                var connection = new ConnectionOptions
+                {
+                    Username = user,
+                    Password = pass,
+                    Impersonation = ImpersonationLevel.Impersonate,
+                    EnablePrivileges = true
+                };
+                var scope = new ManagementScope(
                     @"\\" + computer + @"\root\CIMV2", connection);
                 scope.Connect();
-                ManagementPath managementPath = new ManagementPath(@"Win32_Directory.Name='" + SourcePath + "'");
-                ManagementObject classInstance = new ManagementObject(scope, managementPath, null);
+                var managementPath = new ManagementPath(@"Win32_Directory.Name='" + sourcePath + "'");
+                var classInstance = new ManagementObject(scope, managementPath, null);
                 // Obtain in-parameters for the method
-                ManagementBaseObject inParams = classInstance.GetMethodParameters("CopyEx");
+                var inParams = classInstance.GetMethodParameters("CopyEx");
                 // Add the input parameters.
-                inParams["FileName"] = DestinationPath.Replace("\\", "\\\\");
+                inParams["FileName"] = destinationPath.Replace("\\", "\\\\");
                 inParams["Recursive"] = true;
                 inParams["StartFileName"] = null;
 
                 // Execute the method and obtain the return values.
-                ManagementBaseObject outParams =
+                var outParams =
                     classInstance.InvokeMethod("CopyEx", inParams, null);
                 // List outParams
                 Console.WriteLine((outParams["ReturnValue"]).ToString());
@@ -184,21 +173,23 @@ namespace CommonLib.Util.net
                 throw new Exception(ex.Message);
             }
         }
-        public void test()
+        public void Test()
         {
             try
             {
-                ConnectionOptions _ConnectionOptions = new ConnectionOptions();
-                _ConnectionOptions.Impersonation = ImpersonationLevel.Impersonate;
-                _ConnectionOptions.Authentication = AuthenticationLevel.Packet;
-                _ConnectionOptions.EnablePrivileges = true;
-                _ConnectionOptions.Username = "cz";
-                _ConnectionOptions.Password = "111";
+                var connectionOptions = new ConnectionOptions
+                {
+                    Impersonation = ImpersonationLevel.Impersonate,
+                    Authentication = AuthenticationLevel.Packet,
+                    EnablePrivileges = true,
+                    Username = "cz",
+                    Password = "111"
+                };
                 //_ConnectionOptions.Authority = 
                 //_ConnectionOptions.Authentication = AuthenticationLevel.PacketPrivacy;
-                ManagementPath _ManagementPath = new ManagementPath(@"\\10.10.53.26\root\cimv2");
-                ManagementScope Scope = new ManagementScope(_ManagementPath, _ConnectionOptions);
-                Scope.Connect();
+                var managementPath = new ManagementPath(@"\\10.10.53.26\root\cimv2");
+                var scope = new ManagementScope(managementPath, connectionOptions);
+                scope.Connect();
                 //ObjectGetOptions _ObjectGetOptions = new ObjectGetOptions();
                 //using (ManagementClass shares = new ManagementClass(@"\\10.10.53.26\root\cimv2", "Win32_Share", _ObjectGetOptions))
                 //{
@@ -207,37 +198,38 @@ namespace CommonLib.Util.net
                 //        Console.WriteLine(share["Name"]);
                 //    }
                 //}
-                ObjectQuery Query = new ObjectQuery("SELECT * FROM Win32_LogicalShareSecuritySetting");
-                ManagementObjectSearcher Searcher = new ManagementObjectSearcher(Scope, Query);
-                ManagementObjectCollection QueryCollection = Searcher.Get();
+                var query = new ObjectQuery("SELECT * FROM Win32_LogicalShareSecuritySetting");
+                var searcher = new ManagementObjectSearcher(scope, query);
+                var queryCollection = searcher.Get();
 
-                foreach (ManagementObject SharedFolder in QueryCollection)
+                foreach (var o in queryCollection)
                 {
+                    var sharedFolder = (ManagementObject) o;
                     {
-                        String ShareName = (String)SharedFolder["Name"];
-                        String Caption = (String)SharedFolder["Caption"];
-                        String LocalPath = String.Empty;
-                        ManagementObjectSearcher Win32Share = new ManagementObjectSearcher("SELECT Path FROM Win32_share WHERE Name = '" + ShareName + "'");
-                        foreach (ManagementObject ShareData in Win32Share.Get())
+                        var shareName = (string)sharedFolder["Name"];
+                        var caption = (string)sharedFolder["Caption"];
+                        var localPath = string.Empty;
+                        var win32Share = new ManagementObjectSearcher("SELECT Path FROM Win32_share WHERE Name = '" + shareName + "'");
+                        foreach (var shareData in win32Share.Get())
                         {
-                            LocalPath = (String)ShareData["Path"];
+                            localPath = (string)shareData["Path"];
                         }
 
-                        ManagementBaseObject Method = SharedFolder.InvokeMethod("GetSecurityDescriptor", null, new InvokeMethodOptions());
-                        ManagementBaseObject Descriptor = (ManagementBaseObject)Method["Descriptor"];
-                        ManagementBaseObject[] DACL = (ManagementBaseObject[])Descriptor["DACL"];
-                        foreach (ManagementBaseObject ACE in DACL)
+                        var method = sharedFolder.InvokeMethod("GetSecurityDescriptor", null, new InvokeMethodOptions());
+                        var descriptor = (ManagementBaseObject)method["Descriptor"];
+                        var dacl = (ManagementBaseObject[])descriptor["DACL"];
+                        foreach (var ace in dacl)
                         {
-                            ManagementBaseObject Trustee = (ManagementBaseObject)ACE["Trustee"];
+                            var trustee = (ManagementBaseObject)ace["Trustee"];
 
                             // Full Access = 2032127, Modify = 1245631, Read Write = 118009, Read Only = 1179817
-                            Console.WriteLine(ShareName);
-                            Console.WriteLine(Caption);
-                            Console.WriteLine(LocalPath);
-                            Console.WriteLine((String)Trustee["Domain"]);
-                            Console.WriteLine((String)Trustee["Name"]);
-                            Console.WriteLine((UInt32)ACE["AccessMask"]);
-                            Console.WriteLine((UInt32)ACE["AceType"]);
+                            Console.WriteLine(shareName);
+                            Console.WriteLine(caption);
+                            Console.WriteLine(localPath);
+                            Console.WriteLine((string)trustee["Domain"]);
+                            Console.WriteLine((string)trustee["Name"]);
+                            Console.WriteLine((uint)ace["AccessMask"]);
+                            Console.WriteLine((uint)ace["AceType"]);
                         }
                     }
                 }
