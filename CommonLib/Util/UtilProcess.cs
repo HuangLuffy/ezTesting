@@ -3,11 +3,11 @@ using System.Diagnostics;
 
 namespace CommonLib.Util
 {
-    public class UtilProcess
+    public static class UtilProcess
     {
         public static bool IsProcessExistedByName(string name)
         {
-            foreach (Process p in Process.GetProcessesByName(name))
+            foreach (var p in Process.GetProcessesByName(name))
             {
                 return true;
             }
@@ -15,7 +15,7 @@ namespace CommonLib.Util
         }
         public static void KillProcessByName(string name)
         {
-            foreach (Process p in Process.GetProcessesByName(name))
+            foreach (var p in Process.GetProcessesByName(name))
             {
                 p.Kill();
             }
@@ -24,16 +24,14 @@ namespace CommonLib.Util
         {
             try
             {
-                using (Process currentP = Process.GetCurrentProcess())
+                using (var currentP = Process.GetCurrentProcess())
                 { 
-                    foreach (Process p in Process.GetProcessesByName(currentP.ProcessName))
+                    foreach (var p in Process.GetProcessesByName(currentP.ProcessName))
                     {
-                        if (p.Id != currentP.Id)
-                        {
-                            WinApi.SetForegroundWindow(p.MainWindowHandle);
-                            WinApi.ShowWindowAsync(p.MainWindowHandle, WinApi.SwRestore);
-                            currentP.Kill();
-                        }
+                        if (p.Id == currentP.Id) continue;
+                        WinApi.SetForegroundWindow(p.MainWindowHandle);
+                        WinApi.ShowWindowAsync(p.MainWindowHandle, WinApi.SwRestore);
+                        currentP.Kill();
                     }
                 }
             }
@@ -46,7 +44,7 @@ namespace CommonLib.Util
         {
             try
             {
-                using (Process p = Process.Start(targetFullPath, para))
+                using (var p = Process.Start(targetFullPath, para))
                 {
                     p.WaitForExit();
                 }
@@ -60,7 +58,7 @@ namespace CommonLib.Util
         {
             try
             {
-                using (Process p = Process.Start(targetFullPath, para))
+                using (var p = Process.Start(targetFullPath, para))
                 {
                     //p.Start();
                 }
@@ -74,9 +72,9 @@ namespace CommonLib.Util
         {
             try
             {
-                using (Process p = new Process())
+                using (var p = new Process())
                 {
-                    ProcessStartInfo processStartInfo = new ProcessStartInfo(targetFullPath, para);
+                    var processStartInfo = new ProcessStartInfo(targetFullPath, para);
                     p.StartInfo = processStartInfo;
                     p.StartInfo.UseShellExecute = false;
                     p.StartInfo.CreateNoWindow = true;
@@ -94,55 +92,41 @@ namespace CommonLib.Util
                 return -1;
             }
         }
+
         public static string StartProcessGetString(string targetFullPath, string para = "")
         {
-            try
+            using (var p = new Process())
             {
-                using (Process p = new Process())
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.RedirectStandardInput = true;
+                p.StartInfo.RedirectStandardError = true;
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.FileName = targetFullPath;
+                p.StartInfo.Arguments = para;
+                p.Start();
+                //string dosLine = @"net use " + path + " /User:" + userName + " " + passWord + " /PERSISTENT:YES";
+                //proc.StandardInput.WriteLine(dosLine);
+                //proc.StandardInput.WriteLine("exit");
+                p.WaitForExit();
+                if (p.ExitCode != 0)
                 {
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.RedirectStandardOutput = true;
-                    p.StartInfo.RedirectStandardInput = true;
-                    p.StartInfo.RedirectStandardError = true;
-                    p.StartInfo.CreateNoWindow = true;
-                    p.StartInfo.FileName = targetFullPath;
-                    p.StartInfo.Arguments = para;
-                    p.Start();
-                    //string dosLine = @"net use " + path + " /User:" + userName + " " + passWord + " /PERSISTENT:YES";
-                    //proc.StandardInput.WriteLine(dosLine);
-                    //proc.StandardInput.WriteLine("exit");
-                    p.WaitForExit();
-                    string errormsg = "";
-                    if (p.ExitCode != 0)
+                    var errorMsg = p.StandardError.ReadToEnd();
+                    if (!string.IsNullOrEmpty(errorMsg))
                     {
-                        errormsg = p.StandardError.ReadToEnd();
-                        if (!string.IsNullOrEmpty(errormsg))
-                        {
-                            throw new Exception(errormsg.Replace(Environment.NewLine, " "));
-                        }        
+                        throw new Exception(errorMsg.Replace(Environment.NewLine, " "));
                     }
-                    p.StandardError.Close();
-                    return p.StandardOutput.ReadToEnd();
                 }
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                p.StandardError.Close();
+                return p.StandardOutput.ReadToEnd();
             }
         }
 
         public static string[] StartProcessGetStrings(string targetFullPath, string para = "")
         {
-            try
-            {
-                string strlist = StartProcessGetString(targetFullPath, para);
-                return strlist.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var strList = StartProcessGetString(targetFullPath, para);
+            return strList.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }
