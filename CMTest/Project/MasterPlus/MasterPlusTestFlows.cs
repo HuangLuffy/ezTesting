@@ -15,7 +15,7 @@
         /// </summary>
         public void Flow_LaunchTest()
         {
-            for (int i = 1; i < TEST_TIMES; i++)
+            for (var i = 1; i < TEST_TIMES; i++)
             {
                 MasterPlusTestActions.LaunchTimes = i;
                 MasterPlusTestActions.LaunchSw();
