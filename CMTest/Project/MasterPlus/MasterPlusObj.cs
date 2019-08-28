@@ -11,7 +11,7 @@ namespace CMTest.Project.MasterPlus
             ClassName = "Qt5QWindowOwnDCIcon"
         };
         public static ATElementStruct ButtonCloseMainWindow => 
-            UtilOS.GetOsVersion().Contains(UtilOS.Name.Win10) ? new ATElementStruct() { AutomationId = "Close", ControlType = ATElement.ControlType.Button } : new ATElementStruct() { Name = "Close", ControlType = ATElement.ControlType.Button };
+            UtilOs.GetOsVersion().Contains(UtilOs.Name.Win10) ? new ATElementStruct() { AutomationId = "Close", ControlType = ATElement.ControlType.Button } : new ATElementStruct() { Name = "Close", ControlType = ATElement.ControlType.Button };
 
         public static ATElementStruct DialogWarning = new ATElementStruct()
         {

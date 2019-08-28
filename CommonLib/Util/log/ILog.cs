@@ -1,4 +1,4 @@
-﻿namespace CommonLib.Util.msg
+﻿namespace CommonLib.Util.log
 {
     public interface ILog
     {

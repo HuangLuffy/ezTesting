@@ -79,7 +79,7 @@ namespace CMTest.Project.Portal
         }
         private void WaitForLoadingOrReconnecting(AT profileTmp, AT loadingTmp)
         {
-            if (UtilOS.GetOsVersion().Contains(UtilOS.Name.Win10))
+            if (UtilOs.GetOsVersion().Contains(UtilOs.Name.Win10))
             {
                 UtilTime.WaitTime(3);
             }

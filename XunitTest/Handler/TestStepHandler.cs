@@ -33,7 +33,7 @@ namespace XUnitTest.Handler
             _resultTestInfo = new ResultTestInfo
             {
                 AttrProject = "CM",
-                AttrOs = UtilOS.GetOsVersion(),
+                AttrOs = UtilOs.GetOsVersion(),
                 AttrLanguage = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-", "_"),
                 AttrRegion = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1],
                 AttrDeviceModel = DefaultContent,

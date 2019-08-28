@@ -7,8 +7,8 @@ namespace ATLib
     {
         static void Main(string[] args)
         {
-            Invoker _Invoker = new Invoker(args);
-            Console.Write(_Invoker.HandleEvent());
+            var invoker = new Invoker(args);
+            Console.Write(invoker.HandleEvent());
             //System.Environment.Exit(System.Environment.ExitCode);
             Console.ReadKey();
         }

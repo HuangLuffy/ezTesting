@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using CommonLib.Util.log;
 
 namespace CommonLib.Util.io
 {

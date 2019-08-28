@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using CommonLib.Util.log;
 
 namespace CommonLib.Util.xml
 {

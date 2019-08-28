@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using CommonLib.Util.log;
 
 namespace CommonLib.Util.xml
 {

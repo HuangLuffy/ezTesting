@@ -15,7 +15,7 @@ namespace CommonLib.Util.log
         {
             LogFolderPath = logFolderPath;
             _logName = logName;
-            LogFolderPath = logFolderPath.Equals("") ? ProjectPath.getProjectFullPath() : logFolderPath;
+            LogFolderPath = logFolderPath.Equals("") ? ProjectPath.GetProjectFullPath() : logFolderPath;
             _logFileFullPath = LogFolderPath + @"\" + _logName + ".log";
         }
         public LogSimple(string logFolderPath)
@@ -25,7 +25,7 @@ namespace CommonLib.Util.log
         }
         public LogSimple()
         {
-            _logFileFullPath = Path.Combine(ProjectPath.getProjectFullPath(), _logName + ".log");
+            _logFileFullPath = Path.Combine(ProjectPath.GetProjectFullPath(), _logName + ".log");
         }
         private struct LogLevel
         {

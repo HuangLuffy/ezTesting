@@ -85,9 +85,9 @@ namespace CMTest
                 {
                     return FOUND_TEST;
                 }
-                else if (result.Equals(UtilCmd.OPTION_BACK))
+                else if (result.Equals(UtilCmd.OptionBack))
                 {
-                    return UtilCmd.OPTION_BACK;
+                    return UtilCmd.OptionBack;
                 }
             }
         }
@@ -125,7 +125,7 @@ namespace CMTest
         }
         private bool IsTestExisted(string testName, string selectedNum, string loopName)
         {
-            return $"{selectedNum.Trim()}{UtilCmd.STRING_CONNECTOR}{testName}".Equals(loopName);
+            return $"{selectedNum.Trim()}{UtilCmd.StringConnector}{testName}".Equals(loopName);
         }
     }
 }
