@@ -23,7 +23,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace MS.Win32
+namespace ATLib.Input
 {
     internal class NativeMethods
     {

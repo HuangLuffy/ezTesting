@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using TestLib;
+using XUnitTest.Manager;
 using static CommonLib.Util.UtilCapturer;
 using static CommonLib.Util.UtilTime;
 using static ReportLib.Reporter;

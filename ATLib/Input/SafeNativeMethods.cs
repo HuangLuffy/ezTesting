@@ -14,8 +14,9 @@
 
 using System;
 using System.Runtime.InteropServices;
+using MS.Win32;
 
-namespace MS.Win32
+namespace ATLib.Input
 {
     // This class *MUST* be internal for security purposes
     //CASRemoval:[SuppressUnmanagedCodeSecurity]

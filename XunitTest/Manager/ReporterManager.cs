@@ -1,13 +1,13 @@
 ﻿using ReportLib;
 
-namespace TestLib
+namespace XUnitTest.Manager
 {
     public class ReporterManager
     {
-        private static IReporter _IReporter;
+        private static IReporter _iReporter;
         public static IReporter GeReporter(string pathReportXml, IReporter iReporter = null)
         {
-            return _IReporter = iReporter == null ? new ReporterXsl(pathReportXml) : iReporter;
+            return _iReporter = iReporter ?? new ReporterXsl(pathReportXml);
         }
     }
 }

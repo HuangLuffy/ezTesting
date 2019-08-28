@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ATLib.API
 {
-    public class API : APIBase
+    public class WinApi : APIBase
     {
         /// <summary>
         /// 
@@ -15,7 +15,7 @@ namespace ATLib.API
         /// 
         /// </summary>
         /// <param name="container"></param>
-        public API(IntPtr container)
+        public WinApi(IntPtr container)
         {
             //container = new IntPtr(0);
             _container = container;
@@ -42,19 +42,19 @@ namespace ATLib.API
                 {
                     ClassName = null;
                 }
-                int num = 1;
+                var num = 1;
                 if (listIntPtr != null)
                 {
                     num = listIntPtr.Count;
                 }
                 for (int i = 0; i < num; i++)
                 {
-                    IntPtr intPtrLoop = IntPtr.Zero;
+                    var intPtrLoop = IntPtr.Zero;
                     do
                     {
                         _container = listIntPtr[i];
                         intPtrLoop = FindWindowEx(_container, intPtrLoop, ClassName, null);
-                        if (IsHWNDMatched(intPtrLoop, Name, AutomationId))
+                        if (IsHwndMatched(intPtrLoop, Name, AutomationId))
                         {
                             return intPtrLoop;
                         }
@@ -110,26 +110,26 @@ namespace ATLib.API
         {
             try
             {
-                List<IntPtr> list_IntPtr = new List<IntPtr>();
+                var listIntPtr = new List<IntPtr>();
                 if (ClassName.Equals(null))
                 {
                     ClassName = null;
                 }
-                IntPtr intPtr = IntPtr.Zero;
+                var intPtr = IntPtr.Zero;
                 do
                 {
                     intPtr = FindWindowEx(_container, intPtr, ClassName, null);
-                    if (IsHWNDMatched(intPtr, Name, AutomationId))
+                    if (IsHwndMatched(intPtr, Name, AutomationId))
                     {
-                        list_IntPtr.Add(intPtr);
+                        listIntPtr.Add(intPtr);
                     }
                 }
                 while (!intPtr.Equals(IntPtr.Zero));
-                if (list_IntPtr.Count == 0)
+                if (listIntPtr.Count == 0)
                 {
                     throw new Exception();
                 }
-                return list_IntPtr;
+                return listIntPtr;
             }
             catch (Exception ex)
             {
@@ -148,13 +148,13 @@ namespace ATLib.API
         /// <param name="Timeout"></param>
         /// <param name="IsEnabled"></param>
         /// <returns></returns>
-        public void test(string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string Timeout = null, string IsEnabled = null)
+        public void Test(string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string Timeout = null, string IsEnabled = null)
         {
             try
             {
-                StringBuilder s = new StringBuilder(512);
-                StringBuilder b = new StringBuilder(512);
-                IntPtr intPtr = IntPtr.Zero;
+                var s = new StringBuilder(512);
+                var b = new StringBuilder(512);
+                var intPtr = IntPtr.Zero;
                 do
                 {
                     intPtr = FindWindowEx(new IntPtr(0x9B0A5A), intPtr, "#32770", null);
@@ -177,28 +177,20 @@ namespace ATLib.API
         /// <param name="Name"></param>
         /// <param name="AutomationId"></param>
         /// <returns></returns>
-        public bool IsHWNDMatched(IntPtr intPtr, string Name = null, string AutomationId = null)
+        public bool IsHwndMatched(IntPtr intPtr, string Name = null, string AutomationId = null)
         {
             try
             {
-                int i = 0;
-                if (!Name.Equals(null))
+                if (Name.Equals(null))
+                    return AutomationId.Equals(null) ||
+                           GetDlgCtrlID(intPtr).ToString().ToLower().Equals(AutomationId.ToLower());
+                var s = new StringBuilder(512);
+                GetWindowText(intPtr, s, s.Capacity);
+                if (!s.ToString().ToLower().Equals(Name.ToLower()))
                 {
-                    StringBuilder s = new StringBuilder(512);
-                    i = GetWindowText(intPtr, s, s.Capacity);
-                    if (!s.ToString().ToLower().Equals(Name.ToLower()))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-                if (!AutomationId.Equals(null))
-                {
-                    if (!GetDlgCtrlID(intPtr).ToString().ToLower().Equals(AutomationId.ToLower()))
-                    {
-                        return false;
-                    }
-                }
-                return true;
+                return AutomationId.Equals(null) || GetDlgCtrlID(intPtr).ToString().ToLower().Equals(AutomationId.ToLower());
             }
             catch (Exception)
             {
@@ -212,12 +204,8 @@ namespace ATLib.API
         /// <returns></returns>
         public bool IsChecked(IntPtr intPtr)
         {
-            int ret = SendMessage(intPtr, Status.BM_GETCHECK, 0, IntPtr.Zero);
-            if (ret == Status.BST_CHECKED)
-            {
-                return true;
-            }
-            return false;
+            var ret = SendMessage(intPtr, Status.BM_GETCHECK, 0, IntPtr.Zero);
+            return ret == Status.BST_CHECKED;
         }
     }
 }
