@@ -16,22 +16,20 @@ namespace CMTest.Project
         //}
         private struct Result
         {
-            public const string FAIL = "Failed";
-            public const string PASS = "Passed";
+            public const string Fail = "Failed";
+            public const string Pass = "Passed";
         }
 
         protected void HandleWrongStepResult(string comment, long num = 0)
         {
-            if (comment != "")
-            {
-                //string tmp = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {Result.FAIL} - Num > [{num}]. Error > [{comment}]";
-                string tmp = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}: {Result.FAIL}. Error > [{comment}]";
-                UtilCapturer.Capture(Path.Combine(ImagePath, num.ToString()));
-                UtilFile.WriteFile(Path.Combine(LogPath), tmp, true);
-                Console.WriteLine(tmp);
-                //UtilProcess.KillProcessByName(this.SwProcessName);
-                UtilTime.WaitTime(2);
-            }
+            if (comment == "") return;
+            //string tmp = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {Result.FAIL} - Num > [{num}]. Error > [{comment}]";
+            var tmp = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}: {Result.Fail}. Error > [{comment}]";
+            UtilCapturer.Capture(Path.Combine(ImagePath, num.ToString()));
+            UtilFile.WriteFile(Path.Combine(LogPath), tmp);
+            Console.WriteLine(tmp);
+            //UtilProcess.KillProcessByName(this.SwProcessName);
+            UtilTime.WaitTime(2);
         }
     }
 }

@@ -2,23 +2,23 @@
 
 namespace CMTest
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            TestIt _TestIt = new TestIt();    
+            var testIt = new TestIt();    
             if (args.Length >= 2 && args[0].Trim().Equals("-d", StringComparison.CurrentCultureIgnoreCase))
             {
-                string args1 = args[1].Trim();
+                var args1 = args[1].Trim();
                 if (!args1.Equals(""))
                 {
                     //TestIt.RunDirectly _RunDirectly = new TestIt.RunDirectly() { run = true, device = args1 };
-                    _TestIt.RunDirectly_Flow_PlugInOutServer(args1);
+                    testIt.RunDirectly_Flow_PlugInOutServer(args1);
                 }
             }
             else
             {
-                _TestIt.OpenCmd();
+                testIt.OpenCmd();
             }
             Console.ReadKey();
         }

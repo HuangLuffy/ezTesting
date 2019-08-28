@@ -19,13 +19,13 @@ namespace CMTest.Project
                 UtilTime.WaitTime(2);
                 Timeout = 20;
                 WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
-                MainWindow_SW = new AT().GetElement(Name: Obj.Name_MainWidow, ClassName: Obj.ClassName_MainWidow, Timeout: Timeout);
+                SwMainWindow = new AT().GetElement(Name: Obj.NameMainWidow, ClassName: Obj.ClassNameMainWidow, Timeout: Timeout);
                 //Qt5QWindowIcon
                 UtilTime.WaitTime(2);
             }
             catch (Exception)
             {
-                MainWindow_SW = new AT().GetElement(Name: Obj.Name_MainWidow, ClassName: Obj.ClassName_MainWidow, Timeout: Timeout);
+                SwMainWindow = new AT().GetElement(Name: Obj.NameMainWidow, ClassName: Obj.ClassNameMainWidow, Timeout: Timeout);
                 HandleWrongStepResult("Cannot find the App.", LaunchTimes);
             }
         }
@@ -38,18 +38,18 @@ namespace CMTest.Project
                 WriteConsoleTitle(LaunchTimes, $"Wait ({checkInternal}s)", checkInternal);
             }
             WriteConsoleTitle(LaunchTimes, $"Waiting for checking crash. ({checkTime}s)", checkTime);
-            AT Crash_Window = new AT().GetElement(Name: Obj.Name_CrashMainWidow, Timeout: checkTime, ReturnNullWhenException: true);
+            AT Crash_Window = new AT().GetElement(Name: Obj.NameCrashMainWidow, Timeout: checkTime, ReturnNullWhenException: true);
             if (Crash_Window != null)
             {
-                HandleWrongStepResult(Msg.CRASH, LaunchTimes);
-                throw new Exception(Msg.CRASH);
+                HandleWrongStepResult(Msg.Crash, LaunchTimes);
+                throw new Exception(Msg.Crash);
             }
         }
         public void CloseSW()
         {
             try
             {
-                AT button_Close = MainWindow_SW.GetElement(Name: Obj.Button_CloseMainWindow, ControlType: ATElement.ControlType.Button, TreeScope: ATElement.TreeScope.Descendants);
+                AT button_Close = SwMainWindow.GetElement(Name: Obj.ButtonCloseMainWindow, ControlType: ATElement.ControlType.Button, TreeScope: ATElement.TreeScope.Descendants);
                 button_Close.DoClick();
                 Timeout = 2;
                 WriteConsoleTitle(LaunchTimes, $"Waiting for closing1. ({Timeout}s)", Timeout);
@@ -57,7 +57,7 @@ namespace CMTest.Project
                 try
                 {
                     WriteConsoleTitle(LaunchTimes, $"Waiting for closing2. ({Timeout}s)", Timeout);
-                    button_Close = MainWindow_SW.GetElement(Name: Obj.Button_CloseMainWindow, ControlType: ATElement.ControlType.Button, TreeScope: ATElement.TreeScope.Descendants);
+                    button_Close = SwMainWindow.GetElement(Name: Obj.ButtonCloseMainWindow, ControlType: ATElement.ControlType.Button, TreeScope: ATElement.TreeScope.Descendants);
                     //button_Close.DoClickWithNewThread();
                     button_Close.DoClickPoint();//Don't know why sometimes "button_Close.DoClick();" does not work
                     UtilTime.WaitTime(Timeout);

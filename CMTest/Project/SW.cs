@@ -21,24 +21,24 @@ namespace CMTest.Project
 
         protected struct Msg
         {
-            public const string PROCESSSTILLEXISTS = "This SW's process still exists after closing it.";
-            public const string NOITEMSINUI = "No Items in UI.";
-            public const string CRASH = "Crashed.";
+            public const string ProcessStillExists = "This SW's process still exists after closing it.";
+            public const string NoItemsInUi = "No Items in UI.";
+            public const string Crash = "Crashed.";
         }
 
-        public void SetLaunchTimesAndWriteTestTitle(long launchTimes, string c = "")
+        public void SetLaunchTimesAndWriteTestTitle(long launchTimes, string comments = "")
         {
             LaunchTimes = launchTimes;
-            WriteConsoleTitle(launchTimes, c);
+            WriteConsoleTitle(launchTimes, comments);
         }
 
-        protected void WriteConsoleTitle(long launchTimes, string c = "", int timeout = 0)
+        protected void WriteConsoleTitle(long launchTimes, string comments = "", int timeout = 0)
         {
-            Console.Title = launchTimes.ToString() + " | " + c;
+            Console.Title = launchTimes + " | " + comments;
             var t = Console.Title;
             if (timeout != 0)
             {
-                UtilTime.CountDown(timeout, (s) => { Console.Title = t + " > " + s.ToString(); });
+                UtilTime.CountDown(timeout, s => { Console.Title = t + " > " + s.ToString(); });
             }
             UtilTime.WaitTime(timeout);
         }

@@ -15,19 +15,15 @@ namespace CMTest.Project.MasterPlus
             Timeout = 11;
             WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
             //var TabItem_OVERVIEW = new AT().GetElement(ATElementStruct: MasterPlusObj.TabItem_OVERVIEW, Timeout: Timeout);
-            SwMainWindow = new AT().GetElement(ATElementStruct: MasterPlusObj.MainWindow_SW, Timeout: Timeout);
+            SwMainWindow = new AT().GetElement(ATElementStruct: MasterPlusObj.MainWindowSw, Timeout: Timeout);
         }
         public void CloseSw()
         {
-            var buttonClose = SwMainWindow.GetElement(ATElementStruct: MasterPlusObj.Btn_CloseMainWindow);
+            var buttonClose = SwMainWindow.GetElement(ATElementStruct: MasterPlusObj.ButtonCloseMainWindow);
             buttonClose.DoClick();
             Timeout = 6;
             WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
             UtilTime.WaitTime(Timeout);
-            //if (UtilProcess.IsProcessExistedByName(_Portal.SwProcessName))
-            //{
-            //    _Portal.HandleStepResult(Portal.Log.PROCESSSTILLEXISTS, launchTimes);
-            //}
         }
     }
 }

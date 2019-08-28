@@ -1,6 +1,7 @@
 ﻿using CommonLib.Util;
 using System;
 using System.Windows.Automation;
+using static System.String;
 
 namespace ATLib
 {
@@ -50,11 +51,12 @@ namespace ATLib
         {
             try
             {
-                UtilWait.ForTrue(() =>
-                {
-                    return (GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, -1, false, true) == null);
+                UtilWait.ForTrue(() => (GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, -1, false, true) == null), Timeout);
+                //UtilWait.ForTrue(() =>
+                //{
+                //    return (GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, -1, false, true) == null);
 
-                }, Timeout);
+                //}, Timeout);
             }
             catch (Exception ex)
             {
@@ -102,12 +104,12 @@ namespace ATLib
         {
             try
             {
-                System.Windows.Automation.TreeScope treeScope = GetTreeScope(TreeScope);
-                Condition condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
+                var treeScope = GetTreeScope(TreeScope);
+                var condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
                 AutomationElement = AutomationElement ?? AutomationElement.RootElement;
-                AutomationElementCollection aec = AutomationElement.FindAll(treeScope, condition);
-                AT[] at = new AT[aec.Count];
-                for (int i = 0; i < aec.Count; i++)
+                var aec = AutomationElement.FindAll(treeScope, condition);
+                var at = new AT[aec.Count];
+                for (var i = 0; i < aec.Count; i++)
                 {
                     at[i] = new AT(aec[i]);
                 }
@@ -126,9 +128,9 @@ namespace ATLib
         {
             try
             {
-                AT atObj = null;
+                //AT atObj = null;
                 AutomationElement = AutomationElement ?? AutomationElement.RootElement;  //System.Windows.Automation.Condition.TrueCondition
-                AutomationElementCollection t = AutomationElement.FindAll(System.Windows.Automation.TreeScope.Descendants, Condition.TrueCondition);
+                var t = AutomationElement.FindAll(System.Windows.Automation.TreeScope.Descendants, Condition.TrueCondition);
                 //AutomationElementCollection t = this.me.FindAll(System.Windows.Automation.TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, System.Windows.Automation.ControlType.Pane));
                 foreach (AutomationElement item in t)
                 {
@@ -143,7 +145,7 @@ namespace ATLib
                     }
 
                 }
-                return atObj;
+                return null;
             }
             catch (Exception ex)
             {
@@ -175,10 +177,7 @@ namespace ATLib
         /// <returns></returns>
         public void WaitForDisappeared(int timeout = 1, int interval = -1)
         {
-            UtilWait.ForTrue(() =>
-            {
-               return !GetElementInfo().Exists();
-            }, timeout, interval);
+            UtilWait.ForTrue(() => !GetElementInfo().Exists(), timeout, interval);
         }
         //public void WaitForExisted(int timeout = 1)
         //{
@@ -189,21 +188,12 @@ namespace ATLib
         //}
         public void WaitForEnabled(int timeout = 1, int interval = -1)
         {
-            UtilWait.ForTrue(() =>
-            {
-                return GetElementInfo().IsEnabled();
-            }, timeout, interval);
+            UtilWait.ForTrue(() => GetElementInfo().IsEnabled(), timeout, interval);
         }
-        private Boolean ContainsAndOrWildcard(String which)
+        private bool ContainsAndOrWildcard(String which)
         {
-            if (!String.IsNullOrEmpty(which))
-            {
-                if ((which.Contains(Var.Mark.And) || which.Contains(Var.Mark.Or) || which.Contains(Var.Mark.Wildcard)))
-                {
-                    return true;
-                }
-            }
-            return false;
+            if (IsNullOrEmpty(which)) return false;
+            return which.Contains(Var.Mark.And) || which.Contains(Var.Mark.Or) || which.Contains(Var.Mark.Wildcard);
         }
         private AT GetElementByHandler(AutomationElement parentElement, System.Windows.Automation.TreeScope TreeScope = System.Windows.Automation.TreeScope.Children, Condition Condition = null, string Name = null, string AutomationId = null, string ClassName = null, int? Index = null)
         {
@@ -211,7 +201,6 @@ namespace ATLib
             {
                 AutomationElement resultEle = null;
                 AutomationElementCollection resultEles = null;
-                AT atObj;
                 if (TreeScope.ToString().Equals(AT.TreeScope.Element))
                 {
                     resultEle = parentElement;
@@ -255,7 +244,7 @@ namespace ATLib
                         }
                     }
                 }
-                atObj = new AT(resultEle);
+                var atObj = new AT(resultEle);
                 if (resultEle != null && IsElementsMatch(atObj: atObj, Name: Name, ClassName: ClassName, AutomationId: AutomationId))
                 {
                     return atObj;
@@ -285,11 +274,11 @@ namespace ATLib
         /// <summary>
         /// 
         /// </summary>
-        public void test(AT atObj)
+        public void Test(AT atObj)
         {
             try
             {
-                AutomationElement aaa = GetTopLevelWindow(atObj.AutomationElement);
+                var aaa = GetTopLevelWindow(atObj.AutomationElement);
             }
             catch (Exception ex)
             {
@@ -303,12 +292,11 @@ namespace ATLib
         /// <returns></returns>
         private AutomationElement GetTopLevelWindow(AutomationElement element)
         {
-            TreeWalker walker = TreeWalker.ControlViewWalker;
-            AutomationElement elementParent;
-            AutomationElement node = element;
+            var walker = TreeWalker.ControlViewWalker;
+            var node = element;
             do
             {
-                elementParent = walker.GetParent(node);
+                var elementParent = walker.GetParent(node);
                 if (elementParent == AutomationElement.RootElement) break;
                 node = elementParent;
             }

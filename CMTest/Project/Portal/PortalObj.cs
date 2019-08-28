@@ -2,21 +2,21 @@
 
 namespace CMTest.Project.Portal
 {
-    public class PortalObj : AbsSWObj
+    public class PortalObj : AbsSwObj
     {
         //public override string Name_MainWidow
         //{
         //    get { return "PORTAL"; }
         //}
-        public override string Name_MainWidow => "PORTAL";
+        public override string NameMainWidow => "PORTAL";
 
-        public override string ClassName_MainWidow => "Qt5QWindowIcon";
+        public override string ClassNameMainWidow => "Qt5QWindowIcon";
 
-        public override string Button_CloseMainWindow => "sw_close";
+        public override string ButtonCloseMainWindow => "sw_close";
 
         public string Button_OK_PlugOut => "plugout_ok";
 
-        public override string Name_CrashMainWidow => "PORTAL.exe";
+        public override string NameCrashMainWidow => "PORTAL.exe";
 
         public static ATElementStruct Window_Main = new ATElementStruct()
         {

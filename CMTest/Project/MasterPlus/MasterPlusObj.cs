@@ -3,37 +3,28 @@ using CommonLib.Util.os;
 
 namespace CMTest.Project.MasterPlus
 {
-    public class MasterPlusObj
+    public static class MasterPlusObj
     {
-        public static ATElementStruct MainWindow_SW = new ATElementStruct()
+        public static readonly ATElementStruct MainWindowSw = new ATElementStruct()
         {
             Name = "Cooler Master.*",
             ClassName = "Qt5QWindowOwnDCIcon"
         };
-        public static ATElementStruct Btn_CloseMainWindow
-        {
-            get
-            {
-                if (UtilOS.GetOsVersion().Contains(UtilOS.Name.Win10))
-                {
-                    return new ATElementStruct() { AutomationId = "Close", ControlType = ATElement.ControlType.Button };
-                }
-                return new ATElementStruct() { Name = "Close", ControlType = ATElement.ControlType.Button };
-            }
-        }
+        public static ATElementStruct ButtonCloseMainWindow => 
+            UtilOS.GetOsVersion().Contains(UtilOS.Name.Win10) ? new ATElementStruct() { AutomationId = "Close", ControlType = ATElement.ControlType.Button } : new ATElementStruct() { Name = "Close", ControlType = ATElement.ControlType.Button };
 
-        public static ATElementStruct Dialog_WARNING = new ATElementStruct()
+        public static ATElementStruct DialogWarning = new ATElementStruct()
         {
             Name = "WARNING",
             ControlType = ATElement.ControlType.TabItem
         };
-        public static ATElementStruct Btn_Quit = new ATElementStruct()
+        public static ATElementStruct ButtonQuit = new ATElementStruct()
         {
             Name = "Quit",
             ControlType = ATElement.ControlType.Button
         };
 
-        public static ATElementStruct TabItem_OVERVIEW = new ATElementStruct()
+        public static ATElementStruct TabItemOVERVIEW = new ATElementStruct()
         {
             Name = "OVERVIEW",
             ControlType = ATElement.ControlType.TabItem

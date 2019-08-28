@@ -7,38 +7,38 @@ namespace CMTest.Vm
 {
     public class VmOps
     {
-        public AT GetVM()
+        public AT GetVm()
         {
             return new AT().GetElement(VMObj.Window_VM);
         }
-        private void OpenRemovableDevices(AT Window_VM)
+        private void OpenRemovableDevices(AT windowVm)
         {
-            AT Tab_TestVM = Window_VM.GetElement(VMObj.Tab_TestVM);
-            Tab_TestVM.DoSetFocus();
+            var tabTestVm = windowVm.GetElement(VMObj.Tab_TestVM);
+            tabTestVm.DoSetFocus();
             UtilTime.WaitTime(1);
-            Tab_TestVM.DoClickPoint(10, 10, mk: HWSimulator.HWSend.MouseKeys.RIGHT);
+            tabTestVm.DoClickPoint(10, 10, mk: HWSimulator.HWSend.MouseKeys.RIGHT);
             UtilTime.WaitTime(0.5);
-            AT Item_RemovableDevices = new AT().GetElement(VMObj.Item_RemovableDevices);
-            Item_RemovableDevices.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
+            AT itemRemovableDevices = new AT().GetElement(VMObj.Item_RemovableDevices);
+            itemRemovableDevices.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
             UtilTime.WaitTime(0.5);
         }
 
-        private AT GetTargetItem(string deviceNameVM, int targetIndex)
+        private AT GetTargetItem(string deviceNameVm, int targetIndex)
         {
-            AT itemTarget = null;
+            AT itemTarget;
             if (targetIndex > 0) // Show 2 identical devices in VM.
             {
-                ATS Item_Targets = new AT().GetElements(Name: deviceNameVM, TreeScope: ATElement.TreeScope.Descendants, ControlType: ATElement.ControlType.MenuItem);
-                itemTarget = Item_Targets.GetATCollection()[targetIndex];
+                var itemTargets = new AT().GetElements(Name: deviceNameVm, TreeScope: ATElement.TreeScope.Descendants, ControlType: ATElement.ControlType.MenuItem);
+                itemTarget = itemTargets.GetATCollection()[targetIndex];
             }
             else
             {
-                itemTarget = new AT().GetElement(Name: deviceNameVM, TreeScope: ATElement.TreeScope.Descendants, ControlType: ATElement.ControlType.MenuItem);
+                itemTarget = new AT().GetElement(Name: deviceNameVm, TreeScope: ATElement.TreeScope.Descendants, ControlType: ATElement.ControlType.MenuItem);
             }
             return itemTarget;
         }
 
-        private void PlugoutOrIn()
+        private void PlugOutOrIn()
         {
             AT itemCon = null;
             UtilTime.WaitTime(1);
@@ -48,24 +48,17 @@ namespace CMTest.Vm
             }
             catch (Exception)
             {
-                try
-                {
-                    itemCon = new AT().GetElement(VMObj.Item_Disconnect);
-                }
-                catch (Exception)
-                {
-
-                }
+                itemCon = new AT().GetElement(VMObj.Item_Disconnect);
             }
-            itemCon.DoClickPoint(10, 10, mk: HWSimulator.HWSend.MouseKeys.LEFT);
+            itemCon.DoClickPoint(10, 10);
         }
 
-        public void PlugOutInDeviceFromVM(string deviceNameVM, int itemIndex = 0, AT VM_Window = null)
-        {   //Using admin to run VM in win10 otherwise rightclick would no work.
-            OpenRemovableDevices(VM_Window);
-            AT Item_Target = GetTargetItem(deviceNameVM, itemIndex);
-            Item_Target.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
-            PlugoutOrIn();
+        public void PlugOutInDeviceFromVm(string deviceNameVm, int itemIndex = 0, AT vmWindow = null)
+        {   //Using admin to run VM in win10 otherwise right-click would no work.
+            OpenRemovableDevices(vmWindow);
+            var itemTarget = GetTargetItem(deviceNameVm, itemIndex);
+            itemTarget.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
+            PlugOutOrIn();
         }
     }
 }
