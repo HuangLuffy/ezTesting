@@ -9,18 +9,18 @@ namespace CMTest.Project.MasterPlus
         {
             Initialize();
         }
-        public void LaunchSW()
+        public void LaunchSw()
         { 
             UtilProcess.StartProcess(SwLnkPath);
             Timeout = 11;
             WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
-            var TabItem_OVERVIEW = new AT().GetElement(ATElementStruct: MasterPlusObj.TabItem_OVERVIEW, Timeout: Timeout);
-            MainWindow_SW = new AT().GetElement(ATElementStruct: MasterPlusObj.MainWindow_SW, Timeout: Timeout);
+            //var TabItem_OVERVIEW = new AT().GetElement(ATElementStruct: MasterPlusObj.TabItem_OVERVIEW, Timeout: Timeout);
+            SwMainWindow = new AT().GetElement(ATElementStruct: MasterPlusObj.MainWindow_SW, Timeout: Timeout);
         }
-        public void CloseSW()
+        public void CloseSw()
         {
-            AT button_Close = MainWindow_SW.GetElement(ATElementStruct: MasterPlusObj.Btn_CloseMainWindow, TreeScope: ATElement.TreeScope.Descendants);
-            button_Close.DoClick();
+            var buttonClose = SwMainWindow.GetElement(ATElementStruct: MasterPlusObj.Btn_CloseMainWindow);
+            buttonClose.DoClick();
             Timeout = 6;
             WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
             UtilTime.WaitTime(Timeout);

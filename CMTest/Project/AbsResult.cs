@@ -7,26 +7,25 @@ namespace CMTest.Project
 {
     public abstract class AbsResult
     {
-        public string LogPath
-        {
-            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log"); }
-        }
+        private string LogPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
 
-        public string ImagePath
-        {
-            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }
-        }
-        public struct Result
+        protected string ImagePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
+        //public string ImagePath
+        //{
+        //    get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }
+        //}
+        private struct Result
         {
             public const string FAIL = "Failed";
             public const string PASS = "Passed";
         }
-        public void HandleWrongStepResult(string comment, long num = 0)
+
+        protected void HandleWrongStepResult(string comment, long num = 0)
         {
             if (comment != "")
             {
                 //string tmp = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {Result.FAIL} - Num > [{num}]. Error > [{comment}]";
-                string tmp = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}: {Result.FAIL}. Error > [{comment}]";
+                string tmp = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}: {Result.FAIL}. Error > [{comment}]";
                 UtilCapturer.Capture(Path.Combine(ImagePath, num.ToString()));
                 UtilFile.WriteFile(Path.Combine(LogPath), tmp, true);
                 Console.WriteLine(tmp);

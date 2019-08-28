@@ -1,6 +1,6 @@
 ﻿namespace CMTest.Project
 {
-    public abstract class AbsSWObj
+    public abstract class AbsSwObj
     {
         public virtual string Name_MainWidow { get; }
         public virtual string ClassName_MainWidow { get; }

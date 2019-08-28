@@ -1,15 +1,14 @@
-﻿using ATLib;
+﻿using System;
+using ATLib;
 using CommonLib.Util;
-using CMTest.Project;
-using System;
 using CommonLib.Util.io;
 
-namespace CMTest
+namespace CMTest.Project
 {
     public class SW : AbsResult
     {
-        protected AbsSWObj Obj;
-        protected AT MainWindow_SW = null;
+        protected AbsSwObj Obj;
+        protected AT SwMainWindow = null;
         protected int Timeout { get; set; }
         public long LaunchTimes { get; set; }
 
