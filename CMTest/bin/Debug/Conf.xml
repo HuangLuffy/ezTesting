@@ -12,6 +12,6 @@
     <device vmName ="RGB Mousepad" waitTime="6" index="0">RGB Mousepad</device>
     <device vmName ="MH650" waitTime="6" index="1">MH650</device>
 	<device vmName ="MH670" waitTime="6" index="0">MH670</device>
-	<device vmName ="MM710 Gaming Mouse" waitTime="6" index="0">MM710 Gaming Mouse</device>
+	<device vmName ="MM710 Gaming Mouse" waitTime="8" index="0">MM710 Gaming Mouse</device>
   </vmPlugInOutDevices>
 </conf>
