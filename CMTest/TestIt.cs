@@ -12,16 +12,16 @@ namespace CMTest
     {
         private const string FOUND_TEST = "FOUND_TEST";
         private const string DO_NOTHING = "DO_NOTHING";
-        private PortalTestFlows _PortalTestFlows ;
-        private MasterPlusTestFlows _MasterPlusTestFlows;
-        private List<string> Options_Projects;
-        private UtilCmd _CMD = new UtilCmd();
+        private readonly PortalTestFlows _portalTestFlows ;
+        private readonly MasterPlusTestFlows _masterPlusTestFlows;
+        private readonly List<string> _optionsProjects;
+        private readonly UtilCmd _cmd = new UtilCmd();
 
         public TestIt()
         {
-            _MasterPlusTestFlows = new MasterPlusTestFlows();
-            _PortalTestFlows = new PortalTestFlows();
-            Options_Projects = new List<string> { _PortalTestFlows.PortalTestActions.SwName, _MasterPlusTestFlows.MasterPlusTestActions.SwName };
+            _masterPlusTestFlows = new MasterPlusTestFlows();
+            _portalTestFlows = new PortalTestFlows();
+            _optionsProjects = new List<string> { _portalTestFlows.PortalTestActions.SwName, _masterPlusTestFlows.MasterPlusTestActions.SwName };
         }
         public struct RunDirectly
         {
@@ -30,25 +30,25 @@ namespace CMTest
         }
         public void OpenCmd()
         {
-            var projectOptions = _CMD.WriteCmdMenu(Options_Projects);
+            var projectOptions = _cmd.WriteCmdMenu(_optionsProjects);
             while (true)
             {
                 try
                 {
-                    projectOptions = _CMD.WriteCmdMenu(projectOptions, true, false);
-                    var s = _CMD.ReadLine();
+                    projectOptions = _cmd.WriteCmdMenu(projectOptions, true, false);
+                    var s = _cmd.ReadLine();
                     var result = ShowCmdProjects(s, projectOptions);
                     if (result.Equals(FOUND_TEST))
                     {
-                        _CMD.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
+                        _cmd.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
                         return;
                     }
-                    projectOptions = _CMD.WriteCmdMenu(Options_Projects, true);
+                    projectOptions = _cmd.WriteCmdMenu(_optionsProjects, true);
                 }
                 catch (Exception ex)
                 {
                     HandleWrongStepResult(ex.Message);
-                    _CMD.PressAnyContinue();
+                    _cmd.PressAnyContinue();
                 }
             }
         }
@@ -56,12 +56,13 @@ namespace CMTest
         {
             foreach (var option in options)
             {
-                if (IsTestExisted(_MasterPlusTestFlows.MasterPlusTestActions.SwName, selected, option))
+                if (IsTestExisted(_masterPlusTestFlows.MasterPlusTestActions.SwName, selected, option))
                 {
                     AssembleMasterPlusPlugInOutTests();
                     return ShowCmdTestsBySelectedProject(_optionsMasterPlusTestsWithFuncs);
                 }
-                else if (IsTestExisted(_PortalTestFlows.PortalTestActions.SwName, selected, option))
+
+                if (IsTestExisted(_portalTestFlows.PortalTestActions.SwName, selected, option))
                 {
                     AssemblePortalPlugInOutTests();
                     return ShowCmdTestsBySelectedProject(_optionsPortalTestsWithFuncs);
@@ -71,43 +72,47 @@ namespace CMTest
         }
         private string ShowCmdTestsBySelectedProject(IDictionary<string, Func<dynamic>> testFuncsByTestName)
         {
-            var options = _CMD.WriteCmdMenu(testFuncsByTestName.Keys.ToList());
+            var options = _cmd.WriteCmdMenu(testFuncsByTestName.Keys.ToList());
             while (true)
             {
-                options = _CMD.WriteCmdMenu(options, true, false);
-                string input = _CMD.ReadLine();
-                string result = FindMatchedTest(testFuncsByTestName, input, options);
-                if (result == null)
+                options = _cmd.WriteCmdMenu(options, true, false);
+                var input = _cmd.ReadLine();
+                var result = FindMatchedTest(testFuncsByTestName, input, options);
+                switch (result)
                 {
-                    //Back from submenu, so it should stay here. Or incorrect input
-                }
-                else if (result.Equals(FOUND_TEST))
-                {
-                    return FOUND_TEST;
-                }
-                else if (result.Equals(UtilCmd.OptionBack))
-                {
-                    return UtilCmd.OptionBack;
+                    case null:
+                        //Back from submenu, so it should stay here. Or incorrect input
+                        break;
+                    case FOUND_TEST:
+                        return FOUND_TEST;
+                    case UtilCmd.OptionBack:
+                        return UtilCmd.OptionBack;
+                    default:
+                        continue;
                 }
             }
         }
-        private T FindMatchedOption<T>(IReadOnlyList<string> listAll, string selected, List<string> comparedOptions)
+        private T FindMatchedOption<T>(IReadOnlyList<string> listAll, string selected, IEnumerable<string> comparedOptions)
         {
-            foreach (var comparedOption in comparedOptions)
+            foreach (var deviceName in comparedOptions.Select(comparedOption => GetSelectedName(listAll, selected, comparedOption)).Where(deviceName => deviceName != null))
             {
-                string deviceName = GetSelectedName(listAll, selected, comparedOption);
-                if (deviceName != null)
-                {
-                    return (T)Convert.ChangeType(deviceName, typeof(T));
-                }
+                return (T)Convert.ChangeType(deviceName, typeof(T));
             }
+            //foreach (var comparedOption in comparedOptions)
+            //{
+            //    var deviceName = GetSelectedName(listAll, selected, comparedOption);
+            //    if (deviceName != null)
+            //    {
+            //        return (T)Convert.ChangeType(deviceName, typeof(T));
+            //    }
+            //}
             return default(T);
         }
-        private string FindMatchedDevice(IReadOnlyList<string> Options_Portal_PlugInOut_Device_Names, string selected, List<string> comparedOptions)
+        private string FindMatchedDevice(IReadOnlyList<string> Options_Portal_PlugInOut_Device_Names, string selected, IEnumerable<string> comparedOptions)
         {
             return FindMatchedOption<string>(Options_Portal_PlugInOut_Device_Names, selected, comparedOptions);
         }
-        private string FindMatchedTest(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, List<string> comparedOptions)
+        private string FindMatchedTest(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, IEnumerable<string> comparedOptions)
         {
             var t = FindMatchedOption<string>(testFuncsByTestName.Keys.ToList(), selected, comparedOptions);
             return t == null ? null : testFuncsByTestName[t].Invoke();

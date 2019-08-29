@@ -38,7 +38,7 @@ namespace CMTest.Project
             var t = Console.Title;
             if (timeout != 0)
             {
-                UtilTime.CountDown(timeout, s => { Console.Title = t + " > " + s.ToString(); });
+                UtilTime.CountDown(timeout, s => { Console.Title = t + " > " + s; });
             }
             UtilTime.WaitTime(timeout);
         }

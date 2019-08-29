@@ -12,6 +12,7 @@
 //
 //---------------------------------------------------------------------------
 
+using ATLib.Input;
 using MS.Win32;
 using System;
 using System.Collections;
@@ -125,14 +126,14 @@ namespace ATLib.ATGTestInput
         {
             //CASRemoval:AutomationPermission.Demand( AutomationPermissionFlag.Input );
 
-            int intflags = (int)flags;
+            var intflags = (int)flags;
 
             if ((intflags & (int)SendMouseInputFlags.Absolute) != 0)
             {
-                int vscreenWidth = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_CXVIRTUALSCREEN);
-                int vscreenHeight = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_CYVIRTUALSCREEN);
-                int vscreenLeft = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_XVIRTUALSCREEN);
-                int vscreenTop = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_YVIRTUALSCREEN);
+                var vscreenWidth = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_CXVIRTUALSCREEN);
+                var vscreenHeight = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_CYVIRTUALSCREEN);
+                var vscreenLeft = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_XVIRTUALSCREEN);
+                var vscreenTop = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_YVIRTUALSCREEN);
 
                 // Absolute input requires that input is in 'normalized' coords - with the entire
                 // desktop being (0,0)...(65535,65536). Need to convert input x,y coords to this
@@ -160,8 +161,7 @@ namespace ATLib.ATGTestInput
                 intflags |= UnsafeNativeMethods.MOUSEEVENTF_VIRTUALDESK;
             }
 
-            UnsafeNativeMethods.INPUT mi = new UnsafeNativeMethods.INPUT();
-            mi.type = UnsafeNativeMethods.INPUT_MOUSE;
+            var mi = new UnsafeNativeMethods.INPUT {type = UnsafeNativeMethods.INPUT_MOUSE};
             mi.union.mouseInput.dx = (int)x;
             mi.union.mouseInput.dy = (int)y;
             mi.union.mouseInput.mouseData = data;
@@ -197,8 +197,8 @@ namespace ATLib.ATGTestInput
         //------------------------------------------------------
         internal static void SendKeyboardInput(string keyCombination, int millisecondDelay)
         {
-            ArrayList keysSequence = new ArrayList();
-            string[] keys = keyCombination.Split(new char[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
+            var keysSequence = new ArrayList();
+            var keys = keyCombination.Split(new char[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
             object keyStroke;
 
             try
@@ -319,7 +319,7 @@ namespace ATLib.ATGTestInput
                     // keysSequence is a collection so need to copy 
                     // the results over to the Keys[] and then sent 
                     // it through.
-                    Key[] keyCopy = new Key[keysSequence.Count];
+                    var keyCopy = new Key[keysSequence.Count];
                     for (int i = 0; i < keysSequence.Count; i++)
                         keyCopy[i] = (Key)keysSequence[i];
 
