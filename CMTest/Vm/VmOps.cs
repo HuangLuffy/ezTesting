@@ -7,6 +7,8 @@ namespace CMTest.Vm
 {
     public class VmOps
     {
+        public int PlugOutOrInDeviceCannotFindTimes = 0;
+
         public AT GetVm()
         {
             return new AT().GetElement(VmObj.Window_VM);
@@ -18,7 +20,7 @@ namespace CMTest.Vm
             UtilTime.WaitTime(1);
             tabTestVm.DoClickPoint(10, 10, mk: HWSimulator.HWSend.MouseKeys.RIGHT);
             UtilTime.WaitTime(0.5);
-            AT itemRemovableDevices = new AT().GetElement(VmObj.Item_RemovableDevices);
+            var itemRemovableDevices = new AT().GetElement(VmObj.Item_RemovableDevices);
             itemRemovableDevices.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
             UtilTime.WaitTime(0.5);
         }
@@ -56,7 +58,16 @@ namespace CMTest.Vm
         public void PlugOutInDeviceFromVm(string deviceNameVm, int itemIndex = 0, AT vmWindow = null)
         {   //Using admin to run VM in win10 otherwise right-click would no work.
             OpenRemovableDevices(vmWindow);
-            var itemTarget = GetTargetItem(deviceNameVm, itemIndex);
+            AT itemTarget;
+            try
+            {
+                itemTarget = GetTargetItem(deviceNameVm, itemIndex);
+            }
+            catch (Exception)
+            {
+                PlugOutOrInDeviceCannotFindTimes += 1;
+                throw;
+            }
             itemTarget.DoClickPoint(mk: HWSimulator.HWSend.MouseKeys.NOTCLICK);
             PlugOutOrIn();
         }

@@ -32,13 +32,18 @@ namespace CMTest.Project.Portal
             {
                 // ignored
             }
+            const int t = 10;
+            if (_vmOps.PlugOutOrInDeviceCannotFindTimes == t)
+            {
+                throw new Exception($"Cannot find the device on the menu: VM > Removable Devices or wrong device vMname input in Conf.xml, please make sure this device is connected. Attempt times = {t}");
+            }
         }
         public void ProfilesImExAimpadSwitch(long testTimes)
         {
             var TabItem_Profiles = SwMainWindow.GetElement(PortalObj.TabItem_PROFILES);
             TabItem_Profiles.DoClickPoint();
             UtilTime.WaitTime(2);
-            for (int i = 1; i < testTimes; i++)
+            for (var i = 1; i < testTimes; i++)
             {
                 WriteConsoleTitle(i, $"Starting to Import Export switch (Support Aimpad Mode). ({Timeout}s)", Timeout);
                 ProfilesImExSwitch(PortalObj.Profile_2, null, null, "EXPORT", true);

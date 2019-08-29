@@ -42,24 +42,24 @@ namespace CommonLib.Util
             _listCurrentMenu = t;
             return t;
         }
-        public void Clear()
+        public static void Clear()
         {
             Console.Clear();
         }
-        public void PressAnyContinue(string s = "Please press any key to continue.")
+        public static void PressAnyContinue(string s = "Please press any key to continue.")
         {
             Console.WriteLine(s);
             ReadLine();
         }
-        public void WriteLine(string s)
+        public static void WriteLine(string s)
         {
             Console.WriteLine(s);
         }
-        public string ReadLine()
+        public static string ReadLine()
         {
             return Console.ReadLine();
         }
-        private bool IsMenuChanged(IReadOnlyList<string> a, IReadOnlyList<string> b)
+        private static bool IsMenuChanged(IReadOnlyList<string> a, IReadOnlyList<string> b)
         {
             if (a.Count != b.Count)
             {

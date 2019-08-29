@@ -28,7 +28,6 @@ namespace CMTest
         {
             if (_optionsPortalPlugInOutDeviceNames.Any()) return;
             _optionsPortalPlugInOutDeviceNames = UtilCloner.CloneList(_xmlOps.GetDeviceNameList());
-            //Options_Portal_PlugInOut_Device_Names = UtilCloner.CloneList(VMObj.GetDevicesItemList());
             _optionsPortalPlugInOutDeviceNames.Add(UtilCmd.OptionShowMenuAgain);
             _optionsPortalPlugInOutDeviceNames.Add(UtilCmd.OptionBack);
         }
@@ -59,7 +58,7 @@ namespace CMTest
             while (true)
             {
                 options = _cmd.WriteCmdMenu(options, true, false);
-                var input = _cmd.ReadLine();
+                var input = UtilCmd.ReadLine();
                 var deviceName = FindMatchedDevice(_optionsPortalPlugInOutDeviceNames, input, options);
                 switch (deviceName)
                 {
@@ -68,7 +67,7 @@ namespace CMTest
                     case UtilCmd.OptionBack:
                         return null; //cannot return "back" since it needs to stand at previous level.
                     case UtilCmd.OptionShowMenuAgain:
-                        _cmd.Clear();
+                        UtilCmd.Clear();
                         break;
                     default:
                         RunDirectly_Flow_PlugInOutServer(deviceName);

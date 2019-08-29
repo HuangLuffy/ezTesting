@@ -36,11 +36,11 @@ namespace CMTest
                 try
                 {
                     projectOptions = _cmd.WriteCmdMenu(projectOptions, true, false);
-                    var s = _cmd.ReadLine();
+                    var s = UtilCmd.ReadLine();
                     var result = ShowCmdProjects(s, projectOptions);
                     if (result.Equals(FOUND_TEST))
                     {
-                        _cmd.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
+                        UtilCmd.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
                         return;
                     }
                     projectOptions = _cmd.WriteCmdMenu(_optionsProjects, true);
@@ -48,7 +48,7 @@ namespace CMTest
                 catch (Exception ex)
                 {
                     HandleWrongStepResult(ex.Message);
-                    _cmd.PressAnyContinue();
+                    UtilCmd.PressAnyContinue();
                 }
             }
         }
@@ -61,7 +61,6 @@ namespace CMTest
                     AssembleMasterPlusPlugInOutTests();
                     return ShowCmdTestsBySelectedProject(_optionsMasterPlusTestsWithFuncs);
                 }
-
                 if (IsTestExisted(_portalTestFlows.PortalTestActions.SwName, selected, option))
                 {
                     AssemblePortalPlugInOutTests();
@@ -76,23 +75,23 @@ namespace CMTest
             while (true)
             {
                 options = _cmd.WriteCmdMenu(options, true, false);
-                var input = _cmd.ReadLine();
+                var input = UtilCmd.ReadLine();
                 var result = FindMatchedTest(testFuncsByTestName, input, options);
                 switch (result)
                 {
                     case null:
                         //Back from submenu, so it should stay here. Or incorrect input
-                        break;
+                        break; // break只终止了最近的switch，并没有终止while
                     case FOUND_TEST:
                         return FOUND_TEST;
                     case UtilCmd.OptionBack:
                         return UtilCmd.OptionBack;
                     default:
-                        continue;
+                        continue; // continue不止跳出了switch，还跳过了这一次while循环，没有输出。
                 }
             }
         }
-        private T FindMatchedOption<T>(IReadOnlyList<string> listAll, string selected, IEnumerable<string> comparedOptions)
+        private static T FindMatchedOption<T>(IReadOnlyList<string> listAll, string selected, IEnumerable<string> comparedOptions)
         {
             foreach (var deviceName in comparedOptions.Select(comparedOption => GetSelectedName(listAll, selected, comparedOption)).Where(deviceName => deviceName != null))
             {
@@ -108,27 +107,28 @@ namespace CMTest
             //}
             return default(T);
         }
-        private string FindMatchedDevice(IReadOnlyList<string> Options_Portal_PlugInOut_Device_Names, string selected, IEnumerable<string> comparedOptions)
+        private static string FindMatchedDevice(IReadOnlyList<string> Options_Portal_PlugInOut_Device_Names, string selected, IEnumerable<string> comparedOptions)
         {
             return FindMatchedOption<string>(Options_Portal_PlugInOut_Device_Names, selected, comparedOptions);
         }
-        private string FindMatchedTest(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, IEnumerable<string> comparedOptions)
+        private static string FindMatchedTest(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, IEnumerable<string> comparedOptions)
         {
             var t = FindMatchedOption<string>(testFuncsByTestName.Keys.ToList(), selected, comparedOptions);
             return t == null ? null : testFuncsByTestName[t].Invoke();
         }
-        private string GetSelectedName(IReadOnlyList<string> listAll, string selectedNum, string comparedOptions)
+        private static string GetSelectedName(IEnumerable<string> listAll, string selectedNum, string comparedOptions)
         {
-            for (var j = 0; j < listAll.Count(); j++)
-            {
-                if (IsTestExisted(listAll[j], selectedNum, comparedOptions))
-                {
-                    return listAll[j];
-                }
-            }
-            return null;
+            return listAll.FirstOrDefault(t => IsTestExisted(t, selectedNum, comparedOptions));
+            //for (var j = 0; j < listAll.Count; j++)
+            //{
+            //    if (IsTestExisted(listAll[j], selectedNum, comparedOptions))
+            //    {
+            //        return listAll[j];
+            //    }
+            //}
+            //return null;
         }
-        private bool IsTestExisted(string testName, string selectedNum, string loopName)
+        private static bool IsTestExisted(string testName, string selectedNum, string loopName)
         {
             return $"{selectedNum.Trim()}{UtilCmd.StringConnector}{testName}".Equals(loopName);
         }
