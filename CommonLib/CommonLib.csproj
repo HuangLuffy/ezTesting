@@ -78,7 +78,7 @@
     <Compile Include="Util\net\share\ManagementScopeAccessShare.cs" />
     <Compile Include="Util\net\share\NetUseAccessShare.cs" />
     <Compile Include="Util\net\share\AccessShare1.cs" />
-    <Compile Include="Util\net\IP.cs" />
+    <Compile Include="Util\net\UtilIp.cs" />
     <Compile Include="Util\net\share\ShareFolderProperties.cs" />
     <Compile Include="Util\os\UtilOS.cs" />
     <Compile Include="Util\project\BaseProject.cs" />

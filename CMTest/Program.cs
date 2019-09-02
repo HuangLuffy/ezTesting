@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.NetworkInformation;
+using RemoteLib.Listener;
 
 namespace CMTest
 {
@@ -6,21 +10,18 @@ namespace CMTest
     {
         public static void Main(string[] args)
         {
-            var testIt = new TestIt();    
-            if (args.Length >= 2 && args[0].Trim().Equals("-d", StringComparison.CurrentCultureIgnoreCase))
-            {
-                var args1 = args[1].Trim();
-                if (!args1.Equals(""))
-                {
-                    //TestIt.RunDirectly _RunDirectly = new TestIt.RunDirectly() { run = true, device = args1 };
-                    testIt.RunDirectly_Flow_PlugInOutServer(args1);
-                }
-            }
-            else
+            var listener = ListenerManager.GetListener();
+            listener.Start();
+            Console.Title = $"Current OS Address: [{listener.GetAddress()}]";
+
+        var testIt = new TestIt();    
+            if (!testIt.IsNeededRunCmdDirectly(args))
             {
                 testIt.OpenCmd();
             }
             Console.ReadKey();
+            listener.Stop();
         }
     }
 }
+

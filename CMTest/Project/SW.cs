@@ -11,12 +11,8 @@ namespace CMTest.Project
         protected AT SwMainWindow = null;
         protected int Timeout { get; set; }
         public long LaunchTimes { get; set; }
-
         public string SwName { get; protected set; }
-
         protected string SwProcessName { private get; set; }
-
-        //protected string SwProcessName { get; set; }
         protected string SwLnkPath { get; set; }
 
         protected struct Msg
@@ -32,7 +28,7 @@ namespace CMTest.Project
             WriteConsoleTitle(launchTimes, comments);
         }
 
-        protected void WriteConsoleTitle(long launchTimes, string comments = "", int timeout = 0)
+        protected static void WriteConsoleTitle(long launchTimes, string comments = "", int timeout = 0)
         {
             Console.Title = launchTimes + " | " + comments;
             var t = Console.Title;

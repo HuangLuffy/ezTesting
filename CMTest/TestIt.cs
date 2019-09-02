@@ -28,6 +28,16 @@ namespace CMTest
             public bool run;
             public string device;
         }
+        public bool IsNeededRunCmdDirectly(string[] args)
+        {
+            if (args.Length < 2 || !args[0].Trim().Equals("-d", StringComparison.CurrentCultureIgnoreCase))
+                return false;
+            var args1 = args[1].Trim();
+            if (args1.Equals("")) return false;
+            //TestIt.RunDirectly _RunDirectly = new TestIt.RunDirectly() { run = true, device = args1 };
+            RunDirectly_Flow_PlugInOutServer(args1);
+            return true;
+        }
         public void OpenCmd()
         {
             var projectOptions = _cmd.WriteCmdMenu(_optionsProjects);

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportLib", "ReportLib\Repo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMTest", "CMTest\CMTest.csproj", "{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteLib", "RemoteLib\RemoteLib.csproj", "{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,14 @@ Global
 		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Release|x86.ActiveCfg = Release|Any CPU
 		{3D1214DF-7EBC-4D2D-B7FA-A491C93CEB88}.Release|x86.Build.0 = Release|Any CPU
+		{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}.Debug|x86.Build.0 = Debug|Any CPU
+		{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}.Release|x86.ActiveCfg = Release|Any CPU
+		{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

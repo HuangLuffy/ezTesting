@@ -92,6 +92,10 @@
       <Project>{7e1e761b-431f-4494-a606-50daf578d09e}</Project>
       <Name>CommonLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RemoteLib\RemoteLib.csproj">
+      <Project>{0a5e2a02-1a8c-45be-92ac-76034ec0e844}</Project>
+      <Name>RemoteLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">

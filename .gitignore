@@ -17,6 +17,8 @@ XunitTest/obj/*
 XunitTest/bin/*
 OpenIt/obj/*
 OpenIt/bin/*
+RemoteLib/obj/*
+RemoteLib/bin/*
 CMTest/obj/*
 CMTest/bin/Debug/*
 !/CMTest/bin/Debug/Conf.xml
