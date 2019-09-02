@@ -14,7 +14,7 @@ namespace CMTest
             listener.Start();
             Console.Title = $"Current OS Address: [{listener.GetAddress()}]";
 
-        var testIt = new TestIt();    
+            var testIt = new TestIt();    
             if (!testIt.IsNeededRunCmdDirectly(args))
             {
                 testIt.OpenCmd();

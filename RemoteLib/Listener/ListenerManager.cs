@@ -10,5 +10,9 @@ namespace RemoteLib.Listener
             return _listener = _listener ?? new NancySelfHost();
             //return listener = ruleSession == null ? listener : new NancySelfHost(ruleSession);
         }
+        public static bool IsListenerAvailable()
+        {
+            return _listener != null;
+        }
     }
 }
