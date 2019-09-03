@@ -18,13 +18,14 @@ namespace CMTest
                 testIt.OpenCmd();
             }
             Console.ReadKey();
-            ListenerManager.IfListenerIsRunningThenStop();
+            ListenerManager.GetListener().Stop();
         }
 
         private static async void OpenMonitor()
         {
             await Task.Run(() =>
             {
+                ListenerManager.SetListener(ListenerManager.ListenerChooser.Nancy);
                 var listener = ListenerManager.GetListener();
                 listener.Start();
                 UtilCmd.WriteTitle($"Current Address: [{listener.GetAddress()}]");
