@@ -8,7 +8,6 @@ namespace RemoteLib.Listener
         public static BaseListener GetListener()
         {
             return _listener = _listener ?? new NancySelfHost();
-            //return listener = ruleSession == null ? listener : new NancySelfHost(ruleSession);
         }
         public static bool IsListenerRunning()
         {

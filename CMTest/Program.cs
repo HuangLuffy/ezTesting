@@ -27,7 +27,7 @@ namespace CMTest
             {
                 var listener = ListenerManager.GetListener();
                 listener.Start();
-                UtilCmd.WriteTitle($"Current OS Address: [{listener.GetAddress()}]");
+                UtilCmd.WriteTitle($"Current Address: [{listener.GetAddress()}]");
             });
         }
     }
