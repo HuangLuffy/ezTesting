@@ -59,6 +59,10 @@ namespace CommonLib.Util
         {
             return Console.ReadLine();
         }
+        public static void WriteTitle(string t = "")
+        {
+            Console.Title = t;
+        }
         private static bool IsMenuChanged(IReadOnlyList<string> a, IReadOnlyList<string> b)
         {
             if (a.Count != b.Count)
