@@ -59,6 +59,7 @@
     <Compile Include="Module\TestModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\RequestApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

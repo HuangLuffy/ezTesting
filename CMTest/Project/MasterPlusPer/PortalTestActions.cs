@@ -1,11 +1,10 @@
-﻿using ATLib;
+﻿using System;
+using ATLib;
+using CMTest.Vm;
 using CommonLib.Util;
 using CommonLib.Util.os;
-using CMTest.Vm;
-using System;
 
-
-namespace CMTest.Project.Portal
+namespace CMTest.Project.MasterPlusPer
 {
     public class PortalTestActions : Portal
     {

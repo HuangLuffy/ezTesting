@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Nancy, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nancy.2.0.0\lib\net452\Nancy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,14 +67,16 @@
     <Compile Include="Project\MasterPlus\MasterPlusTestActions.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusObj.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusTestFlows.cs" />
-    <Compile Include="Project\Portal\PortalTestFlows.cs" />
-    <Compile Include="Project\Portal\PortalObj.cs" />
-    <Compile Include="Project\Portal\PortalTestActions.cs" />
+    <Compile Include="Project\RemoteModule\MonitorCrashAction.cs" />
+    <Compile Include="Project\RemoteModule\MonitorCrashModule.cs" />
+    <Compile Include="Project\MasterPlusPer\PortalTestFlows.cs" />
+    <Compile Include="Project\MasterPlusPer\PortalObj.cs" />
+    <Compile Include="Project\MasterPlusPer\PortalTestActions.cs" />
     <Compile Include="Vm\VMObj.cs" />
     <Compile Include="Vm\VmOps.cs" />
     <Compile Include="Project\SWCommonActions.cs" />
     <Compile Include="TestIt.cs" />
-    <Compile Include="Project\Portal\Portal.cs" />
+    <Compile Include="Project\MasterPlusPer\Portal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Project\SW.cs" />
@@ -112,5 +117,6 @@
   <ItemGroup>
     <Content Include="Conf.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

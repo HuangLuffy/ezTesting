@@ -1,7 +1,8 @@
-﻿using CMTest.Vm;
+﻿using System;
 using System.Collections.Generic;
+using CMTest.Vm;
 
-namespace CMTest.Project.Portal
+namespace CMTest.Project.MasterPlusPer
 {
     public class PortalTestFlows
     {
@@ -30,9 +31,18 @@ namespace CMTest.Project.Portal
                 PortalTestActions.IsSwCrash(1, 3);
             }
         }
-        public void Flow_PlugInOutServer(string deviceNameVm, string waitTime, string index)
+        public void Flow_PlugInOutServer(string deviceNameVm, string waitTime, string index, string runTimes)
         {
-            for (var i = 1; i < TestTimes; i++)
+            var testTimes = 8;
+            try
+            {
+                testTimes = Convert.ToInt32(runTimes);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            for (var i = 1; i < testTimes; i++)
             {
                 PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
                 PortalTestActions.PlugOutDeviceFromVm(deviceNameVm, waitTime, index);

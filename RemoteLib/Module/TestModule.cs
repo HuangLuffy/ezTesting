@@ -7,7 +7,7 @@ namespace RemoteLib.Module
         public TestModule()
         {
             //return HttpStatusCode.OK;
-            Get("/", x => "Hello World");
+            //Get("/", x => "Hel11lo World");
             //Get("/GetPerson/{id:int}", parameters =>
             //    {
             //        Person p = new Person();

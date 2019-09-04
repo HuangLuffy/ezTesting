@@ -19,13 +19,13 @@ namespace CMTest.Project
                 UtilTime.WaitTime(2);
                 Timeout = 20;
                 WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
-                SwMainWindow = new AT().GetElement(Name: Obj.NameMainWidow, ClassName: Obj.ClassNameMainWidow, Timeout: Timeout);
+                SwMainWindow = new AT().GetElement(Name: Obj.NameMainWidow, ClassName: Obj.ClassNameMainWindow, Timeout: Timeout);
                 //Qt5QWindowIcon
                 UtilTime.WaitTime(2);
             }
             catch (Exception)
             {
-                SwMainWindow = new AT().GetElement(Name: Obj.NameMainWidow, ClassName: Obj.ClassNameMainWidow, Timeout: Timeout);
+                SwMainWindow = new AT().GetElement(Name: Obj.NameMainWidow, ClassName: Obj.ClassNameMainWindow, Timeout: Timeout);
                 HandleWrongStepResult("Cannot find the App.", LaunchTimes);
             }
         }
@@ -38,7 +38,7 @@ namespace CMTest.Project
                 WriteConsoleTitle(LaunchTimes, $"Wait ({checkInternal}s)", checkInternal);
             }
             WriteConsoleTitle(LaunchTimes, $"Waiting for checking crash. ({checkTime}s)", checkTime);
-            var crashWindow = new AT().GetElement(Name: Obj.NameCrashMainWidow, Timeout: checkTime, ReturnNullWhenException: true);
+            var crashWindow = new AT().GetElement(Name: Obj.NameCrashMainWindow, Timeout: checkTime, ReturnNullWhenException: true);
             if (crashWindow == null) return;
             HandleWrongStepResult(Msg.Crash, LaunchTimes);
             throw new Exception(Msg.Crash);

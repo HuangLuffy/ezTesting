@@ -12,6 +12,7 @@ namespace CMTest.Xml
         private const string AttributeIndex = "index";
         private const string AttributeVmName = "vmName";
         private const string AttributeWaitTime = "waitTime";
+        private const string AttributeRunTimes = "runTimes";
         private const string NodeDevice = "device";
         private readonly XElement _vmPlugInOutDevicesRoot;
         private readonly Dictionary<string, Dictionary<string, string>> _devicesDict = new Dictionary<string, Dictionary<string, string>>();
@@ -36,7 +37,7 @@ namespace CMTest.Xml
         private void LoadDevicesDictInfo()
         {
             var devices = _vmPlugInOutDevicesRoot.Elements(NodeDevice);
-            devices.ToList().ForEach(item => _devicesDict.Add(item.Attribute(AttributeVmName).Value, new Dictionary<string, string>() { { AttributeIndex, item.Attribute(AttributeIndex).Value }, { AttributeWaitTime, item.Attribute(AttributeWaitTime).Value } }));
+            devices.ToList().ForEach(item => _devicesDict.Add(item.Attribute(AttributeVmName).Value, new Dictionary<string, string>() { { AttributeIndex, item.Attribute(AttributeIndex).Value }, { AttributeWaitTime, item.Attribute(AttributeWaitTime).Value }, { AttributeRunTimes, item.Attribute(AttributeRunTimes).Value } }));
         }
         public string GetWaitTime(string deviceName)
         {
@@ -45,6 +46,10 @@ namespace CMTest.Xml
         public string GetIndex(string deviceName)
         {
             return _devicesDict[deviceName][AttributeIndex];
+        }
+        public string GetRunTimes(string deviceName)
+        {
+            return _devicesDict[deviceName][AttributeRunTimes];
         }
         public List<string> GetDeviceNameList()
         {

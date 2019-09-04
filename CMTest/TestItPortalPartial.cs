@@ -1,9 +1,9 @@
-﻿using CMTest.Project.Portal;
-using CMTest.Xml;
+﻿using CMTest.Xml;
 using CommonLib.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CMTest.Project.MasterPlusPer;
 
 namespace CMTest
 {
@@ -75,9 +75,10 @@ namespace CMTest
                 }
             }
         }
-        public void RunDirectly_Flow_PlugInOutServer(string deviceName)
+
+        private void RunDirectly_Flow_PlugInOutServer(string deviceName)
         {
-            _portalTestFlows.Flow_PlugInOutServer(deviceName, _xmlOps.GetWaitTime(deviceName), _xmlOps.GetIndex(deviceName));
+            _portalTestFlows.Flow_PlugInOutServer(deviceName, _xmlOps.GetWaitTime(deviceName), _xmlOps.GetIndex(deviceName), _xmlOps.GetRunTimes(deviceName));
         }
     }
 }

@@ -12,8 +12,8 @@ namespace CMTest.Project
         protected int Timeout { get; set; }
         public long LaunchTimes { get; set; }
         public string SwName { get; protected set; }
-        protected string SwProcessName { private get; set; }
-        protected string SwLnkPath { get; set; }
+        public string SwProcessName { get; set; }
+        public string SwLnkPath { get; set; }
 
         protected struct Msg
         {

@@ -1,6 +1,6 @@
 ﻿using ATLib;
 
-namespace CMTest.Project.Portal
+namespace CMTest.Project.MasterPlusPer
 {
     public class PortalObj : AbsSwObj
     {
@@ -8,19 +8,19 @@ namespace CMTest.Project.Portal
         //{
         //    get { return "PORTAL"; }
         //}
-        public override string NameMainWidow => "PORTAL";
+        public override string NameMainWidow => "MasterPlus(PER. Only)";
 
-        public override string ClassNameMainWidow => "Qt5QWindowIcon";
+        public override string ClassNameMainWindow => "Qt5QWindowIcon";
 
         public override string ButtonCloseMainWindow => "sw_close";
 
         public string Button_OK_PlugOut => "plugout_ok";
 
-        public override string NameCrashMainWidow => "PORTAL.exe";
+        public override string NameCrashMainWindow => "MasterPlus(PER. Only)";
 
         public static ATElementStruct Window_Main = new ATElementStruct()
         {
-            Name = "PORTAL",
+            Name = "MasterPlus(PER. Only)",
             ClassName = "Qt5QWindowIcon"
         };
 
