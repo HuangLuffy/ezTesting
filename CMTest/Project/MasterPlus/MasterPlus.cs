@@ -5,7 +5,7 @@
         public MasterPlus()
         {
             SwLnkPath = @"C:\Users\Public\Desktop\MasterPlus.lnk";
-            SwName = "MasterPlus";
+            SwName = "Cooler Master MasterPlus.*";
             SwProcessName = "MasterPlusApp";
         }
     }

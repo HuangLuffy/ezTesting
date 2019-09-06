@@ -20,7 +20,7 @@ namespace CMTest
         }
         private dynamic Flow_MasterPlus_LaunchTest()
         {
-            _portalTestFlows.Flow_LaunchTest();
+            _masterPlusTestFlows.Flow_LaunchTest();
             return FOUND_TEST;
         }
     }
