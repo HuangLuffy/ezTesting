@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CMTest.Vm;
+using CommonLib.Util;
 
 namespace CMTest.Project.MasterPlusPer
 {
@@ -44,8 +45,12 @@ namespace CMTest.Project.MasterPlusPer
             }
             for (var i = 1; i < testTimes; i++)
             {
-                PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
-                PortalTestActions.PlugOutDeviceFromVm(deviceNameVm, waitTime, index);
+                var devices = UtilString.GetSplitArray(deviceNameVm, ",");
+                foreach (var device in devices)
+                {
+                    PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
+                    PortalTestActions.PlugOutDeviceFromVm(deviceNameVm, waitTime, index);
+                }
             }
         }
         public void Flow_LaunchTest()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace CommonLib.Util
@@ -11,7 +12,7 @@ namespace CommonLib.Util
         /// <param name="value"></param>
         /// <param name="rule"></param>
         /// <returns></returns>
-        public static string[] GetSplitArray(string value, string rule)
+        public static IEnumerable<string> GetSplitArray(string value, string rule)
         {
             var ids = value.Split(new[] { rule }, StringSplitOptions.RemoveEmptyEntries);
             return ids;
