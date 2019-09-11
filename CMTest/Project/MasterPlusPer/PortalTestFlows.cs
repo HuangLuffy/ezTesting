@@ -53,8 +53,8 @@ namespace CMTest.Project.MasterPlusPer
                 foreach (var device in devices)
                 {
                     var index = deviceInfo.GetIndex(device);
-                    //PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
-                    //PortalTestActions.PlugOutDeviceFromVm(device, waitTime, index);
+                    PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
+                    PortalTestActions.PlugOutDeviceFromVm(device, waitTime, index);
                 }
                 //UtilTime.WaitTime(Convert.ToInt16(waitTime));
                 SW.WriteConsoleTitle(i, $"Waiting for connecting/disconnecting. ({timeout}s)", timeout);
