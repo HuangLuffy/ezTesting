@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CMTest.Project.MasterPlusPer;
+using CMTest.Xml;
 
 namespace CMTest
 {
@@ -35,7 +36,7 @@ namespace CMTest
             var args1 = args[1].Trim();
             if (args1.Equals("")) return false;
             //TestIt.RunDirectly _RunDirectly = new TestIt.RunDirectly() { run = true, device = args1 };
-            RunDirectly_Flow_PlugInOutServer(args1);
+            RunDirectly_Flow_PlugInOutServer(args1, new XmlOps());
             return true;
         }
         public void OpenCmd()

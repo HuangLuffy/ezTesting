@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CMTest.Vm;
+using CMTest.Xml;
 using CommonLib.Util;
 
 namespace CMTest.Project.MasterPlusPer
@@ -32,12 +33,13 @@ namespace CMTest.Project.MasterPlusPer
                 PortalTestActions.IsSwCrash(1, 3);
             }
         }
-        public void Flow_PlugInOutServer(string deviceNameVm, string waitTime, string index, string runTimes)
+        //public void Flow_PlugInOutServer(string deviceNameVm, string waitTime, string index, string runTimes)
+        public void Flow_PlugInOutServer(string deviceNamesVm, XmlOps deviceInfo)
         {
             var testTimes = 8;
             try
             {
-                testTimes = Convert.ToInt32(runTimes);
+                testTimes = Convert.ToInt32(deviceInfo.GetRunTimes(deviceNamesVm));
             }
             catch (Exception)
             {
@@ -45,9 +47,11 @@ namespace CMTest.Project.MasterPlusPer
             }
             for (var i = 1; i < testTimes; i++)
             {
-                var devices = UtilString.GetSplitArray(deviceNameVm, ",");
+                var devices = UtilString.GetSplitArray(deviceNamesVm, ",");
                 foreach (var device in devices)
                 {
+                    var index = deviceInfo.GetIndex(device);
+                    var waitTime = deviceInfo.GetWaitTime(device);
                     PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
                     PortalTestActions.PlugOutDeviceFromVm(device, waitTime, index);
                     var timeout = Convert.ToInt16(waitTime);

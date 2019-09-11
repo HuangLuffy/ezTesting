@@ -70,15 +70,15 @@ namespace CMTest
                         UtilCmd.Clear();
                         break;
                     default:
-                        RunDirectly_Flow_PlugInOutServer(deviceName);
+                        RunDirectly_Flow_PlugInOutServer(deviceName, _xmlOps);
                         return FOUND_TEST;
                 }
             }
         }
 
-        private void RunDirectly_Flow_PlugInOutServer(string deviceName)
+        private void RunDirectly_Flow_PlugInOutServer(string deviceName, XmlOps deviceInfo)
         {
-            _portalTestFlows.Flow_PlugInOutServer(deviceName, _xmlOps.GetWaitTime(deviceName), _xmlOps.GetIndex(deviceName), _xmlOps.GetRunTimes(deviceName));
+            _portalTestFlows.Flow_PlugInOutServer(deviceName, deviceInfo);
         }
     }
 }
