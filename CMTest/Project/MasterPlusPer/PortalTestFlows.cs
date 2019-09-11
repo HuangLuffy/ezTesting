@@ -49,7 +49,7 @@ namespace CMTest.Project.MasterPlusPer
                 foreach (var device in devices)
                 {
                     PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
-                    PortalTestActions.PlugOutDeviceFromVm(deviceNameVm, waitTime, index);
+                    PortalTestActions.PlugOutDeviceFromVm(device, waitTime, index);
                 }
             }
         }
