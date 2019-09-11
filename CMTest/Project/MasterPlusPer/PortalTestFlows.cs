@@ -50,6 +50,9 @@ namespace CMTest.Project.MasterPlusPer
                 {
                     PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
                     PortalTestActions.PlugOutDeviceFromVm(device, waitTime, index);
+                    var timeout = Convert.ToInt16(waitTime);
+                    UtilTime.WaitTime(Convert.ToInt16(waitTime));
+                    SW.WriteConsoleTitle(i, $"Waiting for connecting/disconnecting. ({timeout}s)", timeout);
                 }
             }
         }

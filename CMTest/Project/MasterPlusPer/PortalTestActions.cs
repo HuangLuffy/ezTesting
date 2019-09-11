@@ -24,8 +24,8 @@ namespace CMTest.Project.MasterPlusPer
             try
             {
                 _vmOps.PlugOutInDeviceFromVm(deviceNameVm, Convert.ToInt16(index), vmWindow);
-                Timeout = Convert.ToInt16(waitTime);
-                WriteConsoleTitle(LaunchTimes, $"Waiting for connecting/disconnecting. ({Timeout}s)", Timeout);
+                //Timeout = Convert.ToInt16(waitTime);
+                //WriteConsoleTitle(LaunchTimes, $"Waiting for connecting/disconnecting. ({Timeout}s)", Timeout);
             }
             catch (Exception)
             {
