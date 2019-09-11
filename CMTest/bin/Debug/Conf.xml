@@ -12,8 +12,8 @@
     <device vmName ="RGB Mousepad" waitTime="6" index="0" runTimes="9999">RGB Mousepad</device>
     <device vmName ="MH650" waitTime="6" index="1" runTimes="9999">MH650</device>
 	<device vmName ="MH670" waitTime="6" index="0" runTimes="9999">MH670</device>
-	<device vmName ="Cooler Master Technology Inc. GS750" waitTime="6" index="0" runTimes="9999">Cooler Master Technology Inc. GS75</device>
+	<device vmName ="Cooler Master Technology Inc.GS750" waitTime="6" index="0" runTimes="9999">Cooler Master Technology Inc. GS750</device>
 	<device vmName ="MM710 Gaming Mouse" waitTime="5" index="0" runTimes="9999">MM710 Gaming Mouse</device>
-	<device vmName ="MH650,Cooler Master Technology Inc. GS75" waitTime="-1" index="-1" runTimes="9999">MH670</device>
+	<device vmName ="MH650,Cooler Master Technology Inc. GS750" waitTime="-1" index="-1" runTimes="9999">MH670</device>
   </vmPlugInOutDevices>
 </conf>
