@@ -45,19 +45,19 @@ namespace CMTest.Project.MasterPlusPer
             {
                 // ignored
             }
+            var waitTime = deviceInfo.GetWaitTime(deviceNamesVm);
+            var timeout = Convert.ToInt16(waitTime);
             for (var i = 1; i < testTimes; i++)
             {
                 var devices = UtilString.GetSplitArray(deviceNamesVm, ",");
                 foreach (var device in devices)
                 {
                     var index = deviceInfo.GetIndex(device);
-                    var waitTime = deviceInfo.GetWaitTime(device);
-                    PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
-                    PortalTestActions.PlugOutDeviceFromVm(device, waitTime, index);
-                    var timeout = Convert.ToInt16(waitTime);
-                    UtilTime.WaitTime(Convert.ToInt16(waitTime));
-                    SW.WriteConsoleTitle(i, $"Waiting for connecting/disconnecting. ({timeout}s)", timeout);
+                    //PortalTestActions.SetLaunchTimesAndWriteTestTitle(i);
+                    //PortalTestActions.PlugOutDeviceFromVm(device, waitTime, index);
                 }
+                //UtilTime.WaitTime(Convert.ToInt16(waitTime));
+                SW.WriteConsoleTitle(i, $"Waiting for connecting/disconnecting. ({timeout}s)", timeout);
             }
         }
         public void Flow_LaunchTest()
