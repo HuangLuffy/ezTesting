@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace CommonLib.Util.net.share
+namespace CommonLib.Util.Net.Share
 {
     public abstract class AccessShare
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Management;
 
-namespace CommonLib.Util.net.share
+namespace CommonLib.Util.Net.Share
 {
     public class ManagementScopeAccessShare : AccessShare , IAccessShare
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CommonLib.Util.net.share
+namespace CommonLib.Util.Net.Share
 {
     public class NetUseAccessShare : AccessShare, IAccessShare
     {

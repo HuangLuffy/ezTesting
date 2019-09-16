@@ -1,4 +1,4 @@
-﻿namespace CommonLib.Util.net.share
+﻿namespace CommonLib.Util.Net.Share
 {
     public interface IAccessShare
     {

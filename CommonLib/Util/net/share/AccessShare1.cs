@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace CommonLib.Util.net
+namespace CommonLib.Util.Net
 {
     public class AccessShare1 : IDisposable
     {
