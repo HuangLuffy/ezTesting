@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Forms;
 
-namespace CommonLib.Util.project
+namespace CommonLib.Util.Project
 {
     public static class ProjectPath
     {

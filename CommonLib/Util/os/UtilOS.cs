@@ -2,7 +2,7 @@
 using System;
 using System.Management;
 
-namespace CommonLib.Util.os
+namespace CommonLib.Util.OS
 {
     public static class UtilOs
     {

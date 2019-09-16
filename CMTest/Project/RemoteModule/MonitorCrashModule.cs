@@ -8,11 +8,12 @@ namespace CMTest.Project.RemoteModule
         public MonitorCrashModule()
         {
             Get("/", x => "Hello World");
-            Get("MonitorCrash/{hostAddress}", x =>
-            {
-                var a = x.hostAddress;
-                return _monitorCrashAction.GoMonitorCrashStatus();
-            });
+            //Get("MonitorCrash/{hostAddress}", x =>
+            //{
+            //    var a = x.hostAddress;
+            //    return _monitorCrashAction.GoMonitorCrashStatus();
+            //});
+            Get("MonitorCrash", x => _monitorCrashAction.GoMonitorCrashStatus());
         }
     }
 }

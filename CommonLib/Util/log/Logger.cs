@@ -1,8 +1,6 @@
-﻿using CommonLib.Util.msg;
-
-namespace CommonLib.Util.log
+﻿namespace CommonLib.Util.Log
 {
-    public class Logger : Msg
+    public class Logger : Msg.Msg
     {
         private static ILog _iLog;
         public static void Load(ILog iLog)

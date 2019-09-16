@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CommonLib.Util.xml
+namespace CommonLib.Util.Xml
 {
     public interface IXml
     {

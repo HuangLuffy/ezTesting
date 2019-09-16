@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using CommonLib.Util.msg;
-using CommonLib.Util.project;
+using CommonLib.Util.Log;
+using CommonLib.Util.Project;
 
 namespace CommonLib.Util.log
 {

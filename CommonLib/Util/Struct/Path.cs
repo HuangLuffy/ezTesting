@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace CommonLib.Util.utilStruct
+namespace CommonLib.Util.UtilStruct
 {
     public struct PathStruct
     {

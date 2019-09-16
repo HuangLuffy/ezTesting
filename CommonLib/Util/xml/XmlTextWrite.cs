@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using CommonLib.Util.log;
+using CommonLib.Util.Log;
 
-namespace CommonLib.Util.xml
+namespace CommonLib.Util.Xml
 {
     public class XmlTextWrite
     {

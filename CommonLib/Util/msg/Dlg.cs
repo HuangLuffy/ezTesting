@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace CommonLib.Util.msg
+namespace CommonLib.Util.Msg
 {
     public class Dlg : Msg
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using CommonLib.Util.log;
+using CommonLib.Util.Log;
 
-namespace CommonLib.Util.vm
+namespace CommonLib.Util.VM
 {
     public class VmCmdControl : Vm, IVmControl
     {

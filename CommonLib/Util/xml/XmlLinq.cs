@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using CommonLib.Util.log;
+using CommonLib.Util.Log;
 
-namespace CommonLib.Util.xml
+namespace CommonLib.Util.Xml
 {
     public class XmlLinq : IXml
     {

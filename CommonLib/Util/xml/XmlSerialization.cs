@@ -4,9 +4,9 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using CommonLib.Util.log;
+using CommonLib.Util.Log;
 
-namespace CommonLib.Util.xml
+namespace CommonLib.Util.Xml
 {
     public class XmlSerialization
     {

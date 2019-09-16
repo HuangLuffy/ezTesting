@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CommonLib.Util.vm
+namespace CommonLib.Util.VM
 {
     public class Vm
     {

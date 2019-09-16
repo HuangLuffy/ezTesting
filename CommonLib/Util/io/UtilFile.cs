@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using CommonLib.Util.log;
+using CommonLib.Util.Log;
 
-namespace CommonLib.Util.io
+namespace CommonLib.Util.IO
 {
     public static class UtilFile
     {

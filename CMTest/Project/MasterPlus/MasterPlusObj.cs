@@ -1,5 +1,5 @@
 ﻿using ATLib;
-using CommonLib.Util.os;
+using CommonLib.Util.OS;
 
 namespace CMTest.Project.MasterPlus
 {

@@ -2,7 +2,7 @@
 using ATLib;
 using CMTest.Vm;
 using CommonLib.Util;
-using CommonLib.Util.os;
+using CommonLib.Util.OS;
 
 namespace CMTest.Project.MasterPlusPer
 {
