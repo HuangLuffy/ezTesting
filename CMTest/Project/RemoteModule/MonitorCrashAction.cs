@@ -3,6 +3,7 @@ using System.Threading;
 using CMTest.Project.MasterPlusPer;
 using CommonLib.Util;
 using Nancy;
+using RemoteLib.Request;
 
 namespace CMTest.Project.RemoteModule
 {
@@ -10,14 +11,15 @@ namespace CMTest.Project.RemoteModule
     {
         private readonly PortalTestActions _portalTestActions = new PortalTestActions();
         private readonly Portal _portal = new Portal();
-        public HttpStatusCode GoMonitorCrashStatus()
+        public static Thread MonitorCrashThread;
+        public HttpStatusCode StartMonitorCrash()
         {
             UtilCmd.Clear();
             UtilCmd.WriteLine("Crash Monitor is running!");
-            UtilCmd.WriteLine("*********************************************");
+            //UtilCmd.WriteLine("*********************************************");
             UtilProcess.StartProcess(_portal.SwLnkPath);
             UtilTime.WaitTime(1);
-            var monitorExe = new Thread(() =>
+            MonitorCrashThread = new Thread(() =>
             {
                 while (true)
                 {
@@ -28,18 +30,24 @@ namespace CMTest.Project.RemoteModule
                     else
                     {
                         UtilCmd.WriteLine("Crash occurred!");
+                        //RequestApi.Get("http://localhost:9100/AbortMonitorCrash");
+                        MonitorCrashThread.Abort();
                         return;
                     }
                 }
             });
-            monitorExe.Start();
+            MonitorCrashThread.Start();
             return HttpStatusCode.OK;
         }
-        public string IsIp()
+        public HttpStatusCode AbortMonitorCrash()
         {
-            return ";";
+            if (MonitorCrashThread != null && MonitorCrashThread.IsAlive)
+            {
+                MonitorCrashThread.Abort();
+            }
+            UtilCmd.WriteLine("Crash Monitor aborted!");
+            return HttpStatusCode.OK;
         }
-
         public string GetHostAddress()
         {
             return ";";

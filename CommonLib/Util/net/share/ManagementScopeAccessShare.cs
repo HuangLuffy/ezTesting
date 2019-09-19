@@ -118,9 +118,9 @@ namespace CommonLib.Util.Net.Share
             {
                 throw new Exception("Access Denied, wrong username or password.");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                // ignored
             }
             finally
             {

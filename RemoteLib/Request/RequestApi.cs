@@ -10,7 +10,7 @@ namespace RemoteLib.Request
             public const string PUT = "PUT";
             public const string POST = "POST";
         }
-        public string Send(string address, string requestMethod = RequestMethod.POST)
+        public static string Send(string address, string requestMethod = RequestMethod.POST)
         {
             var request = WebRequest.Create(address);
             request.Method = requestMethod;
@@ -23,7 +23,7 @@ namespace RemoteLib.Request
                 }
             }
         }
-        public string Get(string address)
+        public static string Get(string address)
         {
             var response = WebRequest.Create(address).GetResponse();
             using (var reader = new StreamReader(response.GetResponseStream()))

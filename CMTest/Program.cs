@@ -9,17 +9,18 @@ namespace CMTest
     {
         public static void Main(string[] args)
         {
-            OpenMonitor();
+            var om = OpenMonitor();
             var testIt = new TestIt();    
             if (!testIt.IsNeededRunCmdDirectly(args))
             {
                 testIt.OpenCmd();
             }
+            //Task.WaitAll(om);
             Console.ReadKey();
             ListenerManager.GetListener().Stop();
         }
-
-        private static async void OpenMonitor()
+        
+        private static async Task OpenMonitor()
         {
             await Task.Run(() =>
             {

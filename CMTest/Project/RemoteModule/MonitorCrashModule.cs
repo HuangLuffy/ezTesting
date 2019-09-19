@@ -13,7 +13,9 @@ namespace CMTest.Project.RemoteModule
             //    var a = x.hostAddress;
             //    return _monitorCrashAction.GoMonitorCrashStatus();
             //});
-            Get("MonitorCrash", x => _monitorCrashAction.GoMonitorCrashStatus());
+            Get("MonitorCrash", x => _monitorCrashAction.StartMonitorCrash());
+            Get("AbortMonitorCrash", x => _monitorCrashAction.AbortMonitorCrash());
+            Get("Crashed", x => _monitorCrashAction.AbortMonitorCrash());
         }
     }
 }
