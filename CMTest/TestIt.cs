@@ -41,6 +41,9 @@ namespace CMTest
         }
         public void OpenCmd()
         {
+           //UtilCmd.ReadLine();
+            //UtilProcess.StartProcess(@"C:\Users\Administrator\Desktop\Dbgview.exe");
+            //UtilProcess.StartProcess(@"C:\Program Files (x86)\CoolerMaster\PORTAL\MasterPlus(PER. Only).exe");
             var projectOptions = _cmd.WriteCmdMenu(_optionsProjects);
             while (true)
             {

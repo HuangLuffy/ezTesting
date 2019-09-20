@@ -9,7 +9,7 @@ namespace CMTest
     {
         public static void Main(string[] args)
         {
-            var om = OpenMonitor();
+            var om = OpenListener();
             var testIt = new TestIt();    
             if (!testIt.IsNeededRunCmdDirectly(args))
             {
@@ -20,7 +20,7 @@ namespace CMTest
             ListenerManager.GetListener().Stop();
         }
         
-        private static async Task OpenMonitor()
+        private static async Task OpenListener()
         {
             await Task.Run(() =>
             {

@@ -8,7 +8,7 @@ namespace CMTest.Project
     {
         protected SwCommonActions()
         {
-            Initialize();
+            //Initialize();
         }
 
         public void LaunchSw()

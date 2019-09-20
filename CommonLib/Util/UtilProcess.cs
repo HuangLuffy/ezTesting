@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using CommonLib.Util.Log;
 
@@ -124,7 +125,7 @@ namespace CommonLib.Util
             }
         }
 
-        public static string[] StartProcessGetStrings(string targetFullPath, string para = "")
+        public static IEnumerable<string> StartProcessGetStrings(string targetFullPath, string para = "")
         {
             var strList = StartProcessGetString(targetFullPath, para);
             return strList.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);

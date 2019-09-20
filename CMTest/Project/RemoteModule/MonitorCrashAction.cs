@@ -9,7 +9,7 @@ namespace CMTest.Project.RemoteModule
 {
     public class MonitorCrashAction
     {
-        private readonly PortalTestActions _portalTestActions = new PortalTestActions();
+        //private readonly PortalTestActions _portalTestActions = new PortalTestActions();
         private readonly Portal _portal = new Portal();
         public static Thread MonitorCrashThread;
         public HttpStatusCode StartMonitorCrash()
@@ -30,8 +30,8 @@ namespace CMTest.Project.RemoteModule
                     else
                     {
                         UtilCmd.WriteLine("Crash occurred!");
-                        //RequestApi.Get("http://localhost:9100/AbortMonitorCrash");
-                        MonitorCrashThread.Abort();
+                        var t = RequestApi.Get("http://10.10.51.59:9100/Crashed");
+                        AbortMonitorCrash();
                         return;
                     }
                 }
@@ -48,9 +48,14 @@ namespace CMTest.Project.RemoteModule
             UtilCmd.WriteLine("Crash Monitor aborted!");
             return HttpStatusCode.OK;
         }
-        public string GetHostAddress()
+        public HttpStatusCode Crashed()
         {
-            return ";";
+            if (MonitorCrashThread != null && MonitorCrashThread.IsAlive)
+            {
+                MonitorCrashThread.Abort();
+            }
+            UtilCmd.WriteLine("Crash occurred!");
+            return HttpStatusCode.OK;
         }
     }
 }

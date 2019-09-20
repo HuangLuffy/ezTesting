@@ -15,7 +15,7 @@ namespace CMTest.Project.RemoteModule
             //});
             Get("MonitorCrash", x => _monitorCrashAction.StartMonitorCrash());
             Get("AbortMonitorCrash", x => _monitorCrashAction.AbortMonitorCrash());
-            Get("Crashed", x => _monitorCrashAction.AbortMonitorCrash());
+            Get("Crashed", x => _monitorCrashAction.Crashed());
         }
     }
 }
