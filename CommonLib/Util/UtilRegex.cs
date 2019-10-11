@@ -35,5 +35,10 @@ namespace CommonLib.Util
             var match = reg.Match(value);
             return match.Success;
         }
+        public static string GetMatchMidValue(string sourse, string startString, string endString)
+        {
+            Regex rg = new Regex("(?<=(" + startString + "))[.\\s\\S]*?(?=(" + endString + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+            return rg.Match(sourse).Value;
+        }
     }
 }

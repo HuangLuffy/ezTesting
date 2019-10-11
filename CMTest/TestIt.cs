@@ -13,6 +13,10 @@ namespace CMTest
     {
         private const string FOUND_TEST = "FOUND_TEST";
         private const string DO_NOTHING = "DO_NOTHING";
+        private const string OPTION_COMMENT_SEPARATOR_PREFIX = " - \"";
+        private const string OPTION_COMMENT_SEPARATOR_SUFFIX = "\"";
+        private const string OPTION_CONNECT_IP = "Connect the Remote IP if it is correct";
+        private const string OPTION_INPUT_IP = "Input your Remote IP";
         private readonly PortalTestFlows _portalTestFlows ;
         private readonly MasterPlusTestFlows _masterPlusTestFlows;
         private readonly List<string> _optionsProjects;
@@ -22,7 +26,8 @@ namespace CMTest
         {
             _masterPlusTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
-            _optionsProjects = new List<string> { _portalTestFlows.PortalTestActions.SwName, _masterPlusTestFlows.MasterPlusTestActions.SwName };
+            _optionsProjects = new List<string> { _portalTestFlows.PortalTestActions.SwName, _masterPlusTestFlows.MasterPlusTestActions.SwName
+                , AddCommentForOption(OPTION_CONNECT_IP, "asdsd"), OPTION_INPUT_IP };
         }
         public struct RunDirectly
         {
@@ -79,6 +84,14 @@ namespace CMTest
                 {
                     AssemblePortalPlugInOutTests();
                     return ShowCmdTestsBySelectedProject(_optionsPortalTestsWithFuncs);
+                }
+                if (IsTestExisted(OPTION_CONNECT_IP, selected, option))
+                {
+                    var sss = GetCommentFromOption(option);
+                }
+                if (IsTestExisted(OPTION_INPUT_IP, selected, option))
+                {
+
                 }
             }
             return DO_NOTHING;
@@ -142,9 +155,21 @@ namespace CMTest
             //}
             //return null;
         }
-        private static bool IsTestExisted(string testName, string selectedNum, string loopName)
+        private static bool IsTestExisted(string testName, string selectedNum, string optionOneByOne)
         {
-            return $"{selectedNum.Trim()}{UtilCmd.StringConnector}{testName}".Equals(loopName);
+            return $"{selectedNum.Trim()}{UtilCmd.StringConnector}{testName}".Equals(RemoveCommentFromOption(optionOneByOne));
+        }
+        private static string AddCommentForOption(string oriComment, string addedComment)
+        {
+            return $"{oriComment}{OPTION_COMMENT_SEPARATOR_PREFIX}{addedComment}{OPTION_COMMENT_SEPARATOR_SUFFIX}";
+        }
+        private static string RemoveCommentFromOption(string commnet)
+        {
+            return UtilString.GetSplitArray(commnet, OPTION_COMMENT_SEPARATOR_PREFIX).ToList()[0];
+        }
+        private static string GetCommentFromOption(string commnet)
+        {
+            return UtilRegex.GetMatchMidValue(commnet, OPTION_COMMENT_SEPARATOR_PREFIX, OPTION_COMMENT_SEPARATOR_SUFFIX);
         }
     }
 }
