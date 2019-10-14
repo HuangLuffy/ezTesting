@@ -14,12 +14,17 @@ namespace CMTest.Xml
         private const string AttributeWaitTime = "waitTime";
         private const string AttributeRunTimes = "runTimes";
         private const string NodeDevice = "device";
+        private const string NodeRemoteOS = "remoteOS";
+        private const string NodeIP = "ip";
         private readonly XElement _vmPlugInOutDevicesRoot;
+        private readonly XElement _remoteOsRoot;
         private readonly Dictionary<string, Dictionary<string, string>> _devicesDict = new Dictionary<string, Dictionary<string, string>>();
+        private readonly string xmlPath = Path.Combine(Directory.GetCurrentDirectory(), "Conf.xml");
+        private readonly XmlLinq xmlLinq;
         public XmlOps()
         {
-            var xmlLinq = new XmlLinq(Path.Combine(Directory.GetCurrentDirectory(), "Conf.xml"));
-            _vmPlugInOutDevicesRoot = xmlLinq.GetXElement().Element("vmPlugInOutDevices");
+            xmlLinq = new XmlLinq(xmlPath);
+            _vmPlugInOutDevicesRoot = xmlLinq.GetXRoot().Element("vmPlugInOutDevices");
             //vmPlugInOutDevicesRoot = _XmlLinq.GetXElement().Descendants("device").Select(p => p.Elements());
             LoadDevicesDictInfo();
         }
@@ -54,6 +59,15 @@ namespace CMTest.Xml
         public List<string> GetDeviceNameList()
         {
             return _devicesDict.Keys.ToList();
+        }
+        public string GetRemoteOsIp()
+        {
+            return xmlLinq.GetXRoot().Element(NodeRemoteOS).Element(NodeIP).Value;
+        }
+        public void SetRemoteOsIp(string newIp)
+        {
+            xmlLinq.GetXRoot().Element(NodeRemoteOS).Element(NodeIP).Value = newIp;
+            xmlLinq.Save();
         }
     }
 }

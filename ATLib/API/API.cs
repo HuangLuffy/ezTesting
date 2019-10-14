@@ -153,7 +153,7 @@ namespace ATLib.API
                     GetWindowText(intPtr, s, s.Capacity);
                     GetClassName(intPtr, b, b.Capacity);
                     Console.WriteLine(
-                        $"[{UtilString.ConvertIt.ConvertHex(intPtr.ToString())}][{GetDlgCtrlID(intPtr)}][{s}][{b}]");
+                        $"[{UtilRegrex.ConvertIt.ConvertHex(intPtr.ToString())}][{GetDlgCtrlID(intPtr)}][{s}][{b}]");
                 }
                 while (!intPtr.Equals(IntPtr.Zero));
             }

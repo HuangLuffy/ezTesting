@@ -11,16 +11,20 @@ namespace CommonLib.Util.Xml
     public class XmlLinq : IXml
     {
         private readonly string _xmlFullPath;
-        private readonly XElement _xElement;
+        private readonly XElement _xRoot;
         public XmlLinq(string xmlFullPath)
         {
             _xmlFullPath = xmlFullPath;
-            _xElement = XElement.Load(xmlFullPath);
+            _xRoot = XElement.Load(xmlFullPath);
             //Logger.LogThrowException(String.Format("Failed to get xml from [{0}].", xmlFullPath), new StackFrame(0).GetMethod().Name, ex.Message);
         }
-        public XElement GetXElement()
+        public XElement GetXRoot()
         {
-            return _xElement;
+            return _xRoot;
+        }
+        public void Save()
+        {
+            GetXRoot().Save(_xmlFullPath);
         }
         public T GetXmlLoad<T>(string xmlFullPath = "")
         {
@@ -177,9 +181,9 @@ namespace CommonLib.Util.Xml
             {
                 if (string.IsNullOrEmpty(nodeName))
                 {
-                    return from x in _xElement.Elements() select x.Value;
+                    return from x in _xRoot.Elements() select x.Value;
                 }
-                return from x in _xElement.Elements(nodeName) select x.Value;
+                return from x in _xRoot.Elements(nodeName) select x.Value;
             }
             catch (Exception)
             {
@@ -205,7 +209,7 @@ namespace CommonLib.Util.Xml
         {
             try
             {
-                return _xElement.Element(nodeName)?.Value ;
+                return _xRoot.Element(nodeName)?.Value ;
             }
             catch (Exception)
             {

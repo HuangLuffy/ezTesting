@@ -67,11 +67,12 @@
     <Compile Include="Project\MasterPlus\MasterPlusTestActions.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusObj.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusTestFlows.cs" />
-    <Compile Include="Project\RemoteModule\MonitorCrashAction.cs" />
-    <Compile Include="Project\RemoteModule\MonitorCrashModule.cs" />
+    <Compile Include="Project\RemoteModule\MonitorAction.cs" />
+    <Compile Include="Project\RemoteModule\MonitorModule.cs" />
     <Compile Include="Project\MasterPlusPer\PortalTestFlows.cs" />
     <Compile Include="Project\MasterPlusPer\PortalObj.cs" />
     <Compile Include="Project\MasterPlusPer\PortalTestActions.cs" />
+    <Compile Include="Project\RemoteModule\RemoteOS.cs" />
     <Compile Include="Vm\VMObj.cs" />
     <Compile Include="Vm\VmOps.cs" />
     <Compile Include="Project\SWCommonActions.cs" />

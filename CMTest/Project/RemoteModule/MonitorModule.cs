@@ -2,20 +2,20 @@
 
 namespace CMTest.Project.RemoteModule
 {
-    public sealed class MonitorCrashModule : NancyModule
+    public sealed class MonitorModule : NancyModule
     {
-        private readonly MonitorCrashAction _monitorCrashAction = new MonitorCrashAction();
-        public MonitorCrashModule()
+        private readonly MonitorAction _monitorCrashAction = new MonitorAction();
+        public MonitorModule()
         {
-            Get("/", x => "Hello World");
+            Get("/", x => HttpStatusCode.OK);
             //Get("MonitorCrash/{hostAddress}", x =>
             //{
             //    var a = x.hostAddress;
             //    return _monitorCrashAction.GoMonitorCrashStatus();
             //});
-            Get("MonitorCrash", x => _monitorCrashAction.StartMonitorCrash());
+            Get("StartMonitorCrash", x => _monitorCrashAction.StartMonitorCrash());
             Get("AbortMonitorCrash", x => _monitorCrashAction.AbortMonitorCrash());
-            Get("Crashed", x => _monitorCrashAction.Crashed());
+            Get("CrashOccurred", x => _monitorCrashAction.CrashOccurred());
         }
     }
 }

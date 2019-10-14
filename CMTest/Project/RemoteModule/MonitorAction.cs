@@ -7,8 +7,14 @@ using RemoteLib.Request;
 
 namespace CMTest.Project.RemoteModule
 {
-    public class MonitorCrashAction
+    public class MonitorAction
     {
+        private readonly RequestApi _requestApi;
+        public struct ApiNames{
+            public const string StartMonitorCrash = "StartMonitorCrash";
+            public const string AbortMonitorCrash = "AbortMonitorCrash";
+            public const string CrashOccurred = "CrashOccurred";
+        }
         //private readonly PortalTestActions _portalTestActions = new PortalTestActions();
         private readonly Portal _portal = new Portal();
         public static Thread MonitorCrashThread;
@@ -48,7 +54,7 @@ namespace CMTest.Project.RemoteModule
             UtilCmd.WriteLine("Crash Monitor aborted!");
             return HttpStatusCode.OK;
         }
-        public HttpStatusCode Crashed()
+        public HttpStatusCode CrashOccurred()
         {
             if (MonitorCrashThread != null && MonitorCrashThread.IsAlive)
             {
@@ -56,6 +62,10 @@ namespace CMTest.Project.RemoteModule
             }
             UtilCmd.WriteLine("Crash occurred!");
             return HttpStatusCode.OK;
+        }
+        public bool IsRemoteOsAvailable()
+        {
+            return true;
         }
     }
 }

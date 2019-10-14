@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
+using CMTest.Project.RemoteModule;
+using RemoteLib.Request;
 
 namespace CMTest
 {
@@ -21,13 +23,14 @@ namespace CMTest
         private readonly MasterPlusTestFlows _masterPlusTestFlows;
         private readonly List<string> _optionsProjects;
         private readonly UtilCmd _cmd = new UtilCmd();
-
+        private readonly XmlOps _xmlOps = new XmlOps();
+        private readonly MonitorAction _monitorAction = new MonitorAction();
         public TestIt()
         {
             _masterPlusTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             _optionsProjects = new List<string> { _portalTestFlows.PortalTestActions.SwName, _masterPlusTestFlows.MasterPlusTestActions.SwName
-                , AddCommentForOption(OPTION_CONNECT_IP, "asdsd"), OPTION_INPUT_IP };
+                , AddCommentForOption(OPTION_CONNECT_IP, _xmlOps.GetRemoteOsIp().Trim()), OPTION_INPUT_IP };
         }
         public struct RunDirectly
         {
@@ -87,11 +90,29 @@ namespace CMTest
                 }
                 if (IsTestExisted(OPTION_CONNECT_IP, selected, option))
                 {
-                    var sss = GetCommentFromOption(option);
+                    var remoteOsIp = GetCommentFromOption(option);
                 }
                 if (IsTestExisted(OPTION_INPUT_IP, selected, option))
                 {
+                    while (true)
+                    {
+                        //options = _cmd.WriteCmdMenu(options, false, false);
+                        var input = UtilCmd.ReadLine();
+                        if (input.Equals("q",StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            break;
+                        }
+                        if (UtilRegex.IsIp(input))
+                        {
+                            _xmlOps.SetRemoteOsIp(input);
 
+                            RequestApi.Get("http://10.10.51.59:9100/Crashed");
+                        }
+                        else
+                        {
+                            UtilCmd.WriteLine("The words you input is not a invalid IP. Re-input or input \"q\" to quit.");
+                        }
+                    }
                 }
             }
             return DO_NOTHING;
@@ -165,7 +186,7 @@ namespace CMTest
         }
         private static string RemoveCommentFromOption(string commnet)
         {
-            return UtilString.GetSplitArray(commnet, OPTION_COMMENT_SEPARATOR_PREFIX).ToList()[0];
+            return UtilRegrex.GetSplitArray(commnet, OPTION_COMMENT_SEPARATOR_PREFIX).ToList()[0];
         }
         private static string GetCommentFromOption(string commnet)
         {

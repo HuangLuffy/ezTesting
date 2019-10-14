@@ -1,19 +1,20 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <conf>
+  <remoteOS>
+    <ip>2.2.2.2</ip>
+  </remoteOS>
   <vmPlugInOutDevices vmName="MH650">
-    <device vmName ="H500M" waitTime="6" index="0" runTimes="9999">H500M</device>
-	<device vmName ="ARGB2 LED Controller" waitTime="6" index="0" runTimes="9999">ARGB2</device>
-    <device vmName ="RPBU" waitTime="6" index="0" runTimes="9999">RPBU</device>
-    <device vmName ="MM830" waitTime="8" index="0" runTimes="9999">MM830</device>
-	<device vmName ="SK631" waitTime="8" index="0" runTimes="9999">SK631</device>
-	<device vmName ="SK651" waitTime="8" index="0" runTimes="9999">SK651</device>
-    <device vmName ="Gaming Keyboard MK850" waitTime="9" index="0" runTimes="9999">MK850</device>
-    <device vmName ="MH752" waitTime="6" index="0" runTimes="9999">MH752</device>
-    <device vmName ="RGB Mousepad" waitTime="6" index="0" runTimes="9999">RGB Mousepad</device>
-    <device vmName ="MH650" waitTime="6" index="1" runTimes="9999">MH650</device>
-	<device vmName ="MH670" waitTime="6" index="0" runTimes="9999">MH670</device>
-	<device vmName ="Cooler Master Technology Inc. GS750" waitTime="6" index="0" runTimes="9999">Cooler Master Technology Inc. GS750</device>
-	<device vmName ="MM710 Gaming Mouse" waitTime="5" index="0" runTimes="9999">MM710 Gaming Mouse</device>
-	<device vmName ="MH650,Cooler Master Technology Inc. GS750" waitTime="6" index="-1" runTimes="9999">MH650,Cooler Master Technology Inc. GS750</device>
+    <device vmName="H500M" waitTime="6" index="0" runTimes="9999">H500M</device>
+    <device vmName="ARGB2 LED Controller" waitTime="6" index="0" runTimes="9999">ARGB2</device>
+    <device vmName="RPBU" waitTime="6" index="0" runTimes="9999">RPBU</device>
+    <device vmName="MM830" waitTime="8" index="0" runTimes="9999">MM830</device>
+    <device vmName="SK631" waitTime="8" index="0" runTimes="9999">SK631</device>
+    <device vmName="SK651" waitTime="8" index="0" runTimes="9999">SK651</device>
+    <device vmName="Gaming Keyboard MK850" waitTime="9" index="0" runTimes="9999">MK850</device>
+    <device vmName="MH752" waitTime="6" index="0" runTimes="9999">MH752</device>
+    <device vmName="RGB Mousepad" waitTime="6" index="0" runTimes="9999">RGB Mousepad</device>
+    <device vmName="MH650" waitTime="6" index="1" runTimes="9999">MH650</device>
+    <device vmName="MH670" waitTime="6" index="0" runTimes="9999">MH670</device>
+    <device vmName="MM710 Gaming Mouse" waitTime="5" index="0" runTimes="9999">MM710 Gaming Mouse</device>
   </vmPlugInOutDevices>
 </conf>

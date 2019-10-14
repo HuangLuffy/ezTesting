@@ -11,7 +11,6 @@ namespace CMTest
     {
         private readonly IDictionary<string, Func<dynamic>> _optionsPortalTestsWithFuncs = new Dictionary<string, Func<dynamic>>();
         private List<string> _optionsPortalPlugInOutDeviceNames = new List<string>();
-        private readonly XmlOps _xmlOps = new XmlOps();
         private void AssemblePortalPlugInOutTests()
         {
             if (_optionsPortalTestsWithFuncs.Any()) return;
