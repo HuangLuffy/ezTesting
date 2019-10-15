@@ -7,7 +7,7 @@ namespace CMTest.Project.RemoteModule
         private readonly MonitorAction _monitorCrashAction = new MonitorAction();
         public MonitorModule()
         {
-            Get("/", x => HttpStatusCode.OK);
+            Get("/", x => Apis.Status_ListenerIsRunning);
             //Get("MonitorCrash/{hostAddress}", x =>
             //{
             //    var a = x.hostAddress;

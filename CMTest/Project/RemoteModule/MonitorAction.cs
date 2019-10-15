@@ -9,12 +9,6 @@ namespace CMTest.Project.RemoteModule
 {
     public class MonitorAction
     {
-        private readonly RequestApi _requestApi;
-        public struct ApiNames{
-            public const string StartMonitorCrash = "StartMonitorCrash";
-            public const string AbortMonitorCrash = "AbortMonitorCrash";
-            public const string CrashOccurred = "CrashOccurred";
-        }
         //private readonly PortalTestActions _portalTestActions = new PortalTestActions();
         private readonly Portal _portal = new Portal();
         public static Thread MonitorCrashThread;

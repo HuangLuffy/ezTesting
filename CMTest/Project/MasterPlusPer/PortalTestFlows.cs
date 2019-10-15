@@ -49,7 +49,7 @@ namespace CMTest.Project.MasterPlusPer
             var timeout = Convert.ToInt16(waitTime);
             for (var i = 1; i < testTimes; i++)
             {
-                var devices = UtilRegrex.GetSplitArray(deviceNamesVm, ",");
+                var devices = UtilString.GetSplitArray(deviceNamesVm, ",");
                 foreach (var device in devices)
                 {
                     var index = deviceInfo.GetIndex(device);

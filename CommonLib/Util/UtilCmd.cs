@@ -59,6 +59,10 @@ namespace CommonLib.Util
         {
             return Console.ReadLine();
         }
+        public static string GetTitle()
+        {
+            return Console.Title;
+        }
         public static void WriteTitle(string title = "")
         {
             Console.Title = title;

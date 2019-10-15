@@ -10,10 +10,11 @@ namespace RemoteLib.Host.Nancy
     {
         private NancyHost _host;
         private readonly Uri _baseUri;
-        private readonly string _port = "9100";
-        public NancySelfHost()
+        public string Port { set; get; }
+        public NancySelfHost(string port = "9100")
         {
-            var listenerUrl = "http://localhost:" + _port;
+            Port = port;
+            var listenerUrl = "http://localhost:" + port;
             _baseUri = new Uri(listenerUrl);
         }
         private NancyHost CreateAndOpenSelfHost()
@@ -50,7 +51,7 @@ namespace RemoteLib.Host.Nancy
 
         public override string GetPort()
         {
-            return _port;
+            return Port;
         }
 
         public override void Start()

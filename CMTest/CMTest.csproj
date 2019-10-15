@@ -67,6 +67,7 @@
     <Compile Include="Project\MasterPlus\MasterPlusTestActions.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusObj.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusTestFlows.cs" />
+    <Compile Include="Project\RemoteModule\Apis.cs" />
     <Compile Include="Project\RemoteModule\MonitorAction.cs" />
     <Compile Include="Project\RemoteModule\MonitorModule.cs" />
     <Compile Include="Project\MasterPlusPer\PortalTestFlows.cs" />

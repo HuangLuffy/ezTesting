@@ -7,7 +7,7 @@ using System.Linq;
 using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
 using CMTest.Project.RemoteModule;
-using RemoteLib.Request;
+using System.Threading;
 
 namespace CMTest
 {
@@ -19,12 +19,16 @@ namespace CMTest
         private const string OPTION_COMMENT_SEPARATOR_SUFFIX = "\"";
         private const string OPTION_CONNECT_IP = "Connect the Remote IP if it is correct";
         private const string OPTION_INPUT_IP = "Input your Remote IP";
-        private readonly PortalTestFlows _portalTestFlows ;
+        private readonly PortalTestFlows _portalTestFlows;
         private readonly MasterPlusTestFlows _masterPlusTestFlows;
         private readonly List<string> _optionsProjects;
         private readonly UtilCmd _cmd = new UtilCmd();
         private readonly XmlOps _xmlOps = new XmlOps();
         private readonly MonitorAction _monitorAction = new MonitorAction();
+        private RemoteOS _remoteOS;
+
+        public static object UtilRegrex { get; private set; }
+
         public TestIt()
         {
             _masterPlusTestFlows = new MasterPlusTestFlows();
@@ -49,7 +53,7 @@ namespace CMTest
         }
         public void OpenCmd()
         {
-           //UtilCmd.ReadLine();
+            //UtilCmd.ReadLine();
             //UtilProcess.StartProcess(@"C:\Users\Administrator\Desktop\Dbgview.exe");
             //UtilProcess.StartProcess(@"C:\Program Files (x86)\CoolerMaster\PORTAL\MasterPlus(PER. Only).exe");
             var projectOptions = _cmd.WriteCmdMenu(_optionsProjects);
@@ -62,7 +66,7 @@ namespace CMTest
                     var result = ShowCmdProjects(s, projectOptions);
                     if (result.Equals(FOUND_TEST))
                     {
-                        UtilCmd.WriteLine (" >>>>>>>>>>>>>> Test Done! PASS");
+                        UtilCmd.WriteLine(" >>>>>>>>>>>>>> Test Done! PASS");
                         return;
                     }
                     projectOptions = _cmd.WriteCmdMenu(_optionsProjects, true);
@@ -91,22 +95,22 @@ namespace CMTest
                 if (IsTestExisted(OPTION_CONNECT_IP, selected, option))
                 {
                     var remoteOsIp = GetCommentFromOption(option);
+                    IsRemoteOsAvailable(remoteOsIp);
                 }
                 if (IsTestExisted(OPTION_INPUT_IP, selected, option))
                 {
                     while (true)
                     {
-                        //options = _cmd.WriteCmdMenu(options, false, false);
-                        var input = UtilCmd.ReadLine();
-                        if (input.Equals("q",StringComparison.CurrentCultureIgnoreCase))
+                        var remoteOsIp = UtilCmd.ReadLine();
+                        if (remoteOsIp.Equals("q", StringComparison.CurrentCultureIgnoreCase))
                         {
                             break;
                         }
-                        if (UtilRegex.IsIp(input))
+                        if (UtilRegex.IsIp(remoteOsIp))
                         {
-                            _xmlOps.SetRemoteOsIp(input);
-
-                            RequestApi.Get("http://10.10.51.59:9100/Crashed");
+                            _xmlOps.SetRemoteOsIp(remoteOsIp);
+                            IsRemoteOsAvailable(remoteOsIp);
+                            break;
                         }
                         else
                         {
@@ -116,6 +120,38 @@ namespace CMTest
                 }
             }
             return DO_NOTHING;
+        }
+        private void IsRemoteOsAvailable(string remoteOsIp)
+        {
+            string currentTitle = UtilCmd.GetTitle();
+            Thread WaitAnimation = WaitAnimationThread("Connecting...");
+            try
+            {
+                _remoteOS = new RemoteOS(remoteOsIp);
+                WaitAnimation.Start();
+                _remoteOS.IsRemoteOsAvailable();
+                WaitAnimation.Abort();
+                UtilCmd.PressAnyContinue("The communication between the Local OS and the Remote OS established successfully. Press any key to continue.");
+            }
+            catch (Exception)
+            {
+                UtilCmd.WriteTitle(currentTitle);
+                WaitAnimation.Abort();
+                throw;
+            }
+        }
+
+        private Thread WaitAnimationThread(string comment)
+        {
+            return new Thread(() =>
+            {
+                int s = 0;
+                while (true)
+                {
+                    UtilTime.WaitTime(1);
+                    UtilCmd.WriteTitle($"{comment} {s++}s Please Wait... ");
+                }
+            });
         }
         private string ShowCmdTestsBySelectedProject(IDictionary<string, Func<dynamic>> testFuncsByTestName)
         {
@@ -186,7 +222,7 @@ namespace CMTest
         }
         private static string RemoveCommentFromOption(string commnet)
         {
-            return UtilRegrex.GetSplitArray(commnet, OPTION_COMMENT_SEPARATOR_PREFIX).ToList()[0];
+            return UtilString.GetSplitArray(commnet, OPTION_COMMENT_SEPARATOR_PREFIX).ToList()[0];
         }
         private static string GetCommentFromOption(string commnet)
         {

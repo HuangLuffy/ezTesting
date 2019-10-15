@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <conf>
   <remoteOS>
-    <ip>2.2.2.2</ip>
+    <ip>10.10.51.103</ip>
   </remoteOS>
   <vmPlugInOutDevices vmName="MH650">
     <device vmName="H500M" waitTime="6" index="0" runTimes="9999">H500M</device>

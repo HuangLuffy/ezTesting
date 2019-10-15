@@ -1,5 +1,4 @@
-﻿using CommonLib.Util;
-using System.IO;
+﻿using System.IO;
 using System.Net;
 
 namespace RemoteLib.Request
@@ -14,11 +13,11 @@ namespace RemoteLib.Request
             public const string PUT = "PUT";
             public const string POST = "POST";
         }
-        public RequestApi(string ip)
+        public RequestApi(string ip, string port)
         {
             if (!ip.ToLower().Contains("http"))
             {
-                Address = $"http://{ip}";
+                Address = $"http://{ip}:{port}";
             }
         }
         public string SendApi(string command, string requestMethod = RequestMethod.POST)
@@ -26,7 +25,7 @@ namespace RemoteLib.Request
             var address = $"{Address}/{command}";
             return Send(address);
         }
-        public string GetApi(string command)
+        public string GetApi(string command = "")
         {
             var address = $"{Address}/{command}";
             return Get(address);

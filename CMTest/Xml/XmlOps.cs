@@ -17,7 +17,6 @@ namespace CMTest.Xml
         private const string NodeRemoteOS = "remoteOS";
         private const string NodeIP = "ip";
         private readonly XElement _vmPlugInOutDevicesRoot;
-        private readonly XElement _remoteOsRoot;
         private readonly Dictionary<string, Dictionary<string, string>> _devicesDict = new Dictionary<string, Dictionary<string, string>>();
         private readonly string xmlPath = Path.Combine(Directory.GetCurrentDirectory(), "Conf.xml");
         private readonly XmlLinq xmlLinq;
