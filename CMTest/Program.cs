@@ -13,7 +13,7 @@ namespace CMTest
             var testIt = new TestIt();    
             if (!testIt.IsNeededRunCmdDirectly(args))
             {
-                testIt.OpenCmd();
+                testIt.ShowTopMenu();
             }
             //Task.WaitAll(om);
             Console.ReadKey();

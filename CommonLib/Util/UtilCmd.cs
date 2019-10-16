@@ -6,22 +6,34 @@ namespace CommonLib.Util
 {
     public class UtilCmd
     {
-        public const string OptionShowMenuAgain = "Show Menu Again";
-        public const string OptionBack = "Back";
+
         public const string StringConnector = ". ";
         private List<string> _listLastMenu = new List<string>();
         private List<string> _listCurrentMenu = new List<string>();
-
+        public struct Result
+        {
+            public const string FOUND_RESULT = "FOUND_RESULT";
+            public const string FOUND_NULL = "FOUND_NULL";
+            public const string DO_NOTHING = "DO_NOTHING";
+            public const string SHOW_MENU_AGAIN = "Show Menu Again";
+            public const string BACK = "Back";
+        }
+        //public enum ImageType
+        //{
+        //    PNG = 1,
+        //    BMP = 2,
+        //    JPG = 3
+        //}
         public string MenuShowAgain()
         {
             WriteCmdMenu(_listCurrentMenu, lineUpWithNumber: false);
-            return OptionShowMenuAgain;
+            return Result.SHOW_MENU_AGAIN;
         }
 
         public string MenuGoBack()
         {
             WriteCmdMenu(_listLastMenu, lineUpWithNumber: false);
-            return OptionBack;
+            return Result.BACK;
         }
 
         public List<string> WriteCmdMenu(List<string> options, bool clear = false, bool lineUpWithNumber = true)
@@ -83,6 +95,73 @@ namespace CommonLib.Util
                 }
             }
             return false;
+        }
+        public dynamic ShowCmdMenu(IDictionary<string, Func<dynamic>> optionDictionary, IDictionary<string, Func<dynamic>> parentOptionDictionary = null)
+        {
+            var menuOptions = WriteCmdMenu(optionDictionary.Keys.ToList());
+            while (true)
+            {
+                menuOptions = WriteCmdMenu(menuOptions, true, false);
+                var input = ReadLine();
+                var result = FindMatchedFuncAndRun(optionDictionary, input, menuOptions);
+                if (result == null)
+                {
+                    continue;
+                }
+                else if (result.Equals(Result.BACK))
+                {
+                    if (parentOptionDictionary != null)
+                    {
+                        ShowCmdMenu(parentOptionDictionary, null);
+                    }
+                }
+                else if (result != null)
+                {
+                    return result;
+                }
+            }
+        }
+        private static T FindMatchedOption<T>(IReadOnlyList<string> listAll, string selected, IEnumerable<string> comparedOptions)
+        {
+            foreach (var option in comparedOptions.Select(comparedOption => GetSelectedName(listAll, selected, comparedOption)).Where(option => option != null))
+            {
+                return (T)Convert.ChangeType(option, typeof(T));
+            }
+            //foreach (var comparedOption in comparedOptions)
+            //{
+            //    var option = GetSelectedName(listAll, selected, comparedOption);
+            //    if (option != null)
+            //    {
+            //        return (T)Convert.ChangeType(option, typeof(T));
+            //    }
+            //}
+            return default(T);
+        }
+        private static string FindMatchedString(IReadOnlyList<string> optionList, string selected, IEnumerable<string> comparedOptions)
+        {
+            return FindMatchedOption<string>(optionList, selected, comparedOptions);
+        }
+        private static string FindMatchedFuncAndRun(IDictionary<string, Func<dynamic>> optionDictionary, string selected, IEnumerable<string> comparedOptions)
+        {
+            var t = FindMatchedOption<string>(optionDictionary.Keys.ToList(), selected, comparedOptions);
+            return t == null ? null : optionDictionary[t].Invoke();
+        }
+        private static string GetSelectedName(IEnumerable<string> listAll, string selectedNum, string comparedOptions)
+        {
+            return listAll.FirstOrDefault(t => IsTestExisted(t, selectedNum, comparedOptions));
+            //for (var j = 0; j < listAll.Count; j++)
+            //{
+            //    if (IsTestExisted(listAll[j], selectedNum, comparedOptions))
+            //    {
+            //        return listAll[j];
+            //    }
+            //}
+            //return null;
+        }
+        private static bool IsTestExisted(string testName, string selectedNum, string optionOneByOne)
+        {
+            return $"{selectedNum.Trim()}{UtilCmd.StringConnector}{testName}".Equals(optionOneByOne);
+            // return $"{selectedNum.Trim()}{UtilCmd.StringConnector}{testName}".Equals(RemoveCommentFromOption(optionOneByOne));
         }
     }
 }

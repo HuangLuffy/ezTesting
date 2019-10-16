@@ -13,29 +13,48 @@ namespace CMTest
 {
     public partial class TestIt : AbsResult
     {
-        private const string FOUND_TEST = "FOUND_TEST";
-        private const string DO_NOTHING = "DO_NOTHING";
+        private const string MARK_FOUND_RESULT = "FOUND_TEST";
+        private const string MARK_DO_NOTHING = "DO_NOTHING";
         private const string OPTION_COMMENT_SEPARATOR_PREFIX = " - \"";
         private const string OPTION_COMMENT_SEPARATOR_SUFFIX = "\"";
         private const string OPTION_CONNECT_IP = "Connect the Remote IP if it is correct";
         private const string OPTION_INPUT_IP = "Input your Remote IP";
         private readonly PortalTestFlows _portalTestFlows;
         private readonly MasterPlusTestFlows _masterPlusTestFlows;
-        private readonly List<string> _optionsProjects;
         private readonly UtilCmd _cmd = new UtilCmd();
         private readonly XmlOps _xmlOps = new XmlOps();
         private readonly MonitorAction _monitorAction = new MonitorAction();
         private RemoteOS _remoteOS;
 
         public static object UtilRegrex { get; private set; }
-
+        private readonly IDictionary<string, Func<dynamic>> _optionsTopMenu = new Dictionary<string, Func<dynamic>>();
         public TestIt()
         {
             _masterPlusTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
-            _optionsProjects = new List<string> { _portalTestFlows.PortalTestActions.SwName, _masterPlusTestFlows.MasterPlusTestActions.SwName
-                , AddCommentForOption(OPTION_CONNECT_IP, _xmlOps.GetRemoteOsIp().Trim()), OPTION_INPUT_IP };
+            AssembleTopMenu();
         }
+
+        private void AssembleTopMenu()
+        {
+            if (_optionsTopMenu.Any()) return;
+                _optionsTopMenu.Add(AddCommentForOption(OPTION_CONNECT_IP, _xmlOps.GetRemoteOsIp().Trim()), () => {
+                var remoteOsIp = _xmlOps.GetRemoteOsIp().Trim();
+                ConnectRemoteOsAvailable(remoteOsIp); return _cmd.ShowCmdMenu(_optionsTopMenu);
+            });
+                _optionsTopMenu.Add(OPTION_INPUT_IP, () => {
+                CustomizeIp(); return _cmd.ShowCmdMenu(_optionsTopMenu);
+            });
+                _optionsTopMenu.Add(_portalTestFlows.PortalTestActions.SwName, () => {
+                AssemblePortalPlugInOutTests();
+                return _cmd.ShowCmdMenu(_optionsPortalTestsWithFuncs, _optionsTopMenu);
+            } );
+                 _optionsTopMenu.Add(_masterPlusTestFlows.MasterPlusTestActions.SwName, () => {
+                AssembleMasterPlusPlugInOutTests();
+                return _cmd.ShowCmdMenu(_optionsMasterPlusTestsWithFuncs, _optionsTopMenu);
+            });
+        }
+
         public struct RunDirectly
         {
             public bool run;
@@ -51,77 +70,49 @@ namespace CMTest
             RunDirectly_Flow_PlugInOutServer(args1, new XmlOps());
             return true;
         }
-        public void OpenCmd()
+        // Top memu
+        public void ShowTopMenu()
+        { 
+            try
+            {
+                var result = _cmd.ShowCmdMenu(_optionsTopMenu);
+                if (result.Equals(MARK_FOUND_RESULT))
+                {
+                    UtilCmd.WriteLine(" >>>>>>>>>>>>>> Test Done! PASS");
+                    return;
+                }
+                //_cmd.WriteCmdMenu(_optionsProjects, true);
+            }
+            catch (Exception ex)
+            {
+                HandleWrongStepResult(ex.Message);
+                UtilCmd.PressAnyContinue();
+                ShowTopMenu();
+            }
+        }
+        
+        private void CustomizeIp()
         {
-            //UtilCmd.ReadLine();
-            //UtilProcess.StartProcess(@"C:\Users\Administrator\Desktop\Dbgview.exe");
-            //UtilProcess.StartProcess(@"C:\Program Files (x86)\CoolerMaster\PORTAL\MasterPlus(PER. Only).exe");
-            var projectOptions = _cmd.WriteCmdMenu(_optionsProjects);
             while (true)
             {
-                try
+                var remoteOsIp = UtilCmd.ReadLine();
+                if (remoteOsIp.Equals("q", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    projectOptions = _cmd.WriteCmdMenu(projectOptions, true, false);
-                    var s = UtilCmd.ReadLine();
-                    var result = ShowCmdProjects(s, projectOptions);
-                    if (result.Equals(FOUND_TEST))
-                    {
-                        UtilCmd.WriteLine(" >>>>>>>>>>>>>> Test Done! PASS");
-                        return;
-                    }
-                    projectOptions = _cmd.WriteCmdMenu(_optionsProjects, true);
+                    break;
                 }
-                catch (Exception ex)
+                if (UtilRegex.IsIp(remoteOsIp))
                 {
-                    HandleWrongStepResult(ex.Message);
-                    UtilCmd.PressAnyContinue();
+                    _xmlOps.SetRemoteOsIp(remoteOsIp);
+                    ConnectRemoteOsAvailable(remoteOsIp);
+                    break;
+                }
+                else
+                {
+                    UtilCmd.WriteLine("The words you input is not a invalid IP. Re-input or input \"q\" to quit.");
                 }
             }
         }
-        private string ShowCmdProjects(string selected, IEnumerable<string> options)
-        {
-            foreach (var option in options)
-            {
-                if (IsTestExisted(_masterPlusTestFlows.MasterPlusTestActions.SwName, selected, option))
-                {
-                    AssembleMasterPlusPlugInOutTests();
-                    return ShowCmdTestsBySelectedProject(_optionsMasterPlusTestsWithFuncs);
-                }
-                if (IsTestExisted(_portalTestFlows.PortalTestActions.SwName, selected, option))
-                {
-                    AssemblePortalPlugInOutTests();
-                    return ShowCmdTestsBySelectedProject(_optionsPortalTestsWithFuncs);
-                }
-                if (IsTestExisted(OPTION_CONNECT_IP, selected, option))
-                {
-                    var remoteOsIp = GetCommentFromOption(option);
-                    IsRemoteOsAvailable(remoteOsIp);
-                }
-                if (IsTestExisted(OPTION_INPUT_IP, selected, option))
-                {
-                    while (true)
-                    {
-                        var remoteOsIp = UtilCmd.ReadLine();
-                        if (remoteOsIp.Equals("q", StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            break;
-                        }
-                        if (UtilRegex.IsIp(remoteOsIp))
-                        {
-                            _xmlOps.SetRemoteOsIp(remoteOsIp);
-                            IsRemoteOsAvailable(remoteOsIp);
-                            break;
-                        }
-                        else
-                        {
-                            UtilCmd.WriteLine("The words you input is not a invalid IP. Re-input or input \"q\" to quit.");
-                        }
-                    }
-                }
-            }
-            return DO_NOTHING;
-        }
-        private void IsRemoteOsAvailable(string remoteOsIp)
+        private void ConnectRemoteOsAvailable(string remoteOsIp)
         {
             string currentTitle = UtilCmd.GetTitle();
             Thread WaitAnimation = WaitAnimationThread("Connecting...");
@@ -135,8 +126,8 @@ namespace CMTest
             }
             catch (Exception)
             {
-                UtilCmd.WriteTitle(currentTitle);
                 WaitAnimation.Abort();
+                UtilCmd.WriteTitle(currentTitle);
                 throw;
             }
         }
@@ -149,73 +140,11 @@ namespace CMTest
                 while (true)
                 {
                     UtilTime.WaitTime(1);
-                    UtilCmd.WriteTitle($"{comment} {s++}s Please Wait... ");
+                    UtilCmd.WriteTitle($"{comment}  Please Wait...  Time elapsed {s++}s ");
                 }
             });
         }
-        private string ShowCmdTestsBySelectedProject(IDictionary<string, Func<dynamic>> testFuncsByTestName)
-        {
-            var options = _cmd.WriteCmdMenu(testFuncsByTestName.Keys.ToList());
-            while (true)
-            {
-                options = _cmd.WriteCmdMenu(options, true, false);
-                var input = UtilCmd.ReadLine();
-                var result = FindMatchedTest(testFuncsByTestName, input, options);
-                switch (result)
-                {
-                    case null:
-                        //Back from submenu, so it should stay here. Or incorrect input
-                        break; // break只终止了最近的switch，并没有终止while
-                    case FOUND_TEST:
-                        return FOUND_TEST;
-                    case UtilCmd.OptionBack:
-                        return UtilCmd.OptionBack;
-                    default:
-                        continue; // continue不止跳出了switch，还跳过了这一次while循环，没有输出。
-                }
-            }
-        }
-        private static T FindMatchedOption<T>(IReadOnlyList<string> listAll, string selected, IEnumerable<string> comparedOptions)
-        {
-            foreach (var deviceName in comparedOptions.Select(comparedOption => GetSelectedName(listAll, selected, comparedOption)).Where(deviceName => deviceName != null))
-            {
-                return (T)Convert.ChangeType(deviceName, typeof(T));
-            }
-            //foreach (var comparedOption in comparedOptions)
-            //{
-            //    var deviceName = GetSelectedName(listAll, selected, comparedOption);
-            //    if (deviceName != null)
-            //    {
-            //        return (T)Convert.ChangeType(deviceName, typeof(T));
-            //    }
-            //}
-            return default(T);
-        }
-        private static string FindMatchedDevice(IReadOnlyList<string> Options_Portal_PlugInOut_Device_Names, string selected, IEnumerable<string> comparedOptions)
-        {
-            return FindMatchedOption<string>(Options_Portal_PlugInOut_Device_Names, selected, comparedOptions);
-        }
-        private static string FindMatchedTest(IDictionary<string, Func<dynamic>> testFuncsByTestName, string selected, IEnumerable<string> comparedOptions)
-        {
-            var t = FindMatchedOption<string>(testFuncsByTestName.Keys.ToList(), selected, comparedOptions);
-            return t == null ? null : testFuncsByTestName[t].Invoke();
-        }
-        private static string GetSelectedName(IEnumerable<string> listAll, string selectedNum, string comparedOptions)
-        {
-            return listAll.FirstOrDefault(t => IsTestExisted(t, selectedNum, comparedOptions));
-            //for (var j = 0; j < listAll.Count; j++)
-            //{
-            //    if (IsTestExisted(listAll[j], selectedNum, comparedOptions))
-            //    {
-            //        return listAll[j];
-            //    }
-            //}
-            //return null;
-        }
-        private static bool IsTestExisted(string testName, string selectedNum, string optionOneByOne)
-        {
-            return $"{selectedNum.Trim()}{UtilCmd.StringConnector}{testName}".Equals(RemoveCommentFromOption(optionOneByOne));
-        }
+
         private static string AddCommentForOption(string oriComment, string addedComment)
         {
             return $"{oriComment}{OPTION_COMMENT_SEPARATOR_PREFIX}{addedComment}{OPTION_COMMENT_SEPARATOR_SUFFIX}";
