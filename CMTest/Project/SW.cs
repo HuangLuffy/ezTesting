@@ -14,7 +14,7 @@ namespace CMTest.Project
         public string SwName { get; protected set; }
         public string SwProcessName { get; set; }
         public string SwLnkPath { get; set; }
-
+        public string SwBuildPath { get; set; }
         protected struct Msg
         {
             public const string ProcessStillExists = "This SW's process still exists after closing it.";

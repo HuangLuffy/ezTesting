@@ -15,6 +15,9 @@ namespace CMTest.Xml
         private const string AttributeRunTimes = "runTimes";
         private const string NodeDevice = "device";
         private const string NodeRemoteOS = "remoteOS";
+        private const string NodeLocalOS = "localOS";
+        private const string MasterPlusPerBuildPath = "masterPlusPerBuildPath";
+        private const string MasterPlusBuildPath = "masterPlusBuildPath";
         private const string NodeIP = "ip";
         private readonly XElement _vmPlugInOutDevicesRoot;
         private readonly Dictionary<string, Dictionary<string, string>> _devicesDict = new Dictionary<string, Dictionary<string, string>>();
@@ -67,6 +70,14 @@ namespace CMTest.Xml
         {
             xmlLinq.GetXRoot().Element(NodeRemoteOS).Element(NodeIP).Value = newIp;
             xmlLinq.Save();
+        }
+        public string GetMasterPlusPerBuildPath()
+        {
+            return xmlLinq.GetXRoot().Element(NodeLocalOS).Element(MasterPlusPerBuildPath).Value.Trim();
+        }
+        public string GetMasterPlusBuildPath()
+        {
+            return xmlLinq.GetXRoot().Element(NodeLocalOS).Element(MasterPlusPerBuildPath).Value.Trim();
         }
     }
 }

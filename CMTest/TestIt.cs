@@ -70,7 +70,6 @@ namespace CMTest
             RunDirectly_Flow_PlugInOutServer(args1, new XmlOps());
             return true;
         }
-        // Top memu
         public void ShowTopMenu()
         { 
             try
@@ -89,8 +88,7 @@ namespace CMTest
                 UtilCmd.PressAnyContinue();
                 ShowTopMenu();
             }
-        }
-        
+        }   
         private void CustomizeIp()
         {
             while (true)

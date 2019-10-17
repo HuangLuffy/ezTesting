@@ -21,6 +21,7 @@ namespace CMTest
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_SIMPLE_PROFILES_SWITCH, Flow_ProfilesSimpleSwitch);
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
+            _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_INSTALLATION, Flow_Installation);
             _optionsPortalTestsWithFuncs.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
         }
         private void AssemblePortalPlugInOutDevices(bool fromConf = true)
@@ -54,10 +55,14 @@ namespace CMTest
             _portalTestFlows.Flow_ProfilesImExAimpadSwitch();
             return MARK_FOUND_RESULT;
         }
-
         private dynamic RunDirectly_Flow_PlugInOutServer(string deviceName, XmlOps deviceInfo)
         {
             _portalTestFlows.Flow_PlugInOutServer(deviceName, deviceInfo);
+            return MARK_FOUND_RESULT;
+        }
+        private dynamic Flow_Installation()
+        {
+            _portalTestFlows.Flow_Installation(_xmlOps, true);
             return MARK_FOUND_RESULT;
         }
     }

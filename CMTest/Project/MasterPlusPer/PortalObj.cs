@@ -102,7 +102,51 @@ namespace CMTest.Project.MasterPlusPer
         {
             AutomationId = "CommandButton_6"
         };
-        
-
+        public static ATElementStruct Button_Install_OK = new ATElementStruct()
+        {
+            ClassName = "TNewButton",
+            Index = 0
+        };
+        public static ATElementStruct Button_Next = new ATElementStruct()
+        {
+            ClassName = "TNewButton",
+            Index = 0
+        };
+        public static ATElementStruct ComboBox_SelectLauguage = new ATElementStruct()
+        {
+            ClassName = "TNewComboBox"
+        };
+        public static ATElementStruct CheckBox_RemoveCache = new ATElementStruct()
+        {
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Window_SelectLauguage = new ATElementStruct()
+        {
+            ClassName = "TSelectLanguageForm"
+        };
+        public static ATElementStruct Window_InstallWizard = new ATElementStruct()
+        {
+            ClassName = "TWizardForm"
+        };
+        public static ATElementStruct Button_Location_Next = new ATElementStruct()
+        {
+            ClassName = "TNewButton",
+            Index = 1
+        };
+        public static ATElementStruct Button_Folder_Next = new ATElementStruct()
+        {
+            ClassName = "TNewButton",
+            Index = 1
+        };
+        public static ATElementStruct Button_Shortcut_Next = new ATElementStruct()
+        {
+            ClassName = "TNewButton",
+            Index = 1
+        };
+        public static ATElementStruct Button_Install = new ATElementStruct()
+        {
+            ClassName = "TNewButton",
+            Index = 1
+        };
     }
 }

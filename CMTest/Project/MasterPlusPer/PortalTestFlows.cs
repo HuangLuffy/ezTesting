@@ -15,6 +15,7 @@ namespace CMTest.Project.MasterPlusPer
             public const string OPTION_SIMPLE_PROFILES_SWITCH = "Profiles Simple Switch Test";
             public const string OPTION_IMPORT_EXPORT_PROFILES_SWITCH = "Profiles Import Export Switch Test";
             public const string OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH = "Profiles Import Export Switch AIMPAD Test";
+            public const string OPTION_INSTALLATION = "Installation Test";
         }
 
         private static readonly long TestTimes = 9999999;
@@ -86,6 +87,12 @@ namespace CMTest.Project.MasterPlusPer
             PortalTestActions.SetLaunchTimesAndWriteTestTitle(1);
             PortalTestActions.LaunchSw();
             PortalTestActions.ProfilesImExAimpadSwitch(TestTimes);
+        }
+        public void Flow_Installation(XmlOps deviceInfo, bool checkRemove)
+        {
+            //PortalTestActions.SetLaunchTimesAndWriteTestTitle(1);
+            var buildPath = deviceInfo.GetMasterPlusPerBuildPath();
+            PortalTestActions.Flow_Installation(buildPath, checkRemove);
         }
     }
 }

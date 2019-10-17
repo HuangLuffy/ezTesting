@@ -176,5 +176,18 @@ namespace CMTest.Project.MasterPlusPer
             profileTmp.DoClickPoint();
             WaitForLoading(loadingTmp);
         }
+        public void Flow_Installation(string buildPath, bool checkRemove = true)
+        {
+            UtilProcess.StartProcess(buildPath);
+            AT Window_SelectLauguage = new AT().GetElement(PortalObj.Window_SelectLauguage, Timeout = 5, TreeScope: AT.TreeScope.Children);
+            AT Button_OK = Window_SelectLauguage.GetElement(PortalObj.Button_Install_OK, Timeout = 2);
+            Button_OK.DoClick();
+            AT Window_InstallWizard = new AT().GetElement(PortalObj.Window_InstallWizard, Timeout = 5, TreeScope: AT.TreeScope.Children);
+            UtilTime.WaitTime(1);
+            AT Button_RemoveCache = Window_InstallWizard.GetElement(PortalObj.CheckBox_RemoveCache, Timeout = 2);
+            Button_RemoveCache.DoClickPoint();
+            AT Button_Next = Window_InstallWizard.GetElement(PortalObj.Button_Next);
+            Button_Next.DoClick();
+        }
     }
 }
