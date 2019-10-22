@@ -22,6 +22,20 @@ namespace CommonLib.Util
                 p.Kill();
             }
         }
+        public static void ExecuteCmd(string command = "shutdown -f -r -t 0")
+        {
+            using (var p = new Process())
+            {
+                p.StartInfo.FileName = "cmd.exe";//启动cmd命令
+                p.StartInfo.UseShellExecute = false;//是否使用系统外壳程序启动进程
+                p.StartInfo.RedirectStandardInput = true;//是否从流中读取
+                p.StartInfo.RedirectStandardOutput = true;//是否写入流
+                p.StartInfo.RedirectStandardError = true;//是否将错误信息写入流
+                p.StartInfo.CreateNoWindow = true;//是否在新窗口中启动进程
+                p.Start();
+                p.StandardInput.WriteLine(command);
+            }
+        }
         public static void SingletonUI()
         {
             try
@@ -58,16 +72,9 @@ namespace CommonLib.Util
         }
         public static void StartProcess(string targetFullPath, string para = "")
         {
-            try
+            using (var p = Process.Start(targetFullPath, para))
             {
-                using (var p = Process.Start(targetFullPath, para))
-                {
-                    //p.Start();
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.LogThrowMessage($"Failed to start process [{targetFullPath} {para}].", new StackFrame(0).GetMethod().Name, ex.Message);
+                //p.Start();
             }
         }
         public static int StartProcessGetInt(string targetFullPath, string para = "")

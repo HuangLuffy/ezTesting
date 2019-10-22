@@ -15,7 +15,7 @@ namespace CMTest.Project.MasterPlus
 
         public static ATElementStruct DialogWarning = new ATElementStruct()
         {
-            Name = "WARNING",
+            Name = "WARNING||警告",
             ControlType = ATElement.ControlType.TabItem
         };
         public static ATElementStruct ButtonQuit = new ATElementStruct()

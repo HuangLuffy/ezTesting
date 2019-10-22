@@ -9,8 +9,14 @@ namespace CMTest
     {
         public static void Main(string[] args)
         {
-            var om = OpenListener();
-            var testIt = new TestIt();    
+
+
+
+            //var om = OpenListener();
+            var testIt = new TestIt();
+            testIt.RestartFlow();
+            return;
+
             if (!testIt.IsNeededRunCmdDirectly(args))
             {
                 testIt.ShowTopMenu();

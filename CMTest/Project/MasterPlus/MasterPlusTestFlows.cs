@@ -1,4 +1,7 @@
-﻿namespace CMTest.Project.MasterPlus
+﻿using CommonLib.Util;
+using System.Threading;
+
+namespace CMTest.Project.MasterPlus
 {
     public class MasterPlusTestFlows
     {
@@ -21,6 +24,14 @@
                 MasterPlusTestActions.LaunchSw();
                 MasterPlusTestActions.CloseSw();
             }
+        }
+
+        public void Flow_RestartSystem()
+        {
+            Thread t = UtilWait.WaitAnimationThread("Wait 60s", 60);
+            t.Start();
+            t.Join();
+            MasterPlusTestActions.RestartFlow();
         }
     }
 }

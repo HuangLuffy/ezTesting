@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace CommonLib.Util
 {
@@ -69,7 +70,22 @@ namespace CommonLib.Util
                 UtilTime.WaitTime(intervalInSec);
             } while(true);
         }
-        
+        public static Thread WaitAnimationThread(string comment, int times = 5)
+        {
+            return new Thread(() =>
+            {
+                int s = 0;
+                while (true)
+                {
+                    UtilTime.WaitTime(1);
+                    UtilCmd.WriteTitle($"{comment}  Please Wait...  Time elapsed {s++}s ");
+                    if (s == times)
+                    {
+                        return;
+                    }
+                }
+            });
+        }
         //public void test()
         //{
         //    ForTrue(() =>

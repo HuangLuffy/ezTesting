@@ -60,6 +60,12 @@ namespace CMTest
             public bool run;
             public string device;
         }
+
+        public void RestartFlow()
+        {
+            _masterPlusTestFlows.Flow_RestartSystem();
+        }
+
         public bool IsNeededRunCmdDirectly(string[] args)
         {
             if (args.Length < 2 || !args[0].Trim().Equals("-d", StringComparison.CurrentCultureIgnoreCase))
