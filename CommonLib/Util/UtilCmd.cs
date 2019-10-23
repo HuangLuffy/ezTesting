@@ -6,7 +6,6 @@ namespace CommonLib.Util
 {
     public class UtilCmd
     {
-
         public const string StringConnector = ". ";
         private List<string> _listLastMenu = new List<string>();
         private List<string> _listCurrentMenu = new List<string>();

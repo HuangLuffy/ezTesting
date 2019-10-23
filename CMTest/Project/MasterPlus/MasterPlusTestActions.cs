@@ -1,5 +1,10 @@
 ﻿using ATLib;
+using CMTest.Xml;
 using CommonLib.Util;
+using CommonLib.Util.IO;
+using CommonLib.Util.OS;
+using System;
+using System.IO;
 using System.Threading;
 
 namespace CMTest.Project.MasterPlus
@@ -26,41 +31,43 @@ namespace CMTest.Project.MasterPlus
             WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
             UtilTime.WaitTime(Timeout);
         }
-        public void RestartFlow()
+        public void RestartSystemAndCheckDeviceRecognitionFlow(XmlOps xmlOps)
         {
+            var titleLaunchTimes = xmlOps.GetRestartTimes();
+            Thread t = UtilWait.WaitAnimationThread($"Restart Times: {titleLaunchTimes} - Waiting 30s for the OS launching.", 30);
+            t.Start();
+            t.Join();
+            if (!File.Exists(SwLnkPath))
+            {
+                UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - Could not find {SwLnkPath}.");
+                UtilCmd.PressAnyContinue();
+            }
+            UtilProcess.StartProcess(SwLnkPath);
             Timeout = 1;
-            try
-            {
-                UtilProcess.StartProcess(SwLnkPath);
-                Thread t = UtilWait.WaitAnimationThread("Wait the MP+ launching. 30s", 1);
-                t.Start();
-                t.Join();
-            }
-            catch (System.Exception)
-            {
-
-            }
             var DialogWarning = UtilWait.ForAnyResultCatch(() => {
-                UtilCmd.WriteTitle("Search MP+ UI.");
+                UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - Searching MP+ UI.");
                 SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);  // The MP+ will change after a while.
-                UtilCmd.WriteTitle("Search Warning dialog of the MP+.");
+                UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - Searching Warning dialog of the MP+.");
                 return SwMainWindow.GetElement(MasterPlusObj.DialogWarning, Timeout);
             }, 30);
             if (SwMainWindow == null)
             {
-                UtilCmd.WriteTitle("Can not open MasterPlus.");
+                UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - Could not open MasterPlus.");
                 UtilCmd.PressAnyContinue();
             }     
             if (DialogWarning != null)
             {
-                UtilCmd.WriteTitle("The device is not displayed");
+                UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - The device was not displayed");
+                UtilCmd.PressAnyContinue();
             }
             else
             {
+                xmlOps.SetRestartTimes(Convert.ToInt16(titleLaunchTimes) + 1);
+                UtilTime.WaitTime(1);
                 UtilProcess.KillProcessByName(this.SwProcessName);
-                UtilProcess.ExecuteCmd();
+                //UtilProcess.ExecuteCmd();
+                UtilOS.Reboot();
             }
-            UtilCmd.PressAnyContinue();
         }
     }
 }

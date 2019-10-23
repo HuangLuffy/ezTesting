@@ -1,4 +1,5 @@
-﻿using CommonLib.Util;
+﻿using CMTest.Xml;
+using CommonLib.Util;
 using System.Threading;
 
 namespace CMTest.Project.MasterPlus
@@ -26,12 +27,9 @@ namespace CMTest.Project.MasterPlus
             }
         }
 
-        public void Flow_RestartSystem()
+        public void Flow_RestartSystemAndCheckDeviceRecognition(XmlOps xmlOps)
         {
-            Thread t = UtilWait.WaitAnimationThread("Wait OS running. 30s", 1);
-            t.Start();
-            t.Join();
-            MasterPlusTestActions.RestartFlow();
+            MasterPlusTestActions.RestartSystemAndCheckDeviceRecognitionFlow(xmlOps);
         }
     }
 }

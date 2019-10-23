@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <conf>
+  <restartTimes>0</restartTimes>
   <remoteOS>
     <ip>1.1.1.1</ip>
   </remoteOS>
   <localOS>
-	  <masterPlusPerBuildPath>
+    <masterPlusPerBuildPath>
 		D:\Dev\CM\MPP\MasterPlus(PER. Only)_v1.8.5.exe
 	  </masterPlusPerBuildPath>
-	  <masterPlusBuildPath>
-		<ip>1.1.1.1</ip>
-	  </masterPlusBuildPath>
+    <masterPlusBuildPath>
+      <ip>1.1.1.1</ip>
+    </masterPlusBuildPath>
   </localOS>
   <vmPlugInOutDevices vmName="MH650">
     <device vmName="H500M" waitTime="6" index="0" runTimes="9999">H500M</device>

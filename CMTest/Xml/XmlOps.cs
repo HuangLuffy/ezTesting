@@ -16,9 +16,10 @@ namespace CMTest.Xml
         private const string NodeDevice = "device";
         private const string NodeRemoteOS = "remoteOS";
         private const string NodeLocalOS = "localOS";
-        private const string MasterPlusPerBuildPath = "masterPlusPerBuildPath";
-        private const string MasterPlusBuildPath = "masterPlusBuildPath";
+        private const string NodeMasterPlusPerBuildPath = "masterPlusPerBuildPath";
+        private const string NodeMasterPlusBuildPath = "masterPlusBuildPath";
         private const string NodeIP = "ip";
+        private const string NodeRestartTimes = "restartTimes";
         private readonly XElement _vmPlugInOutDevicesRoot;
         private readonly Dictionary<string, Dictionary<string, string>> _devicesDict = new Dictionary<string, Dictionary<string, string>>();
         private readonly string xmlPath = Path.Combine(Directory.GetCurrentDirectory(), "Conf.xml");
@@ -73,11 +74,20 @@ namespace CMTest.Xml
         }
         public string GetMasterPlusPerBuildPath()
         {
-            return xmlLinq.GetXRoot().Element(NodeLocalOS).Element(MasterPlusPerBuildPath).Value.Trim();
+            return xmlLinq.GetXRoot().Element(NodeLocalOS).Element(NodeMasterPlusPerBuildPath).Value.Trim();
         }
         public string GetMasterPlusBuildPath()
         {
-            return xmlLinq.GetXRoot().Element(NodeLocalOS).Element(MasterPlusPerBuildPath).Value.Trim();
+            return xmlLinq.GetXRoot().Element(NodeLocalOS).Element(NodeMasterPlusPerBuildPath).Value.Trim();
+        }
+        public string GetRestartTimes()
+        {
+            return xmlLinq.GetXRoot().Element(NodeRestartTimes).Value.Trim();
+        }
+        public void SetRestartTimes(int times)
+        {
+            xmlLinq.GetXRoot().Element(NodeRestartTimes).Value = times.ToString();
+            xmlLinq.Save();
         }
     }
 }

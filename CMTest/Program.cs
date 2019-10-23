@@ -14,7 +14,7 @@ namespace CMTest
 
             //var om = OpenListener();
             var testIt = new TestIt();
-            testIt.RestartFlow();
+            testIt.RestartSystemAndCheckDeviceRecognition();
             return;
 
             if (!testIt.IsNeededRunCmdDirectly(args))

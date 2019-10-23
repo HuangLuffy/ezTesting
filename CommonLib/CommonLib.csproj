@@ -89,6 +89,7 @@
     <Compile Include="Util\UtilMatch.cs" />
     <Compile Include="Util\UtilProcess.cs" />
     <Compile Include="Util\UtilRegex.cs" />
+    <Compile Include="Util\OS\UtilShutdownOS.cs" />
     <Compile Include="Util\UtilString.cs" />
     <Compile Include="Util\Struct\Path.cs" />
     <Compile Include="Util\UtilSysEnv.cs" />
@@ -106,6 +107,11 @@
     <Compile Include="Util\Zip\IZip.cs" />
     <Compile Include="Util\Zip\Zip7z.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\OS\UtilShutdownOS.resx">
+      <DependentUpon>UtilShutdownOS.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

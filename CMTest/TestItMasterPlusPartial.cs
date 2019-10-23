@@ -23,5 +23,10 @@ namespace CMTest
             _masterPlusTestFlows.Flow_LaunchTest();
             return MARK_FOUND_RESULT;
         }
+
+        public void RestartSystemAndCheckDeviceRecognition()
+        {
+            _masterPlusTestFlows.Flow_RestartSystemAndCheckDeviceRecognition(_xmlOps);
+        }
     }
 }
