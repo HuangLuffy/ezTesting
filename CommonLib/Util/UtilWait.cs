@@ -28,16 +28,32 @@ namespace CommonLib.Util
             }
             return true;
         }
+        public static T ForNonNull<T>(Func<T> action, int maxWaitTimeInSec = -1, int intervalInSec = -1)
+        {
+            return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.NonNullResult);
+        }
         public static T ForTrue<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)
         {
             return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.ForTrue);
         }
-        public static T ForResult<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)
+        public static T ForAnyResult<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)
         {
             return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.AnyResult);
         }
+        public static T ForAnyResultCatch<T>(Func<T> action, int maxWaitTimeInSec = -1, int intervalInSec = -1)
+        {
+            try
+            {
+                return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.AnyResult);
+            }
+            catch (Exception)
+            {
+                return default(T);
+            } 
+        }
         private static T ForWhat<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1, dynamic expectedResult = null)
         {
+            var exceptionMsg = "";
             if (maxWaitTimeInSec == -1)
             {
                 maxWaitTimeInSec = CompMaxWaitTimeInSec < 0 ? MaxWaitTimeInSec : CompMaxWaitTimeInSec;
@@ -50,7 +66,7 @@ namespace CommonLib.Util
             do {
                 if (UtilTime.DateDiff(dt, DateTime.Now, UtilTime.DateInterval.Second) > Convert.ToDouble(maxWaitTimeInSec))
                 {
-                    throw new Exception($"Timeout! The max timeout is {maxWaitTimeInSec}s.");
+                    throw new Exception($"UtilWait > Timeout! The max timeout is {maxWaitTimeInSec}s. The last exception message is {exceptionMsg}.");
                 }
                 try
                 {
@@ -63,9 +79,9 @@ namespace CommonLib.Util
                             return actualResult;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // ignored
+                    exceptionMsg = ex.Message;
                 }
                 UtilTime.WaitTime(intervalInSec);
             } while(true);

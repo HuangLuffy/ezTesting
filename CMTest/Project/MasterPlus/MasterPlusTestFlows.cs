@@ -28,7 +28,7 @@ namespace CMTest.Project.MasterPlus
 
         public void Flow_RestartSystem()
         {
-            Thread t = UtilWait.WaitAnimationThread("Wait 60s", 60);
+            Thread t = UtilWait.WaitAnimationThread("Wait OS running. 30s", 1);
             t.Start();
             t.Join();
             MasterPlusTestActions.RestartFlow();

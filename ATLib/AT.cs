@@ -70,7 +70,7 @@ namespace ATLib
                 AutomationElement = AutomationElement ?? AutomationElement.RootElement;
                 var treeScope = GetTreeScope(TreeScope);
                 var condition = GetCondition(Name, AutomationId, ClassName, FrameworkId, ControlType);
-                var atObj = Timeout <= 0 ? GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index) : UtilWait.ForResult(() => GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index), Timeout);
+                var atObj = Timeout <= 0 ? GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index) : UtilWait.ForAnyResult(() => GetElementByHandler(AutomationElement, treeScope, condition, Name, AutomationId, ClassName, Index), Timeout);
                 if (CheckEnabled != true) return atObj;
                 if (!atObj.GetElementInfo().IsEnabled())
                 {
@@ -117,7 +117,8 @@ namespace ATLib
             {
                 //AT atObj = null;
                 AutomationElement = AutomationElement ?? AutomationElement.RootElement;  //System.Windows.Automation.Condition.TrueCondition
-                var t = AutomationElement.FindAll(System.Windows.Automation.TreeScope.Children, Condition.TrueCondition);
+                var t = AutomationElement.FindAll(System.Windows.Automation.TreeScope.Descendants, Condition.TrueCondition);
+                Console.WriteLine(t.Count);
                 //AutomationElementCollection t = this.me.FindAll(System.Windows.Automation.TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, System.Windows.Automation.ControlType.Pane));
                 foreach (AutomationElement item in t)
                 {
