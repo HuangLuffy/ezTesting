@@ -70,7 +70,7 @@
     <Compile Include="Util\IO\UtilFolder.cs" />
     <Compile Include="Util\Log\ILog.cs" />
     <Compile Include="Util\Log\Logger.cs" />
-    <Compile Include="Util\Log\LogSimple.cs" />
+    <Compile Include="Util\Log\UtilLog.cs" />
     <Compile Include="Util\Msg\Dlg.cs" />
     <Compile Include="Util\Msg\Msg.cs" />
     <Compile Include="Util\Net\Share\AccessShare.cs" />
@@ -89,7 +89,7 @@
     <Compile Include="Util\UtilMatch.cs" />
     <Compile Include="Util\UtilProcess.cs" />
     <Compile Include="Util\UtilRegex.cs" />
-    <Compile Include="Util\OS\UtilShutdownOS.cs" />
+    <Compile Include="Util\OS\UtilOsShutdown.cs" />
     <Compile Include="Util\UtilString.cs" />
     <Compile Include="Util\Struct\Path.cs" />
     <Compile Include="Util\UtilSysEnv.cs" />
@@ -109,8 +109,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Util\OS\UtilShutdownOS.resx">
-      <DependentUpon>UtilShutdownOS.cs</DependentUpon>
+    <EmbeddedResource Include="Util\OS\UtilOsShutdown.resx">
+      <DependentUpon>UtilOsShutdown.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

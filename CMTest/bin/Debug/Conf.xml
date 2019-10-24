@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <conf>
-  <restartTimes>0</restartTimes>
+  <restartTimes>2</restartTimes>
   <remoteOS>
     <ip>1.1.1.1</ip>
   </remoteOS>

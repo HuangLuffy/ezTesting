@@ -9,14 +9,10 @@ namespace CMTest
     {
         public static void Main(string[] args)
         {
-
-
-
-            //var om = OpenListener();
             var testIt = new TestIt();
             testIt.RestartSystemAndCheckDeviceRecognition();
             return;
-
+            var om = OpenListener();
             if (!testIt.IsNeededRunCmdDirectly(args))
             {
                 testIt.ShowTopMenu();

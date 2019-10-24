@@ -6,24 +6,25 @@ using CommonLib.Util.Project;
 
 namespace CommonLib.Util.log
 {
-    public class LogSimple : ILog
+    public class UtilLog : ILog
     {
         private readonly string _logName = "Log";
         public readonly string LogFolderPath;
+        public readonly static string LogTime = $"{DateTime.Now:yyyy_MM_dd hh:mm:ss}";
         private readonly string _logFileFullPath;
-        public LogSimple(string logFolderPath, string logName )
+        public UtilLog(string logFolderPath, string logName )
         {
             LogFolderPath = logFolderPath;
             _logName = logName;
             LogFolderPath = logFolderPath.Equals("") ? ProjectPath.GetProjectFullPath() : logFolderPath;
             _logFileFullPath = LogFolderPath + @"\" + _logName + ".log";
         }
-        public LogSimple(string logFolderPath)
+        public UtilLog(string logFolderPath)
         {
             LogFolderPath = logFolderPath;
             _logFileFullPath = LogFolderPath + @"\" + _logName + ".log";
         }
-        public LogSimple()
+        public UtilLog()
         {
             _logFileFullPath = Path.Combine(ProjectPath.GetProjectFullPath(), _logName + ".log");
         }
@@ -55,7 +56,7 @@ namespace CommonLib.Util.log
             //content = streamReader.ReadToEnd();
             var streamWriter = new StreamWriter(fileStream);
             streamWriter.WriteLine(
-                $"{DateTime.Now:yyyy_MM_dd hh:mm:ss} > [{logLevel}] {message} {methodName} {exception}");
+                $"{LogTime} > [{logLevel}] {message} {methodName} {exception}");
             streamWriter.Close();
             fileStream.Close();
             if (fileInfo.Length < 1024 * 1024 * 200) return;

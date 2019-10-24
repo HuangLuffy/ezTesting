@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using CommonLib.Util.Log;
 
 namespace CommonLib.Util.IO
 {
@@ -26,7 +24,6 @@ namespace CommonLib.Util.IO
             }
             catch (Exception ex)
             {
-                Logger.LogThrowException($"Failed to read file [{fileFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
                 return null;
             }
         }
@@ -39,17 +36,10 @@ namespace CommonLib.Util.IO
         }
         public static void WriteFile(string fileFullPath, string content = "", Boolean append = true)
         {
-            try
+            UtilFolder.CreateDirectory(Path.GetDirectoryName(fileFullPath));
+            using (var streamWriter = new StreamWriter(fileFullPath, append))
             {
-                UtilFolder.CreateDirectory(Path.GetDirectoryName(fileFullPath));
-                using (var streamWriter = new StreamWriter(fileFullPath, append))
-                {
-                    streamWriter.WriteLine(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.LogThrowException($"Failed to write file [{fileFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
+                streamWriter.WriteLine(content);
             }
         }
         public static List<string> ReadFileByLine(string fileFullPath)
@@ -75,8 +65,7 @@ namespace CommonLib.Util.IO
             }
             catch (IOException ex)
             {
-                Logger.LogThrowMessage($"Failed to read file [{fileFullPath}].", new StackFrame(0).GetMethod().Name, ex.Message);
-                return null;
+                return resultList;
             }
             finally
             {

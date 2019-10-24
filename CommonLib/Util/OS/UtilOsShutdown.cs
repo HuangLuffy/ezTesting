@@ -75,17 +75,17 @@ namespace CommonLib.Util.OS
 
         public static void Reboot()
         {
-            ShutDownSys.DoExitWin(ShutDownSys.EWX_FORCE | ShutDownSys.EWX_REBOOT);
+            UtilOS.DoExitWin(UtilOS.EWX_FORCE | UtilOS.EWX_REBOOT);
         }
 
         public static void ShutDown()
         {
-            ShutDownSys.DoExitWin(ShutDownSys.EWX_FORCE | ShutDownSys.EWX_POWEROFF);
+            UtilOS.DoExitWin(UtilOS.EWX_FORCE | UtilOS.EWX_POWEROFF);
         }
 
         public static void LogOff()
         {
-            ShutDownSys.DoExitWin(ShutDownSys.EWX_FORCE | ShutDownSys.EWX_LOGOFF);
+            UtilOS.DoExitWin(UtilOS.EWX_FORCE | UtilOS.EWX_LOGOFF);
         }
     }
 }
