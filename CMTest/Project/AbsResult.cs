@@ -9,7 +9,7 @@ namespace CMTest.Project
     {
         private string LogPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
 
-        protected string ImagePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
+        public string ImagePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
         //public string ImagePath
         //{
         //    get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }

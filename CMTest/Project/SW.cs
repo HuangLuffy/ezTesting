@@ -41,7 +41,7 @@ namespace CMTest.Project
 
         protected void Initialize()
         {
-            UtilFolder.DeleteDirectory(ImagePath);
+            //UtilFolder.DeleteDirectory(ImagePath);
             UtilFolder.CreateDirectory(ImagePath);
             UtilProcess.KillProcessByName(SwProcessName); 
         }

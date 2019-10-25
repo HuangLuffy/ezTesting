@@ -35,35 +35,41 @@ namespace CMTest.Project.MasterPlus
         }
         public void RestartSystemAndCheckDeviceRecognitionFlow(XmlOps xmlOps)
         {
+            string LogTime = $"{DateTime.Now:yyyy.MM.dd_hh.mm.ss}";
             var logFullPath = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
+            UtilFolder.CreateDirectory(Path.Combine(ImagePath, "Restart"));
+            var screenshotPath = Path.Combine("Screenshots\\Restart", LogTime);
             var logLines = UtilFile.ReadFileByLine(logFullPath);
             logLines.ForEach(line => UtilCmd.WriteLine(line));
             var titleLaunchTimes = xmlOps.GetRestartTimes();
-            Thread t = UtilWait.WaitAnimationThread($"{UtilLog.LogTime}: Restart Times: {titleLaunchTimes} - Waiting 30s for the OS launching.", 30);
+            var titleTotal = $"Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count}";
+            Thread t = UtilWait.WaitAnimationThread($"{titleTotal} - Waiting 30s.", 30);
             t.Start();
             t.Join();
             if (!File.Exists(SwLnkPath))
             {
-                UtilCmd.WriteTitle($"{UtilLog.LogTime}: Restart Times: {titleLaunchTimes} - Could not find {SwLnkPath}.");
+                UtilCmd.WriteTitle($"{titleTotal} - Could not find {SwLnkPath}.");
                 UtilCmd.PressAnyContinue();
             }
             UtilProcess.StartProcess(SwLnkPath);
             Timeout = 1;
-            UtilCmd.WriteTitle($"{UtilLog.LogTime}: Restart Times: {titleLaunchTimes} - Searching MP+ UI.");
+            UtilCmd.WriteTitle($"{titleTotal} - Searching MP+ UI.");
             var DialogWarning = UtilWait.ForAnyResultCatch(() => {
                 SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);  // The MP+ will change after a while.
-                UtilCmd.WriteTitle($"{UtilLog.LogTime}: Restart Times: {titleLaunchTimes} - Searching Warning dialog of the MP+.");
+                UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+.");
                 return SwMainWindow.GetElement(MasterPlusObj.DialogWarning, Timeout);
             }, 30);
             if (SwMainWindow == null)
             {
                 //UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - Could not open MasterPlus.");
-                UtilFile.WriteFile(logFullPath, $"{UtilLog.LogTime}: Restart Times: {titleLaunchTimes} - Could not open MasterPlus.");
+                UtilCapturer.Capture(screenshotPath);
+                UtilFile.WriteFile(logFullPath, $"{LogTime}: Restart Times: {titleLaunchTimes} - Could not open MasterPlus.");
             }     
-            if (DialogWarning != null)
+            else if (DialogWarning != null)
             {
+                UtilCapturer.Capture(screenshotPath);
                 //UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - The device was not displayed");
-                UtilFile.WriteFile(logFullPath, $"{UtilLog.LogTime}: Restart Times: {titleLaunchTimes} - The device was not displayed.");
+                UtilFile.WriteFile(logFullPath, $"{LogTime}: Restart Times: {titleLaunchTimes} - The device was not displayed.");
             }
             xmlOps.SetRestartTimes(Convert.ToInt16(titleLaunchTimes) + 1);
             UtilTime.WaitTime(1);

@@ -36,9 +36,10 @@ namespace CommonLib.Util
             var gc = Graphics.FromImage(img);
             gc.CompositingQuality = CompositingQuality.HighSpeed;
             gc.CopyFromScreen(new Point(0, 0), new Point(0, 0), new Size(iWidth, iHeight));
-            img.Save(pathSave, imgf);
+            img.Save(pathSave, imgf); // pathSave: full path will cause error?
             //Guid.NewGuid().ToString()
             gc.Dispose();
+            img.Dispose();
         }
     }
 }
