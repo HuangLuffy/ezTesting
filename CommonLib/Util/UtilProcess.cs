@@ -22,6 +22,17 @@ namespace CommonLib.Util
                 p.Kill();
             }
         }
+        public static void KillProcessByFuzzyName(string name)
+        {
+            foreach (var p in Process.GetProcesses())
+            {
+                if (p.ProcessName.ToLower().Contains(name.ToLower()))
+                {
+                    p.Kill();
+                }
+            } 
+        }
+
         public static void ExecuteCmd(string command = "shutdown -f -r -t 0")
         {
             using (var p = new Process())

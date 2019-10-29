@@ -178,16 +178,40 @@ namespace CMTest.Project.MasterPlusPer
         }
         public void Flow_Installation(string buildPath, bool checkRemove = true)
         {
+            UtilProcess.KillProcessByFuzzyName("MasterPlus");
+            UtilTime.WaitTime(1);
             UtilProcess.StartProcess(buildPath);
             AT Window_SelectLauguage = new AT().GetElement(PortalObj.Window_SelectLauguage, Timeout = 5, TreeScope: AT.TreeScope.Children);
             AT Button_OK = Window_SelectLauguage.GetElement(PortalObj.Button_Install_OK, Timeout = 2);
-            Button_OK.DoClick();
+            Button_OK.DoClick(1);
             AT Window_InstallWizard = new AT().GetElement(PortalObj.Window_InstallWizard, Timeout = 5, TreeScope: AT.TreeScope.Children);
             UtilTime.WaitTime(1);
             AT Button_RemoveCache = Window_InstallWizard.GetElement(PortalObj.CheckBox_RemoveCache, Timeout = 2);
-            Button_RemoveCache.DoClickPoint();
+            Button_RemoveCache.DoClickPoint(waitTime:1);
             AT Button_Next = Window_InstallWizard.GetElement(PortalObj.Button_Next);
-            Button_Next.DoClick();
+            Button_Next.DoClick(1);
+            AT Button_Location_Next = Window_InstallWizard.GetElement(PortalObj.Button_Location_Next);
+            Button_Location_Next.DoClick(2);
+            try
+            {
+                AT Dialog_FolderExists = Window_InstallWizard.GetElement(PortalObj.Dialog_FolderExists);
+                AT Button_DialogFolderExists_Yes = Window_InstallWizard.GetElement(PortalObj.Dialog_FolderExists);
+                Button_DialogFolderExists_Yes.DoClick();
+            }
+            catch (Exception)
+            {
+
+            }
+            AT Button_SelectStartMemuFolder_Next = Window_InstallWizard.GetElement(PortalObj.Button_SelectStartMemuFolder_Next);
+            Button_SelectStartMemuFolder_Next.DoClick(1);
+            AT Button_AddtionalTask_Next = Window_InstallWizard.GetElement(PortalObj.Button_AddtionalTask_Next);
+            Button_AddtionalTask_Next.DoClick(1);
+            AT Button_ReadyToInstall_Install = Window_InstallWizard.GetElement(PortalObj.Button_ReadyToInstall_Install);
+            Button_ReadyToInstall_Install.DoClick(1);
+            AT CheckBox_LaunchPortal = Window_InstallWizard.GetElement(PortalObj.CheckBox_LaunchPortal, Timeout = 20);
+            AT Button_Finish = Window_InstallWizard.GetElement(PortalObj.Button_Finish);
+            Button_Finish.DoClick(1);
+            AT Window_MasterPlusPer = new AT().GetElement(PortalObj.Window_MasterPlusPer, Timeout:10);
         }
     }
 }

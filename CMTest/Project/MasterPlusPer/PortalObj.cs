@@ -18,7 +18,7 @@ namespace CMTest.Project.MasterPlusPer
 
         public override string NameCrashMainWindow => "MasterPlus(PER. Only)";
 
-        public static ATElementStruct Window_Main = new ATElementStruct()
+        public static ATElementStruct Window_MasterPlusPer = new ATElementStruct()
         {
             Name = "MasterPlus(PER. Only)",
             ClassName = "Qt5QWindowIcon"
@@ -131,22 +131,59 @@ namespace CMTest.Project.MasterPlusPer
         public static ATElementStruct Button_Location_Next = new ATElementStruct()
         {
             ClassName = "TNewButton",
-            Index = 1
+            Index = 2
         };
         public static ATElementStruct Button_Folder_Next = new ATElementStruct()
         {
             ClassName = "TNewButton",
-            Index = 1
+            Index = 0
         };
         public static ATElementStruct Button_Shortcut_Next = new ATElementStruct()
         {
             ClassName = "TNewButton",
-            Index = 1
+            Index = 0
         };
         public static ATElementStruct Button_Install = new ATElementStruct()
         {
             ClassName = "TNewButton",
+            Index = 0
+        };
+        public static ATElementStruct Dialog_FolderExists = new ATElementStruct()
+        {
+            FrameworkId = AT.FrameworkId.Win32,
+            ClassName = AT.ClassName.P32770
+        };
+        public static ATElementStruct Button_DialogFolderExists_Yes = new ATElementStruct()
+        {
+            FrameworkId = AT.FrameworkId.Win32,
+            ControlType = AT.ControlType.Button
+        };
+        public static ATElementStruct Button_SelectStartMemuFolder_Next = new ATElementStruct()
+        {
+            ClassName = "TNewButton",
+            Index = 2
+        };
+        public static ATElementStruct Edit_SelectStartMemuFolder = new ATElementStruct()
+        {
+            ClassName = "TNewEdit"
+        };
+        public static ATElementStruct Button_AddtionalTask_Next = new ATElementStruct()
+        {
+            ClassName = "TNewButton",
             Index = 1
+        };
+        public static ATElementStruct Button_ReadyToInstall_Install = new ATElementStruct()
+        {
+            ClassName = "TNewButton",
+            Index = 1
+        };
+        public static ATElementStruct CheckBox_LaunchPortal = new ATElementStruct()
+        {
+            ControlType = AT.ControlType.CheckBox
+        };
+        public static ATElementStruct Button_Finish = new ATElementStruct()
+        {
+            ClassName = "TNewButton"
         };
     }
 }
