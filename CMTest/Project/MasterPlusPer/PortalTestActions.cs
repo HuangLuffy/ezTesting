@@ -180,6 +180,13 @@ namespace CMTest.Project.MasterPlusPer
         {
             UtilProcess.KillProcessByFuzzyName("MasterPlus");
             UtilTime.WaitTime(1);
+            var uninstallerPath = UtilRegistry.GetProductInfo("MasterPlus(PER. Only).*", UtilRegistry.ProductInfo.UninstallString);
+            if (!uninstallerPath.Equals(string.Empty))
+            {
+                WriteConsoleTitle(LaunchTimes, $"Waiting for silent uninstalling. ({2}s)", 2);
+                UtilProcess.StartProcessGetString(uninstallerPath, "/silent");
+                UtilTime.WaitTime(1);
+            }
             UtilProcess.StartProcess(buildPath);
             AT Window_SelectLauguage = new AT().GetElement(PortalObj.Window_SelectLauguage, Timeout = 5, TreeScope: AT.TreeScope.Children);
             AT Button_OK = Window_SelectLauguage.GetElement(PortalObj.Button_Install_OK, Timeout = 2);

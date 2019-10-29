@@ -32,7 +32,8 @@ namespace CommonLib.Util
                 }
             } 
         }
-
+        //UtilProcess.ExecuteCmd(uninstallerPath + " /silent");     does not work
+        //UtilProcess.StartProcessGetString(uninstallerPath, "/silent");   work
         public static void ExecuteCmd(string command = "shutdown -f -r -t 0")
         {
             using (var p = new Process())
@@ -45,6 +46,7 @@ namespace CommonLib.Util
                 p.StartInfo.CreateNoWindow = true;//是否在新窗口中启动进程
                 p.Start();
                 p.StandardInput.WriteLine(command);
+                var a = p.StandardOutput.ReadToEnd();
             }
         }
         public static void SingletonUI()
