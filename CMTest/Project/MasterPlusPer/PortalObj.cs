@@ -156,7 +156,8 @@ namespace CMTest.Project.MasterPlusPer
         public static ATElementStruct Button_DialogFolderExists_Yes = new ATElementStruct()
         {
             FrameworkId = AT.FrameworkId.Win32,
-            ControlType = AT.ControlType.Button
+            ControlType = AT.ControlType.Button,
+            Index = 0
         };
         public static ATElementStruct Button_SelectStartMemuFolder_Next = new ATElementStruct()
         {

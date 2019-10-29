@@ -195,8 +195,8 @@ namespace CMTest.Project.MasterPlusPer
             try
             {
                 AT Dialog_FolderExists = Window_InstallWizard.GetElement(PortalObj.Dialog_FolderExists);
-                AT Button_DialogFolderExists_Yes = Window_InstallWizard.GetElement(PortalObj.Dialog_FolderExists);
-                Button_DialogFolderExists_Yes.DoClick();
+                AT Button_DialogFolderExists_Yes = Dialog_FolderExists.GetElement(PortalObj.Button_DialogFolderExists_Yes);
+                Button_DialogFolderExists_Yes.DoClick(1);
             }
             catch (Exception)
             {
