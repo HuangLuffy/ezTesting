@@ -8,10 +8,14 @@ using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
 using CMTest.Project.RemoteModule;
 using System.Threading;
+using System.IO;
+using CommonLib.Util.Project;
+using CommonLib.Util.IO;
+using CommonLib.Util.OS;
 
 namespace CMTest
 {
-    public partial class TestIt : AbsResult
+    public partial class TestIt : SW
     {
         private const string MARK_FOUND_RESULT = "FOUND_TEST";
         private const string MARK_DO_NOTHING = "DO_NOTHING";
@@ -25,7 +29,6 @@ namespace CMTest
         private readonly XmlOps _xmlOps = new XmlOps();
         private readonly MonitorAction _monitorAction = new MonitorAction();
         private RemoteOS _remoteOS;
-
         public static object UtilRegrex { get; private set; }
         private readonly IDictionary<string, Func<dynamic>> _optionsTopMenu = new Dictionary<string, Func<dynamic>>();
         public TestIt()
@@ -156,5 +159,32 @@ namespace CMTest
         {
             return UtilRegex.GetMatchMidValue(commnet, OPTION_COMMENT_SEPARATOR_PREFIX, OPTION_COMMENT_SEPARATOR_SUFFIX);
         }
+        public void RestartSystemAndCheckDeviceName(string deviceName = "USB Audio Device")
+        {
+            var restartLogTime = GetRestartLogTime();
+            var logLines = PrepareRestartAndGetLogCounts();
+            var titleLaunchTimes = _xmlOps.GetRestartTimes();
+            UtilProcess.StartProcess("devmgmt.msc");
+            var titleTotal = $"Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count}";
+            Thread t = UtilWait.WaitAnimationThread($"{titleTotal} - Waiting 30s.", 30);
+            t.Start();
+            t.Join();
+            var foundUSBAudioDevice = UtilOs.GetDevices().Find(d => d.ToUpper().Contains("USB Audio Device".ToUpper()));
+            if (foundUSBAudioDevice != null)
+            {
+                UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count} - USB Audio Device found.");
+            }
+            _xmlOps.SetRestartTimes(Convert.ToInt16(titleLaunchTimes) + 1);
+            UtilTime.WaitTime(1);
+            UtilOS.Reboot();
+        }
+        private List<string> PrepareRestartAndGetLogCounts()
+        {
+            UtilFolder.CreateDirectory(Path.Combine(ImagePath, "Restart"));
+            var logLines = UtilFile.ReadFileByLine(LogPathRestart);
+            logLines.ForEach(line => UtilCmd.WriteLine(line));
+            return logLines;
+        }
+
     }
 }

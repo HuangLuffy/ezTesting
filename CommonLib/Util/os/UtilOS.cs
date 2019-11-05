@@ -1,11 +1,25 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Management;
+using System.Text;
 
 namespace CommonLib.Util.OS
 {
     public static class UtilOs
     {
+        public static List<string> GetDevices()
+        {
+            var list = new List<string>();
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity");
+            foreach (ManagementObject mgt in searcher.Get())
+            {
+                list.Add(Convert.ToString(mgt["Name"]));
+            }
+            return list;
+        }
+
         public struct Name {
             public const string Win7 = "Win7";
             public const string Win10 = "Win10";

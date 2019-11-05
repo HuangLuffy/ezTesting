@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using CommonLib.Util;
+using CommonLib.Util.OS;
 using RemoteLib.Listener;
 
 namespace CMTest
@@ -10,8 +13,11 @@ namespace CMTest
         public static void Main(string[] args)
         {
             var testIt = new TestIt();
+            //Restart check Device Manager
+            testIt.RestartSystemAndCheckDeviceName();
+            //Restart check MP+
             //testIt.RestartSystemAndCheckDeviceRecognition();
-            //return;
+            return;
             var om = OpenListener();
             if (!testIt.IsNeededRunCmdDirectly(args))
             {

@@ -35,11 +35,10 @@ namespace CMTest.Project.MasterPlus
         }
         public void RestartSystemAndCheckDeviceRecognitionFlow(XmlOps xmlOps)
         {
-            string LogTime = $"{DateTime.Now:yyyy.MM.dd_hh.mm.ss}";
-            var logFullPath = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
             UtilFolder.CreateDirectory(Path.Combine(ImagePath, "Restart"));
-            var screenshotPath = Path.Combine("Screenshots\\Restart", LogTime);
-            var logLines = UtilFile.ReadFileByLine(logFullPath);
+            var restartLogTime = GetRestartLogTime();
+            var screenshotPath = Path.Combine(RestartScreenshotPath, restartLogTime);
+            var logLines = UtilFile.ReadFileByLine(LogPathRestart);
             logLines.ForEach(line => UtilCmd.WriteLine(line));
             var titleLaunchTimes = xmlOps.GetRestartTimes();
             var titleTotal = $"Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count}";
@@ -63,13 +62,13 @@ namespace CMTest.Project.MasterPlus
             {
                 //UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - Could not open MasterPlus.");
                 UtilCapturer.Capture(screenshotPath);
-                UtilFile.WriteFile(logFullPath, $"{LogTime}: Restart Times: {titleLaunchTimes} - Could not open MasterPlus.");
+                UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - Could not open MasterPlus.");
             }     
             else if (DialogWarning != null)
             {
                 UtilCapturer.Capture(screenshotPath);
                 //UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - The device was not displayed");
-                UtilFile.WriteFile(logFullPath, $"{LogTime}: Restart Times: {titleLaunchTimes} - The device was not displayed.");
+                UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - The device was not displayed.");
             }
             xmlOps.SetRestartTimes(Convert.ToInt16(titleLaunchTimes) + 1);
             UtilTime.WaitTime(1);
