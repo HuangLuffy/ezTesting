@@ -33,6 +33,38 @@ namespace CMTest.Project.MasterPlus
             WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
             UtilTime.WaitTime(Timeout);
         }
+
+        public void LaunchAndCheckCrash(long testTimes)
+        {
+            int crashTimes = 0;
+            UtilCmd.Clear();
+            for (int i = 1; i < testTimes; i++)
+            {
+                var titleTotal = $"Reopen Times: {i} - Crash Times: {crashTimes}";
+                var logLines = UtilFile.ReadFileByLine(LogPathLaunch);
+                logLines.ForEach(line => UtilCmd.WriteLine(line));
+                var launchLogTime = GetRestartLogTime();
+                var screenshotPath = Path.Combine(ImagePath, crashTimes.ToString());
+                UtilProcess.StartProcess(SwLnkPath);
+                Timeout = 1;
+                UtilCmd.WriteTitle($"{titleTotal} - Searching MP+ UI.");
+                DateTime starttime = DateTime.Now;
+                var DialogWarning = UtilWait.ForAnyResultCatch(() => {
+                    UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - starttime).Seconds}s.");
+                    SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);  // The MP+ will change after a while.
+                    return SwMainWindow.GetElement(MasterPlusObj.DialogWarning, Timeout);
+                }, 60, 2);
+                if (SwMainWindow == null)
+                {
+                    UtilCapturer.Capture(i.ToString());
+                    UtilFile.WriteFile(LogPathLaunch, $"{launchLogTime}: Reopen Times: {i} - Could not open MasterPlus.");
+                    crashTimes++;
+                }
+                UtilTime.WaitTime(1);
+                UtilProcess.KillProcessByName(this.SwProcessName);
+                UtilTime.WaitTime(1);
+            }
+        }
         public void RestartSystemAndCheckDeviceRecognitionFlow(XmlOps xmlOps)
         {
             UtilFolder.CreateDirectory(Path.Combine(ImagePath, "Restart"));
@@ -42,7 +74,7 @@ namespace CMTest.Project.MasterPlus
             logLines.ForEach(line => UtilCmd.WriteLine(line));
             var titleLaunchTimes = xmlOps.GetRestartTimes();
             var titleTotal = $"Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count}";
-            Thread t = UtilWait.WaitAnimationThread($"{titleTotal} - Waiting 30s.", 30);
+            Thread t = UtilWait.WaitAnimationThread($"{titleTotal} - Waiting 35s.", 35);
             t.Start();
             t.Join();
             if (!File.Exists(SwLnkPath))
@@ -53,11 +85,12 @@ namespace CMTest.Project.MasterPlus
             UtilProcess.StartProcess(SwLnkPath);
             Timeout = 1;
             UtilCmd.WriteTitle($"{titleTotal} - Searching MP+ UI.");
+            DateTime starttime = DateTime.Now;
             var DialogWarning = UtilWait.ForAnyResultCatch(() => {
+                UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - starttime).Seconds}s.");
                 SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);  // The MP+ will change after a while.
-                UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+.");
                 return SwMainWindow.GetElement(MasterPlusObj.DialogWarning, Timeout);
-            }, 30);
+            }, 60, 3);
             if (SwMainWindow == null)
             {
                 //UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - Could not open MasterPlus.");

@@ -8,7 +8,7 @@ namespace CMTest.Project
 {
     public abstract class AbsResult
     {
-        private string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
+        protected string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
         protected string LogPathRestart = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
         protected string ImagePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
         protected string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");

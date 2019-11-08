@@ -14,10 +14,10 @@ namespace CMTest
         {
             var testIt = new TestIt();
             //Restart check Device Manager
-            testIt.RestartSystemAndCheckDeviceName();
+            //testIt.RestartSystemAndCheckDeviceName();
             //Restart check MP+
             //testIt.RestartSystemAndCheckDeviceRecognition();
-            return;
+            //return;
             var om = OpenListener();
             if (!testIt.IsNeededRunCmdDirectly(args))
             {

@@ -9,6 +9,7 @@ namespace CMTest.Project.MasterPlus
         public struct TestNames
         {
             public const string OPTION_LAUNCH_TEST = "Launch Test";
+            public const string OPTION_LAUNCH_CHECK_CRASH = "Launch and check crash";
         }
         
         public static long TEST_TIMES = 99999999;
@@ -30,6 +31,11 @@ namespace CMTest.Project.MasterPlus
         public void Flow_RestartSystemAndCheckDeviceRecognition(XmlOps xmlOps)
         {
             MasterPlusTestActions.RestartSystemAndCheckDeviceRecognitionFlow(xmlOps);
+        }
+
+        public void Flow_LaunchAndCheckCrash()
+        {
+            MasterPlusTestActions.LaunchAndCheckCrash(TEST_TIMES);
         }
     }
 }
