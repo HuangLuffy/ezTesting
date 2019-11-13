@@ -176,7 +176,7 @@ namespace CMTest.Project.MasterPlusPer
             profileTmp.DoClickPoint();
             WaitForLoading(loadingTmp);
         }
-        public void Flow_Installation(string buildPath, bool checkRemove = true)
+        public void Flow_Installation(string buildPath, bool checkRemove = true, string language = "English")
         {
             UtilProcess.KillProcessByFuzzyName("MasterPlus");
             UtilTime.WaitTime(1);
@@ -189,6 +189,11 @@ namespace CMTest.Project.MasterPlusPer
             }
             UtilProcess.StartProcess(buildPath);
             AT Window_SelectLauguage = new AT().GetElement(PortalObj.Window_SelectLauguage, Timeout = 5, TreeScope: AT.TreeScope.Children);
+
+            AT ComboBox_SelectLauguage = Window_SelectLauguage.GetElement(PortalObj.ComboBox_SelectLauguage);
+            ComboBox_SelectLauguage.DoExpand();
+            Window_SelectLauguage = new AT().GetElement(PortalObj.Window_SelectLauguage, Timeout = 5, TreeScope: AT.TreeScope.Children); //refresh
+            Window_SelectLauguage.GetElement(Name: language, TreeScope: AT.TreeScope.Descendants).DoSelect(1);
             AT Button_OK = Window_SelectLauguage.GetElement(PortalObj.Button_Install_OK, Timeout = 2);
             Button_OK.DoClick(1);
             AT Window_InstallWizard = new AT().GetElement(PortalObj.Window_InstallWizard, Timeout = 5, TreeScope: AT.TreeScope.Children);

@@ -107,6 +107,10 @@ namespace CMTest.Project.MasterPlusPer
             ClassName = "TNewButton",
             Index = 0
         };
+        public static ATElementStruct ComboBox_Install = new ATElementStruct()
+        {
+            ClassName = "TNewComboBox",
+        };   
         public static ATElementStruct Button_Next = new ATElementStruct()
         {
             ClassName = "TNewButton",

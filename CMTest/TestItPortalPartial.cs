@@ -11,8 +11,12 @@ namespace CMTest
     {
         private readonly IDictionary<string, Func<dynamic>> _optionsPortalTestsWithFuncs = new Dictionary<string, Func<dynamic>>();
         private readonly IDictionary<string, Func<dynamic>> _optionsPortalPlugInOutDeviceNames = new Dictionary<string, Func<dynamic>>();
-        private void AssemblePortalPlugInOutTests(bool fromConf = true)
+        private readonly IReadOnlyList<string> _listPortalTestLanguages = new List<string>() {"Deutsch", "English",
+        "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
+        private readonly IDictionary<string, Func<dynamic>> _optionsPortalTestLanguages = new Dictionary<string, Func<dynamic>>();
+        private void AssemblePortalTests(bool fromConf = true)
         {
+            AssemblePortalPortalTestLanguages();
             AssemblePortalPlugInOutDevices(fromConf);
             if (_optionsPortalTestsWithFuncs.Any()) return;
             //Select Back that will trigger this function again, so try-catch.
@@ -21,14 +25,20 @@ namespace CMTest
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_SIMPLE_PROFILES_SWITCH, Flow_ProfilesSimpleSwitch);
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
-            _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_INSTALLATION, Flow_Installation);
+            _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_INSTALLATION, () => { return _cmd.ShowCmdMenu(_optionsPortalTestLanguages, _optionsPortalTestsWithFuncs); });
             _optionsPortalTestsWithFuncs.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
+        }
+        private void AssemblePortalPortalTestLanguages()
+        {
+            foreach (var item in _listPortalTestLanguages)
+            {
+                _optionsPortalTestLanguages.Add(item, () => { return Flow_Installation(item); });
+            }
+            _optionsPortalTestLanguages.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
         }
         private void AssemblePortalPlugInOutDevices(bool fromConf = true)
         {
             if (_optionsPortalPlugInOutDeviceNames.Any()) return;
-            //_optionsPortalPlugInOutDeviceNames = UtilCloner.CloneList(_xmlOps.GetDeviceNameList());
-            //_optionsPortalPlugInOutDeviceNames.Add(UtilCmd.OptionShowMenuAgain);
             foreach (var item in _xmlOps.GetDeviceNameList())
             {
                 _optionsPortalPlugInOutDeviceNames.Add(item, () => { return RunDirectly_Flow_PlugInOutServer(item, _xmlOps); });
@@ -60,9 +70,9 @@ namespace CMTest
             _portalTestFlows.Flow_PlugInOutServer(deviceName, deviceInfo);
             return MARK_FOUND_RESULT;
         }
-        private dynamic Flow_Installation()
+        private dynamic Flow_Installation(string language)
         {
-            _portalTestFlows.Flow_Installation(_xmlOps, true);
+            _portalTestFlows.Flow_Installation(_xmlOps, true, language);
             return MARK_FOUND_RESULT;
         }
     }

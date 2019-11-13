@@ -49,7 +49,7 @@ namespace CMTest
                 CustomizeIp(); return _cmd.ShowCmdMenu(_optionsTopMenu);
             });
                 _optionsTopMenu.Add(_portalTestFlows.PortalTestActions.SwName, () => {
-                AssemblePortalPlugInOutTests();
+                AssemblePortalTests();
                 return _cmd.ShowCmdMenu(_optionsPortalTestsWithFuncs, _optionsTopMenu);
             } );
                  _optionsTopMenu.Add(_masterPlusTestFlows.MasterPlusTestActions.SwName, () => {

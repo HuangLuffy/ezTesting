@@ -88,11 +88,11 @@ namespace CMTest.Project.MasterPlusPer
             PortalTestActions.LaunchSw();
             PortalTestActions.ProfilesImExAimpadSwitch(TestTimes);
         }
-        public void Flow_Installation(XmlOps deviceInfo, bool checkRemove)
+        public void Flow_Installation(XmlOps deviceInfo, bool checkRemove, string language)
         {
             //PortalTestActions.SetLaunchTimesAndWriteTestTitle(1);
             var buildPath = deviceInfo.GetMasterPlusPerBuildPath();
-            PortalTestActions.Flow_Installation(buildPath, checkRemove);
+            PortalTestActions.Flow_Installation(buildPath, checkRemove, language);
         }
     }
 }
