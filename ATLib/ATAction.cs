@@ -275,7 +275,7 @@ namespace ATLib
         /// 
         /// </summary>
         /// <param name="waitTime"></param>
-        public void DoIAcessible(double waitTime = 0.1)
+        public void DoIAccessible(double waitTime = 0.1)
         {
             //try { DoSetFocus(ele); }catch (Exception) { }
             try
