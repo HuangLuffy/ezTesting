@@ -317,20 +317,20 @@ namespace ATLib
         /// <summary>
         /// 
         /// </summary>
-        public struct DoMode
+        public enum DoMode
         {
             /// <summary>
             /// 
             /// </summary>
-            public const string Select = "Select";
+            Select = 0,
             /// <summary>
             /// 
             /// </summary>
-            public const string Invoke = "Invoke";
+            Invoke = 1,
             /// <summary>
             /// 
             /// </summary>
-            public const string Point = "Point";
+            Point = 2
         }
         #endregion
         /// <summary>

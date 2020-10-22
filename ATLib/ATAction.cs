@@ -19,7 +19,7 @@ namespace ATLib
             AutomationElement = elePara;
         }
 
-        public void DoByMode(string DoMode, double waitTime = 0.1)
+        public void DoByMode(ATAction.DoMode DoMode, double waitTime = 0.1)
         {
             try
             {
@@ -269,6 +269,29 @@ namespace ATLib
                 throw new Exception("DoWindowEvents error." + ex);
             }
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="waitTime"></param>
+        public void DoIAcessible(double waitTime = 0.1)
+        {
+            //try { DoSetFocus(ele); }catch (Exception) { }
+            try
+            {
+                LegacyIAccessiblePattern t = (LegacyIAccessiblePattern)AutomationElement.GetCurrentPattern(LegacyIAccessiblePattern.Pattern);
+
+                t.DoDefaultAction();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("..... error. " + ex);
+            }
+            Thread.Sleep((int)(waitTime * 1000));
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
