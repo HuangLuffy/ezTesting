@@ -159,8 +159,7 @@ namespace CMTest.Project.MasterPlusPer
         public void ProfilesSimpleSwitch(long testTimes)
         {
             var TabItem_Profiles = SwMainWindow.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: ATElement.TreeScope.Descendants);
-            TabItem_Profiles.DoClickPoint();//"DoClick();" does not work
-            UtilTime.WaitTime(1);
+            TabItem_Profiles.DoClickPoint(1);//"DoClick();" does not work
             for (int i = 1; i < testTimes; i++)
             {
                 WriteConsoleTitle(i, $"Starting to simple switch. ({Timeout}s)", Timeout);

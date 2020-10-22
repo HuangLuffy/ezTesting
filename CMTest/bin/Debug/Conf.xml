@@ -6,7 +6,7 @@
   </remoteOS>
   <localOS>
     <masterPlusPerBuildPath>
-		D:\Dev\CM\MPP\MasterPlus(PER. Only)_v1.8.8.4.exe
+		D:\Dev\CM\MPP\MasterPlus(PER. Only)_v1.9.9.6.exe
 	  </masterPlusPerBuildPath>
     <masterPlusBuildPath>
       <ip>1.1.1.1</ip>
@@ -25,5 +25,6 @@
     <device vmName="MH650" waitTime="6" index="1" runTimes="9999">MH650</device>
     <device vmName="MH670" waitTime="6" index="0" runTimes="9999">MH670</device>
     <device vmName="MM710 Gaming Mouse" waitTime="5" index="0" runTimes="9999">MM710 Gaming Mouse</device>
+	<device vmName="Gaming Mouse MM831" waitTime="5" index="0" runTimes="9999">Gaming Mouse MM831</device>
   </vmPlugInOutDevices>
 </conf>

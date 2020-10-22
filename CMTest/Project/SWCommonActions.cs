@@ -25,8 +25,9 @@ namespace CMTest.Project
             }
             catch (Exception)
             {
-                SwMainWindow = new AT().GetElement(Name: Obj.NameMainWidow, ClassName: Obj.ClassNameMainWindow, Timeout: Timeout);
+                //SwMainWindow = new AT().GetElement(Name: Obj.NameMainWidow, ClassName: Obj.ClassNameMainWindow, Timeout: Timeout);
                 HandleWrongStepResult("Cannot find the App.", LaunchTimes);
+                Console.ReadKey();
             }
         }
 

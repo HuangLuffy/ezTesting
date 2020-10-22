@@ -170,13 +170,21 @@ namespace CMTest
             t.Start();
             t.Join();
             var foundUSBAudioDevice = UtilOs.GetDevices().Find(d => d.ToUpper().Contains("USB Audio Device".ToUpper()));
+            var devicesCount = UtilOs.GetDevices().Count(d => d.ToUpper().Contains("MH650".ToUpper()));
             if (foundUSBAudioDevice != null)
             {
                 UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count} - USB Audio Device found.");
             }
-            _xmlOps.SetRestartTimes(Convert.ToInt16(titleLaunchTimes) + 1);
-            UtilTime.WaitTime(1);
-            UtilOS.Reboot();
+            else if(devicesCount != 3)
+            {
+                UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count} - Could not find 3 MH650 items.");
+            }  
+            else
+            {
+                _xmlOps.SetRestartTimes(Convert.ToInt16(titleLaunchTimes) + 1);
+                UtilTime.WaitTime(1);
+                UtilOS.Reboot();
+            } 
         }
         private List<string> PrepareRestartAndGetLogCounts()
         {

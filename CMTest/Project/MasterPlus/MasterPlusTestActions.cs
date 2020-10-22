@@ -22,8 +22,16 @@ namespace CMTest.Project.MasterPlus
             UtilProcess.StartProcess(SwLnkPath);
             Timeout = 11;
             WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
-            //var TabItem_OVERVIEW = new AT().GetElement(ATElementStruct: MasterPlusObj.TabItem_OVERVIEW, Timeout: Timeout);
             SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);
+
+
+            var tTab = SwMainWindow.GetElement(new ATElementStruct()
+                                    {
+                                        Name = "CONFIGURATION",
+                                        ControlType = ATElement.ControlType.TabItem
+                                    }
+            );
+            tTab.DoClickPoint();
         }
         public void CloseSw()
         {

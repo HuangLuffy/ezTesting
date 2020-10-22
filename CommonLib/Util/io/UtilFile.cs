@@ -6,6 +6,31 @@ namespace CommonLib.Util.IO
 {
     public static class UtilFile
     {
+        public static List<string> GetListByFuzzyLine(string fileFullPath, string wildcard)
+        {
+            var lineList = new List<string>();
+            try
+            {
+                using (var streamReader = new StreamReader(fileFullPath))
+                {
+
+                    string line;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        if (line.ToLower().Contains(wildcard.ToLower()))
+                        {
+                            lineList.Add(line);
+                        }
+                    }
+                    return lineList;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public static List<string> GetListByLine(string fileFullPath)
         {
             var lineList = new List<string>();
