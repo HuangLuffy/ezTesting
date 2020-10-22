@@ -2,9 +2,7 @@
 using CMTest.Xml;
 using CommonLib.Util;
 using CommonLib.Util.IO;
-using CommonLib.Util.log;
 using CommonLib.Util.OS;
-using CommonLib.Util.Project;
 using System;
 using System.IO;
 using System.Threading;
@@ -25,11 +23,14 @@ namespace CMTest.Project.MasterPlus
             SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);
 
 
-            var tTab = SwMainWindow.GetElement(new ATElementStruct()
-                                    {
-                                        Name = "CONFIGURATION",
-                                        ControlType = ATElement.ControlType.TabItem
-                                    }
+
+
+            var tTab = SwMainWindow.GetElement(
+                new ATElementStruct()
+                {
+                    Name = "CONFIGURATION",
+                    ControlType = ATElement.ControlType.TabItem
+                }
             );
             tTab.DoClickPoint();
         }
