@@ -49,7 +49,7 @@ namespace ATLib
             AT[] arrAutomationElement = eleList.ToArray();
             return new ATS(arrAutomationElement);
         }
-        public string SelectItemFromCollection(string strIndex = null, string name = null, string strDoMode = SelectMode.Point)
+        public string SelectItemFromCollection(string strIndex = null, string name = null, DoMode doMode = DoMode.Point)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace ATLib
                         throw new Exception(string.Format("The item index {0} does not exist", strIndex, ex.Message));
                     }
                 }
-                ele.DoByMode(strDoMode);
+                ele.DoByMode(doMode);
                 string t_name = "Can not get name";
                 try { t_name = ele.GetElementInfo().Name(); }
                 catch (Exception) { }

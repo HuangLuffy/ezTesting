@@ -23,13 +23,21 @@ namespace CMTest.Project.MasterPlus
             SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);
 
 
+            var tTab1 = SwMainWindow.GetElements(
+                new ATElementStruct()
+                {
+                    Name = "DeviceList",
+                    //ControlType = ATElement.ControlType.TabItem
+                }
+            );
+            tTab1.GetATCollection()[0].GetIAccessible().Description();
 
 
             var tTab = SwMainWindow.GetElement(
                 new ATElementStruct()
                 {
-                    Name = "CONFIGURATION",
-                    ControlType = ATElement.ControlType.TabItem
+                    Name = "DeviceName",
+                    //ControlType = ATElement.ControlType.TabItem
                 }
             );
             tTab.DoClickPoint();

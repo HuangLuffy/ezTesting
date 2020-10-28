@@ -254,6 +254,65 @@ namespace ATLib
                 throw new Exception("DoSetFocus error. " + ex);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IAccessible GetIAccessible()
+        {
+            try
+            {
+                return new IAccessible(new AT(AutomationElement));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetIAccessible error." + ex);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public class IAccessible
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            AT elePara;
+            /// <summary>
+            /// 
+            /// </summary>
+            LegacyIAccessiblePattern.LegacyIAccessiblePatternInformation LegacyIAccessiblePatternInformation;
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="elePara"></param>
+            public IAccessible(AT elePara)
+            {
+                this.elePara = elePara;
+                try
+                {
+                    LegacyIAccessiblePattern t = (LegacyIAccessiblePattern)elePara.AutomationElement.GetCurrentPattern(LegacyIAccessiblePattern.Pattern);
+                    LegacyIAccessiblePatternInformation = t.Current;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Failed to get IAccessible.");
+                }
+            }
+            public string Description(double waitTime = 0.1)
+            {
+                try
+                {
+                    Thread.Sleep((int)(waitTime * 1000));
+                    return LegacyIAccessiblePatternInformation.Description;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Failed to get Description. " + ex);
+                }
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -269,29 +328,6 @@ namespace ATLib
                 throw new Exception("DoWindowEvents error." + ex);
             }
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="waitTime"></param>
-        public void DoIAccessible(double waitTime = 0.1)
-        {
-            //try { DoSetFocus(ele); }catch (Exception) { }
-            try
-            {
-                LegacyIAccessiblePattern t = (LegacyIAccessiblePattern)AutomationElement.GetCurrentPattern(LegacyIAccessiblePattern.Pattern);
-
-                t.DoDefaultAction();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("..... error. " + ex);
-            }
-            Thread.Sleep((int)(waitTime * 1000));
-        }
-
-
         /// <summary>
         /// 
         /// </summary>
