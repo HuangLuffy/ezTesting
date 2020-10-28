@@ -312,6 +312,20 @@ namespace ATLib
                     throw new Exception("Failed to get Description. " + ex);
                 }
             }
+            public void DoDefaultAction(double waitTime = 0.1)
+            {
+                try
+                {
+
+                    LegacyIAccessiblePattern legacyIAccessiblePatternt = (LegacyIAccessiblePattern)elePara.AutomationElement.GetCurrentPattern(LegacyIAccessiblePattern.Pattern);
+                    legacyIAccessiblePatternt.DoDefaultAction();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Failed to DoDefaultAction. " + ex);
+                }
+                Thread.Sleep((int)(waitTime * 1000));
+            }
         }
         /// <summary>
         /// 

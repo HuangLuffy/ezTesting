@@ -23,8 +23,8 @@ namespace CMTest.Project.MasterPlus
             for (var i = 1; i < TEST_TIMES; i++)
             {
                 MasterPlusTestActions.LaunchTimes = i;
-                MasterPlusTestActions.LaunchSw();
-                MasterPlusTestActions.CloseSw();
+                MasterPlusTestActions.LaunchMasterPlus();
+                MasterPlusTestActions.CloseMasterPlus();
             }
         }
 

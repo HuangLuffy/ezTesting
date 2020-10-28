@@ -15,7 +15,7 @@ namespace CMTest.Project.MasterPlus
         {
             Initialize();
         }
-        public void LaunchSw()
+        public void LaunchMasterPlus()
         { 
             UtilProcess.StartProcess(SwLnkPath);
             Timeout = 11;
@@ -42,7 +42,7 @@ namespace CMTest.Project.MasterPlus
             );
             tTab.DoClickPoint();
         }
-        public void CloseSw()
+        public void CloseMasterPlus()
         {
             var buttonClose = SwMainWindow.GetElement(MasterPlusObj.ButtonCloseMainWindow);
             buttonClose.DoClick();
