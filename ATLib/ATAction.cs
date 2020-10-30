@@ -312,6 +312,18 @@ namespace ATLib
                     throw new Exception("Failed to get Description. " + ex);
                 }
             }
+            public string Name(double waitTime = 0.1)
+            {
+                try
+                {
+                    Thread.Sleep((int)(waitTime * 1000));
+                    return LegacyIAccessiblePatternInformation.Name;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Failed to get Description. " + ex);
+                }
+            }
             public void DoDefaultAction(double waitTime = 0.1)
             {
                 try

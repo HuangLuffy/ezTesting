@@ -38,11 +38,26 @@ namespace ATLib
         {
             return GetElement(ATElementStruct, Timeout, TreeScope.Descendants, CheckEnabled, ReturnNullWhenException);
         }
-
         public ATS GetElements(ATElementStruct ATElementStruct, int Timeout = -1, string treeScope = TreeScope.Children, bool ReturnNullWhenException = false)
         {
             return GetElements(treeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ReturnNullWhenException);
         }
+        public AT GetElementFromIA(ATElementStruct ATElementStruct, int Timeout = -1, string treeScope = TreeScope.Children, bool ReturnNullWhenException = false)
+        {
+            var managedATS = GetElements(ATElementStruct, Timeout, treeScope, ReturnNullWhenException);
+            if (ATElementStruct.IADescription != null)
+            {
+                foreach (var at in managedATS.GetATCollection())
+                {
+                    if (ATElementStruct.IADescription.Equals(at.GetIAccessible().Description()))
+                    {
+                        return at;
+                    }
+                }
+            }
+            throw new Exception($"No element with Description [{ATElementStruct.IADescription }].");
+        }
+
         public AT GetElement(ATElementStruct ATElementStruct, int Timeout = -1, string TreeScope = TreeScope.Descendants, bool CheckEnabled = false, bool ReturnNullWhenException = false)
         {
             return GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, Timeout, CheckEnabled, ReturnNullWhenException);
@@ -131,7 +146,6 @@ namespace ATLib
                     {
                         Console.WriteLine($"[{ex.Message}]");
                     }
-
                 }
                 return null;
             }
@@ -253,20 +267,6 @@ namespace ATLib
             try
             {
                 return new AT(AutomationElement.FromHandle(intPtr));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("GetElementFromHwnd error. " + ex.Message);
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Test(AT atObj)
-        {
-            try
-            {
-                var aaa = GetTopLevelWindow(atObj.AutomationElement);
             }
             catch (Exception ex)
             {
