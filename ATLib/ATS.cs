@@ -25,10 +25,10 @@ namespace ATLib
                 return 0;
             }
         }
-        public ATS GetMatchedElements(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string SelectNum = SelectNum.Single)
+        private ATS GetMatchedElements(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string SelectNum = SelectNum.Single)
         {
-            List<AT> eleList = new List<AT>();
-            foreach (AT item in GetATCollection())
+            var eleList = new List<AT>();
+            foreach (var item in GetATCollection())
             {
                 try
                 {
@@ -46,7 +46,7 @@ namespace ATLib
             {
                 throw new Exception("There is no any item matching.");
             }
-            AT[] arrAutomationElement = eleList.ToArray();
+            var arrAutomationElement = eleList.ToArray();
             return new ATS(arrAutomationElement);
         }
         public string SelectItemFromCollection(string strIndex = null, string name = null, DoMode doMode = DoMode.Point)

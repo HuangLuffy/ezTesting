@@ -22,11 +22,11 @@ namespace ATLib
         {
             return new AT(AutomationElement.RootElement);
         }
-        public ATS GetElementsFromChild(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
+        public ATS GetElementsFromChild(ATElementStruct ATElementStruct, int Timeout = -1, bool ReturnNullWhenException = false)
         {
             return GetElements(ATElementStruct, Timeout, TreeScope.Children, ReturnNullWhenException);
         }
-        public ATS GetElementsFromDescendants(ATElementStruct ATElementStruct, int Timeout = -1, bool CheckEnabled = false, bool ReturnNullWhenException = false)
+        public ATS GetElementsFromDescendants(ATElementStruct ATElementStruct, int Timeout = -1, bool ReturnNullWhenException = false)
         {
             return GetElements(ATElementStruct, Timeout, TreeScope.Descendants, ReturnNullWhenException);
         }
@@ -42,7 +42,7 @@ namespace ATLib
         {
             return GetElements(treeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ReturnNullWhenException);
         }
-        public AT GetElementFromIA(ATElementStruct ATElementStruct, int Timeout = -1, string treeScope = TreeScope.Children, bool ReturnNullWhenException = false)
+        public AT GetElementIA(ATElementStruct ATElementStruct, int Timeout = -1, string treeScope = TreeScope.Children, bool ReturnNullWhenException = false)
         {
             var managedATS = GetElements(ATElementStruct, Timeout, treeScope, ReturnNullWhenException);
             if (managedATS == null)
