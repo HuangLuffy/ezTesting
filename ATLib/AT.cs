@@ -45,6 +45,10 @@ namespace ATLib
         public AT GetElementFromIA(ATElementStruct ATElementStruct, int Timeout = -1, string treeScope = TreeScope.Children, bool ReturnNullWhenException = false)
         {
             var managedATS = GetElements(ATElementStruct, Timeout, treeScope, ReturnNullWhenException);
+            if (managedATS == null)
+            {
+                return null;
+            }
             if (ATElementStruct.IADescription != null)
             {
                 foreach (var at in managedATS.GetATCollection())
@@ -55,9 +59,12 @@ namespace ATLib
                     }
                 }
             }
-            throw new Exception($"No element with Description [{ATElementStruct.IADescription }].");
+            if (ReturnNullWhenException)
+            {
+                return null;
+            }
+            throw new Exception($"No element with Description [{ATElementStruct.IADescription}].");
         }
-
         public AT GetElement(ATElementStruct ATElementStruct, int Timeout = -1, string TreeScope = TreeScope.Descendants, bool CheckEnabled = false, bool ReturnNullWhenException = false)
         {
             return GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, Timeout, CheckEnabled, ReturnNullWhenException);
@@ -89,7 +96,7 @@ namespace ATLib
                 if (CheckEnabled != true) return atObj;
                 if (!atObj.GetElementInfo().IsEnabled())
                 {
-                    throw new Exception("This element is not enabled. ");
+                    throw new Exception("This element is not enabled.");
                 }
                 return atObj;
             }
