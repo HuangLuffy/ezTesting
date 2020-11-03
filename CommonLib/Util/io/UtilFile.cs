@@ -25,7 +25,7 @@ namespace CommonLib.Util.IO
                     return lineList;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -47,7 +47,7 @@ namespace CommonLib.Util.IO
                     return lineList;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -88,7 +88,7 @@ namespace CommonLib.Util.IO
                 }
                 return resultList;
             }
-            catch (IOException ex)
+            catch (IOException)
             {
                 return resultList;
             }

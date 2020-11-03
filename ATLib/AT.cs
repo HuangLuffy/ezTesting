@@ -199,7 +199,7 @@ namespace ATLib
         {
             UtilWait.ForTrue(() => GetElementInfo().IsEnabled(), timeout, interval);
         }
-        private bool ContainsAndOrWildcard(String which)
+        private bool ContainsAndOrWildcard(string which)
         {
             if (IsNullOrEmpty(which)) return false;
             return which.Contains(Var.Mark.And) || which.Contains(Var.Mark.Or) || which.Contains(Var.Mark.Wildcard);
@@ -234,7 +234,7 @@ namespace ATLib
                     }
                     if (resultEle == null)
                     {
-                        if (Index != null || Index > 0)
+                        if (Index != null && Index > 0)
                         {
                             resultEle = resultEles[Convert.ToInt16(Index)];
                         }

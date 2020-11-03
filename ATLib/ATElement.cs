@@ -11,16 +11,16 @@ namespace ATLib
         /// <summary>
         /// Z:\WinBlueSliceAutomation\WinBlueSliceAutomation\DeviceConfig\Public\AT_\ATElement.cs
         /// </summary>
-        public struct WaitEvent
+        public enum WaitEvent
         {
             /// <summary>
             /// 
             /// </summary>
-            public const string Existed = "Existed";
+            Existed = 0,
             /// <summary>
             /// 
             /// </summary>
-            public const string Disappeared = "Disappeared";
+            Disappeared = 1
         }
         /// <summary>
         /// 
@@ -35,38 +35,38 @@ namespace ATLib
         /// <summary>
         /// 
         /// </summary>
-        public struct SelectNum
+        public enum SelectNum
         {
             /// <summary>
             /// 
             /// </summary>
-            public const string Single = "Single";
+            Single = 0,
             /// <summary>
             /// 
             /// </summary>
-            public const string All = "All";
+            All = 1
         }
         /// <summary>
         /// 
         /// </summary>
-        public struct WindowMode
+        public enum WindowMode
         {
             /// <summary>
             /// 
             /// </summary>
-            public const string Normal = "Normal";
+            Normal = 0,
             /// <summary>
             /// 
             /// </summary>
-            public const string Maximized = "Maximized";
+            Maximized = 1,
             /// <summary>
             /// 
             /// </summary>
-            public const string Minimized = "Minimized";
+            Minimized = 2,
             /// <summary>
             /// 
             /// </summary>
-            public const string Close = "Close";
+            Close = 3
         }
         /// <summary>
         /// 
@@ -386,7 +386,7 @@ namespace ATLib
         /// <param name="matchName"></param>
         private static bool IsElementMatch(string targetName, string matchName)
         {
-            if (!String.IsNullOrEmpty(matchName))
+            if (!string.IsNullOrEmpty(matchName))
             {
                 if (!UtilMatch.NameMatch(targetName, matchName))
                 {
@@ -552,32 +552,32 @@ namespace ATLib
         /// <returns></returns>
         protected static Condition GetCondition(string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null)
         {
-            List<Condition> conditionList = new List<Condition>();
+            var conditionList = new List<Condition>();
             try
             {
-                if (!String.IsNullOrEmpty(Name) && !Name.Contains(Var.Mark.Wildcard) && !Name.Contains(Var.Mark.Or) && !Name.Contains(Var.Mark.And))
+                if (!string.IsNullOrEmpty(Name) && !Name.Contains(Var.Mark.Wildcard) && !Name.Contains(Var.Mark.Or) && !Name.Contains(Var.Mark.And))
                 {
                     conditionList.Add(new PropertyCondition(AutomationElement.NameProperty, Name));
                 }
-                if (!String.IsNullOrEmpty(AutomationId) && !AutomationId.Contains(Var.Mark.Wildcard) && !AutomationId.Contains(Var.Mark.Or) && !AutomationId.Contains(Var.Mark.And))
+                if (!string.IsNullOrEmpty(AutomationId) && !AutomationId.Contains(Var.Mark.Wildcard) && !AutomationId.Contains(Var.Mark.Or) && !AutomationId.Contains(Var.Mark.And))
                 {
                     conditionList.Add(new PropertyCondition(AutomationElement.AutomationIdProperty, AutomationId));
                 }
-                if (!String.IsNullOrEmpty(ClassName) && !ClassName.Contains(Var.Mark.Wildcard) && !ClassName.Contains(Var.Mark.Or) && !ClassName.Contains(Var.Mark.And))
+                if (!string.IsNullOrEmpty(ClassName) && !ClassName.Contains(Var.Mark.Wildcard) && !ClassName.Contains(Var.Mark.Or) && !ClassName.Contains(Var.Mark.And))
                 {
                     conditionList.Add(new PropertyCondition(AutomationElement.ClassNameProperty, ClassName));
                 }
-                if (!String.IsNullOrEmpty(FrameworkId))
+                if (!string.IsNullOrEmpty(FrameworkId))
                 {
                     conditionList.Add(new PropertyCondition(AutomationElement.FrameworkIdProperty, FrameworkId));
                 }
-                if (!String.IsNullOrEmpty(ControlType))
+                if (!string.IsNullOrEmpty(ControlType))
                 {
                     System.Windows.Automation.ControlType ctrlType = GetControlType(ControlType);
                     conditionList.Add(new PropertyCondition(AutomationElement.ControlTypeProperty, ctrlType));
                 }
-                Condition[] condition = new Condition[conditionList.Count];
-                for (int i = 0; i < conditionList.Count; i++)
+                var condition = new Condition[conditionList.Count];
+                for (var i = 0; i < conditionList.Count; i++)
                 {
                     condition[i] = conditionList[i];
                 }
@@ -585,7 +585,7 @@ namespace ATLib
                 {
                     return condition[0];
                 }
-                else if (conditionList.Count == 0)
+                if (conditionList.Count == 0)
                 {
                     return null;
                 }

@@ -40,6 +40,7 @@ namespace CMTest.Project.MasterPlus
                     //ControlType = ATElement.ControlType.TabItem
                 }
             );
+            tTab.GetElementInfo().IsChecked();
             tTab.DoClickPoint();
         }
         public void CloseMasterPlus()

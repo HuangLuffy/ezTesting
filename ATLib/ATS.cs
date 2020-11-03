@@ -25,7 +25,7 @@ namespace ATLib
                 return 0;
             }
         }
-        private ATS GetMatchedElements(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string SelectNum = SelectNum.Single)
+        private ATS GetMatchedElements(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, SelectNum SelectNumber = SelectNum.Single)
         {
             var eleList = new List<AT>();
             foreach (var item in GetATCollection())
@@ -36,11 +36,13 @@ namespace ATLib
                     {
                         item.GetElement(TreeScope: TreeScope, Name: Name, AutomationId: AutomationId, ClassName: ClassName, FrameworkId: FrameworkId, ControlType: ControlType);
                         eleList.Add(item);
-                        if (SelectNum.Equals(AT.SelectNum.Single))
+                        if (SelectNumber.Equals(AT.SelectNum.Single))
                             break;
                     }
                 }
-                catch (Exception) { }
+                catch (Exception) { 
+                    //ignored
+                }
             }
             if (eleList.Count == 0)
             {
@@ -54,7 +56,7 @@ namespace ATLib
             try
             {
                 AT ele = null;
-                if (!String.IsNullOrEmpty(name))
+                if (!string.IsNullOrEmpty(name))
                 {
                     try
                     {
@@ -77,7 +79,7 @@ namespace ATLib
                     }
                 }
                 ele.DoByMode(doMode);
-                string t_name = "Can not get name";
+                var t_name = "Can not get name";
                 try { t_name = ele.GetElementInfo().Name(); }
                 catch (Exception) { }
                 return t_name;
