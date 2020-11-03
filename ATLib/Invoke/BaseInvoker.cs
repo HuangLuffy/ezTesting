@@ -40,19 +40,19 @@ namespace ATLib.Invoke
         { 
             if (propertyType.Equals(StructPropertyType.index))
             {
-                return parent.GetElement(TreeScope: ATElement.TreeScope.Descendants, Index: int.Parse(propertyValue), ControlType: controlTypeValue);
+                return parent.GetElement(treeScope: ATElement.TreeScope.Descendants, index: int.Parse(propertyValue), controlType: controlTypeValue);
             }
             else if (propertyType.Equals(StructPropertyType.name))
             {
-                return parent.GetElement(TreeScope: ATElement.TreeScope.Descendants, Name: propertyValue, ControlType: controlTypeValue);
+                return parent.GetElement(treeScope: ATElement.TreeScope.Descendants, name: propertyValue, controlType: controlTypeValue);
             }
             else if (propertyType.Equals(StructPropertyType.className))
             {
-                return parent.GetElement(TreeScope: ATElement.TreeScope.Descendants, ClassName: propertyValue, ControlType: controlTypeValue);
+                return parent.GetElement(treeScope: ATElement.TreeScope.Descendants, className: propertyValue, controlType: controlTypeValue);
             }
             else if (propertyType.Equals(StructPropertyType.id))
             {
-                return parent.GetElement(AutomationId: propertyValue, ControlType: controlTypeValue);
+                return parent.GetElement(automationId: propertyValue, controlType: controlTypeValue);
             }
             else if (propertyType.Equals(StructPropertyType.hwnd))
             {

@@ -34,7 +34,7 @@ namespace ATLib
                 {
                     if (IsElementsMatch(atObj: item, name: name, className: className, automationId: automationId))
                     {
-                        item.GetElement(TreeScope: treeScope, Name: name, AutomationId: automationId, ClassName: className, FrameworkId: frameworkId, ControlType: controlType);
+                        item.GetElement(treeScope: treeScope, name: name, automationId: automationId, className: className, frameworkId: frameworkId, controlType: controlType);
                         eleList.Add(item);
                         if (selectNumber.Equals(AT.SelectNum.Single))
                             break;

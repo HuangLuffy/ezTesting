@@ -93,15 +93,15 @@ namespace CMTest.Project.MasterPlusPer
             }
             try
             {
-                profileTmp = SwMainWindow.GetElement(ATElementStruct: PortalObj.Profile_1, TreeScope: ATElement.TreeScope.Descendants, ReturnNullWhenException: true);
+                profileTmp = SwMainWindow.GetElement(aTElementStruct: PortalObj.Profile_1, treeScope: ATElement.TreeScope.Descendants, returnNullWhenException: true);
                 if (profileTmp == null)
                 {
-                    SwMainWindow.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: ATElement.TreeScope.Descendants).DoClickPoint();
+                    SwMainWindow.GetElement(aTElementStruct: PortalObj.TabItem_PROFILES, treeScope: ATElement.TreeScope.Descendants).DoClickPoint();
                     return;
                 }
                 do
                 {
-                    loadingTmp = SwMainWindow.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: ATElement.TreeScope.Descendants, ReturnNullWhenException: true);
+                    loadingTmp = SwMainWindow.GetElement(aTElementStruct: PortalObj.Lable_LOADING, treeScope: ATElement.TreeScope.Descendants, returnNullWhenException: true);
                 } while (loadingTmp != null);
             }
             catch (Exception)
@@ -116,7 +116,7 @@ namespace CMTest.Project.MasterPlusPer
             {
                 while (true)
                 {
-                    loadingTmp = SwMainWindow.GetElement(ATElementStruct: PortalObj.Lable_LOADING, TreeScope: ATElement.TreeScope.Descendants);
+                    loadingTmp = SwMainWindow.GetElement(aTElementStruct: PortalObj.Lable_LOADING, treeScope: ATElement.TreeScope.Descendants);
                 }
             }
             catch (Exception)
@@ -133,12 +133,12 @@ namespace CMTest.Project.MasterPlusPer
             if (whereToClick.Equals("EXPORT"))
             {
                 profileTmp.GetElement(PortalObj.Profile_EXPORT).DoClickPoint();
-                var dialog = SwMainWindow.GetElement(PortalObj.Window_OpenFIle, TreeScope: ATElement.TreeScope.Children, Timeout: 5);
-                var buttonSave = dialog.GetElement(PortalObj.Button_Save, TreeScope: ATElement.TreeScope.Children, Timeout: 1);
+                var dialog = SwMainWindow.GetElement(PortalObj.Window_OpenFIle, treeScope: ATElement.TreeScope.Children, timeout: 5);
+                var buttonSave = dialog.GetElement(PortalObj.Button_Save, treeScope: ATElement.TreeScope.Children, timeout: 1);
                 buttonSave.DoClickPoint();
                 try
                 {
-                    dialog.GetElement(ATElementStruct: PortalObj.Button_Exist_Yes, TreeScope: ATElement.TreeScope.Descendants, Timeout: 1).DoClickPoint();
+                    dialog.GetElement(aTElementStruct: PortalObj.Button_Exist_Yes, treeScope: ATElement.TreeScope.Descendants, timeout: 1).DoClickPoint();
                 }
                 catch (Exception)
                 {
@@ -149,8 +149,8 @@ namespace CMTest.Project.MasterPlusPer
             else if (whereToClick.Equals("IMPORT"))
             {
                 profileTmp.GetElement(PortalObj.Profile_IMPORT).DoClickPoint();
-                var dialog = SwMainWindow.GetElement(PortalObj.Window_OpenFIle, TreeScope: ATElement.TreeScope.Children, Timeout: 5);
-                dialog = dialog.GetElement(PortalObj.Button_Save, TreeScope: ATElement.TreeScope.Children, Timeout: 1);
+                var dialog = SwMainWindow.GetElement(PortalObj.Window_OpenFIle, treeScope: ATElement.TreeScope.Children, timeout: 5);
+                dialog = dialog.GetElement(PortalObj.Button_Save, treeScope: ATElement.TreeScope.Children, timeout: 1);
                 dialog.DoClickPoint();
                 WaitForEvent(profileTmp, loadingTmp, isAimpad);
             }
@@ -158,7 +158,7 @@ namespace CMTest.Project.MasterPlusPer
 
         public void ProfilesSimpleSwitch(long testTimes)
         {
-            var TabItem_Profiles = SwMainWindow.GetElement(ATElementStruct: PortalObj.TabItem_PROFILES, TreeScope: ATElement.TreeScope.Descendants);
+            var TabItem_Profiles = SwMainWindow.GetElement(aTElementStruct: PortalObj.TabItem_PROFILES, treeScope: ATElement.TreeScope.Descendants);
             TabItem_Profiles.DoClickPoint(1);//"DoClick();" does not work
             for (int i = 1; i < testTimes; i++)
             {
@@ -187,15 +187,15 @@ namespace CMTest.Project.MasterPlusPer
                 UtilTime.WaitTime(1);
             }
             UtilProcess.StartProcess(buildPath);
-            AT Window_SelectLauguage = new AT().GetElement(PortalObj.Window_SelectLauguage, Timeout = 5, TreeScope: AT.TreeScope.Children);
+            AT Window_SelectLauguage = new AT().GetElement(PortalObj.Window_SelectLauguage, Timeout = 5, treeScope: AT.TreeScope.Children);
 
             AT ComboBox_SelectLauguage = Window_SelectLauguage.GetElement(PortalObj.ComboBox_SelectLauguage);
             ComboBox_SelectLauguage.DoExpand();
-            Window_SelectLauguage = new AT().GetElement(PortalObj.Window_SelectLauguage, Timeout = 5, TreeScope: AT.TreeScope.Children); //refresh
-            Window_SelectLauguage.GetElement(Name: language, TreeScope: AT.TreeScope.Descendants).DoSelect(1);
+            Window_SelectLauguage = new AT().GetElement(PortalObj.Window_SelectLauguage, Timeout = 5, treeScope: AT.TreeScope.Children); //refresh
+            Window_SelectLauguage.GetElement(name: language, treeScope: AT.TreeScope.Descendants).DoSelect(1);
             AT Button_OK = Window_SelectLauguage.GetElement(PortalObj.Button_Install_OK, Timeout = 2);
             Button_OK.DoClick(1);
-            AT Window_InstallWizard = new AT().GetElement(PortalObj.Window_InstallWizard, Timeout = 5, TreeScope: AT.TreeScope.Children);
+            AT Window_InstallWizard = new AT().GetElement(PortalObj.Window_InstallWizard, Timeout = 5, treeScope: AT.TreeScope.Children);
             UtilTime.WaitTime(1);
             AT Button_RemoveCache = Window_InstallWizard.GetElement(PortalObj.CheckBox_RemoveCache, Timeout = 2);
             Button_RemoveCache.DoClickPoint(waitTime:1);
@@ -222,7 +222,7 @@ namespace CMTest.Project.MasterPlusPer
             AT CheckBox_LaunchPortal = Window_InstallWizard.GetElement(PortalObj.CheckBox_LaunchPortal, Timeout = 20);
             AT Button_Finish = Window_InstallWizard.GetElement(PortalObj.Button_Finish);
             Button_Finish.DoClick(1);
-            AT Window_MasterPlusPer = new AT().GetElement(PortalObj.Window_MasterPlusPer, Timeout:10);
+            AT Window_MasterPlusPer = new AT().GetElement(PortalObj.Window_MasterPlusPer, timeout:10);
         }
     }
 }

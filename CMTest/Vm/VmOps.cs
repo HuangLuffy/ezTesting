@@ -30,12 +30,12 @@ namespace CMTest.Vm
             AT itemTarget;
             if (targetIndex > 0) // Show 2 identical devices in VM.
             {
-                var itemTargets = new AT().GetElements(Name: deviceNameVm, TreeScope: ATElement.TreeScope.Descendants, ControlType: ATElement.ControlType.MenuItem);
+                var itemTargets = new AT().GetElements(name: deviceNameVm, treeScope: ATElement.TreeScope.Descendants, controlType: ATElement.ControlType.MenuItem);
                 itemTarget = itemTargets.GetATCollection()[targetIndex];
             }
             else
             {
-                itemTarget = new AT().GetElement(Name: deviceNameVm, TreeScope: ATElement.TreeScope.Descendants, ControlType: ATElement.ControlType.MenuItem);
+                itemTarget = new AT().GetElement(name: deviceNameVm, treeScope: ATElement.TreeScope.Descendants, controlType: ATElement.ControlType.MenuItem);
             }
             return itemTarget;
         }
