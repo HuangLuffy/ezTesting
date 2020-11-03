@@ -5,7 +5,7 @@ namespace ATLib
 {
     public class ATS : ATElement
     {
-        private AT[] ats = null;
+        private AT[] ats;
         public ATS(AT[] ats)
         {
             this.ats = ats;
@@ -25,18 +25,18 @@ namespace ATLib
                 return 0;
             }
         }
-        private ATS GetMatchedElements(string TreeScope = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, SelectNum SelectNumber = SelectNum.Single)
+        private ATS GetMatchedElements(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string index = null, SelectNum selectNumber = SelectNum.Single)
         {
             var eleList = new List<AT>();
             foreach (var item in GetATCollection())
             {
                 try
                 {
-                    if (IsElementsMatch(atObj: item, Name: Name, ClassName: ClassName, AutomationId: AutomationId))
+                    if (IsElementsMatch(atObj: item, name: name, className: className, automationId: automationId))
                     {
-                        item.GetElement(TreeScope: TreeScope, Name: Name, AutomationId: AutomationId, ClassName: ClassName, FrameworkId: FrameworkId, ControlType: ControlType);
+                        item.GetElement(TreeScope: treeScope, Name: name, AutomationId: automationId, ClassName: className, FrameworkId: frameworkId, ControlType: controlType);
                         eleList.Add(item);
-                        if (SelectNumber.Equals(AT.SelectNum.Single))
+                        if (selectNumber.Equals(AT.SelectNum.Single))
                             break;
                     }
                 }
@@ -55,12 +55,12 @@ namespace ATLib
         {
             try
             {
-                AT ele = null;
+                AT ele;
                 if (!string.IsNullOrEmpty(name))
                 {
                     try
                     {
-                        ele = GetMatchedElements(Name: name, TreeScope: TreeScope.Element).GetATCollection()[0];
+                        ele = GetMatchedElements(name: name, treeScope: TreeScope.Element).GetATCollection()[0];
                     }
                     catch (Exception ex)
                     {
@@ -79,10 +79,16 @@ namespace ATLib
                     }
                 }
                 ele.DoByMode(doMode);
-                var t_name = "Can not get name";
-                try { t_name = ele.GetElementInfo().Name(); }
-                catch (Exception) { }
-                return t_name;
+                var tName = "Can not get name";
+                try
+                {
+                    tName = ele.GetElementInfo().Name();
+                }
+                catch (Exception)
+                {
+                    //ignored
+                }
+                return tName;
             }
             catch (Exception)
             {

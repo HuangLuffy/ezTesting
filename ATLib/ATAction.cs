@@ -279,22 +279,22 @@ namespace ATLib
             /// <summary>
             /// 
             /// </summary>
-            AT elePara;
+            private readonly AT _elePara;
             /// <summary>
             /// 
             /// </summary>
-            LegacyIAccessiblePattern.LegacyIAccessiblePatternInformation LegacyIAccessiblePatternInformation;
+            private LegacyIAccessiblePattern.LegacyIAccessiblePatternInformation _legacyIAccessiblePatternInformation;
             /// <summary>
             /// 
             /// </summary>
             /// <param name="elePara"></param>
             public IAccessible(AT elePara)
             {
-                this.elePara = elePara;
+                this._elePara = elePara;
                 try
                 {
                     var t = (LegacyIAccessiblePattern)elePara.AutomationElement.GetCurrentPattern(LegacyIAccessiblePattern.Pattern);
-                    LegacyIAccessiblePatternInformation = t.Current;
+                    _legacyIAccessiblePatternInformation = t.Current;
                 }
                 catch (Exception)
                 {
@@ -306,7 +306,7 @@ namespace ATLib
                 try
                 {
                     Thread.Sleep((int)(waitTime * 1000));
-                    return LegacyIAccessiblePatternInformation.Description;
+                    return _legacyIAccessiblePatternInformation.Description;
                 }
                 catch (Exception ex)
                 {
@@ -318,7 +318,7 @@ namespace ATLib
                 try
                 {
                     Thread.Sleep((int)(waitTime * 1000));
-                    return LegacyIAccessiblePatternInformation.Name;
+                    return _legacyIAccessiblePatternInformation.Name;
                 }
                 catch (Exception ex)
                 {
@@ -330,7 +330,7 @@ namespace ATLib
                 try
                 {
 
-                    var legacyIAccessiblePattern = (LegacyIAccessiblePattern)elePara.AutomationElement.GetCurrentPattern(LegacyIAccessiblePattern.Pattern);
+                    var legacyIAccessiblePattern = (LegacyIAccessiblePattern)_elePara.AutomationElement.GetCurrentPattern(LegacyIAccessiblePattern.Pattern);
                     legacyIAccessiblePattern.DoDefaultAction();
                 }
                 catch (Exception ex)

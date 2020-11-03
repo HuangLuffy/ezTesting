@@ -66,7 +66,7 @@ namespace CMTest.Project.MasterPlus
                 UtilProcess.StartProcess(SwLnkPath);
                 Timeout = 1;
                 UtilCmd.WriteTitle($"{titleTotal} - Searching MP+ UI.");
-                DateTime starttime = DateTime.Now;
+                var starttime = DateTime.Now;
                 var DialogWarning = UtilWait.ForAnyResultCatch(() => {
                     UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - starttime).Seconds}s.");
                     SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);  // The MP+ will change after a while.
@@ -92,7 +92,7 @@ namespace CMTest.Project.MasterPlus
             logLines.ForEach(line => UtilCmd.WriteLine(line));
             var titleLaunchTimes = xmlOps.GetRestartTimes();
             var titleTotal = $"Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count}";
-            Thread t = UtilWait.WaitAnimationThread($"{titleTotal} - Waiting 35s.", 35);
+            var t = UtilWait.WaitAnimationThread($"{titleTotal} - Waiting 35s.", 35);
             t.Start();
             t.Join();
             if (!File.Exists(SwLnkPath))
@@ -103,9 +103,9 @@ namespace CMTest.Project.MasterPlus
             UtilProcess.StartProcess(SwLnkPath);
             Timeout = 1;
             UtilCmd.WriteTitle($"{titleTotal} - Searching MP+ UI.");
-            DateTime starttime = DateTime.Now;
-            var DialogWarning = UtilWait.ForAnyResultCatch(() => {
-                UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - starttime).Seconds}s.");
+            var startTime = DateTime.Now;
+            var dialogWarning = UtilWait.ForAnyResultCatch(() => {
+                UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - startTime).Seconds}s.");
                 SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);  // The MP+ will change after a while.
                 return SwMainWindow.GetElement(MasterPlusObj.DialogWarning, Timeout);
             }, 60, 3);
@@ -115,7 +115,7 @@ namespace CMTest.Project.MasterPlus
                 UtilCapturer.Capture(screenshotPath);
                 UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - Could not open MasterPlus.");
             }     
-            else if (DialogWarning != null)
+            else if (dialogWarning != null)
             {
                 UtilCapturer.Capture(screenshotPath);
                 //UtilCmd.WriteTitle($"Restart Times: {titleLaunchTimes} - The device was not displayed");

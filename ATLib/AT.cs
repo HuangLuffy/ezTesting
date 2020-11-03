@@ -245,7 +245,7 @@ namespace ATLib
                         {
                             foreach (AutomationElement item in resultEles)
                             {
-                                if (IsElementsMatch(atObj: new AT(item), Name: Name, ClassName: ClassName, AutomationId: AutomationId))
+                                if (IsElementsMatch(atObj: new AT(item), name: Name, className: ClassName, automationId: AutomationId))
                                 {
                                     return new AT(item);
                                 }
@@ -254,7 +254,7 @@ namespace ATLib
                     }
                 }
                 var atObj = new AT(resultEle);
-                if (resultEle != null && IsElementsMatch(atObj: atObj, Name: Name, ClassName: ClassName, AutomationId: AutomationId))
+                if (resultEle != null && IsElementsMatch(atObj: atObj, name: Name, className: ClassName, automationId: AutomationId))
                 {
                     return atObj;
                 }

@@ -337,40 +337,40 @@ namespace ATLib
         /// 
         /// </summary>
         /// <param name="atObj"></param>
-        /// <param name="TreeScope"></param>
-        /// <param name="Name"></param>
-        /// <param name="AutomationId"></param>
-        /// <param name="ClassName"></param>
-        /// <param name="FrameworkId"></param>
-        /// <param name="ControlType"></param>
+        /// <param name="treeScope"></param>
+        /// <param name="name"></param>
+        /// <param name="automationId"></param>
+        /// <param name="className"></param>
+        /// <param name="frameworkId"></param>
+        /// <param name="controlType"></param>
         /// <returns></returns>
-        protected static bool IsElementsMatch(AT atObj = null, string Name = null, string TreeScope = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null)
+        protected static bool IsElementsMatch(AT atObj = null, string name = null, string treeScope = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null)
         {
             try
             {
                 var t = "";
                 try
                 {
-                    t = atObj.GetElementInfo().Name();
+                    t = atObj?.GetElementInfo().Name();
                 }
                 catch (Exception) { }
-                IsElementMatch(t, Name);
+                IsElementMatch(t, name);
 
-                try { t = atObj.GetElementInfo().ClassName(); }
+                try { t = atObj?.GetElementInfo().ClassName(); }
                 catch (Exception) { }
-                IsElementMatch(t, ClassName);
+                IsElementMatch(t, className);
 
-                try { t = atObj.GetElementInfo().AutomationId(); }
+                try { t = atObj?.GetElementInfo().AutomationId(); }
                 catch (Exception) { }
-                IsElementMatch(t, AutomationId);
+                IsElementMatch(t, automationId);
 
-                try { t = atObj.GetElementInfo().ControlType(); }
+                try { t = atObj?.GetElementInfo().ControlType(); }
                 catch (Exception) { }
-                IsElementMatch(t, ControlType);
+                IsElementMatch(t, controlType);
 
-                try { t = atObj.GetElementInfo().FrameworkId(); }
+                try { t = atObj?.GetElementInfo().FrameworkId(); }
                 catch (Exception) { }
-                IsElementMatch(t, FrameworkId);
+                IsElementMatch(t, frameworkId);
 
                 return true;
             }
@@ -544,36 +544,36 @@ namespace ATLib
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Name"></param>
-        /// <param name="AutomationId"></param>
-        /// <param name="ClassName"></param>
-        /// <param name="FrameworkId"></param>
-        /// <param name="ControlType"></param>
+        /// <param name="name"></param>
+        /// <param name="automationId"></param>
+        /// <param name="className"></param>
+        /// <param name="frameworkId"></param>
+        /// <param name="controlType"></param>
         /// <returns></returns>
-        protected static Condition GetCondition(string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null)
+        protected static Condition GetCondition(string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null)
         {
             var conditionList = new List<Condition>();
             try
             {
-                if (!string.IsNullOrEmpty(Name) && !Name.Contains(Var.Mark.Wildcard) && !Name.Contains(Var.Mark.Or) && !Name.Contains(Var.Mark.And))
+                if (!string.IsNullOrEmpty(name) && !name.Contains(Var.Mark.Wildcard) && !name.Contains(Var.Mark.Or) && !name.Contains(Var.Mark.And))
                 {
-                    conditionList.Add(new PropertyCondition(AutomationElement.NameProperty, Name));
+                    conditionList.Add(new PropertyCondition(AutomationElement.NameProperty, name));
                 }
-                if (!string.IsNullOrEmpty(AutomationId) && !AutomationId.Contains(Var.Mark.Wildcard) && !AutomationId.Contains(Var.Mark.Or) && !AutomationId.Contains(Var.Mark.And))
+                if (!string.IsNullOrEmpty(automationId) && !automationId.Contains(Var.Mark.Wildcard) && !automationId.Contains(Var.Mark.Or) && !automationId.Contains(Var.Mark.And))
                 {
-                    conditionList.Add(new PropertyCondition(AutomationElement.AutomationIdProperty, AutomationId));
+                    conditionList.Add(new PropertyCondition(AutomationElement.AutomationIdProperty, automationId));
                 }
-                if (!string.IsNullOrEmpty(ClassName) && !ClassName.Contains(Var.Mark.Wildcard) && !ClassName.Contains(Var.Mark.Or) && !ClassName.Contains(Var.Mark.And))
+                if (!string.IsNullOrEmpty(className) && !className.Contains(Var.Mark.Wildcard) && !className.Contains(Var.Mark.Or) && !className.Contains(Var.Mark.And))
                 {
-                    conditionList.Add(new PropertyCondition(AutomationElement.ClassNameProperty, ClassName));
+                    conditionList.Add(new PropertyCondition(AutomationElement.ClassNameProperty, className));
                 }
-                if (!string.IsNullOrEmpty(FrameworkId))
+                if (!string.IsNullOrEmpty(frameworkId))
                 {
-                    conditionList.Add(new PropertyCondition(AutomationElement.FrameworkIdProperty, FrameworkId));
+                    conditionList.Add(new PropertyCondition(AutomationElement.FrameworkIdProperty, frameworkId));
                 }
-                if (!string.IsNullOrEmpty(ControlType))
+                if (!string.IsNullOrEmpty(controlType))
                 {
-                    System.Windows.Automation.ControlType ctrlType = GetControlType(ControlType);
+                    System.Windows.Automation.ControlType ctrlType = GetControlType(controlType);
                     conditionList.Add(new PropertyCondition(AutomationElement.ControlTypeProperty, ctrlType));
                 }
                 var condition = new Condition[conditionList.Count];
