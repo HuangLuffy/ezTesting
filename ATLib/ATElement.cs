@@ -289,30 +289,30 @@ namespace ATLib
         /// <summary>
         /// 
         /// </summary>
-        public struct ClickMode
+        public enum ClickMode
         {
             /// <summary>
             /// 
             /// </summary>
-            public const string Invoke = "Invoke";
+            Invoke = 0,
             /// <summary>
             /// 
             /// </summary>
-            public const string Point = "Point";
+            Point = 1
         }
         /// <summary>
         /// 
         /// </summary>
-        public struct SelectMode
+        public enum SelectMode
         {
             /// <summary>
             /// 
             /// </summary>
-            public const string Select = "Select";
+            Select = 0,
             /// <summary>
             /// 
             /// </summary>
-            public const string Point = ClickMode.Point;
+            Point = 1
         }
         /// <summary>
         /// 
@@ -406,106 +406,103 @@ namespace ATLib
             {
                 return System.Windows.Automation.ControlType.ListItem;
             }
-            else if (ctrlType.Equals(ControlType.List))
+            if (ctrlType.Equals(ControlType.List))
             {
                 return System.Windows.Automation.ControlType.List;
             }
-            else if (ctrlType.Equals(ControlType.TreeItem))
+            if (ctrlType.Equals(ControlType.TreeItem))
             {
                 return System.Windows.Automation.ControlType.TreeItem;
             }
-            else if (ctrlType.Equals(ControlType.Button))
+            if (ctrlType.Equals(ControlType.Button))
             {
                 return System.Windows.Automation.ControlType.Button;
             }
-            else if (ctrlType.Equals(ControlType.Hyperlink))
+            if (ctrlType.Equals(ControlType.Hyperlink))
             {
                 return System.Windows.Automation.ControlType.Hyperlink;
             }
-            else if (ctrlType.Equals(ControlType.Custom))
+            if (ctrlType.Equals(ControlType.Custom))
             {
                 return System.Windows.Automation.ControlType.Custom;
             }
-            else if (ctrlType.Equals(ControlType.Pane))
+            if (ctrlType.Equals(ControlType.Pane))
             {
                 return System.Windows.Automation.ControlType.Pane;
             }
-            else if (ctrlType.Equals(ControlType.Edit))
+            if (ctrlType.Equals(ControlType.Edit))
             {
                 return System.Windows.Automation.ControlType.Edit;
             }
-            else if (ctrlType.Equals(ControlType.Tab))
+            if (ctrlType.Equals(ControlType.Tab))
             {
                 return System.Windows.Automation.ControlType.Tab;
             }
-            else if (ctrlType.Equals(ControlType.TabItem))
+            if (ctrlType.Equals(ControlType.TabItem))
             {
                 return System.Windows.Automation.ControlType.TabItem;
             }
-            else if (ctrlType.Equals(ControlType.Window))
+            if (ctrlType.Equals(ControlType.Window))
             {
                 return System.Windows.Automation.ControlType.Window;
             }
-            else if (ctrlType.Equals(ControlType.Text))
+            if (ctrlType.Equals(ControlType.Text))
             {
                 return System.Windows.Automation.ControlType.Text;
             }
-            else if (ctrlType.Equals(ControlType.Tree))
+            if (ctrlType.Equals(ControlType.Tree))
             {
                 return System.Windows.Automation.ControlType.Tree;
             }
-            else if (ctrlType.Equals(ControlType.ComboBox))
+            if (ctrlType.Equals(ControlType.ComboBox))
             {
                 return System.Windows.Automation.ControlType.ComboBox;
             }
-            else if (ctrlType.Equals(ControlType.DataItem))
+            if (ctrlType.Equals(ControlType.DataItem))
             {
                 return System.Windows.Automation.ControlType.DataItem;
             }
-            else if (ctrlType.Equals(ControlType.DataGrid))
+            if (ctrlType.Equals(ControlType.DataGrid))
             {
                 return System.Windows.Automation.ControlType.DataGrid;
             }
-            else if (ctrlType.Equals(ControlType.RadioButton))
+            if (ctrlType.Equals(ControlType.RadioButton))
             {
                 return System.Windows.Automation.ControlType.RadioButton;
             }
-            else if (ctrlType.Equals(ControlType.Hyperlink))
+            if (ctrlType.Equals(ControlType.Hyperlink))
             {
                 return System.Windows.Automation.ControlType.Hyperlink;
             }
-            else if (ctrlType.Equals(ControlType.CheckBox))
+            if (ctrlType.Equals(ControlType.CheckBox))
             {
                 return System.Windows.Automation.ControlType.CheckBox;
             }
-            else if (ctrlType.Equals(ControlType.Text))
+            if (ctrlType.Equals(ControlType.Text))
             {
                 return System.Windows.Automation.ControlType.Text;
             }
-            else if (ctrlType.Equals(ControlType.Menu))
+            if (ctrlType.Equals(ControlType.Menu))
             {
                 return System.Windows.Automation.ControlType.Menu;
             }
-            else if (ctrlType.Equals(ControlType.MenuItem))
+            if (ctrlType.Equals(ControlType.MenuItem))
             {
                 return System.Windows.Automation.ControlType.MenuItem;
             }
-            else if (ctrlType.Equals(ControlType.ToolBar))
+            if (ctrlType.Equals(ControlType.ToolBar))
             {
                 return System.Windows.Automation.ControlType.ToolBar;
             }
-            else if (ctrlType.Equals(ControlType.ToolTip))
+            if (ctrlType.Equals(ControlType.ToolTip))
             {
                 return System.Windows.Automation.ControlType.ToolTip;
             }
-            else if (ctrlType.Equals(ControlType.MenuBar))
+            if (ctrlType.Equals(ControlType.MenuBar))
             {
                 return System.Windows.Automation.ControlType.MenuBar;
             }
-            else
-            {
-                throw new Exception("Failed to get ControlType " + ctrlType + ".");
-            }
+            throw new Exception("Failed to get ControlType " + ctrlType + ".");
         }
         /// <summary>
         /// 
@@ -514,45 +511,35 @@ namespace ATLib
         /// <returns></returns>
         protected static System.Windows.Automation.TreeScope GetTreeScope(string treeScope)
         {
-            try
+            if (string.IsNullOrEmpty(treeScope))
             {
-                if (String.IsNullOrEmpty(treeScope))
-                {
-                    return System.Windows.Automation.TreeScope.Children;
-                }
-                else if(treeScope.Equals(TreeScope.Children))
-                {
-                    return System.Windows.Automation.TreeScope.Children;
-                }
-                else if (treeScope.Equals(TreeScope.Descendants))
-                {
-                    return System.Windows.Automation.TreeScope.Descendants;
-                }
-                else if (treeScope.Equals(TreeScope.Parent))
-                {
-                    return System.Windows.Automation.TreeScope.Parent;
-                }
-                else if (treeScope.Equals(TreeScope.Element))
-                {
-                    return System.Windows.Automation.TreeScope.Element;
-                }
-                else if (treeScope.Equals(TreeScope.Subtree))
-                {
-                    return System.Windows.Automation.TreeScope.Subtree;
-                }
-                else if (treeScope.Equals(TreeScope.Ancestors))
-                {
-                    return System.Windows.Automation.TreeScope.Ancestors;
-                }
-                else
-                {
-                    throw new Exception("Failed to get TreeScope. Current treeScope = " + treeScope + " .");
-                }
+                return System.Windows.Automation.TreeScope.Children;
             }
-            catch (Exception)
+            if(treeScope.Equals(TreeScope.Children))
             {
-                throw;
+                return System.Windows.Automation.TreeScope.Children;
             }
+            if (treeScope.Equals(TreeScope.Descendants))
+            {
+                return System.Windows.Automation.TreeScope.Descendants;
+            }
+            if (treeScope.Equals(TreeScope.Parent))
+            {
+                return System.Windows.Automation.TreeScope.Parent;
+            }
+            if (treeScope.Equals(TreeScope.Element))
+            {
+                return System.Windows.Automation.TreeScope.Element;
+            }
+            if (treeScope.Equals(TreeScope.Subtree))
+            {
+                return System.Windows.Automation.TreeScope.Subtree;
+            }
+            if (treeScope.Equals(TreeScope.Ancestors))
+            {
+                return System.Windows.Automation.TreeScope.Ancestors;
+            }
+            throw new Exception("Failed to get TreeScope. Current treeScope = " + treeScope + " .");
         }
         /// <summary>
         /// 
