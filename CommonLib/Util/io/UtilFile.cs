@@ -52,14 +52,14 @@ namespace CommonLib.Util.IO
                 return null;
             }
         }
-        public static void WriteFileWhenNotExists(string fileFullPath, string content = "", Boolean append = true)
+        public static void WriteFileWhenNotExists(string fileFullPath, string content = "", bool append = true)
         {
             if (!File.Exists(fileFullPath))
             {
                 WriteFile(fileFullPath, content, append);
             } 
         }
-        public static void WriteFile(string fileFullPath, string content = "", Boolean append = true)
+        public static void WriteFile(string fileFullPath, string content = "", bool append = true)
         {
             UtilFolder.CreateDirectory(Path.GetDirectoryName(fileFullPath));
             using (var streamWriter = new StreamWriter(fileFullPath, append))
