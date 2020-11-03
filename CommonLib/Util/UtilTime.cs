@@ -81,7 +81,7 @@ namespace CommonLib.Util
             if (interval == DateInterval.Month)
                 return (newTime.Month - oldTime.Month) + (12 * (newTime.Year - oldTime.Year));
 
-            TimeSpan ts = newTime - oldTime;
+            var ts = newTime - oldTime;
 
             switch (interval)
             {
@@ -157,7 +157,12 @@ namespace CommonLib.Util
             });
             _counterThread.Start();
         }
-       
+        //(DateTime.Now - dateTime).Seconds;
+        public TimeSpan TimeElapsed(DateTime dateTime)
+        {
+            return DateTime.Now - dateTime;
+        }
+
         private static void TimeElapsedEvent(object source, ElapsedEventArgs e)
         {
             Console.WriteLine($"The Elapsed event was raised at {e.SignalTime}");

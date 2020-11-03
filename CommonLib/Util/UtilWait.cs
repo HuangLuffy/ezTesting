@@ -90,7 +90,7 @@ namespace CommonLib.Util
         {
             return new Thread(() =>
             {
-                int s = 0;
+                var s = 0;
                 while (true)
                 {
                     UtilTime.WaitTime(1);
