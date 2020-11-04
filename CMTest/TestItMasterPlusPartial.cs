@@ -10,12 +10,16 @@ namespace CMTest
     {
         private readonly IDictionary<string, Func<dynamic>> _optionsMasterPlusTestsWithFuncs = new Dictionary<string, Func<dynamic>>();
 
-        private void AssembleMasterPlusPlugInOutTests()
+        private void AssembleMasterPlusPlugInOutTests(bool fromConf = true)
         {
             if (_optionsMasterPlusTestsWithFuncs.Any()) return;
-            //Select Back that will trigger this function again, so try-catch.
             _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_TEST, Flow_MasterPlus_LaunchTest);
             _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_CHECK_CRASH, Flow_MasterPlus_LaunchAndCheckCrash);
+
+            AssemblePortalPortalTestLanguages();
+            AssemblePortalPlugInOutDevices(fromConf);
+            _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_TEST, () => _cmd.ShowCmdMenu(_optionsXmlPlugInOutDeviceNames, _optionsPortalTestsWithFuncs));
+
             //_optionsMasterPlusTestsWithFuncs.Add(UtilCmd.Result.SHOW_MENU_AGAIN, _cmd.MenuShowAgain);
             _optionsMasterPlusTestsWithFuncs.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
         }
@@ -35,6 +39,12 @@ namespace CMTest
         public void RestartSystemAndCheckDeviceRecognition()
         {
             _masterPlusTestFlows.Flow_RestartSystemAndCheckDeviceRecognition(_xmlOps);
+        }
+
+        private dynamic Flow_KeymappingTest()
+        {
+            _masterPlusTestFlows.Flow_KeymappingTest(_xmlOps);
+            return MARK_FOUND_RESULT;
         }
     }
 }

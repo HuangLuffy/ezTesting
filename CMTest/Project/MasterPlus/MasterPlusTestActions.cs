@@ -54,9 +54,9 @@ namespace CMTest.Project.MasterPlus
 
         public void LaunchAndCheckCrash(long testTimes)
         {
-            int crashTimes = 0;
+            var crashTimes = 0;
             UtilCmd.Clear();
-            for (int i = 1; i < testTimes; i++)
+            for (var i = 1; i < testTimes; i++)
             {
                 var titleTotal = $"Reopen Times: {i} - Crash Times: {crashTimes}";
                 var logLines = UtilFile.ReadFileByLine(LogPathLaunch);
@@ -66,9 +66,9 @@ namespace CMTest.Project.MasterPlus
                 UtilProcess.StartProcess(SwLnkPath);
                 Timeout = 1;
                 UtilCmd.WriteTitle($"{titleTotal} - Searching MP+ UI.");
-                var starttime = DateTime.Now;
-                var DialogWarning = UtilWait.ForAnyResultCatch(() => {
-                    UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - starttime).Seconds}s.");
+                var startTime = DateTime.Now;
+                var dialogWarning = UtilWait.ForAnyResultCatch(() => {
+                    UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - startTime).Seconds}s.");
                     SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);  // The MP+ will change after a while.
                     return SwMainWindow.GetElement(MasterPlusObj.DialogWarning, Timeout);
                 }, 60, 2);

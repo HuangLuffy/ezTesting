@@ -10,9 +10,10 @@ namespace CMTest.Project.MasterPlus
         {
             public const string OPTION_LAUNCH_TEST = "Launch Test";
             public const string OPTION_LAUNCH_CHECK_CRASH = "Launch and check crash";
+            public const string OPTION_TEST = "Test";
         }
         
-        public static long TEST_TIMES = 99999999;
+        private static readonly long TEST_TIMES = 99999999;
 
         public readonly MasterPlusTestActions MasterPlusTestActions = new MasterPlusTestActions();
         /// <summary>
@@ -36,6 +37,11 @@ namespace CMTest.Project.MasterPlus
         public void Flow_LaunchAndCheckCrash()
         {
             MasterPlusTestActions.LaunchAndCheckCrash(TEST_TIMES);
+        }
+
+        public void Flow_KeymappingTest(XmlOps xmlOps)
+        {
+            var aa = xmlOps.GetVmPlugInOutDeviceNeedToRun();
         }
     }
 }

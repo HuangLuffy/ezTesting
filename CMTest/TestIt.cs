@@ -29,8 +29,11 @@ namespace CMTest
         private readonly XmlOps _xmlOps = new XmlOps();
         private readonly MonitorAction _monitorAction = new MonitorAction();
         private RemoteOS _remoteOS;
-        public static object UtilRegrex { get; private set; }
+        //public static object UtilRegrex { get; private set; }
         private readonly IDictionary<string, Func<dynamic>> _optionsTopMenu = new Dictionary<string, Func<dynamic>>();
+        private readonly IDictionary<string, Func<dynamic>> _optionsXmlPlugInOutDeviceNames = new Dictionary<string, Func<dynamic>>();
+        private readonly IReadOnlyList<string> _listXmlTestLanguages = new List<string>() {"Deutsch", "English",
+            "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
             _masterPlusTestFlows = new MasterPlusTestFlows();

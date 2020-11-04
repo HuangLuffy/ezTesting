@@ -59,7 +59,7 @@ namespace CMTest.Xml
         {
             return _devicesDict[deviceName][AttributeRunTimes];
         }
-        public List<string> GetDeviceNameList()
+        public IEnumerable<string> GetDeviceNameList()
         {
             return _devicesDict.Keys.ToList();
         }
