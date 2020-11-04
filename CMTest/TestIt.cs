@@ -43,10 +43,12 @@ namespace CMTest
             if (_optionsTopMenu.Any()) return;
                 _optionsTopMenu.Add(AddCommentForOption(OPTION_CONNECT_IP, _xmlOps.GetRemoteOsIp().Trim()), () => {
                 var remoteOsIp = _xmlOps.GetRemoteOsIp().Trim();
-                ConnectRemoteOsAvailable(remoteOsIp); return _cmd.ShowCmdMenu(_optionsTopMenu);
+                ConnectRemoteOsAvailable(remoteOsIp);
+                return _cmd.ShowCmdMenu(_optionsTopMenu);
             });
                 _optionsTopMenu.Add(OPTION_INPUT_IP, () => {
-                CustomizeIp(); return _cmd.ShowCmdMenu(_optionsTopMenu);
+                CustomizeIp();
+                return _cmd.ShowCmdMenu(_optionsTopMenu);
             });
                 _optionsTopMenu.Add(_portalTestFlows.PortalTestActions.SwName, () => {
                 AssemblePortalTests();
@@ -82,7 +84,6 @@ namespace CMTest
                 if (result.Equals(MARK_FOUND_RESULT))
                 {
                     UtilCmd.WriteLine(" >>>>>>>>>>>>>> Test Done! PASS");
-                    return;
                 }
                 //_cmd.WriteCmdMenu(_optionsProjects, true);
             }
@@ -116,48 +117,35 @@ namespace CMTest
         }
         private void ConnectRemoteOsAvailable(string remoteOsIp)
         {
-            string currentTitle = UtilCmd.GetTitle();
-            Thread WaitAnimation = WaitAnimationThread("Connecting...");
+            var currentTitle = UtilCmd.GetTitle();
+            var waitAnimation = UtilWait.WaitTimeElapseThread("Connecting...");
             try
             {
                 _remoteOS = new RemoteOS(remoteOsIp);
-                WaitAnimation.Start();
+                waitAnimation.Start();
                 _remoteOS.IsRemoteOsAvailable();
-                WaitAnimation.Abort();
+                waitAnimation.Abort();
                 UtilCmd.PressAnyContinue("The communication between the Local OS and the Remote OS established successfully. Press any key to continue.");
             }
             catch (Exception)
             {
-                WaitAnimation.Abort();
+                waitAnimation.Abort();
                 UtilCmd.WriteTitle(currentTitle);
                 throw;
             }
-        }
-
-        private Thread WaitAnimationThread(string comment)
-        {
-            return new Thread(() =>
-            {
-                int s = 0;
-                while (true)
-                {
-                    UtilTime.WaitTime(1);
-                    UtilCmd.WriteTitle($"{comment}  Please Wait...  Time elapsed {s++}s ");
-                }
-            });
         }
 
         private static string AddCommentForOption(string oriComment, string addedComment)
         {
             return $"{oriComment}{OPTION_COMMENT_SEPARATOR_PREFIX}{addedComment}{OPTION_COMMENT_SEPARATOR_SUFFIX}";
         }
-        private static string RemoveCommentFromOption(string commnet)
+        private static string RemoveCommentFromOption(string comment)
         {
-            return UtilString.GetSplitArray(commnet, OPTION_COMMENT_SEPARATOR_PREFIX).ToList()[0];
+            return UtilString.GetSplitArray(comment, OPTION_COMMENT_SEPARATOR_PREFIX).ToList()[0];
         }
-        private static string GetCommentFromOption(string commnet)
+        private static string GetCommentFromOption(string comment)
         {
-            return UtilRegex.GetMatchMidValue(commnet, OPTION_COMMENT_SEPARATOR_PREFIX, OPTION_COMMENT_SEPARATOR_SUFFIX);
+            return UtilRegex.GetMatchMidValue(comment, OPTION_COMMENT_SEPARATOR_PREFIX, OPTION_COMMENT_SEPARATOR_SUFFIX);
         }
         public void RestartSystemAndCheckDeviceName(string deviceName = "USB Audio Device")
         {
@@ -166,7 +154,7 @@ namespace CMTest
             var titleLaunchTimes = _xmlOps.GetRestartTimes();
             UtilProcess.StartProcess("devmgmt.msc");
             var titleTotal = $"Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count}";
-            Thread t = UtilWait.WaitAnimationThread($"{titleTotal} - Waiting 30s.", 30);
+            var t = UtilWait.WaitTimeElapseThread($"{titleTotal} - Waiting 30s.", 30);
             t.Start();
             t.Join();
             var foundUSBAudioDevice = UtilOs.GetDevices().Find(d => d.ToUpper().Contains("USB Audio Device".ToUpper()));

@@ -86,7 +86,7 @@ namespace CommonLib.Util
                 UtilTime.WaitTime(intervalInSec);
             } while(true);
         }
-        public static Thread WaitAnimationThread(string comment, int times = 5)
+        public static Thread WaitTimeElapseThread(string comment, int times = -1)
         {
             return new Thread(() =>
             {
