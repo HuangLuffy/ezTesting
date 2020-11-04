@@ -66,7 +66,7 @@ namespace ATLib
         {
             return GetElement(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.Index, timeout, checkEnabled, returnNullWhenException);
         }
-        public void WaitForDisappearedBySearch(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Descendants)
+        public void WaitForVanishedBySearch(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Descendants)
         {
             try
             {
@@ -181,11 +181,11 @@ namespace ATLib
         /// 
         /// </summary>
         /// <returns></returns>
-        public void WaitForDisappeared(int timeout = 1, int interval = -1)
+        public void WaitForVanished(int timeout = 1, int interval = -1)
         {
             UtilWait.ForTrue(() => !GetElementInfo().Exists(), timeout, interval);
         }
-        //public void WaitForExisted(int timeout = 1)
+        //public void WaitForPresent(int timeout = 1)
         //{
         //    UtilWait.ForTrue(() =>
         //    {
