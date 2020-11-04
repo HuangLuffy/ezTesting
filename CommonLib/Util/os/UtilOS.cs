@@ -12,8 +12,8 @@ namespace CommonLib.Util.OS
         public static List<string> GetDevices()
         {
             var list = new List<string>();
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity");
-            foreach (ManagementObject mgt in searcher.Get())
+            var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity");
+            foreach (var mgt in searcher.Get())
             {
                 list.Add(Convert.ToString(mgt["Name"]));
             }
@@ -41,8 +41,8 @@ namespace CommonLib.Util.OS
             {
                 var query = new SelectQuery("select * from Win32_OperatingSystem");
                 var searcher = new ManagementObjectSearcher(query);
-                var mocollection = searcher.Get();
-                foreach (var mo in mocollection)
+                var moCollection = searcher.Get();
+                foreach (var mo in moCollection)
                 {
                     // console.writeline("asas:{0}", mo["caption"]);
                     //try { name = Convert.ToString(mo["caption"]); }
