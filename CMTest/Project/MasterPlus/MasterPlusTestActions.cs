@@ -92,7 +92,7 @@ namespace CMTest.Project.MasterPlus
             logLines.ForEach(line => UtilCmd.WriteLine(line));
             var titleLaunchTimes = xmlOps.GetRestartTimes();
             var titleTotal = $"Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count}";
-            var t = UtilWait.WaitAnimationThread($"{titleTotal} - Waiting 35s.", 35);
+            var t = UtilWait.WaitTimeElapseThread($"{titleTotal} - Waiting 35s.", 35);
             t.Start();
             t.Join();
             if (!File.Exists(SwLnkPath))

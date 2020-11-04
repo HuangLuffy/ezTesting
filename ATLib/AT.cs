@@ -1,5 +1,6 @@
 ﻿using CommonLib.Util;
 using System;
+using System.Linq;
 using System.Windows.Automation;
 using static System.String;
 
@@ -42,28 +43,24 @@ namespace ATLib
         {
             return GetElements(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, returnNullWhenException);
         }
-        public AT GetElementIA(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Children, bool returnNullWhenException = false)
+        public AT GetIAElementFromATS(ATElementStruct iAElementStruct, ATS ats, bool returnNullWhenException = false)
         {
-            var managedATS = GetElements(aTElementStruct, timeout, treeScope, returnNullWhenException);
-            if (managedATS == null)
+            if (iAElementStruct.IADescription != null)
             {
-                return null;
-            }
-            if (aTElementStruct.IADescription != null)
-            {
-                foreach (var at in managedATS.GetATCollection())
-                {
-                    if (aTElementStruct.IADescription.Equals(at.GetIAccessible().Description()))
-                    {
-                        return at;
-                    }
-                }
+                return ats.GetATCollection().ToList().Find(d => iAElementStruct.IADescription.Equals(d.GetIAccessible().Description()));
+                //foreach (var at in ats.GetATCollection())
+                //{
+                //    if (aTElementStruct.IADescription.Equals(at.GetIAccessible().Description()))
+                //    {
+                //        return at;
+                //    }
+                //}
             }
             if (returnNullWhenException)
             {
                 return null;
             }
-            throw new Exception($"No element with Description [{aTElementStruct.IADescription}].");
+            throw new Exception($"No element with Description [{iAElementStruct.IADescription}].");
         }
         public AT GetElement(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Descendants, bool checkEnabled = false, bool returnNullWhenException = false)
         {
