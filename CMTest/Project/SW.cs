@@ -43,7 +43,7 @@ namespace CMTest.Project
         {
             //UtilFolder.DeleteDirectory(ImagePath);
             UtilFolder.CreateDirectory(ImagePath);
-            UtilProcess.KillProcessByName(SwProcessName); 
+            //UtilProcess.KillProcessByName(SwProcessName); 
         }
     }
 }

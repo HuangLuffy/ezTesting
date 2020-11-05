@@ -577,6 +577,11 @@ namespace ATLib
                     conditionList.Add(new PropertyCondition(AutomationElement.ControlTypeProperty, ctrlType));
                 }
                 var condition = new Condition[conditionList.Count];
+                //No conditions in, give True Condition
+                if (conditionList.Count == 0)
+                {
+                    return Condition.TrueCondition;
+                }
                 for (var i = 0; i < conditionList.Count; i++)
                 {
                     condition[i] = conditionList[i];
@@ -584,10 +589,6 @@ namespace ATLib
                 if (conditionList.Count == 1)
                 {
                     return condition[0];
-                }
-                if (conditionList.Count == 0)
-                {
-                    return null;
                 }
                 return new AndCondition(condition);
             }

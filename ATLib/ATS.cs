@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ATLib
 {
@@ -94,6 +95,18 @@ namespace ATLib
             {
                 throw;
             }
+        }
+        public AT GetElementByIA(ATElementStruct iAElementStruct, bool returnNullWhenException = false)
+        {
+            if (iAElementStruct.IADescription != null)
+            {
+                return this.ats.ToList().Find(d => iAElementStruct.IADescription.Equals(d.GetIAccessible().Description()));
+            }
+            if (returnNullWhenException)
+            {
+                return null;
+            }
+            throw new Exception($"No element with Description [{iAElementStruct.IADescription}].");
         }
     }
 }

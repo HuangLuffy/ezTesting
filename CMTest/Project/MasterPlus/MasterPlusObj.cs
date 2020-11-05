@@ -29,5 +29,14 @@ namespace CMTest.Project.MasterPlus
             Name = "OVERVIEW",
             ControlType = ATElement.ControlType.TabItem
         };
+        public static ATElementStruct DeviceList = new ATElementStruct()
+        {
+            Name = "DeviceList",
+        };
+        public static ATElementStruct AssignContainer = new ATElementStruct()
+        {
+            Name = "AssignContainer",
+        };
+
     }
 }

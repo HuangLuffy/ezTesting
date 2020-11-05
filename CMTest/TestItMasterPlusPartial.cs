@@ -16,14 +16,25 @@ namespace CMTest
             _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_TEST, Flow_MasterPlus_LaunchTest);
             _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_CHECK_CRASH, Flow_MasterPlus_LaunchAndCheckCrash);
 
-            AssemblePortalPortalTestLanguages();
-            AssemblePortalPlugInOutDevices(fromConf);
+            AssembleTestLanguages();
+            AssembleDevices(fromConf);
             _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_TEST, () => _cmd.ShowCmdMenu(_optionsXmlPlugInOutDeviceNames, _optionsPortalTestsWithFuncs));
 
             //_optionsMasterPlusTestsWithFuncs.Add(UtilCmd.Result.SHOW_MENU_AGAIN, _cmd.MenuShowAgain);
             _optionsMasterPlusTestsWithFuncs.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
         }
-
+        private void AssembleDevices(bool fromConf = true)
+        {
+            if (_optionsXmlPlugInOutDeviceNames.Any()) return;
+            foreach (var deviceName in _xmlOps.GetDeviceNameList())
+            {
+                _optionsXmlPlugInOutDeviceNames.Add(deviceName, () => {
+                    _masterPlusTestFlows.Flow_KeymappingTest(deviceName);
+                    return MARK_FOUND_RESULT;
+                });       
+            }
+            _optionsXmlPlugInOutDeviceNames.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
+        }
         private dynamic Flow_MasterPlus_LaunchAndCheckCrash()
         {
             _masterPlusTestFlows.Flow_LaunchAndCheckCrash();
@@ -41,9 +52,9 @@ namespace CMTest
             _masterPlusTestFlows.Flow_RestartSystemAndCheckDeviceRecognition(_xmlOps);
         }
 
-        private dynamic Flow_KeymappingTest()
+        private dynamic Flow_KeymappingTest(string deviceName)
         {
-            _masterPlusTestFlows.Flow_KeymappingTest(_xmlOps);
+            _masterPlusTestFlows.Flow_KeymappingTest(deviceName);
             return MARK_FOUND_RESULT;
         }
     }

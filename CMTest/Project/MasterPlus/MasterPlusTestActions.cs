@@ -20,28 +20,7 @@ namespace CMTest.Project.MasterPlus
             UtilProcess.StartProcess(SwLnkPath);
             Timeout = 11;
             WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
-            SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);
-
-
-            var tTab1 = SwMainWindow.GetElements(
-                new ATElementStruct()
-                {
-                    Name = "DeviceList",
-                    //ControlType = ATElement.ControlType.TabItem
-                }
-            );
-            tTab1.GetATCollection()[0].GetIAccessible().Description();
-
-
-            var tTab = SwMainWindow.GetElement(
-                new ATElementStruct()
-                {
-                    Name = "DeviceName",
-                    //ControlType = ATElement.ControlType.TabItem
-                }
-            );
-            tTab.GetElementInfo().IsChecked();
-            tTab.DoClickPoint();
+            new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);
         }
         public void CloseMasterPlus()
         {
@@ -126,6 +105,17 @@ namespace CMTest.Project.MasterPlus
             UtilProcess.KillProcessByName(this.SwProcessName);
             //UtilProcess.ExecuteCmd();// sometimes it does not work somehow.
             UtilOS.Reboot();
+        }
+        public void KeyMappingTest(string deviceName)
+        {
+            Timeout = 11;
+            //WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
+            SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);
+            var deviceList = SwMainWindow.GetElement(MasterPlusObj.DeviceList);
+            var devices = deviceList.GetElementsFromChild(new ATElementStruct() { ControlType = AT.ControlType.ListItem });
+            var dut = devices.GetElementByIA(new ATElementStruct() { IADescription = deviceName });
+
+            dut.DoClickPoint();
         }
     }
 }

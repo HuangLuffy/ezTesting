@@ -39,9 +39,9 @@ namespace CMTest.Project.MasterPlus
             MasterPlusTestActions.LaunchAndCheckCrash(TEST_TIMES);
         }
 
-        public void Flow_KeymappingTest(XmlOps xmlOps)
+        public void Flow_KeymappingTest(string deviceName)
         {
-            var aa = xmlOps.GetVmPlugInOutDeviceNeedToRun();
+            MasterPlusTestActions.KeyMappingTest(deviceName);
         }
     }
 }

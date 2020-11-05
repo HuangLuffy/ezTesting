@@ -13,7 +13,7 @@ namespace CMTest
         private readonly IDictionary<string, Func<dynamic>> _optionsPortalTestLanguages = new Dictionary<string, Func<dynamic>>();
         private void AssemblePortalTests(bool fromConf = true)
         {
-            AssemblePortalPortalTestLanguages();
+            AssembleTestLanguages();
             AssemblePortalPlugInOutDevices(fromConf);
             if (_optionsPortalTestsWithFuncs.Any()) return;
             //Select Back that will trigger this function again, so try-catch.
@@ -25,7 +25,7 @@ namespace CMTest
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_INSTALLATION, () => _cmd.ShowCmdMenu(_optionsPortalTestLanguages, _optionsPortalTestsWithFuncs));
             _optionsPortalTestsWithFuncs.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
         }
-        private void AssemblePortalPortalTestLanguages()
+        private void AssembleTestLanguages()
         {
             foreach (var item in _listXmlTestLanguages)
             {

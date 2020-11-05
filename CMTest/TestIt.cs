@@ -137,7 +137,6 @@ namespace CMTest
                 throw;
             }
         }
-
         private static string AddCommentForOption(string oriComment, string addedComment)
         {
             return $"{oriComment}{OPTION_COMMENT_SEPARATOR_PREFIX}{addedComment}{OPTION_COMMENT_SEPARATOR_SUFFIX}";
@@ -150,6 +149,16 @@ namespace CMTest
         {
             return UtilRegex.GetMatchMidValue(comment, OPTION_COMMENT_SEPARATOR_PREFIX, OPTION_COMMENT_SEPARATOR_SUFFIX);
         }
+
+
+
+
+
+
+        /// <summary>
+        /// //ignore below codes
+        /// </summary>
+        /// <param name="deviceName"></param>
         public void RestartSystemAndCheckDeviceName(string deviceName = "USB Audio Device")
         {
             var restartLogTime = GetRestartLogTime();
