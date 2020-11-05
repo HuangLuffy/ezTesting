@@ -112,7 +112,7 @@ namespace CMTest.Project.MasterPlus
             //WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
             SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);
             var deviceList = SwMainWindow.GetElement(MasterPlusObj.DeviceList);
-            var devices = deviceList.GetElementsFromChild(new ATElementStruct() { ControlType = AT.ControlType.ListItem });
+            var devices = deviceList.GetElementsAllChild();
             var dut = devices.GetElementByIA(new ATElementStruct() { IADescription = deviceName });
 
             dut.DoClickPoint();

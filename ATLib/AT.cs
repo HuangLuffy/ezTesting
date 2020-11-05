@@ -27,6 +27,10 @@ namespace ATLib
         {
             return GetElements(aTElementStruct, timeout, TreeScope.Children, returnNullWhenException);
         }
+        public ATS GetElementsAllChild(int timeout = -1, bool returnNullWhenException = false)
+        {
+            return GetElements(new ATElementStruct(), timeout, TreeScope.Children, returnNullWhenException);
+        }
         public ATS GetElementsFromDescendants(ATElementStruct aTElementStruct, int timeout = -1, bool returnNullWhenException = false)
         {
             return GetElements(aTElementStruct, timeout, TreeScope.Descendants, returnNullWhenException);
