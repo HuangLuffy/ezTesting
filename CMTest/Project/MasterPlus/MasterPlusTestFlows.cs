@@ -41,7 +41,11 @@ namespace CMTest.Project.MasterPlus
 
         public void Flow_KeymappingTest(string deviceName)
         {
-            MasterPlusTestActions.KeyMappingTest(deviceName);
+            SW.WriteConsoleTitle(1, $"Waiting for launching. (1s)", 1);
+            var SwMainWindow = MasterPlusTestActions.GetMasterPlusMainWindow(11);
+            var dut = MasterPlusTestActions.GetTestDevice(deviceName, SwMainWindow);
+            dut.DoClickPoint();
+            //MasterPlusTestActions.KeyMappingTest(deviceName);
         }
     }
 }

@@ -27,7 +27,21 @@ namespace CMTest.Project
             LaunchTimes = launchTimes;
             WriteConsoleTitle(launchTimes, comments);
         }
-
+        public static void WriteConsoleTitle(string comments = "", int timeout = 0)
+        {
+            Console.Title = comments;
+            WriteConsoleTitlePri(comments, timeout);
+        }
+        private static void WriteConsoleTitlePri(string title, int timeout = 0)
+        {
+            Console.Title = title;
+            var t = Console.Title;
+            if (timeout != 0)
+            {
+                UtilTime.CountDown(timeout, s => { Console.Title = t + " > " + s; });
+            }
+            UtilTime.WaitTime(timeout);
+        }
         public static void WriteConsoleTitle(long launchTimes, string comments = "", int timeout = 0)
         {
             Console.Title = launchTimes + " | " + comments;

@@ -109,13 +109,20 @@ namespace CMTest.Project.MasterPlus
         public void KeyMappingTest(string deviceName)
         {
             Timeout = 11;
-            //WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
-            SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);
-            var deviceList = SwMainWindow.GetElement(MasterPlusObj.DeviceList);
-            var devices = deviceList.GetElementsAllChild();
-            var dut = devices.GetElementByIA(new ATElementStruct() { IADescription = deviceName });
-
+            WriteConsoleTitle(LaunchTimes, $"Waiting for launching. (1s)", 1);
+            SwMainWindow = GetMasterPlusMainWindow(Timeout);
+            var dut = GetTestDevice(deviceName, SwMainWindow);
             dut.DoClickPoint();
+        }
+        public AT GetTestDevice(string deviceName, AT swMainWindow)
+        {
+            var deviceList = swMainWindow.GetElement(MasterPlusObj.DeviceList);
+            var devices = deviceList.GetElementsAllChild();
+            return devices.GetElementByIA(new ATElementStruct() { IADescription = deviceName });
+        }
+        public AT GetMasterPlusMainWindow(int timeout)
+        {
+            return new AT().GetElement(MasterPlusObj.MainWindowSw, timeout);
         }
     }
 }
