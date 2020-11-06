@@ -1,4 +1,5 @@
-﻿using ATLib;
+﻿
+using ATLib;
 using CMTest.Xml;
 using CommonLib.Util;
 using CommonLib.Util.IO;
@@ -41,7 +42,7 @@ namespace CMTest.Project.MasterPlus
                 var logLines = UtilFile.ReadFileByLine(LogPathLaunch);
                 logLines.ForEach(line => UtilCmd.WriteLine(line));
                 var launchLogTime = GetRestartLogTime();
-                var screenshotPath = Path.Combine(ImagePath, crashTimes.ToString());
+                var screenshotPath = Path.Combine(ScreenshotsPath, crashTimes.ToString());
                 UtilProcess.StartProcess(SwLnkPath);
                 Timeout = 1;
                 UtilCmd.WriteTitle($"{titleTotal} - Searching MP+ UI.");
@@ -64,7 +65,7 @@ namespace CMTest.Project.MasterPlus
         }
         public void RestartSystemAndCheckDeviceRecognitionFlow(XmlOps xmlOps)
         {
-            UtilFolder.CreateDirectory(Path.Combine(ImagePath, "Restart"));
+            UtilFolder.CreateDirectory(Path.Combine(ScreenshotsPath, "Restart"));
             var restartLogTime = GetRestartLogTime();
             var screenshotPath = Path.Combine(RestartScreenshotPath, restartLogTime);
             var logLines = UtilFile.ReadFileByLine(LogPathRestart);

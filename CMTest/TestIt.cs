@@ -188,7 +188,7 @@ namespace CMTest
         }
         private List<string> PrepareRestartAndGetLogCounts()
         {
-            UtilFolder.CreateDirectory(Path.Combine(ImagePath, "Restart"));
+            UtilFolder.CreateDirectory(Path.Combine(ScreenshotsPath, "Restart"));
             var logLines = UtilFile.ReadFileByLine(LogPathRestart);
             logLines.ForEach(line => UtilCmd.WriteLine(line));
             return logLines;

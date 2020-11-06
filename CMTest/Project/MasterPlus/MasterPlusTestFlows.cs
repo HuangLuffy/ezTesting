@@ -1,5 +1,6 @@
 ﻿using CMTest.Xml;
 using CommonLib.Util;
+using ReportLib;
 using System.Threading;
 
 namespace CMTest.Project.MasterPlus
@@ -16,6 +17,7 @@ namespace CMTest.Project.MasterPlus
         private static readonly long TEST_TIMES = 99999999;
 
         public readonly MasterPlusTestActions MasterPlusTestActions = new MasterPlusTestActions();
+        public IReporter iReporter = new ReporterXsl();
         /// <summary>
         /// haha
         /// </summary>
@@ -41,9 +43,9 @@ namespace CMTest.Project.MasterPlus
 
         public void Flow_KeymappingTest(string deviceName)
         {
-            SW.WriteConsoleTitle(1, $"Waiting for launching. (1s)", 1);
-            var SwMainWindow = MasterPlusTestActions.GetMasterPlusMainWindow(11);
-            var dut = MasterPlusTestActions.GetTestDevice(deviceName, SwMainWindow);
+            SW.WriteConsoleTitle($"Waiting for launching. (1s)");
+            var swMainWindow = MasterPlusTestActions.GetMasterPlusMainWindow(11);
+            var dut = MasterPlusTestActions.GetTestDevice(deviceName, swMainWindow);
             dut.DoClickPoint();
             //MasterPlusTestActions.KeyMappingTest(deviceName);
         }

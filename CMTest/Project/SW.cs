@@ -29,7 +29,6 @@ namespace CMTest.Project
         }
         public static void WriteConsoleTitle(string comments = "", int timeout = 0)
         {
-            Console.Title = comments;
             WriteConsoleTitlePri(comments, timeout);
         }
         private static void WriteConsoleTitlePri(string title, int timeout = 0)
@@ -45,18 +44,13 @@ namespace CMTest.Project
         public static void WriteConsoleTitle(long launchTimes, string comments = "", int timeout = 0)
         {
             Console.Title = launchTimes + " | " + comments;
-            var t = Console.Title;
-            if (timeout != 0)
-            {
-                UtilTime.CountDown(timeout, s => { Console.Title = t + " > " + s; });
-            }
-            UtilTime.WaitTime(timeout);
+            WriteConsoleTitlePri(Console.Title, timeout);
         }
 
         protected void Initialize()
         {
-            //UtilFolder.DeleteDirectory(ImagePath);
-            UtilFolder.CreateDirectory(ImagePath);
+            //UtilFolder.DeleteDirectory(ScreenshotsPath);
+            UtilFolder.CreateDirectory(ScreenshotsPath);
             //UtilProcess.KillProcessByName(SwProcessName); 
         }
     }

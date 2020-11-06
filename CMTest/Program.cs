@@ -35,22 +35,7 @@ namespace CMTest
         {
             return string.Format("{0:000}", Convert.ToInt16(ggg));
         }
-        public static bool dddddddddddddddd(string[] array)
-        {
-            Hashtable ht = new Hashtable();
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (ht.Contains(array[i]))
-                {
-                    return true;
-                }
-                else
-                {
-                    ht.Add(array[i], array[i]);
-                }
-            }
-            return false;
-        }
+
         private static async Task OpenListener()
         {
             await Task.Run(() =>

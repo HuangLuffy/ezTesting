@@ -158,11 +158,14 @@ namespace CommonLib.Util
             _counterThread.Start();
         }
         //(DateTime.Now - dateTime).Seconds;
-        public TimeSpan TimeElapsed(DateTime dateTime)
+        public static TimeSpan TimeElapsed(DateTime dateTime)
         {
             return DateTime.Now - dateTime;
         }
-
+        public static string GetTimeString()
+        {
+            return $"{DateTime.Now:yyyy.MM.dd_hh.mm.ss}";
+        }
         private static void TimeElapsedEvent(object source, ElapsedEventArgs e)
         {
             Console.WriteLine($"The Elapsed event was raised at {e.SignalTime}");

@@ -113,6 +113,10 @@
       <Project>{0a5e2a02-1a8c-45be-92ac-76034ec0e844}</Project>
       <Name>RemoteLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ReportLib\ReportLib.csproj">
+      <Project>{A33CB8AC-544C-48F8-901B-14C5F0B29BEF}</Project>
+      <Name>ReportLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
