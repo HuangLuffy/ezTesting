@@ -50,6 +50,7 @@ namespace CMTest.Project
         protected void Initialize()
         {
             //UtilFolder.DeleteDirectory(ScreenshotsPath);
+            UtilFolder.CreateDirectory(ResultPath);
             UtilFolder.CreateDirectory(ScreenshotsPath);
             //UtilProcess.KillProcessByName(SwProcessName); 
         }

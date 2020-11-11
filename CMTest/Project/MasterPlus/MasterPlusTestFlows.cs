@@ -1,11 +1,10 @@
-﻿using CMTest.Xml;
-using CommonLib.Util;
+﻿using System.IO;
+using CMTest.Xml;
 using ReportLib;
-using System.Threading;
 
 namespace CMTest.Project.MasterPlus
 {
-    public class MasterPlusTestFlows
+    public class MasterPlusTestFlows :SW
     {
         public struct TestNames
         {
@@ -15,12 +14,13 @@ namespace CMTest.Project.MasterPlus
         }
         
         private static readonly long TEST_TIMES = 99999999;
-
+        private IReporter _iReporter;
         public readonly MasterPlusTestActions MasterPlusTestActions = new MasterPlusTestActions();
-        public IReporter iReporter = new ReporterXsl();
-        /// <summary>
-        /// haha
-        /// </summary>
+
+        public MasterPlusTestFlows()
+        {
+            _iReporter = new ReporterXsl(Path.Combine(ResultPath, "MasterPlusTestFlows.xml"));
+        }
         public void Flow_LaunchTest()
         {
             for (var i = 1; i < TEST_TIMES; i++)
@@ -47,6 +47,13 @@ namespace CMTest.Project.MasterPlus
             var swMainWindow = MasterPlusTestActions.GetMasterPlusMainWindow(11);
             var dut = MasterPlusTestActions.GetTestDevice(deviceName, swMainWindow);
             dut.DoClickPoint();
+            _iReporter.AddTestStep(new Reporter.ResultTestCase()
+            {
+                NodeStepNumber = 1,
+                NodeDescription = "123123",
+                NodeExpectedResult = "NodeExpectedResult",
+                NodeResult = SW.Result.Fail
+            });
             //MasterPlusTestActions.KeyMappingTest(deviceName);
         }
     }

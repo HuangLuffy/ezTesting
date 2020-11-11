@@ -8,20 +8,21 @@ namespace CMTest.Project
 {
     public abstract class AbsResult
     {
-        protected string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
-        protected string LogPathRestart = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
-        protected string ScreenshotsPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
-        protected string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");
+        public string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
+        public string LogPathRestart = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
+        public string ResultPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Result");
+        public string ScreenshotsPath => Path.Combine(ResultPath, "Screenshots");
+        public string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");
         //public string ImagePath
         //{
         //    get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }
         //}
-        private struct Result
+        public struct Result
         {
             public const string Fail = "Failed";
             public const string Pass = "Passed";
         }
-        protected string GetTestTimeString()
+        public string GetTestTimeString()
         {
             return UtilTime.GetTimeString();
         }

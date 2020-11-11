@@ -22,5 +22,6 @@ RemoteLib/bin/*
 CMTest/obj/*
 CMTest/bin/Debug/*
 !/CMTest/bin/Debug/Conf.xml
+!/CMTest/bin/Debug/xmlReport.xsl
 CMTest/bin/Release
 packages/*

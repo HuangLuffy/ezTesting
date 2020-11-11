@@ -2,7 +2,7 @@
 <conf>
   <restartTimes>0</restartTimes>
   <remoteOS>
-    <ip>1.1.1.1</ip>
+    <ip>1.1.1.2</ip>
   </remoteOS>
   <localOS>
     <masterPlusPerBuildPath>

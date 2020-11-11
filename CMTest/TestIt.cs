@@ -12,10 +12,11 @@ using System.IO;
 using CommonLib.Util.Project;
 using CommonLib.Util.IO;
 using CommonLib.Util.OS;
+using ReportLib;
 
 namespace CMTest
 {
-    public partial class TestIt : SW
+    public partial class TestIt
     {
         private const string MARK_FOUND_RESULT = "FOUND_TEST";
         private const string MARK_DO_NOTHING = "DO_NOTHING";
@@ -92,7 +93,7 @@ namespace CMTest
             }
             catch (Exception ex)
             {
-                HandleWrongStepResult(ex.Message);
+                //HandleWrongStepResult(ex.Message);
                 UtilCmd.PressAnyContinue();
                 ShowTopMenu();
             }
@@ -159,40 +160,40 @@ namespace CMTest
         /// //ignore below codes
         /// </summary>
         /// <param name="deviceName"></param>
-        public void RestartSystemAndCheckDeviceName(string deviceName = "USB Audio Device")
-        {
-            var restartLogTime = GetRestartLogTime();
-            var logLines = PrepareRestartAndGetLogCounts();
-            var titleLaunchTimes = _xmlOps.GetRestartTimes();
-            UtilProcess.StartProcess("devmgmt.msc");
-            var titleTotal = $"Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count}";
-            var t = UtilWait.WaitTimeElapseThread($"{titleTotal} - Waiting 30s.", 30);
-            t.Start();
-            t.Join();
-            var foundUSBAudioDevice = UtilOs.GetDevices().Find(d => d.ToUpper().Contains("USB Audio Device".ToUpper()));
-            var devicesCount = UtilOs.GetDevices().Count(d => d.ToUpper().Contains("MH650".ToUpper()));
-            if (foundUSBAudioDevice != null)
-            {
-                UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count} - USB Audio Device found.");
-            }
-            else if(devicesCount != 3)
-            {
-                UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count} - Could not find 3 MH650 items.");
-            }  
-            else
-            {
-                _xmlOps.SetRestartTimes(Convert.ToInt16(titleLaunchTimes) + 1);
-                UtilTime.WaitTime(1);
-                UtilOS.Reboot();
-            } 
-        }
-        private List<string> PrepareRestartAndGetLogCounts()
-        {
-            UtilFolder.CreateDirectory(Path.Combine(ScreenshotsPath, "Restart"));
-            var logLines = UtilFile.ReadFileByLine(LogPathRestart);
-            logLines.ForEach(line => UtilCmd.WriteLine(line));
-            return logLines;
-        }
+        //public void RestartSystemAndCheckDeviceName(string deviceName = "USB Audio Device")
+        //{
+        //    var restartLogTime = GetRestartLogTime();
+        //    var logLines = PrepareRestartAndGetLogCounts();
+        //    var titleLaunchTimes = _xmlOps.GetRestartTimes();
+        //    UtilProcess.StartProcess("devmgmt.msc");
+        //    var titleTotal = $"Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count}";
+        //    var t = UtilWait.WaitTimeElapseThread($"{titleTotal} - Waiting 30s.", 30);
+        //    t.Start();
+        //    t.Join();
+        //    var foundUSBAudioDevice = UtilOs.GetDevices().Find(d => d.ToUpper().Contains("USB Audio Device".ToUpper()));
+        //    var devicesCount = UtilOs.GetDevices().Count(d => d.ToUpper().Contains("MH650".ToUpper()));
+        //    if (foundUSBAudioDevice != null)
+        //    {
+        //        UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count} - USB Audio Device found.");
+        //    }
+        //    else if(devicesCount != 3)
+        //    {
+        //        UtilFile.WriteFile(LogPathRestart, $"{restartLogTime}: Restart Times: {titleLaunchTimes} - Error Times: {logLines.Count} - Could not find 3 MH650 items.");
+        //    }  
+        //    else
+        //    {
+        //        _xmlOps.SetRestartTimes(Convert.ToInt16(titleLaunchTimes) + 1);
+        //        UtilTime.WaitTime(1);
+        //        UtilOS.Reboot();
+        //    } 
+        //}
+        //private List<string> PrepareRestartAndGetLogCounts()
+        //{
+        //    UtilFolder.CreateDirectory(Path.Combine(ScreenshotsPath, "Restart"));
+        //    var logLines = UtilFile.ReadFileByLine(LogPathRestart);
+        //    logLines.ForEach(line => UtilCmd.WriteLine(line));
+        //    return logLines;
+        //}
 
     }
 }
