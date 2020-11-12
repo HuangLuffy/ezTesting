@@ -2,9 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 using CMTest.Xml;
+using CommonLib.Util;
 using CommonLib.Util.OS;
 using CommonLib.Util.Project;
 using ReportLib;
+using static CommonLib.Util.UtilCapturer;
 
 namespace CMTest.Project.MasterPlus
 {
@@ -21,7 +23,12 @@ namespace CMTest.Project.MasterPlus
         private IReporter _iReporter;
         public Reporter.ResultTestInfo resultTestInfo;
         public readonly MasterPlusTestActions MasterPlusTestActions = new MasterPlusTestActions();
-
+        private string _manualCheckLink = Reporter.DefaultContent;
+        public void Capture(string pathSave, string comment = "Shot", ImageType imageType = ImageType.PNG)
+        {
+            _manualCheckLink += _iReporter.SetManualCheck(comment, pathSave);
+            UtilCapturer.Capture(pathSave, imageType);
+        }
         public MasterPlusTestFlows()
         {
             //var frame = new StackTrace().GetFrame(level);
@@ -81,6 +88,8 @@ namespace CMTest.Project.MasterPlus
                 r.NodeResult = Reporter.Result.FAIL;
                 r.AttrMessage = "Failed to launch MP+.";
             }
+
+            r.NodeNeedToCheck = _manualCheckLink;
             _iReporter.AddTestStep(r, resultTestInfo);
         }
         public void Case_SelectDevice(string deviceName)
