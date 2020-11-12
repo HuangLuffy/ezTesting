@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using CMTest.Xml;
 using CommonLib.Util.OS;
@@ -23,6 +24,10 @@ namespace CMTest.Project.MasterPlus
 
         public MasterPlusTestFlows()
         {
+            //var frame = new StackTrace().GetFrame(level);
+            //ClassName = frame.GetMethod().ReflectedType?.Name;
+            //ClassFullName = frame.GetMethod().ReflectedType?.FullName;
+            //FunctionName = frame.GetMethod().Name;
             _iReporter = new ReporterXsl(Path.Combine(ResultTimePath, "MasterPlusTestFlows.xml"), ProjectPath.GetProjectFullPath());
             _resultTestInfo = new Reporter.ResultTestInfo
             {
@@ -32,7 +37,7 @@ namespace CMTest.Project.MasterPlus
                 AttrRegion = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1],
                 AttrDeviceModel = Reporter.DefaultContent,
                 AttrDeviceName = Reporter.DefaultContent,
-                AttrVersion = Reporter.DefaultContent,
+                AttrVersion = UtilOs.GetOsProperty(),
                 AttrTests = 0,
                 AttrPasses = 0,
                 AttrFailures = 0,
@@ -62,9 +67,12 @@ namespace CMTest.Project.MasterPlus
 
         public void Flow_KeymappingTest(string deviceName)
         {
+            _resultTestInfo.AttrDeviceModel = deviceName;
+            _resultTestInfo.AttrDeviceName = deviceName;
+            _resultTestInfo.AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             try
             {
-                SW.WriteConsoleTitle($"Waiting for launching. (1s)");
+                //SW.WriteConsoleTitle($"Waiting for launching. (1s)");
                 var swMainWindow = MasterPlusTestActions.GetMasterPlusMainWindow(11);
                 var dut = MasterPlusTestActions.GetTestDevice(deviceName, swMainWindow);
                 dut.DoClickPoint();
@@ -77,8 +85,7 @@ namespace CMTest.Project.MasterPlus
                     NodeDescription = "123123",
                     NodeExpectedResult = "NodeExpectedResult",
                     NodeResult = Reporter.Result.FAIL
-                });
-                _iReporter.ModifyTestInfo(_resultTestInfo);
+                }, _resultTestInfo);
             }
 
             //MasterPlusTestActions.KeyMappingTest(deviceName);

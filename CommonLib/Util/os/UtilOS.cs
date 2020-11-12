@@ -4,11 +4,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Management;
 using System.Text;
+using System.Windows.Forms.VisualStyles;
 
 namespace CommonLib.Util.OS
 {
     public static class UtilOs
     {
+        public struct OsProperty
+        {
+            public const string Caption = "caption";
+            public const string Version = "version";
+            public const string OsAndVersion = "osAndVersion";
+            public const string OsArchitecture = "OSArchitecture";
+        }
         public static List<string> GetDevices()
         {
             var list = new List<string>();
@@ -34,9 +42,27 @@ namespace CommonLib.Util.OS
                 name = name.Split('.')[0];
                 return name;
         }
+
+        public static string GetOsProperty(string whichOne = OsProperty.Version)
+        {
+            var name = "";
+            try
+            {
+                var query = new SelectQuery("select * from Win32_OperatingSystem");
+                var searcher = new ManagementObjectSearcher(query);
+                var moCollection = searcher.Get();
+                foreach (var mo in moCollection)
+                {
+                    name = Convert.ToString(mo[whichOne]);
+                }
+                return name;
+            }
+            catch (Exception) { return name; }
+        }
+
         public static string GetOsVersion()
         {
-            string name = "";
+            var name = "";
             try
             {
                 var query = new SelectQuery("select * from Win32_OperatingSystem");

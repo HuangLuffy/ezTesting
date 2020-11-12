@@ -98,8 +98,9 @@ namespace ReportLib
                     )
             );
         }
-        public void AddTestStep(ResultTestCase resultTestCase)
+        public void AddTestStep(ResultTestCase resultTestCase, ResultTestInfo resultTestInfo = null)
         {
+            resultTestInfo.AttrTests += 1;
             var thisDoc = XDoc ?? XDocument.Load(PathReportXml);
             if (thisDoc?.Root != null)
             {
@@ -114,8 +115,33 @@ namespace ReportLib
                     testCases.Last().AddAfterSelf(xElement);
                 }
             }
-
             thisDoc?.Save(PathReportXml);
+            if (resultTestInfo != null)
+            {
+                if (resultTestCase.NodeResult.Equals(Reporter.Result.FAIL))
+                {
+                    resultTestInfo.AttrFailures += 1;
+                }
+                else if (resultTestCase.NodeResult.Equals(Reporter.Result.BLOCK))
+                {
+                    resultTestInfo.AttrBlocks += 1;
+                }
+                else if (resultTestCase.NodeResult.Equals(Reporter.Result.PASS))
+                {
+                    resultTestInfo.AttrPasses += 1;
+                }
+                else if (resultTestCase.NodeResult.Equals(Reporter.Result.TBD))
+                {
+                    resultTestInfo.AttrTbds += 1;
+                }
+                resultTestInfo.AttrTime += resultTestCase.AttrTime;
+                resultTestInfo.AttrPassesPercent = GetResultPercent(resultTestInfo.AttrPasses, resultTestInfo.AttrTests, 1);
+                resultTestInfo.AttrFailuresPercent = GetResultPercent(resultTestInfo.AttrFailures, resultTestInfo.AttrTests, 1);
+                resultTestInfo.AttrErrorsPercent = GetResultPercent(resultTestInfo.AttrErrors, resultTestInfo.AttrTests, 1);
+                resultTestInfo.AttrBlocksPercent = GetResultPercent(resultTestInfo.AttrBlocks, resultTestInfo.AttrTests, 1);
+                resultTestInfo.AttrTbdsPercent = GetResultPercent(resultTestInfo.AttrTbds, resultTestInfo.AttrTests, 1);
+                ModifyTestInfo(resultTestInfo);
+            }
         }
 
         public void ModifyTestInfo(ResultTestInfo resultTestInfo)

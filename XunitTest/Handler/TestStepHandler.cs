@@ -135,7 +135,7 @@ namespace XUnitTest.Handler
 
             public TestFunctionInfo(int level, IReporter iReporter)
             {
-                StackFrame frame = new StackTrace().GetFrame(level);
+                var frame = new StackTrace().GetFrame(level);
                 ClassName = frame.GetMethod().ReflectedType?.Name;
                 ClassFullName = frame.GetMethod().ReflectedType?.FullName;
                 FunctionName = frame.GetMethod().Name;
