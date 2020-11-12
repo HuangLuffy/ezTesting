@@ -2,34 +2,34 @@
 using CommonLib.Util;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace CMTest
 {
     public partial class TestIt
     {
-        private readonly IDictionary<string, Func<dynamic>> _optionsMasterPlusTestsWithFuncs = new Dictionary<string, Func<dynamic>>();
+        private readonly IDictionary<string, Func<dynamic>> _optionsTestsWithFuncs = new Dictionary<string, Func<dynamic>>();
 
         private void AssembleMasterPlusPlugInOutTests(bool fromConf = true)
         {
-            if (_optionsMasterPlusTestsWithFuncs.Any()) return;
-            _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_TEST, Flow_MasterPlus_LaunchTest);
-            _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_CHECK_CRASH, Flow_MasterPlus_LaunchAndCheckCrash);
+            if (_optionsTestsWithFuncs.Any()) return;
+            _optionsTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_TEST, Flow_MasterPlus_LaunchTest);
+            _optionsTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_CHECK_CRASH, Flow_MasterPlus_LaunchAndCheckCrash);
 
-            AssembleDevices(fromConf);
-            _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_TEST, () => _cmd.ShowCmdMenu(_optionsXmlPlugInOutDeviceNames, _optionsPortalTestsWithFuncs));
-
+            _KeyMappingTestWithFuncs(fromConf);
+            _optionsTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_TEST, () => _cmd.ShowCmdMenu(_optionsXmlPlugInOutDeviceNames, _optionsTestsWithFuncs));
             //_optionsMasterPlusTestsWithFuncs.Add(UtilCmd.Result.SHOW_MENU_AGAIN, _cmd.MenuShowAgain);
-            _optionsMasterPlusTestsWithFuncs.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
+            _optionsTestsWithFuncs.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
         }
-        private void AssembleDevices(bool fromConf = true)
+        private void _KeyMappingTestWithFuncs(bool fromConf = true)
         {
             if (_optionsXmlPlugInOutDeviceNames.Any()) return;
             //foreach (var deviceName in _xmlOps.GetDeviceNameList())
             foreach (var deviceName in new List<string>(){"SK622W", "SK622B" })
             {
                 _optionsXmlPlugInOutDeviceNames.Add(deviceName, () => {
-                    _masterPlusTestFlows.Flow_KeymappingTest(deviceName);
+                    this.Flow_KeymappingTest(deviceName);
                     return MARK_FOUND_RESULT;
                 });       
             }
@@ -54,7 +54,10 @@ namespace CMTest
 
         private dynamic Flow_KeymappingTest(string deviceName)
         {
-            _masterPlusTestFlows.Flow_KeymappingTest(deviceName);
+            _masterPlusTestFlows.resultTestInfo.AttrDeviceModel = deviceName;
+            _masterPlusTestFlows.resultTestInfo.AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            _masterPlusTestFlows.Case_LaunchMasterPlus();
+            _masterPlusTestFlows.Case_SelectDevice(deviceName);
             return MARK_FOUND_RESULT;
         }
     }

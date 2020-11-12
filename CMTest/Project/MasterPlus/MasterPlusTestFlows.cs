@@ -8,7 +8,7 @@ using ReportLib;
 
 namespace CMTest.Project.MasterPlus
 {
-    public class MasterPlusTestFlows :SW
+    public class MasterPlusTestFlows : MasterPlus
     {
         public struct TestNames
         {
@@ -19,7 +19,7 @@ namespace CMTest.Project.MasterPlus
         
         private static readonly long TEST_TIMES = 99999999;
         private IReporter _iReporter;
-        private Reporter.ResultTestInfo _resultTestInfo;
+        public Reporter.ResultTestInfo resultTestInfo;
         public readonly MasterPlusTestActions MasterPlusTestActions = new MasterPlusTestActions();
 
         public MasterPlusTestFlows()
@@ -29,16 +29,16 @@ namespace CMTest.Project.MasterPlus
             //ClassFullName = frame.GetMethod().ReflectedType?.FullName;
             //FunctionName = frame.GetMethod().Name;
             _iReporter = new ReporterXsl(Path.Combine(ResultTimePath, "MasterPlusTestFlows.xml"), ProjectPath.GetProjectFullPath());
-            _resultTestInfo = new Reporter.ResultTestInfo
+            resultTestInfo = new Reporter.ResultTestInfo
             {
-                AttrProject = "CM",
+                AttrProject = "Cooler Master",
                 AttrOs = UtilOs.GetOsVersion(),
                 AttrLanguage = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-", "_"),
                 AttrRegion = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1],
                 AttrDeviceModel = Reporter.DefaultContent,
                 AttrDeviceName = Reporter.DefaultContent,
                 AttrVersion = UtilOs.GetOsProperty(),
-                AttrTests = 0,
+                AttrTotalCases = 0,
                 AttrPasses = 0,
                 AttrFailures = 0,
                 AttrTbds = 0,
@@ -50,7 +50,7 @@ namespace CMTest.Project.MasterPlus
             for (var i = 1; i < TEST_TIMES; i++)
             {
                 MasterPlusTestActions.LaunchTimes = i;
-                MasterPlusTestActions.LaunchMasterPlus();
+                MasterPlusTestActions.LaunchMasterPlus("",11);
                 MasterPlusTestActions.CloseMasterPlus();
             }
         }
@@ -64,31 +64,45 @@ namespace CMTest.Project.MasterPlus
         {
             MasterPlusTestActions.LaunchAndCheckCrash(TEST_TIMES);
         }
-
-        public void Flow_KeymappingTest(string deviceName)
+        //Common cases
+        public void Case_LaunchMasterPlus()
         {
-            _resultTestInfo.AttrDeviceModel = deviceName;
-            _resultTestInfo.AttrDeviceName = deviceName;
-            _resultTestInfo.AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            var r = new Reporter.ResultTestCase()
+            {
+                NodeDescription = $"Launch MasterPlus from {SwLnkPath}. Timeout = 15s",
+                NodeExpectedResult = "MasterPlus+ launched successfully.",
+            };
             try
             {
-                //SW.WriteConsoleTitle($"Waiting for launching. (1s)");
-                var swMainWindow = MasterPlusTestActions.GetMasterPlusMainWindow(11);
+                //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
+            }
+            catch (Exception)
+            {
+                r.NodeResult = Reporter.Result.FAIL;
+                r.AttrMessage = "Failed to launch MP+.";
+            }
+            _iReporter.AddTestStep(r, resultTestInfo);
+        }
+        public void Case_SelectDevice(string deviceName)
+        {
+            var r = new Reporter.ResultTestCase()
+            {
+                NodeDescription = $"Select {deviceName} from MasterPlus.",
+                NodeExpectedResult = "Device can be found.",
+            };
+            try
+            {
+                var swMainWindow = MasterPlusTestActions.GetMasterPlusMainWindow();
                 var dut = MasterPlusTestActions.GetTestDevice(deviceName, swMainWindow);
                 dut.DoClickPoint();
             }
             catch (Exception)
             {
-                _iReporter.AddTestStep(new Reporter.ResultTestCase()
-                {
-                    NodeStepNumber = 1,
-                    NodeDescription = "123123",
-                    NodeExpectedResult = "NodeExpectedResult",
-                    NodeResult = Reporter.Result.FAIL
-                }, _resultTestInfo);
+                r.NodeResult = Reporter.Result.FAIL;
+                r.AttrMessage = "Failed to find the device.";
             }
-
-            //MasterPlusTestActions.KeyMappingTest(deviceName);
+            _iReporter.AddTestStep(r, resultTestInfo);
         }
+        //KeymappingTest
     }
 }

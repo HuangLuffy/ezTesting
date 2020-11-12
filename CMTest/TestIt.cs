@@ -60,7 +60,7 @@ namespace CMTest
             } );
                  _optionsTopMenu.Add(_masterPlusTestFlows.MasterPlusTestActions.SwName, () => {
                 AssembleMasterPlusPlugInOutTests();
-                return _cmd.ShowCmdMenu(_optionsMasterPlusTestsWithFuncs, _optionsTopMenu);
+                return _cmd.ShowCmdMenu(_optionsTestsWithFuncs, _optionsTopMenu);
             });
         }
 
@@ -87,7 +87,7 @@ namespace CMTest
                 var result = _cmd.ShowCmdMenu(_optionsTopMenu);
                 if (result.Equals(MARK_FOUND_RESULT))
                 {
-                    UtilCmd.WriteLine(" >>>>>>>>>>>>>> Test Done! PASS");
+                    UtilCmd.WriteLine(" >>>>>>>>>>>>>> Test Done!");
                 }
                 //_cmd.WriteCmdMenu(_optionsProjects, true);
             }

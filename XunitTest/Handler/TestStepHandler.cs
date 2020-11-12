@@ -40,7 +40,7 @@ namespace XUnitTest.Handler
                 AttrDeviceModel = DefaultContent,
                 AttrDeviceName = DefaultContent,
                 AttrVersion = DefaultContent,
-                AttrTests = 0,
+                AttrTotalCases = 0,
                 AttrPasses = 0,
                 AttrFailures = 0,
                 AttrTbds = 0,
@@ -102,7 +102,7 @@ namespace XUnitTest.Handler
             {
                 Capture("End Shot", "");
 
-                _resultTestInfo.AttrTests += 1;
+                _resultTestInfo.AttrTotalCases += 1;
 
                 resultTestCase.AttrClassname = xunitInfo.ClassFullName;
                 resultTestCase.AttrName = xunitInfo.FunctionName;
@@ -116,11 +116,11 @@ namespace XUnitTest.Handler
                 _iReporter.AddTestStep(resultTestCase);
                 _resultTestInfo.AttrTestName = xunitInfo.ClassName;
                 _resultTestInfo.AttrTime += resultTestCase.AttrTime;
-                _resultTestInfo.AttrPassesPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrPasses, _resultTestInfo.AttrTests, 1);
-                _resultTestInfo.AttrFailuresPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrFailures, _resultTestInfo.AttrTests, 1);
-                _resultTestInfo.AttrErrorsPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrErrors, _resultTestInfo.AttrTests, 1);
-                _resultTestInfo.AttrBlocksPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrBlocks, _resultTestInfo.AttrTests, 1);
-                _resultTestInfo.AttrTbdsPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrTbds, _resultTestInfo.AttrTests, 1);
+                _resultTestInfo.AttrPassesPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrPasses, _resultTestInfo.AttrTotalCases, 1);
+                _resultTestInfo.AttrFailuresPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrFailures, _resultTestInfo.AttrTotalCases, 1);
+                _resultTestInfo.AttrErrorsPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrErrors, _resultTestInfo.AttrTotalCases, 1);
+                _resultTestInfo.AttrBlocksPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrBlocks, _resultTestInfo.AttrTotalCases, 1);
+                _resultTestInfo.AttrTbdsPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrTbds, _resultTestInfo.AttrTotalCases, 1);
                 _iReporter.ModifyTestInfo(_resultTestInfo);
             }  
         }

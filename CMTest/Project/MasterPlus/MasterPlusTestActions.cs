@@ -16,19 +16,27 @@ namespace CMTest.Project.MasterPlus
         {
             Initialize();
         }
-        public void LaunchMasterPlus()
-        { 
-            UtilProcess.StartProcess(SwLnkPath);
-            Timeout = 11;
-            WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
-            new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);
+        public AT LaunchMasterPlus(string appFullPath = "" , int timeout = 15,bool killCurrentOne = true)
+        {
+            if (killCurrentOne)
+            {
+                UtilProcess.KillProcessByName(SwProcessName);
+                UtilTime.WaitTime(1);
+            }
+            if (appFullPath.Equals(""))
+            {
+                appFullPath = SwLnkPath;
+            }
+            UtilProcess.StartProcess(appFullPath);
+            //WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
+            return new AT().GetElement(MasterPlusObj.MainWindowSw, timeout);
         }
         public void CloseMasterPlus()
         {
             var buttonClose = SwMainWindow.GetElement(MasterPlusObj.ButtonCloseMainWindow);
             buttonClose.DoClick();
             Timeout = 6;
-            WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
+            //WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
             UtilTime.WaitTime(Timeout);
         }
 
@@ -59,7 +67,7 @@ namespace CMTest.Project.MasterPlus
                     crashTimes++;
                 }
                 UtilTime.WaitTime(1);
-                UtilProcess.KillProcessByName(this.SwProcessName);
+                UtilProcess.KillProcessByName(SwProcessName);
                 UtilTime.WaitTime(1);
             }
         }
@@ -121,7 +129,7 @@ namespace CMTest.Project.MasterPlus
             var devices = deviceList.GetElementsAllChild();
             return devices.GetElementByIA(new ATElementStruct() { IADescription = deviceName });
         }
-        public AT GetMasterPlusMainWindow(int timeout)
+        public AT GetMasterPlusMainWindow(int timeout = 0)
         {
             return new AT().GetElement(MasterPlusObj.MainWindowSw, timeout);
         }

@@ -32,15 +32,20 @@ namespace ReportLib
             public string AttrDeviceModel { get; set; }
             public string AttrDeviceName { get; set; }
             public string AttrRegion { get; set; }
-            public int AttrTests { get; set; }
+            public int AttrTotalCases { get; set; }
             public string AttrVersion { get; set; }
             public string AttrName { get; set; }
         }
         public class ResultTestCase
         {
+            public ResultTestCase()
+            {
+                this.NodeResult = Reporter.Result.PASS;
+            }
             public int NodeStepNumber { get; set; }
             public string NodeDescription { get; set; }
             public string NodeExpectedResult { get; set; }
+            //public string NodeErrorMessage { get; set; }
             public string NodeNeedToCheck { get; set; }
             public string NodeResult { get; set; }
             public string NodeFailure { get; set; }
@@ -82,6 +87,7 @@ namespace ReportLib
         public const string NodeStep = "step";
         public const string NodeDescription = "description";
         public const string NodeExpectedResult = "expectedResult";
+        public const string NodeErrorMessage = "errorMessage";
         public const string NodeNeedToCheck = "needToCheck";
         public const string NodeResult = "result";
         public const string NodeFailure = "failure";

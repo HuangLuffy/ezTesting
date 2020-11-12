@@ -88,19 +88,21 @@ namespace ReportLib
                     new XAttribute(AttrName, resultTestCase.AttrName ?? Reporter.DefaultContent),
                     new XElement(NodeStep, resultTestCase.NodeStepNumber),
                     new XElement(NodeDescription, resultTestCase.NodeDescription ?? Reporter.DefaultContent),
+                   // new XElement(NodeErrorMessage, resultTestCase.NodeErrorMessage ?? Reporter.DefaultContent),
                     new XElement(NodeExpectedResult, resultTestCase.NodeExpectedResult ?? Reporter.DefaultContent),
                     new XElement(NodeNeedToCheck, resultTestCase.NodeNeedToCheck ?? Reporter.DefaultContent),
                     new XElement(NodeResult, resultTestCase.NodeResult ?? Reporter.DefaultContent),
                     new XElement(
                         NodeFailure,
-                        new XAttribute(AttrMessage, Reporter.DefaultContent),
+                        new XAttribute(AttrMessage, resultTestCase.AttrMessage ?? Reporter.DefaultContent),
                         new XAttribute(AttrType, Reporter.DefaultContent)
                     )
             );
         }
         public void AddTestStep(ResultTestCase resultTestCase, ResultTestInfo resultTestInfo = null)
         {
-            resultTestInfo.AttrTests += 1;
+            resultTestCase.NodeStepNumber += 1;
+            resultTestInfo.AttrTotalCases += 1;
             var thisDoc = XDoc ?? XDocument.Load(PathReportXml);
             if (thisDoc?.Root != null)
             {
@@ -135,11 +137,11 @@ namespace ReportLib
                     resultTestInfo.AttrTbds += 1;
                 }
                 resultTestInfo.AttrTime += resultTestCase.AttrTime;
-                resultTestInfo.AttrPassesPercent = GetResultPercent(resultTestInfo.AttrPasses, resultTestInfo.AttrTests, 1);
-                resultTestInfo.AttrFailuresPercent = GetResultPercent(resultTestInfo.AttrFailures, resultTestInfo.AttrTests, 1);
-                resultTestInfo.AttrErrorsPercent = GetResultPercent(resultTestInfo.AttrErrors, resultTestInfo.AttrTests, 1);
-                resultTestInfo.AttrBlocksPercent = GetResultPercent(resultTestInfo.AttrBlocks, resultTestInfo.AttrTests, 1);
-                resultTestInfo.AttrTbdsPercent = GetResultPercent(resultTestInfo.AttrTbds, resultTestInfo.AttrTests, 1);
+                resultTestInfo.AttrPassesPercent = GetResultPercent(resultTestInfo.AttrPasses, resultTestInfo.AttrTotalCases, 1);
+                resultTestInfo.AttrFailuresPercent = GetResultPercent(resultTestInfo.AttrFailures, resultTestInfo.AttrTotalCases, 1);
+                resultTestInfo.AttrErrorsPercent = GetResultPercent(resultTestInfo.AttrErrors, resultTestInfo.AttrTotalCases, 1);
+                resultTestInfo.AttrBlocksPercent = GetResultPercent(resultTestInfo.AttrBlocks, resultTestInfo.AttrTotalCases, 1);
+                resultTestInfo.AttrTbdsPercent = GetResultPercent(resultTestInfo.AttrTbds, resultTestInfo.AttrTotalCases, 1);
                 ModifyTestInfo(resultTestInfo);
             }
         }
@@ -158,7 +160,7 @@ namespace ReportLib
             rootElement.Attribute(AttrDeviceModel).Value = resultTestInfo.AttrDeviceModel ?? Reporter.DefaultContent;
             rootElement.Attribute(AttrDeviceName).Value = resultTestInfo.AttrDeviceName ?? Reporter.DefaultContent;
             rootElement.Attribute(AttrRegion).Value = resultTestInfo.AttrRegion ?? Reporter.DefaultContent;
-            rootElement.Attribute(AttrTests).Value = resultTestInfo.AttrTests.ToString() ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrTests).Value = resultTestInfo.AttrTotalCases.ToString() ?? Reporter.DefaultContent;
             rootElement.Attribute(AttrVersion).Value = resultTestInfo.AttrVersion ?? Reporter.DefaultContent;
             rootElement.Attribute(AttrName).Value = resultTestInfo.AttrName ?? Reporter.DefaultContent;
 
