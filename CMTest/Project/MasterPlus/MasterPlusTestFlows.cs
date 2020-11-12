@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using CMTest.Xml;
+using CommonLib.Util.OS;
+using CommonLib.Util.Project;
 using ReportLib;
 
 namespace CMTest.Project.MasterPlus
@@ -15,11 +18,27 @@ namespace CMTest.Project.MasterPlus
         
         private static readonly long TEST_TIMES = 99999999;
         private IReporter _iReporter;
+        private Reporter.ResultTestInfo _resultTestInfo;
         public readonly MasterPlusTestActions MasterPlusTestActions = new MasterPlusTestActions();
 
         public MasterPlusTestFlows()
         {
-            _iReporter = new ReporterXsl(Path.Combine(ResultPath, "MasterPlusTestFlows.xml"));
+            _iReporter = new ReporterXsl(Path.Combine(ResultTimePath, "MasterPlusTestFlows.xml"), ProjectPath.GetProjectFullPath());
+            _resultTestInfo = new Reporter.ResultTestInfo
+            {
+                AttrProject = "CM",
+                AttrOs = UtilOs.GetOsVersion(),
+                AttrLanguage = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-", "_"),
+                AttrRegion = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1],
+                AttrDeviceModel = Reporter.DefaultContent,
+                AttrDeviceName = Reporter.DefaultContent,
+                AttrVersion = Reporter.DefaultContent,
+                AttrTests = 0,
+                AttrPasses = 0,
+                AttrFailures = 0,
+                AttrTbds = 0,
+                AttrBlocks = 0
+            };
         }
         public void Flow_LaunchTest()
         {
@@ -43,17 +62,25 @@ namespace CMTest.Project.MasterPlus
 
         public void Flow_KeymappingTest(string deviceName)
         {
-            SW.WriteConsoleTitle($"Waiting for launching. (1s)");
-            var swMainWindow = MasterPlusTestActions.GetMasterPlusMainWindow(11);
-            var dut = MasterPlusTestActions.GetTestDevice(deviceName, swMainWindow);
-            dut.DoClickPoint();
-            _iReporter.AddTestStep(new Reporter.ResultTestCase()
+            try
             {
-                NodeStepNumber = 1,
-                NodeDescription = "123123",
-                NodeExpectedResult = "NodeExpectedResult",
-                NodeResult = SW.Result.Fail
-            });
+                SW.WriteConsoleTitle($"Waiting for launching. (1s)");
+                var swMainWindow = MasterPlusTestActions.GetMasterPlusMainWindow(11);
+                var dut = MasterPlusTestActions.GetTestDevice(deviceName, swMainWindow);
+                dut.DoClickPoint();
+            }
+            catch (Exception)
+            {
+                _iReporter.AddTestStep(new Reporter.ResultTestCase()
+                {
+                    NodeStepNumber = 1,
+                    NodeDescription = "123123",
+                    NodeExpectedResult = "NodeExpectedResult",
+                    NodeResult = Reporter.Result.FAIL
+                });
+                _iReporter.ModifyTestInfo(_resultTestInfo);
+            }
+
             //MasterPlusTestActions.KeyMappingTest(deviceName);
         }
     }

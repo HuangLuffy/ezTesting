@@ -16,7 +16,6 @@ namespace CMTest
             _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_TEST, Flow_MasterPlus_LaunchTest);
             _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_LAUNCH_CHECK_CRASH, Flow_MasterPlus_LaunchAndCheckCrash);
 
-            AssembleTestLanguages();
             AssembleDevices(fromConf);
             _optionsMasterPlusTestsWithFuncs.Add(MasterPlusTestFlows.TestNames.OPTION_TEST, () => _cmd.ShowCmdMenu(_optionsXmlPlugInOutDeviceNames, _optionsPortalTestsWithFuncs));
 
@@ -26,7 +25,8 @@ namespace CMTest
         private void AssembleDevices(bool fromConf = true)
         {
             if (_optionsXmlPlugInOutDeviceNames.Any()) return;
-            foreach (var deviceName in _xmlOps.GetDeviceNameList())
+            //foreach (var deviceName in _xmlOps.GetDeviceNameList())
+            foreach (var deviceName in new List<string>(){"SK622W", "SK622B" })
             {
                 _optionsXmlPlugInOutDeviceNames.Add(deviceName, () => {
                     _masterPlusTestFlows.Flow_KeymappingTest(deviceName);

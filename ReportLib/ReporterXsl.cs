@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using CommonLib.Util.IO;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -8,12 +10,12 @@ namespace ReportLib
     {
         private XDocument XDoc { get; set; }
         private string PathReportXml { get; }
-        public ReporterXsl(string pathReportXml)
+        public ReporterXsl(string pathReportXml, string xslPath = "")
         {
             PathReportXml = pathReportXml;
             if (!File.Exists(PathReportXml))
             {
-                CreateResultXml();
+                CreateResultXml(xslPath: xslPath);
             }
         }
         public void SetEnvBlockMsg(string envBlockMsg)
@@ -33,9 +35,16 @@ namespace ReportLib
             return $"{comment}@@@{link}";
         }
 
-        private void CreateResultXml(string xslName = "xmlReport.xsl")
+        private void CreateResultXml(string xslName = "xmlReport.xsl", string xslPath = "")
         {
-
+            if (!xslPath.Equals(""))
+            {
+                if (!xslPath.Contains("."))
+                {
+                    xslPath = Path.Combine(xslPath, xslName);
+                }
+                File.Copy(xslPath, Path.Combine(Path.GetDirectoryName(PathReportXml), xslName), false);
+            }
             var xDoc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XProcessingInstruction("xml-stylesheet", $"type='text/xsl' href='{xslName}'"),
@@ -74,18 +83,18 @@ namespace ReportLib
             return 
                 new XElement(
                     NodeTestcase,
-                    new XAttribute(AttrClassname, resultTestCase.AttrClassname),
+                    new XAttribute(AttrClassname, resultTestCase.AttrClassname??Reporter.DefaultContent),
                     new XAttribute(AttrTime, resultTestCase.AttrTime),
-                    new XAttribute(AttrName, resultTestCase.AttrName),
+                    new XAttribute(AttrName, resultTestCase.AttrName ?? Reporter.DefaultContent),
                     new XElement(NodeStep, resultTestCase.NodeStepNumber),
-                    new XElement(NodeDescription, resultTestCase.NodeDescription),
-                    new XElement(NodeExpectedResult, resultTestCase.NodeExpectedResult),
-                    new XElement(NodeNeedToCheck, resultTestCase.NodeNeedToCheck),
-                    new XElement(NodeResult, resultTestCase.NodeResult),
+                    new XElement(NodeDescription, resultTestCase.NodeDescription ?? Reporter.DefaultContent),
+                    new XElement(NodeExpectedResult, resultTestCase.NodeExpectedResult ?? Reporter.DefaultContent),
+                    new XElement(NodeNeedToCheck, resultTestCase.NodeNeedToCheck ?? Reporter.DefaultContent),
+                    new XElement(NodeResult, resultTestCase.NodeResult ?? Reporter.DefaultContent),
                     new XElement(
                         NodeFailure,
-                        new XAttribute(AttrMessage, "na"),
-                        new XAttribute(AttrType, "na")
+                        new XAttribute(AttrMessage, Reporter.DefaultContent),
+                        new XAttribute(AttrType, Reporter.DefaultContent)
                     )
             );
         }
@@ -115,28 +124,28 @@ namespace ReportLib
         {
             var thisDoc = XDoc ?? XDocument.Load(PathReportXml);
             var rootElement = XDoc.Root;
-            rootElement.Attribute(AttrProject).Value = resultTestInfo.AttrProject;
-            rootElement.Attribute(AttrTestName).Value = resultTestInfo.AttrTestName;
-            rootElement.Attribute(AttrOs).Value = resultTestInfo.AttrOs;
-            rootElement.Attribute(AttrLanguage).Value = resultTestInfo.AttrLanguage;
-            rootElement.Attribute(AttrTime).Value = resultTestInfo.AttrTime.ToString();
-            rootElement.Attribute(AttrDeviceModel).Value = resultTestInfo.AttrDeviceModel;
-            rootElement.Attribute(AttrDeviceName).Value = resultTestInfo.AttrDeviceName;
-            rootElement.Attribute(AttrRegion).Value = resultTestInfo.AttrRegion;
-            rootElement.Attribute(AttrTests).Value = resultTestInfo.AttrTests.ToString();
-            rootElement.Attribute(AttrVersion).Value = resultTestInfo.AttrVersion;
-            rootElement.Attribute(AttrName).Value = resultTestInfo.AttrName;
+            rootElement.Attribute(AttrProject).Value = resultTestInfo.AttrProject ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrTestName).Value = resultTestInfo.AttrTestName ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrOs).Value = resultTestInfo.AttrOs ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrLanguage).Value = resultTestInfo.AttrLanguage ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrTime).Value = resultTestInfo.AttrTime.ToString() ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrDeviceModel).Value = resultTestInfo.AttrDeviceModel ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrDeviceName).Value = resultTestInfo.AttrDeviceName ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrRegion).Value = resultTestInfo.AttrRegion ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrTests).Value = resultTestInfo.AttrTests.ToString() ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrVersion).Value = resultTestInfo.AttrVersion ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrName).Value = resultTestInfo.AttrName ?? Reporter.DefaultContent;
 
-            rootElement.Attribute(AttrBlocks).Value = resultTestInfo.AttrBlocks.ToString();
-            rootElement.Attribute(AttrBlocksPercent).Value = resultTestInfo.AttrBlocksPercent;
-            rootElement.Attribute(AttrErrors).Value = resultTestInfo.AttrErrors.ToString();
-            rootElement.Attribute(AttrErrorsPercent).Value = resultTestInfo.AttrErrorsPercent;
-            rootElement.Attribute(AttrFailures).Value = resultTestInfo.AttrFailures.ToString();
-            rootElement.Attribute(AttrFailsPercent).Value = resultTestInfo.AttrFailuresPercent;
-            rootElement.Attribute(AttrPasses).Value = resultTestInfo.AttrPasses.ToString();
-            rootElement.Attribute(AttrPassesPercent).Value = resultTestInfo.AttrPassesPercent;
-            rootElement.Attribute(AttrTbds).Value = resultTestInfo.AttrTbds.ToString();
-            rootElement.Attribute(AttrTbdsPercent).Value = resultTestInfo.AttrTbdsPercent;
+            rootElement.Attribute(AttrBlocks).Value = resultTestInfo.AttrBlocks.ToString() ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrBlocksPercent).Value = resultTestInfo.AttrBlocksPercent ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrErrors).Value = resultTestInfo.AttrErrors.ToString() ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrErrorsPercent).Value = resultTestInfo.AttrErrorsPercent ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrFailures).Value = resultTestInfo.AttrFailures.ToString() ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrFailsPercent).Value = resultTestInfo.AttrFailuresPercent ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrPasses).Value = resultTestInfo.AttrPasses.ToString() ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrPassesPercent).Value = resultTestInfo.AttrPassesPercent ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrTbds).Value = resultTestInfo.AttrTbds.ToString() ?? Reporter.DefaultContent;
+            rootElement.Attribute(AttrTbdsPercent).Value = resultTestInfo.AttrTbdsPercent ?? Reporter.DefaultContent;
             thisDoc.Save(PathReportXml);
         }
     }

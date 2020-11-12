@@ -11,6 +11,7 @@ namespace ReportLib
             public const string BLOCK = "Block";
             public const string TBD = "Tbd";
         }
+        public const string DefaultContent = "NA";
         public class ResultTestInfo
         {
             public int AttrBlocks { get; set; }
@@ -47,7 +48,7 @@ namespace ReportLib
             public string AttrType { get; set; }
 
             public long AttrTime { get; set; }
-            public string AttrClassname { get; set; }
+            public string AttrClassname { get; set ; }
             public string AttrName { get; set; }
         }
         public const string NodeTestsuite = "testsuite";

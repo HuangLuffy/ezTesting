@@ -93,6 +93,7 @@ namespace CMTest
             }
             catch (Exception ex)
             {
+                var a = ex.Message;
                 //HandleWrongStepResult(ex.Message);
                 UtilCmd.PressAnyContinue();
                 ShowTopMenu();
