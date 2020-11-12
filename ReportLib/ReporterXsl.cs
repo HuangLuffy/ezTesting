@@ -30,7 +30,7 @@ namespace ReportLib
         {
             return $"{line}~!~";
         }
-        public string SetManualCheck(string comment, string link)
+        public string SetNeedToCheck(string comment, string link)
         {
             return $"{comment}@@@{link}";
         }

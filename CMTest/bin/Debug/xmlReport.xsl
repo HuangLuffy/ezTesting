@@ -552,7 +552,7 @@
 				<td id="tdDescription">Description</td>
 				<td id="tdExpectedResult">Expected Result</td>
 				<td id="tdErrorMessage">Error Message</td>
-				<td id="tdManualCheck">Manual Check</td>
+				<td id="tdManualCheck">Need To Check</td>
 				<td id="tdResult" style="cursor:hand;">Result</td>
 				<td id="tdTime" style="cursor:hand;">Time(s)</td>
 			</tr>
@@ -578,7 +578,7 @@
 				<xsl:value-of select="failure/@message"/>
 			</td>
 			<td style="Width:120;text-align:left;">
-				<xsl:value-of select="manualCheck"/>
+				<xsl:value-of select="needToCheck"/>
 			</td>
 			<td ondblclick="CreateDataTable('Result', this);" style="text-align:center;cursor:hand;" nowrap="nowrap">
 				<xsl:value-of select="result"/>

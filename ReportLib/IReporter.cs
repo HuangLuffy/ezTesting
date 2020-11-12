@@ -9,7 +9,7 @@ namespace ReportLib
         void ModifyTestInfo(ResultTestInfo resultTestInfo);
         string SetAsLink(string link);
         string SetNewLine(string line);
-        string SetManualCheck(string comment, string link);
+        string SetNeedToCheck(string comment, string link);
         string GetResultPercent(int result, int total, int keepPoint = 2);
     }
 }

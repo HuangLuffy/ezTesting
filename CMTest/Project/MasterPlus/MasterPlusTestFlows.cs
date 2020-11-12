@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using CMTest.Xml;
 using CommonLib.Util;
 using CommonLib.Util.OS;
@@ -26,7 +27,8 @@ namespace CMTest.Project.MasterPlus
         private string _manualCheckLink = Reporter.DefaultContent;
         public void Capture(string pathSave, string comment = "Shot", ImageType imageType = ImageType.PNG)
         {
-            _manualCheckLink += _iReporter.SetManualCheck(comment, pathSave);
+            _manualCheckLink = _iReporter.SetNeedToCheck(comment, pathSave);
+            _manualCheckLink = _iReporter.SetAsLink(_manualCheckLink);
             UtilCapturer.Capture(pathSave, imageType);
         }
         public MasterPlusTestFlows()
@@ -88,7 +90,7 @@ namespace CMTest.Project.MasterPlus
                 r.NodeResult = Reporter.Result.FAIL;
                 r.AttrMessage = "Failed to launch MP+.";
             }
-
+            Capture(UtilString.GetSplitArray(ScreenshotsPath, "Screenshots").ElementAt(1), "123");
             r.NodeNeedToCheck = _manualCheckLink;
             _iReporter.AddTestStep(r, resultTestInfo);
         }
