@@ -58,7 +58,7 @@ namespace CMTest
                 AssemblePortalTests();
                 return _cmd.ShowCmdMenu(_optionsPortalTestsWithFuncs, _optionsTopMenu);
             } );
-                 _optionsTopMenu.Add(_masterPlusTestFlows.MasterPlusTestActions.SwName, () => {
+                 _optionsTopMenu.Add(_masterPlusTestFlows.MpSteps.SwName, () => {
                 AssembleMasterPlusPlugInOutTests();
                 return _cmd.ShowCmdMenu(_optionsTestsWithFuncs, _optionsTopMenu);
             });

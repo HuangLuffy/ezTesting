@@ -1,6 +1,7 @@
 ﻿using CommonLib.Util;
 using System;
 using System.IO;
+using System.Linq;
 using CommonLib.Util.IO;
 using CommonLib.Util.Project;
 using ReportLib;
@@ -9,13 +10,29 @@ namespace CMTest.Project
 {
     public abstract class AbsResult
     {
+        public struct Const
+        {
+            public const string Screenshots = "Screenshots";
+            public const string Result = "Result";
+        }
+        
         public string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
         public string LogPathRestart = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
         //public string ProjectPath => AppDomain.CurrentDomain.BaseDirectory;
-        public string ResultPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Result");
-        public string ResultTimePath => Path.Combine(ResultPath, GetTestTimeString());
-        public string ScreenshotsPath => Path.Combine(ResultTimePath, "Screenshots");
+        public string ResultPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Const.Result);
+        public string CurrentTestFolderName;
+        public string ResultTimePath => Path.Combine(ResultPath, CurrentTestFolderName);
+        public string ScreenshotsPath => Path.Combine(ResultTimePath, Const.Screenshots);
         public string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");
+        public string ScreenshotsRelativePath;
+
+
+        public AbsResult()
+        {
+            CurrentTestFolderName = GetTestTimeString();//This function would run twice if put it with "public string CurrentTestFolderName";
+            ScreenshotsRelativePath = Path.Combine(Const.Result, CurrentTestFolderName, Const.Screenshots);
+            //ScreenshotsRelativePath = UtilString.GetSplitArray(ScreenshotsPath, "\\").ElementAt(UtilString.GetSplitArray(ScreenshotsPath, "\\").Count() - 2);
+        }
         //public string ImagePath
         //{
         //    get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }
