@@ -19,21 +19,26 @@ namespace CMTest.Project.MasterPlus
             public const string OPTION_LAUNCH_CHECK_CRASH = "Launch and check crash";
             public const string OPTION_TEST = "Test";
         }
-        
+
         private static readonly long TEST_TIMES = 99999999;
         private IReporter _iReporter;
         public Reporter.ResultTestInfo resultTestInfo;
         public readonly MasterPlusTestActions MpActions = new MasterPlusTestActions();
-        public bool isCaseFailed = true;
+
+        public bool isCaseFailed = false;
+
         //private string _manualCheckLink = Reporter.DefaultContent;
-        private void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string name = "", ImageType imageType = ImageType.PNG)
+        private void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string name = "",
+            ImageType imageType = ImageType.PNG)
         {
             if (name.Equals(""))
             {
                 name = UtilTime.GetLongTimeString();
             }
+
             var t = Path.Combine(MpActions.ScreenshotsRelativePath, name);
-            var manualCheckLink = _iReporter.SetNeedToCheck(commentOnWeb, Path.Combine(AbsResult.Const.Screenshots, name + "." + imageType));
+            var manualCheckLink = _iReporter.SetNeedToCheck(commentOnWeb,
+                Path.Combine(AbsResult.Const.Screenshots, name + "." + imageType));
             manualCheckLink = _iReporter.SetAsLink(manualCheckLink);
             UtilCapturer.Capture(t, imageType);
             if (r != null)
@@ -41,10 +46,12 @@ namespace CMTest.Project.MasterPlus
                 r.NodeNeedToCheck += manualCheckLink;
             }
         }
+
         public MasterPlusTestFlows()
         {
             MpActions.Initialize();
-            _iReporter = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"), ProjectPath.GetProjectFullPath());
+            _iReporter = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"),
+                ProjectPath.GetProjectFullPath());
             resultTestInfo = new Reporter.ResultTestInfo
             {
                 AttrProject = "Cooler Master",
@@ -61,12 +68,13 @@ namespace CMTest.Project.MasterPlus
                 AttrBlocks = 0
             };
         }
+
         public void Flow_LaunchTest()
         {
             for (var i = 1; i < TEST_TIMES; i++)
             {
                 MpActions.LaunchTimes = i;
-                MpActions.LaunchMasterPlus("",11);
+                MpActions.LaunchMasterPlus("", 11);
                 MpActions.CloseMasterPlus();
             }
         }
@@ -80,61 +88,118 @@ namespace CMTest.Project.MasterPlus
         {
             MpActions.LaunchAndCheckCrash(TEST_TIMES);
         }
+
         //Common cases
+        //public void Case_LaunchMasterPlus()
+        //{
+        //    var r = new Reporter.ResultTestCase()
+        //    {
+        //        NodeDescription = $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s",
+        //        NodeExpectedResult = "MasterPlus+ launched successfully.",
+        //    };
+        //    if (isCaseFailed)
+        //    {
+        //        r.NodeResult = Reporter.Result.BLOCK;
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
+        //        }
+        //        catch (Exception)
+        //        {
+        //            isCaseFailed = true;
+        //            r.NodeResult = Reporter.Result.FAIL;
+        //            r.AttrMessage = "Failed to launch MP+.";
+        //        }
+
+        //        Capture(r);
+        //    }
+        //    _iReporter.AddTestStep(r, resultTestInfo);
+        //}
         public void Case_LaunchMasterPlus()
         {
-            var r = new Reporter.ResultTestCase()
-            {
-                NodeDescription = $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s",
-                NodeExpectedResult = "MasterPlus+ launched successfully.",
-            };
-            if (isCaseFailed)
-            {
-                r.NodeResult = Reporter.Result.BLOCK;
-            }
-            else
-            {
-                try
+            Exec(() =>
                 {
                     //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
                 }
-                catch (Exception)
-                {
-                    r.NodeResult = Reporter.Result.FAIL;
-                    r.AttrMessage = "Failed to launch MP+.";
-                }
-                Capture(r);
-            }
-            _iReporter.AddTestStep(r, resultTestInfo);
+                , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s"
+                , "MasterPlus+ launched successfully."
+                , "Failed to launch MP+.");
         }
         public void Case_SelectDevice(string deviceName)
         {
-            var r = new Reporter.ResultTestCase()
-            {
-                NodeDescription = $"Select {deviceName} from MasterPlus.",
-                NodeExpectedResult = $"{deviceName} can be found.",
-            };
-            if (isCaseFailed)
-            {
-                r.NodeResult = Reporter.Result.BLOCK;
-            }
-            else
-            {
-                try
+            Exec(() =>
                 {
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
                     dut.DoClickPoint();
                 }
+                , $"Select {deviceName} from MasterPlus."
+                , $"{deviceName} can be found."
+                , "Failed to find the device.");
+        }
+        //public void Case_SelectDevice1(string deviceName)
+        //{
+        //    var r = new Reporter.ResultTestCase()
+        //    {
+        //        NodeDescription = $"Select {deviceName} from MasterPlus.",
+        //        NodeExpectedResult = $"{deviceName} can be found.",
+        //    };
+        //    if (isCaseFailed)
+        //    {
+        //        r.NodeResult = Reporter.Result.BLOCK;
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            var swMainWindow = MpActions.GetMasterPlusMainWindow();
+        //            var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
+        //            dut.DoClickPoint();
+        //        }
+        //        catch (Exception)
+        //        {
+        //            isCaseFailed = true;
+        //            r.NodeResult = Reporter.Result.FAIL;
+        //            r.AttrMessage = "Failed to find the device.";
+        //        }
+
+        //        Capture(r);
+        //    }
+
+        //    _iReporter.AddTestStep(r, resultTestInfo);
+        //}
+
+        //KeymappingTest
+        private void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage)
+        {
+            var r = new Reporter.ResultTestCase()
+            {
+                NodeDescription = nodeDescription,
+                NodeExpectedResult = nodeExpectedResult,
+            };
+            if (isCaseFailed)
+            {
+                r.NodeResult = Reporter.Result.BLOCK;
+            }
+            else
+            {
+                try
+                {
+                    //var actualResult = action.Invoke();
+                    action.Invoke();
+                }
                 catch (Exception)
                 {
+                    isCaseFailed = true;
                     r.NodeResult = Reporter.Result.FAIL;
-                    r.AttrMessage = "Failed to find the device.";
+                    r.AttrMessage = nodeErrorMessage;
                 }
                 Capture(r);
             }
             _iReporter.AddTestStep(r, resultTestInfo);
         }
-        //KeymappingTest
     }
 }
