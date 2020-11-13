@@ -90,7 +90,7 @@ namespace ReportLib
                     new XElement(NodeDescription, resultTestCase.NodeDescription ?? Reporter.DefaultContent),
                    // new XElement(NodeErrorMessage, resultTestCase.NodeErrorMessage ?? Reporter.DefaultContent),
                     new XElement(NodeExpectedResult, resultTestCase.NodeExpectedResult ?? Reporter.DefaultContent),
-                    new XElement(NodeNeedToCheck, resultTestCase.NodeNeedToCheck ?? Reporter.DefaultContent),
+                    new XElement(NodeNeedToCheck, resultTestCase.NodeNeedToCheck ?? ""),
                     new XElement(NodeResult, resultTestCase.NodeResult ?? Reporter.DefaultContent),
                     new XElement(
                         NodeFailure,
@@ -101,8 +101,9 @@ namespace ReportLib
         }
         public void AddTestStep(ResultTestCase resultTestCase, ResultTestInfo resultTestInfo = null)
         {
-            resultTestCase.NodeStepNumber += 1;
             resultTestInfo.AttrTotalCases += 1;
+            resultTestCase.NodeStepNumber += 1;//new object every time, so it would always be 1 and do the next step.
+            resultTestCase.NodeStepNumber = resultTestInfo.AttrTotalCases;
             var thisDoc = XDoc ?? XDocument.Load(PathReportXml);
             if (thisDoc?.Root != null)
             {

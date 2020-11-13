@@ -47,7 +47,7 @@ namespace CMTest.Project
             WriteConsoleTitlePri(Console.Title, timeout);
         }
 
-        protected void Initialize()
+        public void Initialize()
         {
             //UtilFolder.DeleteDirectory(ScreenshotsPath);
             UtilFolder.CreateDirectory(ResultPath);

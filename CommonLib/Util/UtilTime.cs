@@ -164,7 +164,11 @@ namespace CommonLib.Util
         }
         public static string GetTimeString()
         {
-            return $"{DateTime.Now:yyyyMMdd_hhmmss}";
+            return $"{DateTime.Now:yyyyMMdd_HHmmss}";
+        }
+        public static string GetLongTimeString()
+        {
+            return $"{DateTime.Now:yyyyMMddHHmmssfff}";
         }
         private static void TimeElapsedEvent(object source, ElapsedEventArgs e)
         {

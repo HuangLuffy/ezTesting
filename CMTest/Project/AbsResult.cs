@@ -48,7 +48,7 @@ namespace CMTest.Project
         }
         protected string GetRestartLogTime()
         {
-            return $"{DateTime.Now:yyyy.MM.dd_hh.mm.ss}";
+            return $"{DateTime.Now:yyyy.MM.dd_HH.mm.ss}";
         }
         protected void HandleWrongStepResult(string comment, long num = 0)
         {

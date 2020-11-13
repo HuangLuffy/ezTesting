@@ -23,24 +23,27 @@ namespace CMTest.Project.MasterPlus
         private static readonly long TEST_TIMES = 99999999;
         private IReporter _iReporter;
         public Reporter.ResultTestInfo resultTestInfo;
-        public readonly MasterPlusTestActions MpSteps = new MasterPlusTestActions();
+        public readonly MasterPlusTestActions MpActions = new MasterPlusTestActions();
         //private string _manualCheckLink = Reporter.DefaultContent;
-
-        private string Capture(string name, string commentOnWeb = "Shot", ImageType imageType = ImageType.PNG)
+        private void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string name = "", ImageType imageType = ImageType.PNG)
         {
-           var t = Path.Combine(MpSteps.ScreenshotsRelativePath, name);
-           var manualCheckLink = _iReporter.SetNeedToCheck(commentOnWeb, Path.Combine(AbsResult.Const.Screenshots, name + "." + imageType));
-           manualCheckLink = _iReporter.SetAsLink(manualCheckLink);
-           UtilCapturer.Capture(t, imageType);
-           return manualCheckLink;
+            if (name.Equals(""))
+            {
+                name = UtilTime.GetLongTimeString();
+            }
+            var t = Path.Combine(MpActions.ScreenshotsRelativePath, name);
+            var manualCheckLink = _iReporter.SetNeedToCheck(commentOnWeb, Path.Combine(AbsResult.Const.Screenshots, name + "." + imageType));
+            manualCheckLink = _iReporter.SetAsLink(manualCheckLink);
+            UtilCapturer.Capture(t, imageType);
+            if (r != null)
+            {
+                r.NodeNeedToCheck += manualCheckLink;
+            }
         }
         public MasterPlusTestFlows()
         {
-            //var frame = new StackTrace().GetFrame(level);
-            //ClassName = frame.GetMethod().ReflectedType?.Name;
-            //ClassFullName = frame.GetMethod().ReflectedType?.FullName;
-            //FunctionName = frame.GetMethod().Name;
-            _iReporter = new ReporterXsl(Path.Combine(MpSteps.ResultTimePath, "MasterPlusTestFlows.xml"), ProjectPath.GetProjectFullPath());
+            MpActions.Initialize();
+            _iReporter = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"), ProjectPath.GetProjectFullPath());
             resultTestInfo = new Reporter.ResultTestInfo
             {
                 AttrProject = "Cooler Master",
@@ -61,27 +64,27 @@ namespace CMTest.Project.MasterPlus
         {
             for (var i = 1; i < TEST_TIMES; i++)
             {
-                MpSteps.LaunchTimes = i;
-                MpSteps.LaunchMasterPlus("",11);
-                MpSteps.CloseMasterPlus();
+                MpActions.LaunchTimes = i;
+                MpActions.LaunchMasterPlus("",11);
+                MpActions.CloseMasterPlus();
             }
         }
 
         public void Flow_RestartSystemAndCheckDeviceRecognition(XmlOps xmlOps)
         {
-            MpSteps.RestartSystemAndCheckDeviceRecognitionFlow(xmlOps);
+            MpActions.RestartSystemAndCheckDeviceRecognitionFlow(xmlOps);
         }
 
         public void Flow_LaunchAndCheckCrash()
         {
-            MpSteps.LaunchAndCheckCrash(TEST_TIMES);
+            MpActions.LaunchAndCheckCrash(TEST_TIMES);
         }
         //Common cases
         public void Case_LaunchMasterPlus()
         {
             var r = new Reporter.ResultTestCase()
             {
-                NodeDescription = $"Launch MasterPlus from {MpSteps.SwLnkPath}. Timeout = 15s",
+                NodeDescription = $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s",
                 NodeExpectedResult = "MasterPlus+ launched successfully.",
             };
             try
@@ -93,7 +96,7 @@ namespace CMTest.Project.MasterPlus
                 r.NodeResult = Reporter.Result.FAIL;
                 r.AttrMessage = "Failed to launch MP+.";
             }
-            r.NodeNeedToCheck = Capture("333", "123");
+            Capture(r);
             _iReporter.AddTestStep(r, resultTestInfo);
         }
         public void Case_SelectDevice(string deviceName)
@@ -101,12 +104,12 @@ namespace CMTest.Project.MasterPlus
             var r = new Reporter.ResultTestCase()
             {
                 NodeDescription = $"Select {deviceName} from MasterPlus.",
-                NodeExpectedResult = "Device can be found.",
+                NodeExpectedResult = $"{deviceName} can be found.",
             };
             try
             {
-                var swMainWindow = MpSteps.GetMasterPlusMainWindow();
-                var dut = MpSteps.GetTestDevice(deviceName, swMainWindow);
+                var swMainWindow = MpActions.GetMasterPlusMainWindow();
+                var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
                 dut.DoClickPoint();
             }
             catch (Exception)
@@ -114,6 +117,7 @@ namespace CMTest.Project.MasterPlus
                 r.NodeResult = Reporter.Result.FAIL;
                 r.AttrMessage = "Failed to find the device.";
             }
+            Capture(r);
             _iReporter.AddTestStep(r, resultTestInfo);
         }
         //KeymappingTest

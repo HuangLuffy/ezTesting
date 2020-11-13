@@ -14,7 +14,7 @@ namespace CMTest.Project.MasterPlus
     {
         public MasterPlusTestActions()
         {
-            Initialize();
+
         }
         public AT LaunchMasterPlus(string appFullPath = "" , int timeout = 15,bool killCurrentOne = true)
         {

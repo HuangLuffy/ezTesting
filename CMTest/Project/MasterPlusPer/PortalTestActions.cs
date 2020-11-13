@@ -12,7 +12,6 @@ namespace CMTest.Project.MasterPlusPer
         private readonly VmOps _vmOps;
         public PortalTestActions()
         {
-            Initialize();
             _portalObj = (PortalObj)Obj;
             _vmOps = new VmOps();
         }
