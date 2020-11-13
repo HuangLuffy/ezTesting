@@ -24,6 +24,7 @@ namespace CMTest.Project.MasterPlus
         private IReporter _iReporter;
         public Reporter.ResultTestInfo resultTestInfo;
         public readonly MasterPlusTestActions MpActions = new MasterPlusTestActions();
+        public bool isCaseFailed = true;
         //private string _manualCheckLink = Reporter.DefaultContent;
         private void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string name = "", ImageType imageType = ImageType.PNG)
         {
@@ -87,16 +88,23 @@ namespace CMTest.Project.MasterPlus
                 NodeDescription = $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s",
                 NodeExpectedResult = "MasterPlus+ launched successfully.",
             };
-            try
+            if (isCaseFailed)
             {
-                //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
+                r.NodeResult = Reporter.Result.BLOCK;
             }
-            catch (Exception)
+            else
             {
-                r.NodeResult = Reporter.Result.FAIL;
-                r.AttrMessage = "Failed to launch MP+.";
+                try
+                {
+                    //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
+                }
+                catch (Exception)
+                {
+                    r.NodeResult = Reporter.Result.FAIL;
+                    r.AttrMessage = "Failed to launch MP+.";
+                }
+                Capture(r);
             }
-            Capture(r);
             _iReporter.AddTestStep(r, resultTestInfo);
         }
         public void Case_SelectDevice(string deviceName)
@@ -106,18 +114,25 @@ namespace CMTest.Project.MasterPlus
                 NodeDescription = $"Select {deviceName} from MasterPlus.",
                 NodeExpectedResult = $"{deviceName} can be found.",
             };
-            try
+            if (isCaseFailed)
             {
-                var swMainWindow = MpActions.GetMasterPlusMainWindow();
-                var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
-                dut.DoClickPoint();
+                r.NodeResult = Reporter.Result.BLOCK;
             }
-            catch (Exception)
+            else
             {
-                r.NodeResult = Reporter.Result.FAIL;
-                r.AttrMessage = "Failed to find the device.";
+                try
+                {
+                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
+                    var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
+                    dut.DoClickPoint();
+                }
+                catch (Exception)
+                {
+                    r.NodeResult = Reporter.Result.FAIL;
+                    r.AttrMessage = "Failed to find the device.";
+                }
+                Capture(r);
             }
-            Capture(r);
             _iReporter.AddTestStep(r, resultTestInfo);
         }
         //KeymappingTest
