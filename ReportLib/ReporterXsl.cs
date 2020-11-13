@@ -18,6 +18,10 @@ namespace ReportLib
                 CreateResultXml(xslPath: xslPath);
             }
         }
+        public string GetResultFullPath()
+        {
+            return PathReportXml;
+        }
         public void SetEnvBlockMsg(string envBlockMsg)
         {
             

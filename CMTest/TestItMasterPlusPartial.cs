@@ -58,6 +58,7 @@ namespace CMTest
             _masterPlusTestFlows.resultTestInfo.AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             _masterPlusTestFlows.Case_LaunchMasterPlus();
             _masterPlusTestFlows.Case_SelectDevice(deviceName);
+            _masterPlusTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }
     }

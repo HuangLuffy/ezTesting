@@ -24,8 +24,8 @@ namespace CMTest.Project.MasterPlus
         private IReporter _iReporter;
         public Reporter.ResultTestInfo resultTestInfo;
         public readonly MasterPlusTestActions MpActions = new MasterPlusTestActions();
-
-        public bool isCaseFailed = false;
+        private string ReportFullPath;
+        private bool isCaseFailed = false;
 
         //private string _manualCheckLink = Reporter.DefaultContent;
         private void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string name = "",
@@ -47,9 +47,14 @@ namespace CMTest.Project.MasterPlus
             }
         }
 
+        public void LaunchTestReport()
+        {
+            Process.Start("IExplore.exe", _iReporter.GetResultFullPath());
+        }
         public MasterPlusTestFlows()
         {
             MpActions.Initialize();
+
             _iReporter = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"),
                 ProjectPath.GetProjectFullPath());
             resultTestInfo = new Reporter.ResultTestInfo
