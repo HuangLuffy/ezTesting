@@ -11,6 +11,7 @@ namespace ReportLib
             public const string BLOCK = "Block";
             public const string TBD = "Tbd";
         }
+        public static bool IsLastCaseFailed = false;
         public const string DefaultContent = "NA";
         public class ResultTestInfo
         {

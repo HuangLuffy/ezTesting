@@ -54,8 +54,8 @@ namespace CMTest
 
         private dynamic Flow_KeymappingTest(string deviceName)
         {
-            _masterPlusTestFlows.resultTestInfo.AttrDeviceModel = deviceName;
-            _masterPlusTestFlows.resultTestInfo.AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            _masterPlusTestFlows.ResultTestInfo.AttrDeviceModel = deviceName;
+            _masterPlusTestFlows.ResultTestInfo.AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             _masterPlusTestFlows.Case_LaunchMasterPlus();
             _masterPlusTestFlows.Case_SelectDevice(deviceName);
             _masterPlusTestFlows.LaunchTestReport();

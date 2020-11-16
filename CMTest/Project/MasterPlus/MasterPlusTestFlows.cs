@@ -21,13 +21,58 @@ namespace CMTest.Project.MasterPlus
         }
 
         private static readonly long TEST_TIMES = 99999999;
-        private IReporter _iReporter;
-        public Reporter.ResultTestInfo resultTestInfo;
+        private readonly IReporter _iReporter;
+        public readonly Reporter.ResultTestInfo ResultTestInfo;
         public readonly MasterPlusTestActions MpActions = new MasterPlusTestActions();
-        private string ReportFullPath;
-        private bool isCaseFailed = false;
-
-        //private string _manualCheckLink = Reporter.DefaultContent;
+        public MasterPlusTestFlows()
+        {
+            MpActions.Initialize();
+            _iReporter = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"),
+                ProjectPath.GetProjectFullPath());
+            ResultTestInfo = new Reporter.ResultTestInfo
+            {
+                AttrProject = "Cooler Master",
+                AttrOs = UtilOs.GetOsVersion(),
+                AttrLanguage = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-", "_"),
+                AttrRegion = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1],
+                AttrDeviceModel = Reporter.DefaultContent,
+                AttrDeviceName = Reporter.DefaultContent,
+                AttrVersion = UtilOs.GetOsProperty(),
+                AttrTotalCases = 0,
+                AttrPasses = 0,
+                AttrFailures = 0,
+                AttrTbds = 0,
+                AttrBlocks = 0
+            };
+        }
+        private void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage)
+        {
+            var r = new Reporter.ResultTestCase()
+            {
+                NodeDescription = nodeDescription,
+                NodeExpectedResult = nodeExpectedResult,
+            };
+            if (Reporter.IsLastCaseFailed)
+            {
+                r.NodeResult = Reporter.Result.BLOCK;
+            }
+            else
+            {
+                try
+                {
+                    //var actualResult = action.Invoke();
+                    action.Invoke();
+                }
+                catch (Exception)
+                {
+                    Reporter.IsLastCaseFailed = true;
+                    r.NodeResult = Reporter.Result.FAIL;
+                    r.AttrMessage = nodeErrorMessage;
+                }
+                Capture(r);
+            }
+            _iReporter.AddTestStep(r, ResultTestInfo);
+        }
         private void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string name = "",
             ImageType imageType = ImageType.PNG)
         {
@@ -50,28 +95,6 @@ namespace CMTest.Project.MasterPlus
         public void LaunchTestReport()
         {
             Process.Start("IExplore.exe", _iReporter.GetResultFullPath());
-        }
-        public MasterPlusTestFlows()
-        {
-            MpActions.Initialize();
-
-            _iReporter = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"),
-                ProjectPath.GetProjectFullPath());
-            resultTestInfo = new Reporter.ResultTestInfo
-            {
-                AttrProject = "Cooler Master",
-                AttrOs = UtilOs.GetOsVersion(),
-                AttrLanguage = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-", "_"),
-                AttrRegion = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1],
-                AttrDeviceModel = Reporter.DefaultContent,
-                AttrDeviceName = Reporter.DefaultContent,
-                AttrVersion = UtilOs.GetOsProperty(),
-                AttrTotalCases = 0,
-                AttrPasses = 0,
-                AttrFailures = 0,
-                AttrTbds = 0,
-                AttrBlocks = 0
-            };
         }
 
         public void Flow_LaunchTest()
@@ -178,33 +201,6 @@ namespace CMTest.Project.MasterPlus
         //}
 
         //KeymappingTest
-        private void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage)
-        {
-            var r = new Reporter.ResultTestCase()
-            {
-                NodeDescription = nodeDescription,
-                NodeExpectedResult = nodeExpectedResult,
-            };
-            if (isCaseFailed)
-            {
-                r.NodeResult = Reporter.Result.BLOCK;
-            }
-            else
-            {
-                try
-                {
-                    //var actualResult = action.Invoke();
-                    action.Invoke();
-                }
-                catch (Exception)
-                {
-                    isCaseFailed = true;
-                    r.NodeResult = Reporter.Result.FAIL;
-                    r.AttrMessage = nodeErrorMessage;
-                }
-                Capture(r);
-            }
-            _iReporter.AddTestStep(r, resultTestInfo);
-        }
+        
     }
 }
