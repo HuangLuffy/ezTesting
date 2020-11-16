@@ -115,14 +115,7 @@ namespace CMTest.Project.MasterPlus
             //UtilProcess.ExecuteCmd();// sometimes it does not work somehow.
             UtilOS.Reboot();
         }
-        public void KeyMappingTest(string deviceName)
-        {
-            Timeout = 11;
-            WriteConsoleTitle(LaunchTimes, $"Waiting for launching. (1s)", 1);
-            SwMainWindow = GetMasterPlusMainWindow(Timeout);
-            var dut = GetTestDevice(deviceName, SwMainWindow);
-            dut.DoClickPoint();
-        }
+
         public AT GetTestDevice(string deviceName, AT swMainWindow)
         {
             var deviceList = swMainWindow.GetElement(MasterPlusObj.DeviceList);

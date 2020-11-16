@@ -26,8 +26,8 @@ namespace CMTest.Project.MasterPlus
         public MasterPlusTestFlows()
         {
             MpActions.Initialize();
-            R = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"),
-                ProjectPath.GetProjectFullPath(), 
+            R = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, new StackTrace().GetFrame(0).GetMethod().ReflectedType?.Name + ".xml"),
+                ProjectPath.GetProjectFullPath(), MpActions.GetScreenshotsRelativePath(),
                 new Reporter.ResultTestInfo
                 {
                     AttrProject = "Cooler Master",
@@ -43,7 +43,6 @@ namespace CMTest.Project.MasterPlus
                     AttrTbds = 0,
                     AttrBlocks = 0
                 });
-            R.SetCaptureRelativePath(MpActions.GetScreenshotsRelativePath());
         }
 
         public void LaunchTestReport()

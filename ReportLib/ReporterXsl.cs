@@ -13,7 +13,7 @@ namespace ReportLib
         private string PathReportXml { get; }
         private string CaptureRelativePath { set; get; }
         private Reporter.ResultTestInfo ResultTestInfo { get; }
-        public ReporterXsl(string pathReportXml, string xslPath = "", Reporter.ResultTestInfo resultTestInfo = null)
+        public ReporterXsl(string pathReportXml, string xslPath = "", string captureRelativePath = "", Reporter.ResultTestInfo resultTestInfo = null)
         {
             PathReportXml = pathReportXml;
             if (!File.Exists(PathReportXml))
@@ -21,6 +21,7 @@ namespace ReportLib
                 CreateResultXml(xslPath: xslPath);
             }
             ResultTestInfo = resultTestInfo;
+            CaptureRelativePath = captureRelativePath;
         }
         public string GetResultFullPath()
         {
