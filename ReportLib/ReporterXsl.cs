@@ -3,6 +3,7 @@ using CommonLib.Util.IO;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using CommonLib.Util;
 
 namespace ReportLib
 {
@@ -10,21 +11,32 @@ namespace ReportLib
     {
         private XDocument XDoc { get; set; }
         private string PathReportXml { get; }
-        public ReporterXsl(string pathReportXml, string xslPath = "")
+        private string CaptureRelativePath { set; get; }
+        private Reporter.ResultTestInfo ResultTestInfo { get; }
+        public ReporterXsl(string pathReportXml, string xslPath = "", Reporter.ResultTestInfo resultTestInfo = null)
         {
             PathReportXml = pathReportXml;
             if (!File.Exists(PathReportXml))
             {
                 CreateResultXml(xslPath: xslPath);
             }
+            ResultTestInfo = resultTestInfo;
         }
         public string GetResultFullPath()
         {
             return PathReportXml;
         }
-        public void SetEnvBlockMsg(string envBlockMsg)
+        public void SetCaptureRelativePath(string captureRelativePath)
         {
-            
+            CaptureRelativePath = captureRelativePath;
+        }
+        public string GetCaptureRelativePath()
+        {
+            return CaptureRelativePath;
+        }
+        public ResultTestInfo GetResultTestInfo()
+        {
+            return ResultTestInfo;
         }
         public string SetAsLink(string link)
         {
@@ -147,11 +159,11 @@ namespace ReportLib
                 resultTestInfo.AttrErrorsPercent = GetResultPercent(resultTestInfo.AttrErrors, resultTestInfo.AttrTotalCases, 1);
                 resultTestInfo.AttrBlocksPercent = GetResultPercent(resultTestInfo.AttrBlocks, resultTestInfo.AttrTotalCases, 1);
                 resultTestInfo.AttrTbdsPercent = GetResultPercent(resultTestInfo.AttrTbds, resultTestInfo.AttrTotalCases, 1);
-                ModifyTestInfo(resultTestInfo);
+                ModifyResultTestInfo(resultTestInfo);
             }
         }
 
-        public void ModifyTestInfo(ResultTestInfo resultTestInfo)
+        public void ModifyResultTestInfo(ResultTestInfo resultTestInfo)
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
         {
@@ -180,6 +192,56 @@ namespace ReportLib
             rootElement.Attribute(AttrTbds).Value = resultTestInfo.AttrTbds.ToString() ?? Reporter.DefaultContent;
             rootElement.Attribute(AttrTbdsPercent).Value = resultTestInfo.AttrTbdsPercent ?? Reporter.DefaultContent;
             thisDoc.Save(PathReportXml);
+        }
+        public void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string imageName = "", string capturesRelativePath = "",
+            UtilCapturer.ImageType imageType = UtilCapturer.ImageType.PNG)
+        {
+            if (imageName.Equals(""))
+            {
+                imageName = UtilTime.GetLongTimeString();
+            }
+
+            if (capturesRelativePath.Equals(""))
+            {
+                capturesRelativePath = this.GetCaptureRelativePath();
+;            }
+            var t = Path.Combine(capturesRelativePath, imageName);
+            var manualCheckLink = SetNeedToCheck(commentOnWeb,
+                Path.Combine(capturesRelativePath.Split('\\').Last(), imageName + "." + imageType));
+            manualCheckLink = SetAsLink(manualCheckLink);
+            UtilCapturer.Capture(t, imageType);
+            if (r != null)
+            {
+                r.NodeNeedToCheck += manualCheckLink;
+            }
+        }
+        public void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage)
+        {
+            var r = new Reporter.ResultTestCase()
+            {
+                NodeDescription = nodeDescription,
+                NodeExpectedResult = nodeExpectedResult,
+            };
+            if (Reporter.IsLastCaseFailed)
+            {
+                r.NodeResult = Reporter.Result.BLOCK;
+            }
+            else
+            {
+                try
+                {
+                    //var actualResult = action.Invoke();
+                    action.Invoke();
+                }
+                catch (Exception)
+                {
+                    Reporter.IsLastCaseFailed = true;
+                    r.NodeResult = Reporter.Result.FAIL;
+                    r.AttrMessage = nodeErrorMessage;
+                }
+                Capture(r);
+            }
+            AddTestStep(r, ResultTestInfo);
         }
     }
 }

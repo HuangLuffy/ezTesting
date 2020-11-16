@@ -122,7 +122,7 @@ namespace XUnitTest.Handler
                 _resultTestInfo.AttrErrorsPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrErrors, _resultTestInfo.AttrTotalCases, 1);
                 _resultTestInfo.AttrBlocksPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrBlocks, _resultTestInfo.AttrTotalCases, 1);
                 _resultTestInfo.AttrTbdsPercent = _iReporter.GetResultPercent(_resultTestInfo.AttrTbds, _resultTestInfo.AttrTotalCases, 1);
-                _iReporter.ModifyTestInfo(_resultTestInfo);
+                _iReporter.ModifyResultTestInfo(_resultTestInfo);
             }  
         }
         private class TestFunctionInfo

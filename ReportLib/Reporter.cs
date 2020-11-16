@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using CommonLib.Util;
+using static CommonLib.Util.UtilCapturer;
 
 namespace ReportLib
 {
@@ -11,7 +14,7 @@ namespace ReportLib
             public const string BLOCK = "Block";
             public const string TBD = "Tbd";
         }
-        public static bool IsLastCaseFailed = false;
+        protected static bool IsLastCaseFailed = false;
         public const string DefaultContent = "NA";
         public class ResultTestInfo
         {
@@ -94,7 +97,6 @@ namespace ReportLib
         public const string NodeFailure = "failure";
         public const string AttrMessage = "message";
         public const string AttrType = "type";
-
         public string GetResultPercent(int result, int total, int keepPoint = 2)
         {
             return (Math.Round((double)result / total, keepPoint) * 100) + "%";

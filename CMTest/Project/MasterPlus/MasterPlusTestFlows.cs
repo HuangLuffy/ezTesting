@@ -21,80 +21,34 @@ namespace CMTest.Project.MasterPlus
         }
 
         private static readonly long TEST_TIMES = 99999999;
-        private readonly IReporter _iReporter;
-        public readonly Reporter.ResultTestInfo ResultTestInfo;
+        public readonly IReporter iReporter;
         public readonly MasterPlusTestActions MpActions = new MasterPlusTestActions();
         public MasterPlusTestFlows()
         {
             MpActions.Initialize();
-            _iReporter = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"),
-                ProjectPath.GetProjectFullPath());
-            ResultTestInfo = new Reporter.ResultTestInfo
-            {
-                AttrProject = "Cooler Master",
-                AttrOs = UtilOs.GetOsVersion(),
-                AttrLanguage = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-", "_"),
-                AttrRegion = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1],
-                AttrDeviceModel = Reporter.DefaultContent,
-                AttrDeviceName = Reporter.DefaultContent,
-                AttrVersion = UtilOs.GetOsProperty(),
-                AttrTotalCases = 0,
-                AttrPasses = 0,
-                AttrFailures = 0,
-                AttrTbds = 0,
-                AttrBlocks = 0
-            };
-        }
-        private void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage)
-        {
-            var r = new Reporter.ResultTestCase()
-            {
-                NodeDescription = nodeDescription,
-                NodeExpectedResult = nodeExpectedResult,
-            };
-            if (Reporter.IsLastCaseFailed)
-            {
-                r.NodeResult = Reporter.Result.BLOCK;
-            }
-            else
-            {
-                try
+            iReporter = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"),
+                ProjectPath.GetProjectFullPath(), 
+                new Reporter.ResultTestInfo
                 {
-                    //var actualResult = action.Invoke();
-                    action.Invoke();
-                }
-                catch (Exception)
-                {
-                    Reporter.IsLastCaseFailed = true;
-                    r.NodeResult = Reporter.Result.FAIL;
-                    r.AttrMessage = nodeErrorMessage;
-                }
-                Capture(r);
-            }
-            _iReporter.AddTestStep(r, ResultTestInfo);
-        }
-        private void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string name = "",
-            ImageType imageType = ImageType.PNG)
-        {
-            if (name.Equals(""))
-            {
-                name = UtilTime.GetLongTimeString();
-            }
-
-            var t = Path.Combine(MpActions.ScreenshotsRelativePath, name);
-            var manualCheckLink = _iReporter.SetNeedToCheck(commentOnWeb,
-                Path.Combine(AbsResult.Const.Screenshots, name + "." + imageType));
-            manualCheckLink = _iReporter.SetAsLink(manualCheckLink);
-            UtilCapturer.Capture(t, imageType);
-            if (r != null)
-            {
-                r.NodeNeedToCheck += manualCheckLink;
-            }
+                    AttrProject = "Cooler Master",
+                    AttrOs = UtilOs.GetOsVersion(),
+                    AttrLanguage = System.Globalization.CultureInfo.InstalledUICulture.Name.Replace("-", "_"),
+                    AttrRegion = System.Globalization.CultureInfo.InstalledUICulture.Name.Split('-')[1],
+                    AttrDeviceModel = Reporter.DefaultContent,
+                    AttrDeviceName = Reporter.DefaultContent,
+                    AttrVersion = UtilOs.GetOsProperty(),
+                    AttrTotalCases = 0,
+                    AttrPasses = 0,
+                    AttrFailures = 0,
+                    AttrTbds = 0,
+                    AttrBlocks = 0
+                });
+            iReporter.SetCaptureRelativePath(MpActions.GetScreenshotsRelativePath());
         }
 
         public void LaunchTestReport()
         {
-            Process.Start("IExplore.exe", _iReporter.GetResultFullPath());
+            Process.Start("IExplore.exe", iReporter.GetResultFullPath());
         }
 
         public void Flow_LaunchTest()
@@ -118,6 +72,52 @@ namespace CMTest.Project.MasterPlus
         }
 
         //Common cases
+        
+        public void Case_LaunchMasterPlus()
+        {
+            iReporter.Exec(() =>
+                {
+                    //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
+                }
+                , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s"
+                , "MasterPlus+ launched successfully."
+                , "Failed to launch MP+.");
+        }
+        public void Case_SelectDevice(string deviceName)
+        {
+            iReporter.Exec(() =>
+                {
+                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
+                    var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
+                    dut.DoClickPoint();
+                }
+                , $"Select {deviceName} from MasterPlus."
+                , $"{deviceName} can be found."
+                , "Failed to find the device.");
+        }
+
+
+
+
+
+
+        //private void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string imageName = "",
+        //    ImageType imageType = ImageType.PNG)
+        //{
+        //    if (imageName.Equals(""))
+        //    {
+        //        imageName = UtilTime.GetLongTimeString();
+        //    }
+        //    var t = Path.Combine(MpActions.GetScreenshotsRelativePath(), imageName);
+        //    var manualCheckLink = _iReporter.SetNeedToCheck(commentOnWeb,
+        //        Path.Combine(AbsResult.Const.Screenshots, imageName + "." + imageType));
+        //    manualCheckLink = _iReporter.SetAsLink(manualCheckLink);
+        //    UtilCapturer.Capture(t, imageType);
+        //    if (r != null)
+        //    {
+        //        r.NodeNeedToCheck += manualCheckLink;
+        //    }
+        //}
         //public void Case_LaunchMasterPlus()
         //{
         //    var r = new Reporter.ResultTestCase()
@@ -146,28 +146,6 @@ namespace CMTest.Project.MasterPlus
         //    }
         //    _iReporter.AddTestStep(r, resultTestInfo);
         //}
-        public void Case_LaunchMasterPlus()
-        {
-            Exec(() =>
-                {
-                    //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
-                }
-                , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s"
-                , "MasterPlus+ launched successfully."
-                , "Failed to launch MP+.");
-        }
-        public void Case_SelectDevice(string deviceName)
-        {
-            Exec(() =>
-                {
-                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
-                    var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
-                    dut.DoClickPoint();
-                }
-                , $"Select {deviceName} from MasterPlus."
-                , $"{deviceName} can be found."
-                , "Failed to find the device.");
-        }
         //public void Case_SelectDevice1(string deviceName)
         //{
         //    var r = new Reporter.ResultTestCase()
@@ -201,6 +179,6 @@ namespace CMTest.Project.MasterPlus
         //}
 
         //KeymappingTest
-        
+
     }
 }

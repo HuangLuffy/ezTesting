@@ -15,33 +15,29 @@ namespace CMTest.Project
             public const string Screenshots = "Screenshots";
             public const string Result = "Result";
         }
-        
-        public string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
-        public string LogPathRestart = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
+
+        protected string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
+        protected string LogPathRestart = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
         //public string ProjectPath => AppDomain.CurrentDomain.BaseDirectory;
-        public string ResultPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Const.Result);
-        public string CurrentTestFolderName;
-        public string ResultTimePath => Path.Combine(ResultPath, CurrentTestFolderName);
-        public string ScreenshotsPath => Path.Combine(ResultTimePath, Const.Screenshots);
-        public string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");
-        public string ScreenshotsRelativePath;
+        protected string ResultPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Const.Result);
+        private readonly string _currentTestFolderName;
+        public string ResultTimePath => Path.Combine(ResultPath, _currentTestFolderName);
+        protected string ScreenshotsPath => Path.Combine(ResultTimePath, Const.Screenshots);
+        protected readonly string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");
+        private readonly string _screenshotsRelativePath;
 
 
         public AbsResult()
         {
-            CurrentTestFolderName = GetTestTimeString();//This function would run twice if put it with "public string CurrentTestFolderName";
-            ScreenshotsRelativePath = Path.Combine(Const.Result, CurrentTestFolderName, Const.Screenshots);
+            _currentTestFolderName = GetTestTimeString();//This function would run twice if put it with "public string CurrentTestFolderName";
+            _screenshotsRelativePath = Path.Combine(Const.Result, _currentTestFolderName, Const.Screenshots);
             //ScreenshotsRelativePath = UtilString.GetSplitArray(ScreenshotsPath, "\\").ElementAt(UtilString.GetSplitArray(ScreenshotsPath, "\\").Count() - 2);
         }
-        //public string ImagePath
-        //{
-        //    get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots"); }
-        //}
-        //public struct Result
-        //{
-        //    public const string Fail = "Failed";
-        //    public const string Pass = "Passed";
-        //}
+        public string GetScreenshotsRelativePath()
+        {
+            return _screenshotsRelativePath;
+        }
+
         public string GetTestTimeString()
         {
             return UtilTime.GetTimeString();
