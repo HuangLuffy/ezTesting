@@ -2,6 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using ATLib.Input;
 using CMTest.Xml;
 using CommonLib.Util;
 using CommonLib.Util.OS;
@@ -71,11 +74,38 @@ namespace CMTest.Project.MasterPlus
         }
 
         //Common cases
-        
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        public static void PressKey(Keys key, bool up)
+        {
+            const int KEYEVENTF_EXTENDEDKEY = 0x1;
+            const int KEYEVENTF_KEYUP = 0x2;
+            if (up)
+            {
+                keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, (UIntPtr)0);
+            }
+            else
+            {
+                keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY, (UIntPtr)0);
+            }
+        }
+
         public void Case_LaunchMasterPlus()
         {
             R.Exec(() =>
                 {
+                    UtilTime.WaitTime(4);
+                    try
+                    {
+                        PressKey(Keys.A, false);
+                        PressKey(Keys.A, true);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                    
                     //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
                 }
                 , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s."

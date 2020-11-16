@@ -605,7 +605,7 @@
                 SendInput(1, ref KB_DownINPUT, Marshal.SizeOf(new INPUT()));
                 //Thread.Sleep(1000);   'INPUT KB_DownINPUT2 = new INPUT();   'KB_DownINPUT2.type = SendInputEventType.InputKeyboard;   'KB_DownINPUT2.mkhi.ki.wVk = (ushort)VirtualKeys.VK_LWIN;   'KB_DownINPUT2.mkhi.ki.dwFlags = (uint)WParamFlags.WM_KEYUP;   'SendInput(2, ref KB_DownINPUT2, Marshal.SizeOf(new INPUT()));  End Sub 
             }
-            public static void KBDo(ushort whickKey)
+            public static void KBDo(Enum whickKey)
             {
                 INPUT KB_DownINPUT = new INPUT();
                 KB_DownINPUT.type = SendInputEventType.InputKeyboard;
@@ -692,6 +692,21 @@
                 SendInput(1, ref KB_DownINPUT, Marshal.SizeOf(new INPUT()));
                 //Thread.Sleep(1000);   'INPUT KB_DownINPUT2 = new INPUT();   'KB_DownINPUT2.type = SendInputEventType.InputKeyboard;   'KB_DownINPUT2.mkhi.ki.wVk = (ushort)VirtualKeys.VK_LWIN;   'KB_DownINPUT2.mkhi.ki.dwFlags = (uint)WParamFlags.WM_KEYUP;   'SendInput(2, ref KB_DownINPUT2, Marshal.SizeOf(new INPUT()));  End Sub 
             }
+            //[DllImport("user32.dll", SetLastError = true)]
+            //static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+            //public static void PressKey(Keys key, bool up)
+            //{
+            //    const int KEYEVENTF_EXTENDEDKEY = 0x1;
+            //    const int KEYEVENTF_KEYUP = 0x2;
+            //    if (up)
+            //    {
+            //        keybd_event((byte)key, 0x4F, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, (UIntPtr)0);
+            //    }
+            //    else
+            //    {
+            //        keybd_event((byte)key, 0x4F, KEYEVENTF_EXTENDEDKEY, (UIntPtr)0);
+            //    }
+            //}
             public static void KBDoALTI()
             {
                 INPUT KB_DownINPUT = new INPUT();

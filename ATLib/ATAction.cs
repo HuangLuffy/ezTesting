@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows;
 using System.Windows.Automation;
@@ -725,7 +726,7 @@ namespace ATLib
             /// 
             /// </summary>
             /// <returns></returns>
-            public Rect BoundingRectangle()
+            public Rectangle BoundingRectangle()
             {
                 try
                 {

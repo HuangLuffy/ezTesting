@@ -37,6 +37,8 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
+            var aa = BitConverter.GetBytes(69);
+            var bb = 69.ToString("x8");
             _masterPlusTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();
