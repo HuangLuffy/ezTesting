@@ -46,6 +46,19 @@ namespace ReportLib
         {
             return $"{line}~!~";
         }
+        public string SetAsLines(params string[] lines)
+        {
+            var addNumber = !lines[0].StartsWith("1.");
+            var wholeLine = "";
+            for (var i = 0; i < lines.Length; i++)
+            {
+                if (addNumber)
+                {
+                    wholeLine += SetNewLine($"{i + 1} {lines[i]}");
+                }
+            }
+            return wholeLine;
+        }
         public string SetNeedToCheck(string comment, string link)
         {
             return $"{comment}@@@{link}";

@@ -12,6 +12,7 @@ namespace ReportLib
         ResultTestInfo GetResultTestInfo();
         string SetAsLink(string link);
         string SetNewLine(string line);
+        string SetAsLines(params string[] lines);
         string SetNeedToCheck(string comment, string link);
         string GetResultPercent(int result, int total, int keepPoint = 2);
         string GetResultFullPath();

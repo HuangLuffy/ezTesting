@@ -54,10 +54,14 @@ namespace CMTest
 
         private dynamic Flow_KeymappingTest(string deviceName)
         {
-            _masterPlusTestFlows.iReporter.GetResultTestInfo().AttrDeviceModel = deviceName;
-            _masterPlusTestFlows.iReporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            _masterPlusTestFlows.R.GetResultTestInfo().AttrDeviceModel = deviceName;
+            _masterPlusTestFlows.R.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             _masterPlusTestFlows.Case_LaunchMasterPlus();
-            _masterPlusTestFlows.Case_SelectDevice(deviceName);
+            _masterPlusTestFlows.Case_SelectDeviceFromList(deviceName);
+            _masterPlusTestFlows.Case_SelectKeyMappingTab();
+            _masterPlusTestFlows.Case_OpenKey1();
+
+
             _masterPlusTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }

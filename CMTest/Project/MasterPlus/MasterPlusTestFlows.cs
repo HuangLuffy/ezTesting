@@ -21,12 +21,12 @@ namespace CMTest.Project.MasterPlus
         }
 
         private static readonly long TEST_TIMES = 99999999;
-        public readonly IReporter iReporter;
+        public readonly IReporter R;
         public readonly MasterPlusTestActions MpActions = new MasterPlusTestActions();
         public MasterPlusTestFlows()
         {
             MpActions.Initialize();
-            iReporter = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"),
+            R = new ReporterXsl(Path.Combine(MpActions.ResultTimePath, "MasterPlusTestFlows.xml"),
                 ProjectPath.GetProjectFullPath(), 
                 new Reporter.ResultTestInfo
                 {
@@ -43,12 +43,12 @@ namespace CMTest.Project.MasterPlus
                     AttrTbds = 0,
                     AttrBlocks = 0
                 });
-            iReporter.SetCaptureRelativePath(MpActions.GetScreenshotsRelativePath());
+            R.SetCaptureRelativePath(MpActions.GetScreenshotsRelativePath());
         }
 
         public void LaunchTestReport()
         {
-            Process.Start("IExplore.exe", iReporter.GetResultFullPath());
+            Process.Start("IExplore.exe", R.GetResultFullPath());
         }
 
         public void Flow_LaunchTest()
@@ -75,17 +75,17 @@ namespace CMTest.Project.MasterPlus
         
         public void Case_LaunchMasterPlus()
         {
-            iReporter.Exec(() =>
+            R.Exec(() =>
                 {
                     //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
                 }
-                , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s"
+                , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s."
                 , "MasterPlus+ launched successfully."
                 , "Failed to launch MP+.");
         }
-        public void Case_SelectDevice(string deviceName)
+        public void Case_SelectDeviceFromList(string deviceName)
         {
-            iReporter.Exec(() =>
+            R.Exec(() =>
                 {
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
@@ -96,8 +96,31 @@ namespace CMTest.Project.MasterPlus
                 , "Failed to find the device.");
         }
 
+        public void Case_SelectKeyMappingTab()
+        {
+            R.Exec(() =>
+                {
+                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
 
+    
+                }
+                , $"Select KeyMapping tab."
+                , $"Select successfully."
+                , "Failed to select KeyMapping tab.");
+        }
+        public void Case_OpenKey1()
+        {
+            R.Exec(() =>
+                {
+                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
+                    
 
+                }
+                , R.SetAsLines("Open Reassignment dialog for the Key 1.", 
+                                           "Type 2 as the assigned key.")
+                , $"Assign successfully."
+                , "Failed to assign.");
+        }
 
 
 
