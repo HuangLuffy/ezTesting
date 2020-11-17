@@ -64,7 +64,6 @@ namespace CMTest
             _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.B, "C");
             _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.C, "A");
 
-
             _masterPlusTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }

@@ -10,6 +10,7 @@ using System.Threading;
 using ATLib.Input;
 using CommonLib;
 using static ATLib.Input.KbEvent;
+using ReportLib;
 
 namespace CMTest.Project.MasterPlus
 {
@@ -143,6 +144,7 @@ namespace CMTest.Project.MasterPlus
         }
         public void AssignKeyOnReassignDialog(ScanCode keyNeedToInput, string assignWhichKey)
         {
+            Reporter.IsLastCaseFailed = false;
             var keyName = UtilEnum.GetEnumNameByValue<ScanCode>(keyNeedToInput);
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keyA = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKey });
