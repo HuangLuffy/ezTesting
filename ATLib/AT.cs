@@ -45,7 +45,7 @@ namespace ATLib
         }
         public ATS GetElements(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Children, bool returnNullWhenException = false)
         {
-            return GetElements(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, returnNullWhenException);
+            return GetElements(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.FullDescriton, returnNullWhenException);
         }
         public AT GetIAElementFromATS(ATElementStruct iAElementStruct, ATS ats, bool returnNullWhenException = false)
         {
@@ -68,13 +68,13 @@ namespace ATLib
         }
         public AT GetElement(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Descendants, bool checkEnabled = false, bool returnNullWhenException = false)
         {
-            return GetElement(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.Index, timeout, checkEnabled, returnNullWhenException);
+            return GetElement(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.FullDescriton, aTElementStruct.Index, timeout, checkEnabled, returnNullWhenException);
         }
         public void WaitForVanishedBySearch(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Descendants)
         {
             try
             {
-                UtilWait.ForTrue(() => (GetElement(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.Index, -1, false, true) == null), timeout);
+                UtilWait.ForTrue(() => (GetElement(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.FullDescriton, aTElementStruct.Index, -1, false, true) == null), timeout);
                 //UtilWait.ForTrue(() =>
                 //{
                 //    return (GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, -1, false, true) == null);
@@ -86,13 +86,13 @@ namespace ATLib
                 throw new Exception($"This element still exists. {ex.Message}" );
             }
         }
-        public AT GetElement(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, int? index = null, int timeout = -1, bool checkEnabled = false, bool returnNullWhenException = false)
+        public AT GetElement(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, int? index = null, int timeout = -1, bool checkEnabled = false, bool returnNullWhenException = false)
         {
             try
             {
                 AutomationElement = AutomationElement ?? AutomationElement.RootElement;
                 var treeScopeVar = GetTreeScope(treeScope);
-                var condition = GetCondition(name, automationId, className, frameworkId, controlType);
+                var condition = GetCondition(name, automationId, className, frameworkId, controlType, fullDescription);
                 var atObj = timeout <= 0 ? GetElementByHandler(AutomationElement, treeScopeVar, condition, name, automationId, className, index) : UtilWait.ForAnyResult(() => GetElementByHandler(AutomationElement, treeScopeVar, condition, name, automationId, className, index), timeout);
                 if (checkEnabled != true) return atObj;
                 if (!atObj.GetElementInfo().IsEnabled())
@@ -110,12 +110,12 @@ namespace ATLib
                 throw new Exception("[ERROR]: GetElement. " + ex.Message + $"TreeScope:{(treeScope ?? "")} Name:{(name ?? "")} ControlType:{(controlType ?? "")} ClassName:{(className ?? "")} AutomationId:{(automationId ?? "")}");
             }
         }
-        public ATS GetElements(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, bool returnNullWhenException = false)
+        public ATS GetElements(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, bool returnNullWhenException = false)
         {
             try
             {
                 var treeScopeVar = GetTreeScope(treeScope);
-                var condition = GetCondition(name, automationId, className, frameworkId, controlType);
+                var condition = GetCondition(name, automationId, className, frameworkId, controlType, fullDescription);
                 AutomationElement = AutomationElement ?? AutomationElement.RootElement;
                 var aec = AutomationElement.FindAll(treeScopeVar, condition);
                 var at = new AT[aec.Count];

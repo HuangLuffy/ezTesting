@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using ATLib.Input;
 using CMTest.Xml;
+using CommonLib;
 using CommonLib.Util;
 using CommonLib.Util.OS;
 using CommonLib.Util.Project;
@@ -80,20 +81,9 @@ namespace CMTest.Project.MasterPlus
         {
             R.Exec(() =>
                 {
-                    UtilTime.WaitTime(4);
-                    try
-                    {
-   
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
-                    
-                    //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
+                    var swMainWindow = MpActions.LaunchMasterPlus(MpActions.SwLnkPath, 35);
                 }
-                , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s."
+                , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 35s."
                 , "MasterPlus+ launched successfully."
                 , "Failed to launch MP+.");
         }
@@ -121,18 +111,17 @@ namespace CMTest.Project.MasterPlus
                 , $"Select successfully."
                 , "Failed to select KeyMapping tab.");
         }
-        public void Case_OpenKeyA(ScanCode scanCode)
+        public void Case_AssignKey(ScanCode scanCode, string assignWhichKey)
         {
             R.Exec(() =>
                 {
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
-                    MpActions.OpenReassignmentDialog(scanCode);
-
+                    MpActions.AssignKeyOnReassignDialog(scanCode, assignWhichKey);
                 }
-                , R.SetAsLines("Open Reassignment dialog for the Key A.", 
-                                           "Type B as the assigned key.")
-                , $"Assign successfully."
-                , "Failed to assign.");
+                , R.SetAsLines($"Open Reassignment dialog for the Key {assignWhichKey}.", 
+                                           $"Assign {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
+                , R.SetAsLines($"Assign successfully.", "The Grid would be purple.")
+                , "Failed.");
         }
 
 

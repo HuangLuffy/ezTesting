@@ -59,5 +59,9 @@ namespace CMTest.Project.MasterPlus
         {
             Name = "AssignedValue"
         };
+        public static ATElementStruct ReassignSaveButton = new ATElementStruct()
+        {
+            FullDescriton = "ReassignSaveButton"
+        };
     }
 }

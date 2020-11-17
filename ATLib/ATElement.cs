@@ -550,7 +550,7 @@ namespace ATLib
         /// <param name="frameworkId"></param>
         /// <param name="controlType"></param>
         /// <returns></returns>
-        protected static Condition GetCondition(string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null)
+        protected static Condition GetCondition(string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null)
         {
             var conditionList = new List<Condition>();
             try
@@ -566,6 +566,10 @@ namespace ATLib
                 if (!string.IsNullOrEmpty(className) && !className.Contains(Var.Mark.Wildcard) && !className.Contains(Var.Mark.Or) && !className.Contains(Var.Mark.And))
                 {
                     conditionList.Add(new PropertyCondition(AutomationElement.ClassNameProperty, className));
+                }
+                if (!string.IsNullOrEmpty(fullDescription) && !fullDescription.Contains(Var.Mark.Wildcard) && !fullDescription.Contains(Var.Mark.Or) && !fullDescription.Contains(Var.Mark.And))
+                {
+                    conditionList.Add(new PropertyCondition(AutomationElement.FullDescription, fullDescription));
                 }
                 if (!string.IsNullOrEmpty(frameworkId))
                 {

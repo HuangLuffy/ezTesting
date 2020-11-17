@@ -57,10 +57,10 @@ namespace CMTest
         {
             _masterPlusTestFlows.R.GetResultTestInfo().AttrDeviceModel = deviceName;
             _masterPlusTestFlows.R.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
-            //_masterPlusTestFlows.Case_LaunchMasterPlus();
-            //_masterPlusTestFlows.Case_SelectDeviceFromList(deviceName);
-            //_masterPlusTestFlows.Case_SelectKeyMappingTab(deviceName);
-            _masterPlusTestFlows.Case_OpenKeyA(KbEvent.ScanCode.B);
+            _masterPlusTestFlows.Case_LaunchMasterPlus();
+            _masterPlusTestFlows.Case_SelectDeviceFromList(deviceName);
+            _masterPlusTestFlows.Case_SelectKeyMappingTab(deviceName);
+            _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.B, "A");
 
 
             _masterPlusTestFlows.LaunchTestReport();

@@ -19,7 +19,7 @@ namespace CMTest.Project.MasterPlus
         {
 
         }
-        public AT LaunchMasterPlus(string appFullPath = "" , int timeout = 15,bool killCurrentOne = true)
+        public AT LaunchMasterPlus(string appFullPath, int timeout, bool killCurrentOne = true)
         {
             if (killCurrentOne)
             {
@@ -32,7 +32,9 @@ namespace CMTest.Project.MasterPlus
             }
             UtilProcess.StartProcess(appFullPath);
             //WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
-            return new AT().GetElement(MPObj.MainWindow, timeout);
+            UtilTime.WaitTime(4);
+            UtilProcess.KillProcessByName("RENEW");
+            return GetMasterPlusMainWindow(timeout);
         }
         public void CloseMasterPlus()
         {
@@ -136,25 +138,31 @@ namespace CMTest.Project.MasterPlus
         public void ClickResetButton(string deviceName)
         {
             var keyMappingResetButton = GetMasterPlusMainWindow().GetElementFromChild(MPObj.KeyMappingResetButton);
-            //keyMappingResetButton.DoClickPoint(1);
-            //ClickCommonDialog();
+            keyMappingResetButton.DoClickPoint(1);
+            ClickCommonDialog();
         }
-        public void OpenReassignmentDialog(ScanCode scanCode)
+        public void AssignKeyOnReassignDialog(ScanCode keyNeedToInput, string assignWhichKey)
         {
+            var keyName = UtilEnum.GetEnumNameByValue<ScanCode>(keyNeedToInput);
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
-            var keyA = assignContainer.GetElementFromChild(new ATElementStruct() { Name = "A" });
+            var keyA = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKey });
             keyA.DoClickPoint(1);
             var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
-            KbEvent.Press(scanCode);
+            KbEvent.Press(keyNeedToInput);
             UtilTime.WaitTime(1);
             var assignedValue = reassignDialog.GetElementFromDescendants(MPObj.AssignedValue);
             var value = assignedValue.GetElementInfo().FullDescription();
-            if (!value.Equals(UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)))
+            if (!value.Equals(keyName))
             {
-                throw new Exception($"Input {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}, but get {value}");
+                throw new Exception($"Input {UtilEnum.GetEnumNameByValue<ScanCode>(keyNeedToInput)}, but get {value}.");
+            }
+            var saveButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignSaveButton);
+            saveButton.DoClickPoint(1);
+            if (!keyA.GetElementInfo().FullDescription().Equals(KeyMappingGridColor.Purple))
+            {
+                throw new Exception($"Key {UtilEnum.GetEnumNameByValue<ScanCode>(keyNeedToInput)} in not {nameof(KeyMappingGridColor.Purple)}.");
             }
         }
-
 
         public AT GetMasterPlusMainWindow(int timeout = 0)
         {

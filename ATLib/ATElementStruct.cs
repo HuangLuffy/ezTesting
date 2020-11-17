@@ -8,6 +8,7 @@
         public string FrameworkId = null;
         public int? Index = null;
         public string ControlType = null;
+        public string FullDescriton = null;
         public string IADescription = null;
     }
 }

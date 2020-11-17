@@ -55,7 +55,7 @@ namespace ReportLib
             {
                 if (addNumber)
                 {
-                    wholeLine += SetNewLine($"{i + 1} {lines[i]}");
+                    wholeLine += SetNewLine($"{i + 1}. {lines[i]}");
                 }
             }
             return wholeLine;
