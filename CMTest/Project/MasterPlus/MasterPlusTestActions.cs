@@ -34,7 +34,7 @@ namespace CMTest.Project.MasterPlus
             //WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
             UtilTime.WaitTime(4);
             UtilProcess.KillProcessByName("RENEW");
-            return GetMasterPlusMainWindow(timeout);
+            return GetMasterPlusMainWindowForLaunching(timeout);
         }
         public void CloseMasterPlus()
         {
@@ -169,6 +169,17 @@ namespace CMTest.Project.MasterPlus
             return new AT().GetElementFromChild(MPObj.MainWindow, timeout);
         }
 
+        public AT GetMasterPlusMainWindowForLaunching(int timeout = 0)
+        {
+            AT mainWindow = null;
+            UtilWait.ForTrueCatch(() =>
+            {
+                mainWindow = new AT().GetElementFromChild(MPObj.MainWindow, timeout);
+                mainWindow.GetElement(MPObj.DeviceList);
+                return true;
+            }, timeout);
+            return mainWindow;
+        }
         public enum CommonDialogButtons
         {
             XButton = 0,

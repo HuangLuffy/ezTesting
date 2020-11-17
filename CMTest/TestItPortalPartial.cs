@@ -18,7 +18,7 @@ namespace CMTest
             if (_optionsPortalTestsWithFuncs.Any()) return;
             //Select Back that will trigger this function again, so try-catch.
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_LAUNCH_TEST, Flow_Portal_LaunchTest);
-            _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_PLUGIN_OUT_SERVER, () => _cmd.ShowCmdMenu(_optionsXmlPlugInOutDeviceNames, _optionsPortalTestsWithFuncs));
+            //_optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_PLUGIN_OUT_SERVER, () => _cmd.ShowCmdMenu(_optionsXmlPlugInOutDeviceNames, _optionsPortalTestsWithFuncs));
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_SIMPLE_PROFILES_SWITCH, Flow_ProfilesSimpleSwitch);
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_IMPORT_EXPORT_AIMPAD_PROFILES_SWITCH, Flow_ProfilesImExAimpadSwitch);

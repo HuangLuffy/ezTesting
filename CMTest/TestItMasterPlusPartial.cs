@@ -60,7 +60,9 @@ namespace CMTest
             _masterPlusTestFlows.Case_LaunchMasterPlus();
             _masterPlusTestFlows.Case_SelectDeviceFromList(deviceName);
             _masterPlusTestFlows.Case_SelectKeyMappingTab(deviceName);
-            _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.B, "A");
+            _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.A, "B");
+            _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.B, "C");
+            _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.C, "A");
 
 
             _masterPlusTestFlows.LaunchTestReport();
