@@ -3,12 +3,12 @@ using CommonLib.Util.OS;
 
 namespace CMTest.Project.MasterPlus
 {
-    public static class MasterPlusObj
+    public static class MPObj
     {
-        public static readonly ATElementStruct MainWindowSw = new ATElementStruct()
+        public static readonly ATElementStruct MainWindow = new ATElementStruct()
         {
-            Name = "Cooler Master.*",
-            ClassName = "Qt5QWindowOwnDCIcon"
+            //ClassName = "Qt5QWindowOwnDCIcon",
+            Name = "Cooler Master MasterPlus.*"
         };
         public static ATElementStruct ButtonCloseMainWindow => 
             UtilOs.GetOsVersion().Contains(UtilOs.Name.Win10) ? new ATElementStruct() { AutomationId = "Close", ControlType = ATElement.ControlType.Button } : new ATElementStruct() { Name = "Close", ControlType = ATElement.ControlType.Button };
@@ -31,12 +31,33 @@ namespace CMTest.Project.MasterPlus
         };
         public static ATElementStruct DeviceList = new ATElementStruct()
         {
-            Name = "DeviceList",
+            Name = "DeviceList"
         };
         public static ATElementStruct AssignContainer = new ATElementStruct()
         {
-            Name = "AssignContainer",
+            Name = "AssignContainer"
         };
-
+        public static ATElementStruct KeyMappingResetButton = new ATElementStruct()
+        {
+            Name = "KeyMappingResetButton",
+            ControlType = ATElement.ControlType.Button
+        };
+        public static ATElementStruct CommonDialogParent = new ATElementStruct()
+        {
+            ClassName = "QQuickPopupItem"
+        };
+        public static ATElementStruct CommonDialog = new ATElementStruct()
+        {
+            Name = "CommonDialog"
+        };
+        public static ATElementStruct ReassignDialog = new ATElementStruct()
+        {
+            ClassName = "QQuickPopupItem",
+            Name = "ReassignDialog"
+        };
+        public static ATElementStruct AssignedValue = new ATElementStruct()
+        {
+            Name = "AssignedValue"
+        };
     }
 }

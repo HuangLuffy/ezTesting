@@ -10,6 +10,7 @@ using CommonLib.Util;
 using CommonLib.Util.OS;
 using CommonLib.Util.Project;
 using ReportLib;
+using static ATLib.Input.KbEvent;
 using static CommonLib.Util.UtilCapturer;
 
 namespace CMTest.Project.MasterPlus
@@ -101,36 +102,35 @@ namespace CMTest.Project.MasterPlus
             R.Exec(() =>
                 {
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
-                    var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
-                    dut.DoClickPoint();
+                    MpActions.SelectTestDevice(deviceName, swMainWindow);
                 }
                 , $"Select {deviceName} from MasterPlus."
                 , $"{deviceName} can be found."
                 , "Failed to find the device.");
         }
 
-        public void Case_SelectKeyMappingTab()
+        public void Case_SelectKeyMappingTab(string deviceName)
         {
             R.Exec(() =>
                 {
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
-
-    
+                    MpActions.SelectTab(deviceName);
+                    MpActions.ClickResetButton(deviceName);
                 }
-                , $"Select KeyMapping tab."
+                , R.SetAsLines($"Select KeyMapping tab.", "Click Reset button.")
                 , $"Select successfully."
                 , "Failed to select KeyMapping tab.");
         }
-        public void Case_OpenKey1()
+        public void Case_OpenKeyA(ScanCode scanCode)
         {
             R.Exec(() =>
                 {
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
-                    
+                    MpActions.OpenReassignmentDialog(scanCode);
 
                 }
-                , R.SetAsLines("Open Reassignment dialog for the Key 1.", 
-                                           "Type 2 as the assigned key.")
+                , R.SetAsLines("Open Reassignment dialog for the Key A.", 
+                                           "Type B as the assigned key.")
                 , $"Assign successfully."
                 , "Failed to assign.");
         }

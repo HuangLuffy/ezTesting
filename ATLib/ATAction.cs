@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
 using System.Windows;
 using System.Windows.Automation;
-using static ATLib.Input.HWSimulator;
 using static ATLib.Input.HWSimulator.HWSend;
 
 namespace ATLib
@@ -77,9 +75,9 @@ namespace ATLib
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="waitTime"></param>
-        public void DoClickPoint(double x = 0, double y = 0, double waitTime = 0.1, MouseKeys mk = MouseKeys.LEFT)
+        public void DoClickPoint(double waitTime = 0.1, double x = 0, double y = 0, MouseKeys mk = MouseKeys.LEFT)
         {
-            var ptClick = new Point();
+            var ptClick = new System.Windows.Point();
             if (x == 0 && y == 0)
             {
                 try
@@ -620,6 +618,21 @@ namespace ATLib
             /// 
             /// </summary>
             /// <returns></returns>
+            public string FullDescription()
+            {
+                try
+                {
+                    return current.FullDescription;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to get IsEnabled status. {ex}");
+                }
+            }
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
             public IntPtr GetHwnd()
             {
                 try
@@ -726,7 +739,7 @@ namespace ATLib
             /// 
             /// </summary>
             /// <returns></returns>
-            public Rectangle BoundingRectangle()
+            public Rect BoundingRectangle()
             {
                 try
                 {

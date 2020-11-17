@@ -15,6 +15,7 @@ using CommonLib.Util.Project;
 using CommonLib.Util.IO;
 using CommonLib.Util.OS;
 using ReportLib;
+using static ATLib.Input.KbEvent;
 
 namespace CMTest
 {
@@ -39,9 +40,6 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            UtilTime.WaitTime(5);
-            KbEvent.PressByScanCode(KbEvent.ScanCode.A);
-
             _masterPlusTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();

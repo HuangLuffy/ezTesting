@@ -219,17 +219,17 @@ namespace ATLib
                 {
                     if (ContainsAndOrWildcard(name) || ContainsAndOrWildcard(className) || ContainsAndOrWildcard(automationId) || index != null)
                     {
-                        if (condition == null)
-                        {
-                            condition = Condition.TrueCondition;
-                        }
-                        resultEles = parentElement.FindAll(treeScope, condition);
+                        resultEles = parentElement.FindAll(treeScope, Condition.TrueCondition);
                     }
                     else
                     {
+                        //if (condition == null)
+                        //{
+                        //    return new AT(null);
+                        //}
                         if (condition == null)
                         {
-                            return new AT(null);
+                            condition = Condition.TrueCondition;
                         }
                         resultEle = parentElement.FindFirst(treeScope, condition);
                     }

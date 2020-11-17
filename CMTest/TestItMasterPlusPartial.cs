@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using ATLib.Input;
 
 namespace CMTest
 {
@@ -56,10 +57,10 @@ namespace CMTest
         {
             _masterPlusTestFlows.R.GetResultTestInfo().AttrDeviceModel = deviceName;
             _masterPlusTestFlows.R.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
-            _masterPlusTestFlows.Case_LaunchMasterPlus();
-            _masterPlusTestFlows.Case_SelectDeviceFromList(deviceName);
-            _masterPlusTestFlows.Case_SelectKeyMappingTab();
-            _masterPlusTestFlows.Case_OpenKey1();
+            //_masterPlusTestFlows.Case_LaunchMasterPlus();
+            //_masterPlusTestFlows.Case_SelectDeviceFromList(deviceName);
+            //_masterPlusTestFlows.Case_SelectKeyMappingTab(deviceName);
+            _masterPlusTestFlows.Case_OpenKeyA(KbEvent.ScanCode.B);
 
 
             _masterPlusTestFlows.LaunchTestReport();

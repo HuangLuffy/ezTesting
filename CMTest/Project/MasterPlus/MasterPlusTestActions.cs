@@ -7,6 +7,9 @@ using CommonLib.Util.OS;
 using System;
 using System.IO;
 using System.Threading;
+using ATLib.Input;
+using CommonLib;
+using static ATLib.Input.KbEvent;
 
 namespace CMTest.Project.MasterPlus
 {
@@ -29,11 +32,11 @@ namespace CMTest.Project.MasterPlus
             }
             UtilProcess.StartProcess(appFullPath);
             //WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
-            return new AT().GetElement(MasterPlusObj.MainWindowSw, timeout);
+            return new AT().GetElement(MPObj.MainWindow, timeout);
         }
         public void CloseMasterPlus()
         {
-            var buttonClose = SwMainWindow.GetElement(MasterPlusObj.ButtonCloseMainWindow);
+            var buttonClose = SwMainWindow.GetElement(MPObj.ButtonCloseMainWindow);
             buttonClose.DoClick();
             Timeout = 6;
             //WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
@@ -57,8 +60,8 @@ namespace CMTest.Project.MasterPlus
                 var startTime = DateTime.Now;
                 var dialogWarning = UtilWait.ForAnyResultCatch(() => {
                     UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - startTime).Seconds}s.");
-                    SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);  // The MP+ will change after a while.
-                    return SwMainWindow.GetElement(MasterPlusObj.DialogWarning, Timeout);
+                    SwMainWindow = new AT().GetElement(MPObj.MainWindow, Timeout);  // The MP+ will change after a while.
+                    return SwMainWindow.GetElement(MPObj.DialogWarning, Timeout);
                 }, 60, 2);
                 if (SwMainWindow == null)
                 {
@@ -94,8 +97,8 @@ namespace CMTest.Project.MasterPlus
             var startTime = DateTime.Now;
             var dialogWarning = UtilWait.ForAnyResultCatch(() => {
                 UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - startTime).Seconds}s.");
-                SwMainWindow = new AT().GetElement(MasterPlusObj.MainWindowSw, Timeout);  // The MP+ will change after a while.
-                return SwMainWindow.GetElement(MasterPlusObj.DialogWarning, Timeout);
+                SwMainWindow = new AT().GetElement(MPObj.MainWindow, Timeout);  // The MP+ will change after a while.
+                return SwMainWindow.GetElement(MPObj.DialogWarning, Timeout);
             }, 60, 3);
             if (SwMainWindow == null)
             {
@@ -116,15 +119,60 @@ namespace CMTest.Project.MasterPlus
             UtilOS.Reboot();
         }
 
-        public AT GetTestDevice(string deviceName, AT swMainWindow)
+        public void SelectTestDevice(string deviceName, AT swMainWindow)
         {
-            var deviceList = swMainWindow.GetElement(MasterPlusObj.DeviceList);
-            var devices = deviceList.GetElementsAllChild();
-            return devices.GetElementByIA(new ATElementStruct() { IADescription = deviceName });
+            var deviceList = swMainWindow.GetElement(MPObj.DeviceList);
+            //var devices = deviceList.GetElementsAllChild();
+            //return devices.GetElementByIA(new ATElementStruct() { IADescription = deviceName });
+            var dut = deviceList.GetElementFromChild(new ATElementStruct() {Name = deviceName});
+            dut.DoClickPoint(waitTime: 1);
         }
+        public void SelectTab(string deviceName)
+        {
+            var currentTab = GetMasterPlusMainWindow().GetElement(new ATElementStruct() { ControlType = ATElement.ControlType.Tab });
+            var devices = currentTab.GetElementsAllChild();
+            devices.GetATCollection()[2].DoClickPoint(1);
+        }
+        public void ClickResetButton(string deviceName)
+        {
+            var keyMappingResetButton = GetMasterPlusMainWindow().GetElementFromChild(MPObj.KeyMappingResetButton);
+            //keyMappingResetButton.DoClickPoint(1);
+            //ClickCommonDialog();
+        }
+        public void OpenReassignmentDialog(ScanCode scanCode)
+        {
+            var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
+            var keyA = assignContainer.GetElementFromChild(new ATElementStruct() { Name = "A" });
+            keyA.DoClickPoint(1);
+            var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
+            KbEvent.Press(scanCode);
+            UtilTime.WaitTime(1);
+            var assignedValue = reassignDialog.GetElementFromDescendants(MPObj.AssignedValue);
+            var value = assignedValue.GetElementInfo().FullDescription();
+            if (!value.Equals(UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)))
+            {
+                throw new Exception($"Input {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}, but get {value}");
+            }
+        }
+
+
         public AT GetMasterPlusMainWindow(int timeout = 0)
         {
-            return new AT().GetElement(MasterPlusObj.MainWindowSw, timeout);
+            return new AT().GetElementFromChild(MPObj.MainWindow, timeout);
+        }
+
+        public enum CommonDialogButtons
+        {
+            XButton = 0,
+            OKButton = 1,
+            CancelButton =2
+        }
+        public void ClickCommonDialog(CommonDialogButtons whichButton = CommonDialogButtons.OKButton)
+        {
+            var commonDialogParent = GetMasterPlusMainWindow().GetElementFromChild(MPObj.CommonDialogParent, 3);
+            var commonDialog = commonDialogParent.GetElementFromChild(MPObj.CommonDialog);
+            var commonDialogButtons = commonDialog.GetElementsFromChild(new ATElementStruct() {ControlType = ATElement.ControlType.Button});
+            commonDialogButtons.GetATCollection()[(int)whichButton].DoClickPoint(2);
         }
     }
 }

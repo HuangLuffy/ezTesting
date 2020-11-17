@@ -247,11 +247,11 @@ namespace ReportLib
                     //var actualResult = action.Invoke();
                     action.Invoke();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     Reporter.IsLastCaseFailed = true;
                     r.NodeResult = Reporter.Result.FAIL;
-                    r.AttrMessage = nodeErrorMessage;
+                    r.AttrMessage = nodeErrorMessage += e.Message;
                 }
                 Capture(r);
             }
