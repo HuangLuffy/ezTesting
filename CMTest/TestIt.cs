@@ -9,6 +9,8 @@ using CMTest.Xml;
 using CMTest.Project.RemoteModule;
 using System.Threading;
 using System.IO;
+using System.Windows.Forms;
+using ATLib.Input;
 using CommonLib.Util.Project;
 using CommonLib.Util.IO;
 using CommonLib.Util.OS;
@@ -37,8 +39,9 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            var aa = BitConverter.GetBytes(69);
-            var bb = 69.ToString("x8");
+            UtilTime.WaitTime(5);
+            KbEvent.PressByScanCode(KbEvent.ScanCode.A);
+
             _masterPlusTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();
