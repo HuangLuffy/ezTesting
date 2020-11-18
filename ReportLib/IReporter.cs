@@ -20,6 +20,6 @@ namespace ReportLib
         void SetCaptureRelativePath(string captureRelativePath);
         void Capture(Reporter.ResultTestCase r , string commentOnWeb = "Step_End", string imageName = "", string screenshotsRelativePath = "",
             UtilCapturer.ImageType imageType = UtilCapturer.ImageType.PNG);
-        void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage);
+        void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage, WhenCaseFailed blockOrRun = WhenCaseFailed.Default);
     }
 }

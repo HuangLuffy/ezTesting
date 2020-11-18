@@ -1,7 +1,4 @@
 ﻿using System;
-using System.IO;
-using CommonLib.Util;
-using static CommonLib.Util.UtilCapturer;
 
 namespace ReportLib
 {
@@ -14,7 +11,15 @@ namespace ReportLib
             public const string BLOCK = "Block";
             public const string TBD = "Tbd";
         }
-        public static bool IsLastCaseFailed = false;
+
+        public enum WhenCaseFailed
+        {
+            BlockAllLeftCases = 0,
+            StillRunThisCase = 1,
+            Default = 2
+        }
+        public static bool BlockAllLeftCasesAnyway = false;
+        public static bool BlockCurrentCase = false;
         public const string DefaultContent = "NA";
         public class ResultTestInfo
         {

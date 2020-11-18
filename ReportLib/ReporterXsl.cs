@@ -229,14 +229,14 @@ namespace ReportLib
                 r.NodeNeedToCheck += manualCheckLink;
             }
         }
-        public void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage)
+        public void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage, WhenCaseFailed blockOrRun)
         {
             var r = new Reporter.ResultTestCase()
             {
                 NodeDescription = nodeDescription,
                 NodeExpectedResult = nodeExpectedResult,
             };
-            if (Reporter.IsLastCaseFailed)
+            if (Reporter.BlockAllLeftCasesAnyway)
             {
                 r.NodeResult = Reporter.Result.BLOCK;
             }
@@ -249,13 +249,22 @@ namespace ReportLib
                 }
                 catch (Exception e)
                 {
-                    Reporter.IsLastCaseFailed = true;
+                    if (blockOrRun == WhenCaseFailed.BlockAllLeftCases)
+                    {
+                        Reporter.BlockAllLeftCasesAnyway = true;
+                    }
+                    Reporter.BlockCurrentCase = true;
                     r.NodeResult = Reporter.Result.FAIL;
-                    r.AttrMessage = nodeErrorMessage += e.Message;
+                    r.AttrMessage = nodeErrorMessage += $" - {e.Message}";
                 }
                 Capture(r);
             }
             AddTestStep(r, ResultTestInfo);
+        }
+
+        public void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage)
+        {
+            throw new NotImplementedException();
         }
     }
 }

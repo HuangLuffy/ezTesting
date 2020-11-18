@@ -85,7 +85,8 @@ namespace CMTest.Project.MasterPlus
                 }
                 , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 35s."
                 , "MasterPlus+ launched successfully."
-                , "Failed to launch MP+.");
+                , "Failed to launch MP+."
+                , Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
         public void Case_SelectDeviceFromList(string deviceName)
         {
@@ -96,7 +97,8 @@ namespace CMTest.Project.MasterPlus
                 }
                 , $"Select {deviceName} from MasterPlus."
                 , $"{deviceName} can be found."
-                , "Failed to find the device.");
+                , "Failed to find the device."
+                , Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
 
         public void Case_SelectKeyMappingTab(string deviceName)
@@ -109,7 +111,8 @@ namespace CMTest.Project.MasterPlus
                 }
                 , R.SetAsLines($"Select KeyMapping tab.", "Click Reset button.")
                 , $"Select successfully."
-                , "Failed to select KeyMapping tab.");
+                , "Failed to select KeyMapping tab."
+                , Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
         public void Case_AssignKey(ScanCode scanCode, string assignWhichKey)
         {
@@ -121,7 +124,8 @@ namespace CMTest.Project.MasterPlus
                 , R.SetAsLines($"Open Reassignment dialog for the Key {assignWhichKey}.", 
                                            $"Assign {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
                 , R.SetAsLines($"Assign successfully.", "The Grid would be purple.")
-                , "Failed.");
+                , "Failed."
+                , Reporter.WhenCaseFailed.StillRunThisCase);
         }
 
 

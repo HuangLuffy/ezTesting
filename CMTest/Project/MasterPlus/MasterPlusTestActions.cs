@@ -144,7 +144,6 @@ namespace CMTest.Project.MasterPlus
         }
         public void AssignKeyOnReassignDialog(ScanCode keyNeedToInput, string assignWhichKey)
         {
-            Reporter.IsLastCaseFailed = false;
             var keyName = UtilEnum.GetEnumNameByValue<ScanCode>(keyNeedToInput);
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keyA = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKey });
@@ -176,7 +175,7 @@ namespace CMTest.Project.MasterPlus
             AT mainWindow = null;
             UtilWait.ForTrueCatch(() =>
             {
-                mainWindow = new AT().GetElementFromChild(MPObj.MainWindow, timeout);
+                mainWindow = GetMasterPlusMainWindow(timeout);
                 mainWindow.GetElement(MPObj.DeviceList);
                 return true;
             }, timeout);
