@@ -240,6 +240,10 @@ namespace ReportLib
             {
                 r.NodeResult = Reporter.Result.BLOCK;
             }
+            else if (BlockCurrentCase && blockOrRun != WhenCaseFailed.StillRunThisCase)
+            {
+                r.NodeResult = Reporter.Result.BLOCK;
+            }
             else
             {
                 try
