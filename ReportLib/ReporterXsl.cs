@@ -231,6 +231,7 @@ namespace ReportLib
         }
         public void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage, WhenCaseFailed blockOrRun)
         {
+            var elapsedTime = 0;
             var r = new Reporter.ResultTestCase()
             {
                 NodeDescription = nodeDescription,
@@ -249,7 +250,9 @@ namespace ReportLib
                 try
                 {
                     //var actualResult = action.Invoke();
+                    var currentTime = DateTime.Now;
                     action.Invoke();
+                    elapsedTime = UtilTime.TimeElapsed(currentTime).Seconds;
                 }
                 catch (Exception e)
                 {
@@ -263,12 +266,8 @@ namespace ReportLib
                 }
                 Capture(r);
             }
+            r.AttrTime = elapsedTime;
             AddTestStep(r, ResultTestInfo);
-        }
-
-        public void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage)
-        {
-            throw new NotImplementedException();
         }
     }
 }
