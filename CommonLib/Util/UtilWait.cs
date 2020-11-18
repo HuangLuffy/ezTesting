@@ -77,6 +77,8 @@ namespace CommonLib.Util
                             return actualResult;
                         case ResultType.AnyResult:
                             return actualResult;
+                        case ResultType.NonNullResult when actualResult != null:
+                            return actualResult;
                     }
                 }
                 catch (Exception ex)

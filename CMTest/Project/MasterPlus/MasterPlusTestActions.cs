@@ -177,10 +177,9 @@ namespace CMTest.Project.MasterPlus
 
         public AT GetMasterPlusMainWindowForLaunching(int timeout = 0)
         {
-            AT mainWindow = null;
             return UtilWait.ForNonNull(() =>
             {
-                mainWindow = GetMasterPlusMainWindow();
+                var mainWindow = GetMasterPlusMainWindow();
                 mainWindow.GetElement(MPObj.DeviceList);
                 return mainWindow;
             }, timeout);
