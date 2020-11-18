@@ -178,13 +178,12 @@ namespace CMTest.Project.MasterPlus
         public AT GetMasterPlusMainWindowForLaunching(int timeout = 0)
         {
             AT mainWindow = null;
-            UtilWait.ForTrueCatch(() =>
+            return UtilWait.ForNonNull(() =>
             {
                 mainWindow = GetMasterPlusMainWindow();
                 mainWindow.GetElement(MPObj.DeviceList);
-                return true;
+                return mainWindow;
             }, timeout);
-            return mainWindow;
         }
         public enum CommonDialogButtons
         {
