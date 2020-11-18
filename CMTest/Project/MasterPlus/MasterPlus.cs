@@ -22,5 +22,26 @@ namespace CMTest.Project.MasterPlus
                 return ((System.Linq.Expressions.MemberExpression)exp.Body).Member.Name;
             }
         }
+
+        public enum Tabs
+        {
+            Wireless,
+            Lighting,
+            KeyMapping,
+            Macros,
+            Profiles
+        }
+
+        public int GetTabIndexByTabCount(int tabCount, Tabs tabs = Tabs.KeyMapping)
+        {
+            if (tabCount == 4)
+            {
+                return Convert.ToInt16(tabs - 1);
+            }
+            else
+            {
+                return Convert.ToInt16(tabs);
+            }
+        }
     }
 }

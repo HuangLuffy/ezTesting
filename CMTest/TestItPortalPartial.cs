@@ -14,7 +14,7 @@ namespace CMTest
         private void AssemblePortalTests(bool fromConf = true)
         {
             AssembleTestLanguages();
-            AssemblePortalPlugInOutDevices(fromConf);
+            //AssemblePortalPlugInOutDevices(fromConf);
             if (_optionsPortalTestsWithFuncs.Any()) return;
             //Select Back that will trigger this function again, so try-catch.
             _optionsPortalTestsWithFuncs.Add(PortalTestFlows.TestNames.OPTION_LAUNCH_TEST, Flow_Portal_LaunchTest);

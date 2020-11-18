@@ -20,7 +20,7 @@ namespace CMTest.Project.MasterPlusPer
 
         private static readonly long TestTimes = 9999999;
 
-        public List<string> OptionsPortalPlugInOutDevicesName = VmObj.GetDevicesItemList();
+        //public List<string> OptionsPortalPlugInOutDevicesName = VmObj.GetDevicesItemList();
         //new List<string> { VMObj.DeviceItem.Item_MM830.Name, VMObj.DeviceItem.Item_MP860.Name, VMObj.DeviceItem.Item_MK850.Name, VMObj.DeviceItem.Item_MH752.Name, VMObj.DeviceItem.Item_MP750.Name, VMObj.DeviceItem.Item_MH650.Name };
 
         public readonly PortalTestActions PortalTestActions = new PortalTestActions();

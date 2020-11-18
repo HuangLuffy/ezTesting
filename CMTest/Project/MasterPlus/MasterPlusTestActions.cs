@@ -50,7 +50,6 @@ namespace CMTest.Project.MasterPlus
             //WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
             UtilTime.WaitTime(Timeout);
         }
-
         public void LaunchAndCheckCrash(long testTimes)
         {
             var crashTimes = 0;
@@ -126,7 +125,6 @@ namespace CMTest.Project.MasterPlus
             //UtilProcess.ExecuteCmd();// sometimes it does not work somehow.
             UtilOS.Reboot();
         }
-
         public void SelectTestDevice(string deviceName, AT swMainWindow)
         {
             var deviceList = swMainWindow.GetElement(MPObj.DeviceList);
@@ -139,7 +137,7 @@ namespace CMTest.Project.MasterPlus
         {
             var currentTab = GetMasterPlusMainWindow().GetElement(new ATElementStruct() { ControlType = ATElement.ControlType.Tab });
             var devices = currentTab.GetElementsAllChild();
-            devices.GetATCollection()[2].DoClickPoint(1);
+            devices.GetATCollection()[GetTabIndexByTabCount(devices.GetATCollection().Length)].DoClickPoint(1);
         }
         public void ClickResetButton(string deviceName)
         {
@@ -169,12 +167,10 @@ namespace CMTest.Project.MasterPlus
                 throw new Exception($"Key {UtilEnum.GetEnumNameByValue<ScanCode>(keyNeedToInput)} in not {nameof(KeyMappingGridColor.Purple)}.");
             }
         }
-
         public AT GetMasterPlusMainWindow(int timeout = 0)
         {
             return new AT().GetElementFromChild(MPObj.MainWindow, timeout);
         }
-
         public AT GetMasterPlusMainWindowForLaunching(int timeout = 0)
         {
             return UtilWait.ForNonNull(() =>
