@@ -259,7 +259,7 @@ namespace ReportLib
                     }
                     Reporter.BlockCurrentCase = true;
                     r.NodeResult = Reporter.Result.FAIL;
-                    r.AttrMessage = nodeErrorMessage += $" - {e.Message}";
+                    r.AttrMessage = nodeErrorMessage += $" [{e.Message}]";
                 }
                 Capture(r);
             }

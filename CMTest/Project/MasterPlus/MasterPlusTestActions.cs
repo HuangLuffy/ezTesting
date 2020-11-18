@@ -31,10 +31,15 @@ namespace CMTest.Project.MasterPlus
             {
                 appFullPath = SwLnkPath;
             }
+            if (!UtilFile.Exists(appFullPath))
+            {
+                throw new Exception($"{appFullPath} does not exist.");
+            }
             UtilProcess.StartProcess(appFullPath);
-            //WriteConsoleTitle(LaunchTimes, $"Waiting for launching. ({Timeout}s)", Timeout);
+
             UtilTime.WaitTime(4);
             UtilProcess.KillProcessByName("RENEW");
+            UtilTime.WaitTime(1);
             return GetMasterPlusMainWindowForLaunching(timeout);
         }
         public void CloseMasterPlus()
@@ -175,7 +180,7 @@ namespace CMTest.Project.MasterPlus
             AT mainWindow = null;
             UtilWait.ForTrueCatch(() =>
             {
-                mainWindow = GetMasterPlusMainWindow(timeout);
+                mainWindow = GetMasterPlusMainWindow();
                 mainWindow.GetElement(MPObj.DeviceList);
                 return true;
             }, timeout);

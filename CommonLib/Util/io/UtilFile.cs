@@ -59,6 +59,10 @@ namespace CommonLib.Util.IO
                 WriteFile(fileFullPath, content, append);
             } 
         }
+        public static bool Exists(string fileFullPath)
+        {
+            return File.Exists(fileFullPath);
+        }
         public static void WriteFile(string fileFullPath, string content = "", bool append = true)
         {
             UtilFolder.CreateDirectory(Path.GetDirectoryName(fileFullPath));
