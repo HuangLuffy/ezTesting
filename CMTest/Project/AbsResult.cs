@@ -14,6 +14,7 @@ namespace CMTest.Project
         {
             public const string Screenshots = "Screenshots";
             public const string Result = "Result";
+            public const string Resources = "Resources";
         }
 
         protected string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
@@ -25,6 +26,7 @@ namespace CMTest.Project
         protected string ScreenshotsPath => Path.Combine(ResultTimePath, Const.Screenshots);
         protected readonly string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");
         private readonly string _screenshotsRelativePath;
+        public string ResourcesKeysRelativePath => Path.Combine(Const.Resources, "Keys.h");
 
 
         public AbsResult()

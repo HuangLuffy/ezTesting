@@ -6,6 +6,7 @@ using System.Linq;
 using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
 using CMTest.Project.RemoteModule;
+using CommonLib.Util.IO;
 
 namespace CMTest
 {
@@ -18,7 +19,7 @@ namespace CMTest
         private const string OPTION_CONNECT_IP = "Connect the Remote IP if it is correct";
         private const string OPTION_INPUT_IP = "Input your Remote IP";
         private readonly PortalTestFlows _portalTestFlows;
-        private readonly MasterPlusTestFlows _masterPlusTestFlows;
+        private readonly MasterPlusTestFlows _mpTestFlows;
         private readonly UtilCmd _cmd = new UtilCmd();
         private readonly XmlOps _xmlOps = new XmlOps();
         private readonly MonitorAction _monitorAction = new MonitorAction();
@@ -30,7 +31,7 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            _masterPlusTestFlows = new MasterPlusTestFlows();
+            _mpTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();
         }
@@ -51,7 +52,7 @@ namespace CMTest
                 AssemblePortalTests();
                 return _cmd.ShowCmdMenu(_optionsPortalTestsWithFuncs, _optionsTopMenu);
             } );
-                 _optionsTopMenu.Add(_masterPlusTestFlows.MpActions.SwName, () => {
+                 _optionsTopMenu.Add(_mpTestFlows.MpActions.SwName, () => {
                 AssembleMasterPlusPlugInOutTests();
                 return _cmd.ShowCmdMenu(_optionsTestsWithFuncs, _optionsTopMenu);
             });

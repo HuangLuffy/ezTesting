@@ -77,13 +77,13 @@ namespace CMTest.Project.MasterPlus
 
         //Common cases
 
-        public void Case_LaunchMasterPlus()
+        public void Case_LaunchMasterPlus(int timeout)
         {
             R.Exec(() =>
                 {
-                    var swMainWindow = MpActions.LaunchMasterPlus(MpActions.SwLnkPath, 35);
+                    var swMainWindow = MpActions.LaunchMasterPlus(MpActions.SwLnkPath, timeout);
                 }
-                , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 35s."
+                , $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = {timeout}s."
                 , "MasterPlus+ launched successfully."
                 , "Failed to launch MP+."
                 , Reporter.WhenCaseFailed.BlockAllLeftCases);
@@ -100,7 +100,6 @@ namespace CMTest.Project.MasterPlus
                 , "Failed to find the device."
                 , Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
-
         public void Case_SelectKeyMappingTab(string deviceName)
         {
             R.Exec(() =>
@@ -127,87 +126,5 @@ namespace CMTest.Project.MasterPlus
                 , "Failed."
                 , Reporter.WhenCaseFailed.StillRunThisCase);
         }
-
-
-
-        //private void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string imageName = "",
-        //    ImageType imageType = ImageType.PNG)
-        //{
-        //    if (imageName.Equals(""))
-        //    {
-        //        imageName = UtilTime.GetLongTimeString();
-        //    }
-        //    var t = Path.Combine(MpActions.GetScreenshotsRelativePath(), imageName);
-        //    var manualCheckLink = _iReporter.SetNeedToCheck(commentOnWeb,
-        //        Path.Combine(AbsResult.Const.Screenshots, imageName + "." + imageType));
-        //    manualCheckLink = _iReporter.SetAsLink(manualCheckLink);
-        //    UtilCapturer.Capture(t, imageType);
-        //    if (r != null)
-        //    {
-        //        r.NodeNeedToCheck += manualCheckLink;
-        //    }
-        //}
-        //public void Case_LaunchMasterPlus()
-        //{
-        //    var r = new Reporter.ResultTestCase()
-        //    {
-        //        NodeDescription = $"Launch MasterPlus from {MpActions.SwLnkPath}. Timeout = 15s",
-        //        NodeExpectedResult = "MasterPlus+ launched successfully.",
-        //    };
-        //    if (isCaseFailed)
-        //    {
-        //        r.NodeResult = Reporter.Result.BLOCK;
-        //    }
-        //    else
-        //    {
-        //        try
-        //        {
-        //            //var swMainWindow = MasterPlusTestActions.LaunchMasterPlus(SwLnkPath,15);
-        //        }
-        //        catch (Exception)
-        //        {
-        //            isCaseFailed = true;
-        //            r.NodeResult = Reporter.Result.FAIL;
-        //            r.AttrMessage = "Failed to launch MP+.";
-        //        }
-
-        //        Capture(r);
-        //    }
-        //    _iReporter.AddTestStep(r, resultTestInfo);
-        //}
-        //public void Case_SelectDevice1(string deviceName)
-        //{
-        //    var r = new Reporter.ResultTestCase()
-        //    {
-        //        NodeDescription = $"Select {deviceName} from MasterPlus.",
-        //        NodeExpectedResult = $"{deviceName} can be found.",
-        //    };
-        //    if (isCaseFailed)
-        //    {
-        //        r.NodeResult = Reporter.Result.BLOCK;
-        //    }
-        //    else
-        //    {
-        //        try
-        //        {
-        //            var swMainWindow = MpActions.GetMasterPlusMainWindow();
-        //            var dut = MpActions.GetTestDevice(deviceName, swMainWindow);
-        //            dut.DoClickPoint();
-        //        }
-        //        catch (Exception)
-        //        {
-        //            isCaseFailed = true;
-        //            r.NodeResult = Reporter.Result.FAIL;
-        //            r.AttrMessage = "Failed to find the device.";
-        //        }
-
-        //        Capture(r);
-        //    }
-
-        //    _iReporter.AddTestStep(r, resultTestInfo);
-        //}
-
-        //KeymappingTest
-
     }
 }

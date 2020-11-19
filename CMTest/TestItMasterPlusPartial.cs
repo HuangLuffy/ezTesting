@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using ATLib.Input;
+using CommonLib.Util.IO;
 
 namespace CMTest
 {
     public partial class TestIt
     {
         private readonly IDictionary<string, Func<dynamic>> _optionsTestsWithFuncs = new Dictionary<string, Func<dynamic>>();
-
+        public readonly IDictionary<string, IReadOnlyList<string>> CMKeys = new Dictionary<string, IReadOnlyList<string>>();
+        //IEnumerable<string>
         private void AssembleMasterPlusPlugInOutTests(bool fromConf = true)
         {
             if (_optionsTestsWithFuncs.Any()) return;
@@ -36,35 +38,48 @@ namespace CMTest
             }
             _optionsXmlPlugInOutDeviceNames.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
         }
+
+        public void GetKeyboardKeys()
+        {
+            var keyboardKeyLines = UtilFile.GetListByLine(_mpTestFlows.MpActions.ResourcesKeysRelativePath);
+            foreach (var line in keyboardKeyLines)
+            {
+                if (line.StartsWith("SC_KEY_"))
+                {
+                    CMKeys.Add(line.Split(',')[0], new List<string>());
+                }
+            }
+
+        }
         private dynamic Flow_MasterPlus_LaunchAndCheckCrash()
         {
-            _masterPlusTestFlows.Flow_LaunchAndCheckCrash();
+            _mpTestFlows.Flow_LaunchAndCheckCrash();
             return MARK_FOUND_RESULT;
         }
 
         private dynamic Flow_MasterPlus_LaunchTest()
         {
-            _masterPlusTestFlows.Flow_LaunchTest();
+            _mpTestFlows.Flow_LaunchTest();
             return MARK_FOUND_RESULT;
         }
 
         public void RestartSystemAndCheckDeviceRecognition()
         {
-            _masterPlusTestFlows.Flow_RestartSystemAndCheckDeviceRecognition(_xmlOps);
+            _mpTestFlows.Flow_RestartSystemAndCheckDeviceRecognition(_xmlOps);
         }
 
         private dynamic Flow_KeymappingTest(string deviceName)
         {
-            _masterPlusTestFlows.R.GetResultTestInfo().AttrDeviceModel = deviceName;
-            _masterPlusTestFlows.R.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
-            _masterPlusTestFlows.Case_LaunchMasterPlus();
-            _masterPlusTestFlows.Case_SelectDeviceFromList(deviceName);
-            _masterPlusTestFlows.Case_SelectKeyMappingTab(deviceName);
-            _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.A, "B");
-            _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.B, "C");
-            _masterPlusTestFlows.Case_AssignKey(KbEvent.ScanCode.C, "A");
+            _mpTestFlows.R.GetResultTestInfo().AttrDeviceModel = deviceName;
+            _mpTestFlows.R.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            _mpTestFlows.Case_LaunchMasterPlus();
+            _mpTestFlows.Case_SelectDeviceFromList(deviceName);
+            _mpTestFlows.Case_SelectKeyMappingTab(deviceName);
+            _mpTestFlows.Case_AssignKey(KbEvent.ScanCode.A, "B");
+            _mpTestFlows.Case_AssignKey(KbEvent.ScanCode.B, "C");
+            _mpTestFlows.Case_AssignKey(KbEvent.ScanCode.C, "A");
 
-            _masterPlusTestFlows.LaunchTestReport();
+            _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }
     }
