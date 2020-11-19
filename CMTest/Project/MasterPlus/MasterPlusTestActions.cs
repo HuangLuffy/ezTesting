@@ -167,6 +167,38 @@ namespace CMTest.Project.MasterPlus
                 throw new Exception($"Key {UtilEnum.GetEnumNameByValue<ScanCode>(keyNeedToInput)} in not {nameof(KeyMappingGridColor.Purple)}.");
             }
         }
+
+        public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKey)
+        {
+            var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
+            var keyA = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKey });
+            keyA.DoClickPoint(1);
+            var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
+            var reassignCollapseButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCollapseButton);
+            reassignCollapseButton.DoClickPoint(1);
+            var ReassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown);
+            var whichCatalog = ReassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItem });
+            //ReassignMenuItems
+
+
+
+
+            var assignedValue = reassignDialog.GetElementFromDescendants(MPObj.AssignedValue);
+            var value = assignedValue.GetElementInfo().FullDescription();
+            if (!value.Equals(""))
+            {
+                throw new Exception($"Input {1}, but get {value}.");
+            }
+            var saveButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignSaveButton);
+            saveButton.DoClickPoint(1);
+            if (!keyA.GetElementInfo().FullDescription().Equals(KeyMappingGridColor.Purple))
+            {
+                throw new Exception($"Key {1} in not {nameof(KeyMappingGridColor.Purple)}.");
+            }
+        }
+
+
+
         public AT GetMasterPlusMainWindow(int timeout = 0)
         {
             return new AT().GetElementFromChild(MPObj.MainWindow, timeout);

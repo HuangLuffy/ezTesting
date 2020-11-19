@@ -43,5 +43,19 @@ namespace CMTest.Project.MasterPlus
                 return Convert.ToInt16(tabs);
             }
         }
+
+        public class ReassignMenuItems
+        {
+            public const string LettersNumbers = "Letters & Numbers";
+            public const string Macro = "Macro";
+            public const string MediaKeys = "Media Keys";
+            public const string MiscKeys = "MiscKeys";
+            public const string ModifierSpacingKeys = "Modifier & Spacing Keys";
+            public const string NavigationKeys = "Navigation Keys";
+            public const string NumpadKeys = "Numpad Keys";
+            public const string PunctuationKeys = "PunctuationKeys";
+
+            //Letters & Numbers, Macro, Media Keys, Misc Keys, Modifier & Spacing Keys, Navigation Keys, Numpad Keys, Punctuation Keys
+        }
     }
 }

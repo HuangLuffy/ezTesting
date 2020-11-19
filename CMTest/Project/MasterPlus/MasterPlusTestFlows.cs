@@ -1,10 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using ATLib.Input;
 using CMTest.Xml;
 using CommonLib;
 using CommonLib.Util;
@@ -12,7 +8,6 @@ using CommonLib.Util.OS;
 using CommonLib.Util.Project;
 using ReportLib;
 using static ATLib.Input.KbEvent;
-using static CommonLib.Util.UtilCapturer;
 
 namespace CMTest.Project.MasterPlus
 {
@@ -120,8 +115,22 @@ namespace CMTest.Project.MasterPlus
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     MpActions.AssignKeyOnReassignDialog(scanCode, assignWhichKey);
                 }
-                , R.SetAsLines($"Open Reassignment dialog for the Key {assignWhichKey}.", 
-                                           $"Assign {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
+                , R.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {assignWhichKey}.", 
+                                           $"Push {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
+                , R.SetAsLines($"Assign successfully.", "The Grid would be purple.")
+                , "Failed."
+                , Reporter.WhenCaseFailed.StillRunThisCase);
+        }
+        public void Case_AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKey)
+        {
+            R.Exec(() =>
+                {
+                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
+                    MpActions.AssignKeyFromReassignMenu(whichMenuItem, whichMenuItemSubItem, assignWhichKey);
+                }
+                , R.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {whichMenuItem}.",
+                    $"Open Reassignment menu.",
+                    $"Choose {1}.")
                 , R.SetAsLines($"Assign successfully.", "The Grid would be purple.")
                 , "Failed."
                 , Reporter.WhenCaseFailed.StillRunThisCase);

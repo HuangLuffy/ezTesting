@@ -33,6 +33,7 @@ namespace CMTest
         {
             _mpTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
+            GetKeyboardKeys();
             AssembleTopMenu();
         }
 
@@ -58,11 +59,6 @@ namespace CMTest
             });
         }
 
-        public struct RunDirectly
-        {
-            public bool run;
-            public string device;
-        }
 
         public bool IsNeededRunCmdDirectly(string[] args)
         {
@@ -189,6 +185,10 @@ namespace CMTest
         //    logLines.ForEach(line => UtilCmd.WriteLine(line));
         //    return logLines;
         //}
-
+        //public struct RunDirectly
+        //{
+        //    public bool run;
+        //    public string device;
+        //}
     }
 }

@@ -6,14 +6,15 @@ using System.Diagnostics;
 using System.Linq;
 using ATLib.Input;
 using CommonLib.Util.IO;
+using System.Text.RegularExpressions;
 
 namespace CMTest
 {
     public partial class TestIt
     {
         private readonly IDictionary<string, Func<dynamic>> _optionsTestsWithFuncs = new Dictionary<string, Func<dynamic>>();
-        public readonly IDictionary<string, IReadOnlyList<string>> CMKeys = new Dictionary<string, IReadOnlyList<string>>();
-        //IEnumerable<string>
+        public readonly IDictionary<string, IEnumerable<string>> CMKeys = new Dictionary<string, IEnumerable<string>>();
+        //IEnumerable<string> IReadOnlyList<string>
         private void AssembleMasterPlusPlugInOutTests(bool fromConf = true)
         {
             if (_optionsTestsWithFuncs.Any()) return;
@@ -32,7 +33,7 @@ namespace CMTest
             foreach (var deviceName in new List<string>(){"SK622W", "SK622B" })
             {
                 _optionsXmlPlugInOutDeviceNames.Add(deviceName, () => {
-                    this.Flow_KeymappingTest(deviceName);
+                    this.Flow_KeyMappingBaseTest(deviceName);
                     return MARK_FOUND_RESULT;
                 });       
             }
@@ -44,9 +45,10 @@ namespace CMTest
             var keyboardKeyLines = UtilFile.GetListByLine(_mpTestFlows.MpActions.ResourcesKeysRelativePath);
             foreach (var line in keyboardKeyLines)
             {
-                if (line.StartsWith("SC_KEY_"))
+                if (line.Contains("SC_KEY_"))
                 {
-                    CMKeys.Add(line.Split(',')[0], new List<string>());
+                    var keys = UtilRegex.GetStringsFromDoubleQuo(line);
+                    CMKeys.Add(line.Split(',')[0], keys);
                 }
             }
 
@@ -72,12 +74,25 @@ namespace CMTest
         {
             _mpTestFlows.R.GetResultTestInfo().AttrDeviceModel = deviceName;
             _mpTestFlows.R.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
-            _mpTestFlows.Case_LaunchMasterPlus();
+            _mpTestFlows.Case_LaunchMasterPlus(60);
             _mpTestFlows.Case_SelectDeviceFromList(deviceName);
             _mpTestFlows.Case_SelectKeyMappingTab(deviceName);
             _mpTestFlows.Case_AssignKey(KbEvent.ScanCode.A, "B");
             _mpTestFlows.Case_AssignKey(KbEvent.ScanCode.B, "C");
             _mpTestFlows.Case_AssignKey(KbEvent.ScanCode.C, "A");
+
+            _mpTestFlows.LaunchTestReport();
+            return MARK_FOUND_RESULT;
+        }
+        private dynamic Flow_KeyMappingBaseTest(string deviceName)
+        {
+            _mpTestFlows.R.GetResultTestInfo().AttrDeviceModel = deviceName;
+            _mpTestFlows.R.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            //_mpTestFlows.Case_LaunchMasterPlus(120);
+            //_mpTestFlows.Case_SelectDeviceFromList(deviceName);
+            //_mpTestFlows.Case_SelectKeyMappingTab(deviceName);
+            _mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, "B" ,"C");
+
 
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;

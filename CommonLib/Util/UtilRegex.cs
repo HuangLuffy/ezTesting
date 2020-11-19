@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace CommonLib.Util
 {
@@ -37,8 +39,15 @@ namespace CommonLib.Util
         }
         public static string GetMatchMidValue(string sourse, string startString, string endString)
         {
-            Regex rg = new Regex("(?<=(" + startString + "))[.\\s\\S]*?(?=(" + endString + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+            var rg = new Regex("(?<=(" + startString + "))[.\\s\\S]*?(?=(" + endString + "))", RegexOptions.Multiline | RegexOptions.Singleline);
             return rg.Match(sourse).Value;
+        }
+
+        public static IEnumerable<string> GetStringsFromDoubleQuo(string sourse)
+        {
+            var re = new Regex("\"([^\"]*)\"", RegexOptions.IgnoreCase);
+            return re.Matches(sourse).Cast<Match>().Select(m => m.Value.Replace("\"", ""))
+                .ToArray(); ;
         }
     }
 }
