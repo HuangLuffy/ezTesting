@@ -91,7 +91,7 @@ namespace CMTest
             //_mpTestFlows.Case_LaunchMasterPlus(120);
             //_mpTestFlows.Case_SelectDeviceFromList(deviceName);
             //_mpTestFlows.Case_SelectKeyMappingTab(deviceName);
-            _mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, "B" ,"C");
+            _mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.EMail, "A");
 
 
             _mpTestFlows.LaunchTestReport();

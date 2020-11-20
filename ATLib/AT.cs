@@ -107,7 +107,7 @@ namespace ATLib
                 {
                     return null;
                 }
-                throw new Exception("[ERROR]: GetElement. " + ex.Message + $"TreeScope:{(treeScope ?? "")} Name:{(name ?? "")} ControlType:{(controlType ?? "")} ClassName:{(className ?? "")} AutomationId:{(automationId ?? "")}");
+                throw new Exception("[ERROR]: GetElement. " + ex.Message + $"TreeScope:{(treeScope ?? "")} Name:{(name ?? "")} ControlType:{(controlType ?? "")} fullDescription:{(fullDescription ?? "")} ClassName:{(className ?? "")} AutomationId:{(automationId ?? "")}");
             }
         }
         public ATS GetElements(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, bool returnNullWhenException = false)
@@ -127,7 +127,7 @@ namespace ATLib
             }
             catch (Exception ex)
             {
-                throw new Exception("[ERROR]: GetElement. " + ex.Message + $"TreeScope:{(treeScope ?? "")} Name:{(name ?? "")} ControlType:{(controlType ?? "")} ClassName:{(className ?? "")} AutomationId:{(automationId ?? "")}");
+                throw new Exception("[ERROR]: GetElement. " + ex.Message + $"TreeScope:{(treeScope ?? "")} Name:{(name ?? "")} ControlType:{(controlType ?? "")} fullDescription:{(fullDescription ?? "")} ClassName:{(className ?? "")} AutomationId:{(automationId ?? "") }");
             }
         }
         /// <summary>

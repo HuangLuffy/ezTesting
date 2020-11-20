@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CMTest.Project.MasterPlus
 {
@@ -54,8 +55,20 @@ namespace CMTest.Project.MasterPlus
             public const string NavigationKeys = "Navigation Keys";
             public const string NumpadKeys = "Numpad Keys";
             public const string PunctuationKeys = "PunctuationKeys";
-
             //Letters & Numbers, Macro, Media Keys, Misc Keys, Modifier & Spacing Keys, Navigation Keys, Numpad Keys, Punctuation Keys
+            public class MediaKeysItems
+            {
+                public const string PlayPause = "PLAY/PAUSE";
+                public const string Stop = "Macro";
+                public const string NextTrack = "NEXT TRACK";
+                public const string PreviousTrack = "PREVIOUS TRACK";
+                public const string VolumeDown = "VOLUME DOWN";
+                public const string VolumeUP = "VOLUME UP";
+                public const string Mute = "MUTE";
+                public const string EMail = "E-MAIL";
+                public const string Calculator = "CACULATOR";
+                public const string WebBrowser = "WEB BROWSER";
+            }
         }
     }
 }

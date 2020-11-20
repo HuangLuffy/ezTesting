@@ -42,6 +42,19 @@ namespace ATLib
                 throw;
             }
         }
+        public void Scrollwhat(double waitTime = 0.2)
+        {
+            try
+            {
+                var t = AutomationElement.GetCurrentPattern(ScrollItemPattern.Pattern) as ScrollItemPattern;
+                t.ScrollIntoView();
+                Thread.Sleep((int)(waitTime * 1000));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DoExpand error. " + ex);
+            }
+        }
         public void DoExpand(double waitTime = 0.2)
         {
             try
@@ -170,10 +183,6 @@ namespace ATLib
                 try
                 {
                     _scrollPattern?.ScrollVertical(ScrollAmount.LargeDecrement);
-                    //if (_scrollPattern != null)
-                    //{
-                    //    _scrollPattern.ScrollVertical(ScrollAmount.LargeDecrement);
-                    //}
                 }
                 catch (Exception ex)
                 {
