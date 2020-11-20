@@ -31,6 +31,7 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
+           MasterPlus.KeyMappingGridColor.GetVarName("#00ff00");
             _mpTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             GetKeyboardKeys();

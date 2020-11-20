@@ -548,7 +548,7 @@ namespace ATLib
             /// 
             /// </summary>
             /// <returns></returns>
-            public bool IsEnable()
+            public bool IsOffscreen()
             {
                 try
                 {

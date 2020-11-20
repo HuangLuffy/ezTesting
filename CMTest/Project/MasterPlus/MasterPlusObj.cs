@@ -33,6 +33,9 @@ namespace CMTest.Project.MasterPlus
         {
             Name = "DeviceList"
         };
+
+        #region KeyMapping
+
         public static ATElementStruct AssignContainer = new ATElementStruct()
         {
             Name = "AssignContainer"
@@ -60,10 +63,13 @@ namespace CMTest.Project.MasterPlus
             Name = "ReassignDropdown"
         };
         
-
         public static ATElementStruct AssignedValue = new ATElementStruct()
         {
             Name = "AssignedValue"
+        };
+        public static ATElementStruct ReassignTitleValue = new ATElementStruct()
+        {
+            Name = "ReassignTitleValue"
         };
         public static ATElementStruct ReassignSaveButton = new ATElementStruct()
         {
@@ -73,5 +79,15 @@ namespace CMTest.Project.MasterPlus
         {
             Name = "CollapseButton"
         };
+        public static ATElementStruct DisableKeyCheckbox = new ATElementStruct()
+        {
+            Name = "DisableKeyCheckbox"
+        };
+        public static ATElementStruct EnableKeyCheckbox = new ATElementStruct()
+        {
+            Name = "EnableKeyCheckbox"
+        };
+
+        #endregion
     }
 }

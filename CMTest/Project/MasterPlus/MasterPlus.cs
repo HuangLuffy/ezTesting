@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using CommonLib.Util;
 
 namespace CMTest.Project.MasterPlus
 {
@@ -18,9 +20,9 @@ namespace CMTest.Project.MasterPlus
             public const string Purple = "#84329b";
             public const string Red = "#ff0000";
             public const string Cyan = "#00aeef";
-            public static string GetVarName(System.Linq.Expressions.Expression<Func<string, string>> exp)
+            public static string GetVarName(string value)
             {
-                return ((System.Linq.Expressions.MemberExpression)exp.Body).Member.Name;
+                return UtilReflect.GetVarNameByValue(typeof(KeyMappingGridColor), value);
             }
         }
 
@@ -59,14 +61,14 @@ namespace CMTest.Project.MasterPlus
             public class MediaKeysItems
             {
                 public const string PlayPause = "PLAY/PAUSE";
-                public const string Stop = "Macro";
+                public const string Stop = "STOP";
                 public const string NextTrack = "NEXT TRACK";
                 public const string PreviousTrack = "PREVIOUS TRACK";
                 public const string VolumeDown = "VOLUME DOWN";
                 public const string VolumeUP = "VOLUME UP";
                 public const string Mute = "MUTE";
                 public const string EMail = "E-MAIL";
-                public const string Calculator = "CACULATOR";
+                public const string Calculator = "CALCULATOR";
                 public const string WebBrowser = "WEB BROWSER";
             }
         }

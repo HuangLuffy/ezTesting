@@ -83,17 +83,49 @@ namespace CMTest.Project.MasterPlus
         }
         private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string keyValueNeedToInput)
         {
-            var assignedValue = reassignDialog.GetElementFromDescendants(MPObj.AssignedValue);
-            var value = assignedValue.GetElementInfo().FullDescription();
-            if (!value.Equals(keyValueNeedToInput))
+            var gridColorValue = KeyMappingGridColor.Purple;
+            try
             {
-                throw new Exception($"Input {keyValueNeedToInput}, but get {value}.");
+                var assignedValue = reassignDialog.GetElementFromDescendants(MPObj.AssignedValue, returnNullWhenException: true);
+                if (keyValueNeedToInput.Equals(MPObj.DisableKeyCheckbox.Name))
+                {
+                    gridColorValue = KeyMappingGridColor.Red;
+                    if (assignedValue != null && !assignedValue.GetElementInfo().IsOffscreen())
+                    {
+                        throw new Exception($"Reassign box is still there.");
+                    }
+                }
+                else if (keyValueNeedToInput.Equals(MPObj.EnableKeyCheckbox.Name))
+                {
+                    gridColorValue = KeyMappingGridColor.Green;
+                    var reassignTitleValue = reassignDialog.GetElementFromDescendants(MPObj.ReassignTitleValue);
+                    if (assignedValue.GetElementInfo().FullDescription() != reassignTitleValue.GetElementInfo().FullDescription())
+                    {
+                        throw new Exception($"The assigned is not restored to {reassignTitleValue.GetElementInfo().FullDescription()} when enabling it.");
+                    }
+                }
+                else
+                {
+                    gridColorValue = KeyMappingGridColor.Purple;
+                    var value = assignedValue.GetElementInfo().FullDescription();
+                    if (!value.Equals(keyValueNeedToInput))
+                    {
+                        throw new Exception($"Input {keyValueNeedToInput}, but get {value}.");
+                    }
+                }
             }
-            var saveButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignSaveButton);
-            saveButton.DoClickPoint(1);
-            if (!keyGridNeedToBeAssigned.GetElementInfo().FullDescription().Equals(KeyMappingGridColor.Purple))
+            catch (Exception e)
             {
-                throw new Exception($"Key {keyValueNeedToInput} in not {nameof(KeyMappingGridColor.Purple)}.");
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                var saveButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignSaveButton);
+                saveButton.DoClickPoint(1);
+            }
+            if (!keyGridNeedToBeAssigned.GetElementInfo().FullDescription().Equals(gridColorValue))
+            {
+                throw new Exception($"Key {keyValueNeedToInput} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.");
             }
         }
         public void AssignKeyOnReassignDialog(ScanCode keyValueNeedToInputScanCode, string assignWhichKeyGrid)
@@ -106,6 +138,7 @@ namespace CMTest.Project.MasterPlus
                     UtilTime.WaitTime(1);
                 });
         }
+
         public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid)
         {
             CommonAssignKey(whichMenuItemSubItem, assignWhichKeyGrid,
@@ -114,13 +147,34 @@ namespace CMTest.Project.MasterPlus
                     var reassignCollapseButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCollapseButton);
                     reassignCollapseButton.DoClickPoint(1);
                     var reassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown);
-                    var whichCatalog = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItem });
-                    whichCatalog.DoClickPoint(1);
-                    var subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
+                    var subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem }, returnNullWhenException: true);
+                    if (subItem == null)
+                    {
+                        var whichCatalog = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItem });
+                        whichCatalog.DoClickPoint(1);
+                        subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
+                    }
                     subItem.GetIAccessible().DoDefaultAction();
                 });
         }
-
+        public void DisableKey(string disableWhichKeyGrid)
+        {
+            CommonAssignKey(MPObj.DisableKeyCheckbox.Name, disableWhichKeyGrid,
+                (reassignDialog) =>
+                {
+                    var disableKeyCheckbox = reassignDialog.GetElementFromDescendants(MPObj.DisableKeyCheckbox);
+                    disableKeyCheckbox.DoClickPoint(1);
+                });
+        }
+        public void EnableKey(string disableWhichKeyGrid)
+        {
+            CommonAssignKey(MPObj.EnableKeyCheckbox.Name, disableWhichKeyGrid,
+                (reassignDialog) =>
+                {
+                    var enableKeyCheckbox = reassignDialog.GetElementFromDescendants(MPObj.EnableKeyCheckbox);
+                    enableKeyCheckbox.DoClickPoint(1);
+                });
+        }
         #endregion
 
         public AT GetMasterPlusMainWindow(int timeout = 0)

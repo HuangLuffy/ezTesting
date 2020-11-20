@@ -108,7 +108,7 @@ namespace CMTest.Project.MasterPlus
                 , "Failed to select KeyMapping tab."
                 , Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
-        public void Case_AssignKey(ScanCode scanCode, string assignWhichKey)
+        public void Case_AssignKeyOnReassignDialog(ScanCode scanCode, string assignWhichKey)
         {
             R.Exec(() =>
                 {
@@ -128,10 +128,36 @@ namespace CMTest.Project.MasterPlus
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     MpActions.AssignKeyFromReassignMenu(whichMenuItem, whichMenuItemSubItem, assignWhichKey);
                 }
-                , R.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {whichMenuItem}.",
+                , R.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {assignWhichKey}.",
                     $"Open Reassignment menu.",
-                    $"Choose {1}.")
+                    $"Choose {whichMenuItem} > {whichMenuItemSubItem}.")
                 , R.SetAsLines($"Assign successfully.", "The Grid would be purple.")
+                , "Failed."
+                , Reporter.WhenCaseFailed.StillRunThisCase);
+        }
+        public void Case_DisableKey(string disableWhichKey)
+        {
+            R.Exec(() =>
+                {
+                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
+                    MpActions.DisableKey(disableWhichKey);
+                }
+                , R.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {disableWhichKey}.",
+                    $"Set it disabled.")
+                , R.SetAsLines($"Disable successfully.", "The Grid would be red.")
+                , "Failed."
+                , Reporter.WhenCaseFailed.StillRunThisCase);
+        }
+        public void Case_EnableKey(string enableWhichKey)
+        {
+            R.Exec(() =>
+                {
+                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
+                    MpActions.EnableKey(enableWhichKey);
+                }
+                , R.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {enableWhichKey}.",
+                    $"Set it enabled.")
+                , R.SetAsLines($"enable successfully and the key value is default value.", "The Grid would be green.")
                 , "Failed."
                 , Reporter.WhenCaseFailed.StillRunThisCase);
         }
