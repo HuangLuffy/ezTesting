@@ -38,10 +38,6 @@ namespace CMTest.Project.MasterPlus
                 throw new Exception($"{appFullPath} does not exist.");
             }
             UtilProcess.StartProcess(appFullPath);
-
-            UtilTime.WaitTime(4);
-            UtilProcess.KillProcessByName("RENEW");
-            UtilTime.WaitTime(1);
             return GetMasterPlusMainWindowForLaunching(timeout);
         }
         public void CloseMasterPlus(int timeout = 10)
@@ -76,13 +72,16 @@ namespace CMTest.Project.MasterPlus
             ClickCommonDialog();
         }
 
-        private void CommonAssignKey(string keyValueNeedToInput, string assignWhichKeyGrid, Action<AT> action)
+        private void CommonAssignKeyAndVerify(string keyValueNeedToInput, string assignWhichKeyGrid, Action<AT> assignAction , bool onlyVerify = false)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
             keyGridNeedToBeAssigned.DoClickPoint(1);
             var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
-            action.Invoke(reassignDialog);
+            if (!onlyVerify)
+            {
+                assignAction.Invoke(reassignDialog);
+            }
             VerifyAssignedKeyValueAndGridColor(keyGridNeedToBeAssigned, reassignDialog, keyValueNeedToInput);
         }
         private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string keyValueNeedToInput)
@@ -132,20 +131,20 @@ namespace CMTest.Project.MasterPlus
                 R.SetStepFailed($"Key {keyValueNeedToInput} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.", "colorWrong");
             }
         }
-        public void AssignKeyOnReassignDialog(ScanCode keyValueNeedToInputScanCode, string assignWhichKeyGrid)
+        public void AssignKeyOnReassignDialog(ScanCode keyValueNeedToInputScanCode, string assignWhichKeyGrid, bool onlyVerify = false)
         {
             var keyValueNeedToInput = UtilEnum.GetEnumNameByValue<ScanCode>(keyValueNeedToInputScanCode);
-            CommonAssignKey(keyValueNeedToInput, assignWhichKeyGrid,
+            CommonAssignKeyAndVerify(keyValueNeedToInput, assignWhichKeyGrid,
                 (reassignDialog) =>
                 {
                     KbEvent.Press(keyValueNeedToInputScanCode);
                     UtilTime.WaitTime(1);
-                });
+                }, onlyVerify);
         }
 
-        public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid)
+        public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid, bool onlyVerify = false)
         {
-            CommonAssignKey(whichMenuItemSubItem, assignWhichKeyGrid,
+            CommonAssignKeyAndVerify(whichMenuItemSubItem, assignWhichKeyGrid,
                 (reassignDialog) =>
                 {
                     var reassignCollapseButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCollapseButton);
@@ -159,25 +158,25 @@ namespace CMTest.Project.MasterPlus
                         subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
                     }
                     subItem.GetIAccessible().DoDefaultAction();
-                });
+                }, onlyVerify);
         }
-        public void DisableKey(string disableWhichKeyGrid)
+        public void DisableKey(string disableWhichKeyGrid, bool onlyVerify = false)
         {
-            CommonAssignKey(MPObj.DisableKeyCheckbox.Name, disableWhichKeyGrid,
+            CommonAssignKeyAndVerify(MPObj.DisableKeyCheckbox.Name, disableWhichKeyGrid,
                 (reassignDialog) =>
                 {
                     var disableKeyCheckbox = reassignDialog.GetElementFromDescendants(MPObj.DisableKeyCheckbox);
                     disableKeyCheckbox.DoClickPoint(1);
-                });
+                }, onlyVerify);
         }
-        public void EnableKey(string disableWhichKeyGrid)
+        public void EnableKey(string disableWhichKeyGrid, bool onlyVerify = false)
         {
-            CommonAssignKey(MPObj.EnableKeyCheckbox.Name, disableWhichKeyGrid,
+            CommonAssignKeyAndVerify(MPObj.EnableKeyCheckbox.Name, disableWhichKeyGrid,
                 (reassignDialog) =>
                 {
                     var enableKeyCheckbox = reassignDialog.GetElementFromDescendants(MPObj.EnableKeyCheckbox);
                     enableKeyCheckbox.DoClickPoint(1);
-                });
+                }, onlyVerify);
         }
         #endregion
 
@@ -189,6 +188,11 @@ namespace CMTest.Project.MasterPlus
         {
             return UtilWait.ForNonNull(() =>
             {
+                if (UtilProcess.IsProcessExistedByName("RENEW"))
+                {
+                    UtilProcess.KillProcessByName("RENEW");
+                    UtilTime.WaitTime(1);
+                }
                 var mainWindow = GetMasterPlusMainWindow();
                 mainWindow.GetElement(MPObj.DeviceList);
                 return mainWindow;

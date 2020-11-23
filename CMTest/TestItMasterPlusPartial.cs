@@ -91,19 +91,37 @@ namespace CMTest
             //_mpTestFlows.Case_LaunchMasterPlus(120);
             //_mpTestFlows.Case_SelectDeviceFromList(deviceName);
             //_mpTestFlows.Case_SelectKeyMappingTab(deviceName);
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.EMail, "A");
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Calculator, "B");
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.PlayPause, "C");
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Stop, "D");
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.PreviousTrack, "E");
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.NextTrack, "F");
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Mute, "G");
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeDown, "H");
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeUP, "I");
-            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.WebBrowser, "J");
-            //_mpTestFlows.Case_DisableKey("K");
-            //_mpTestFlows.Case_EnableKey("K");
+            var forTest = new List<List<string>>();
+            forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.EMail, "A"});
+            //forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Calculator, "B" });
+            //forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.PlayPause, "C" });
+            //forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Stop, "D"});
+            //forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.PreviousTrack, "E" });
+            //forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.NextTrack, "F" });
+            //forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Mute, "G" });
+            //forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeDown, "H" });
+            //forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeUP, "I" });
+            //forTest.Add(new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.WebBrowser, "J" });
+            foreach (var item in forTest)
+            {
+                _mpTestFlows.Case_AssignKeyFromReassignMenu(item[0], item[1], item[2]);
+            }
             _mpTestFlows.Case_CloseMasterPlus(10);
+            _mpTestFlows.Case_LaunchMasterPlus(120);
+            _mpTestFlows.Case_SelectDeviceFromList(deviceName);
+            _mpTestFlows.Case_SelectKeyMappingTab(deviceName);
+            foreach (var item in forTest)
+            {
+                _mpTestFlows.Case_AssignKeyFromReassignMenu(item[0], item[1], item[2], true);
+            }
+            //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.EMail, "A");
+            _mpTestFlows.Case_DisableKey("K");
+            _mpTestFlows.Case_EnableKey("K");
+            _mpTestFlows.Case_DisableKey("L");
+            _mpTestFlows.Case_EnableKey("K", true);
+            _mpTestFlows.Case_DisableKey("L",true);
+
+
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }
