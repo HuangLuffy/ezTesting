@@ -13,6 +13,7 @@ namespace ReportLib
         private string PathReportXml { get; }
         private string CaptureRelativePath { set; get; }
         private Reporter.ResultTestInfo ResultTestInfo { get; }
+        private Reporter.ResultTestCase CurrentTestCase { set; get; }
         public ReporterXsl(string pathReportXml, string xslPath = "", string captureRelativePath = "", Reporter.ResultTestInfo resultTestInfo = null)
         {
             PathReportXml = pathReportXml;
@@ -22,6 +23,10 @@ namespace ReportLib
             }
             ResultTestInfo = resultTestInfo;
             CaptureRelativePath = captureRelativePath;
+        }
+        public ResultTestCase GetCurrentTestCase()
+        {
+            return CurrentTestCase;
         }
         public string GetResultFullPath()
         {
@@ -237,6 +242,7 @@ namespace ReportLib
                 NodeDescription = nodeDescription,
                 NodeExpectedResult = nodeExpectedResult,
             };
+            CurrentTestCase = r;
             if (Reporter.BlockAllLeftCasesAnyway)
             {
                 r.NodeResult = Reporter.Result.BLOCK;
@@ -268,6 +274,13 @@ namespace ReportLib
             }
             r.AttrTime = elapsedTime;
             AddTestStep(r, ResultTestInfo);
+        }
+
+        public void SetStepFailed(string errorMessage = "Failed", string commentOnWeb = "Failed", string imageName = "")
+        {
+            CurrentTestCase.AttrMessage += $" [{errorMessage}]";
+            Capture(CurrentTestCase, commentOnWeb);
+            throw new Exception(errorMessage);
         }
     }
 }

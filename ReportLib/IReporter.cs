@@ -21,5 +21,6 @@ namespace ReportLib
         void Capture(Reporter.ResultTestCase r , string commentOnWeb = "Step_End", string imageName = "", string screenshotsRelativePath = "",
             UtilCapturer.ImageType imageType = UtilCapturer.ImageType.PNG);
         void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage, WhenCaseFailed blockOrRun = WhenCaseFailed.Default);
+        void SetStepFailed(string errorMessage = "Failed", string commentOnWeb = "Failed", string imageName = "Failed");
     }
 }

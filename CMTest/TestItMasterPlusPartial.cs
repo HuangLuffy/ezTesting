@@ -72,8 +72,8 @@ namespace CMTest
 
         private dynamic Flow_KeymappingTest(string deviceName)
         {
-            _mpTestFlows.R.GetResultTestInfo().AttrDeviceModel = deviceName;
-            _mpTestFlows.R.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            _mpTestFlows.IReporter.GetResultTestInfo().AttrDeviceModel = deviceName;
+            _mpTestFlows.IReporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             _mpTestFlows.Case_LaunchMasterPlus(60);
             _mpTestFlows.Case_SelectDeviceFromList(deviceName);
             _mpTestFlows.Case_SelectKeyMappingTab(deviceName);
@@ -86,8 +86,8 @@ namespace CMTest
         }
         private dynamic Flow_KeyMappingBaseTest(string deviceName)
         {
-            _mpTestFlows.R.GetResultTestInfo().AttrDeviceModel = deviceName;
-            _mpTestFlows.R.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            _mpTestFlows.IReporter.GetResultTestInfo().AttrDeviceModel = deviceName;
+            _mpTestFlows.IReporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             //_mpTestFlows.Case_LaunchMasterPlus(120);
             //_mpTestFlows.Case_SelectDeviceFromList(deviceName);
             //_mpTestFlows.Case_SelectKeyMappingTab(deviceName);

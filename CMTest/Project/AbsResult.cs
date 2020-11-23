@@ -22,12 +22,11 @@ namespace CMTest.Project
         //public string ProjectPath => AppDomain.CurrentDomain.BaseDirectory;
         protected string ResultPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Const.Result);
         private readonly string _currentTestFolderName;
-        public string ResultTimePath => Path.Combine(ResultPath, _currentTestFolderName);
+        private string ResultTimePath => Path.Combine(ResultPath, _currentTestFolderName);
         protected string ScreenshotsPath => Path.Combine(ResultTimePath, Const.Screenshots);
         protected readonly string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");
         private readonly string _screenshotsRelativePath;
         public string ResourcesKeysRelativePath => Path.Combine(Const.Resources, "Keys.h");
-
 
         public AbsResult()
         {
@@ -39,7 +38,10 @@ namespace CMTest.Project
         {
             return _screenshotsRelativePath;
         }
-
+        public string GetResultTimePath()
+        {
+            return ResultTimePath;
+        }
         public string GetTestTimeString()
         {
             return UtilTime.GetTimeString();

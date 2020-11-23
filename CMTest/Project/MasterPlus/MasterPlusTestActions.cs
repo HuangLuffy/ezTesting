@@ -17,6 +17,11 @@ namespace CMTest.Project.MasterPlus
 {
     public class MasterPlusTestActions : MasterPlus
     {
+        private IReporter R;
+        public void SetReport(IReporter r)
+        {
+            R = r;
+        }
         public AT LaunchMasterPlus(string appFullPath, int timeout, bool killCurrentOne = true)
         {
             if (killCurrentOne)
@@ -90,9 +95,10 @@ namespace CMTest.Project.MasterPlus
                 if (keyValueNeedToInput.Equals(MPObj.DisableKeyCheckbox.Name))
                 {
                     gridColorValue = KeyMappingGridColor.Red;
+                    R.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
                     if (assignedValue != null && !assignedValue.GetElementInfo().IsOffscreen())
                     {
-                        throw new Exception($"Reassign box is still there.");
+                        R.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
                     }
                 }
                 else if (keyValueNeedToInput.Equals(MPObj.EnableKeyCheckbox.Name))
@@ -101,7 +107,7 @@ namespace CMTest.Project.MasterPlus
                     var reassignTitleValue = reassignDialog.GetElementFromDescendants(MPObj.ReassignTitleValue);
                     if (assignedValue.GetElementInfo().FullDescription() != reassignTitleValue.GetElementInfo().FullDescription())
                     {
-                        throw new Exception($"The assigned is not restored to {reassignTitleValue.GetElementInfo().FullDescription()} when enabling it.");
+                        R.SetStepFailed($"The assigned key is not restored to {reassignTitleValue.GetElementInfo().FullDescription()} when enabling it.", "assignedValueNotRestored");
                     }
                 }
                 else
@@ -110,7 +116,7 @@ namespace CMTest.Project.MasterPlus
                     var value = assignedValue.GetElementInfo().FullDescription();
                     if (!value.Equals(keyValueNeedToInput))
                     {
-                        throw new Exception($"Input {keyValueNeedToInput}, but get {value}.");
+                        R.SetStepFailed($"Input {keyValueNeedToInput}, but get {value}.", "assignedValueWrong");
                     }
                 }
             }
@@ -125,7 +131,7 @@ namespace CMTest.Project.MasterPlus
             }
             if (!keyGridNeedToBeAssigned.GetElementInfo().FullDescription().Equals(gridColorValue))
             {
-                throw new Exception($"Key {keyValueNeedToInput} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.");
+                R.SetStepFailed($"Key {keyValueNeedToInput} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.", "colorWrong");
             }
         }
         public void AssignKeyOnReassignDialog(ScanCode keyValueNeedToInputScanCode, string assignWhichKeyGrid)
