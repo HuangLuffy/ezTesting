@@ -12,7 +12,7 @@ namespace ReportLib
         private XDocument XDoc { get; set; }
         private string PathReportXml { get; }
         private string CaptureRelativePath { set; get; }
-        private Reporter.ResultTestInfo ResultTestInfo { get; }
+        private Reporter.ResultTestInfo _ResultTestInfo { get; }
         private Reporter.ResultTestCase CurrentTestCase { set; get; }
         public ReporterXsl(string pathReportXml, string xslPath = "", string captureRelativePath = "", Reporter.ResultTestInfo resultTestInfo = null)
         {
@@ -21,7 +21,7 @@ namespace ReportLib
             {
                 CreateResultXml(xslPath: xslPath);
             }
-            ResultTestInfo = resultTestInfo;
+            _ResultTestInfo = resultTestInfo;
             CaptureRelativePath = captureRelativePath;
         }
         public ResultTestCase GetCurrentTestCase()
@@ -42,7 +42,7 @@ namespace ReportLib
         }
         public ResultTestInfo GetResultTestInfo()
         {
-            return ResultTestInfo;
+            return _ResultTestInfo;
         }
         public string SetAsLink(string link)
         {
@@ -273,7 +273,7 @@ namespace ReportLib
                 Capture(r);
             }
             r.AttrTime = elapsedTime;
-            AddTestStep(r, ResultTestInfo);
+            AddTestStep(r, GetResultTestInfo());
         }
 
         public void SetStepFailed(string errorMessage = "Failed", string commentOnWeb = "Failed", string imageName = "")

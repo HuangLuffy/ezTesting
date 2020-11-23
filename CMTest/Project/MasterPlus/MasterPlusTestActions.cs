@@ -44,13 +44,12 @@ namespace CMTest.Project.MasterPlus
             UtilTime.WaitTime(1);
             return GetMasterPlusMainWindowForLaunching(timeout);
         }
-        public void CloseMasterPlus()
+        public void CloseMasterPlus(int timeout = 10)
         {
-            var buttonClose = SwMainWindow.GetElement(MPObj.ButtonCloseMainWindow);
-            buttonClose.DoClick();
-            Timeout = 6;
-            //WriteConsoleTitle(LaunchTimes, $"Waiting for closing. ({Timeout}s)", Timeout);
-            UtilTime.WaitTime(Timeout);
+            var buttonClose = GetMasterPlusMainWindow().GetElementFromChild(MPObj.CloseMasterPlusButton);
+            buttonClose.DoClickPoint(1);
+            UtilWait.ForTrue(() => !UtilProcess.IsProcessExistedByName(this.SwProcessName), timeout);
+
         }
 
         public void SelectTestDevice(string deviceName, AT swMainWindow)
@@ -95,7 +94,6 @@ namespace CMTest.Project.MasterPlus
                 if (keyValueNeedToInput.Equals(MPObj.DisableKeyCheckbox.Name))
                 {
                     gridColorValue = KeyMappingGridColor.Red;
-                    R.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
                     if (assignedValue != null && !assignedValue.GetElementInfo().IsOffscreen())
                     {
                         R.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");

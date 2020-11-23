@@ -13,6 +13,10 @@ namespace CMTest.Project.MasterPlus
         public static ATElementStruct ButtonCloseMainWindow => 
             UtilOs.GetOsVersion().Contains(UtilOs.Name.Win10) ? new ATElementStruct() { AutomationId = "Close", ControlType = ATElement.ControlType.Button } : new ATElementStruct() { Name = "Close", ControlType = ATElement.ControlType.Button };
 
+        public static ATElementStruct CloseMasterPlusButton = new ATElementStruct()
+        {
+            FullDescriton = "MPCloseButton"
+        };
         public static ATElementStruct DialogWarning = new ATElementStruct()
         {
             Name = "WARNING||警告",

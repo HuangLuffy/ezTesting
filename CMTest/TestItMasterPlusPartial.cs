@@ -101,9 +101,9 @@ namespace CMTest
             //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeDown, "H");
             //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeUP, "I");
             //_mpTestFlows.Case_AssignKeyFromReassignMenu(MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.WebBrowser, "J");
-            _mpTestFlows.Case_DisableKey("K");
-           // _mpTestFlows.Case_EnableKey("K");
-
+            //_mpTestFlows.Case_DisableKey("K");
+            //_mpTestFlows.Case_EnableKey("K");
+            _mpTestFlows.Case_CloseMasterPlus(10);
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }

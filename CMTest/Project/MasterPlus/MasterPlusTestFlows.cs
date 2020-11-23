@@ -87,6 +87,17 @@ namespace CMTest.Project.MasterPlus
                 , "Failed to launch MP+."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
+        public void Case_CloseMasterPlus(int timeout)
+        {
+            IReporter.Exec(() =>
+                {
+                    MpActions.CloseMasterPlus(timeout);
+                }
+                , $"Close MasterPlus by clicking X button. Timeout = {timeout}s."
+                , "MasterPlus+ closed successfully."
+                , "Failed to close MP+."
+                , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
+        }
         public void Case_SelectDeviceFromList(string deviceName)
         {
             IReporter.Exec(() =>
