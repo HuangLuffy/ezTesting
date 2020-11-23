@@ -39,5 +39,10 @@ namespace CommonLib.Util
         {
             return (collection as List<T>).Contains(value);
         }
+
+        public static bool Distinct<T>(this IEnumerable<T> collection)
+        {
+            return (collection as List<T>).Distinct();
+        }
     }
 }

@@ -65,14 +65,14 @@ namespace CMTest.Project.MasterPlus
 
         #region KeyMapping
 
-        public void ClickResetButton(string deviceName)
+        public void ClickResetButton(ATElementStruct whichResetButton)
         {
-            var keyMappingResetButton = GetMasterPlusMainWindow().GetElementFromChild(MPObj.KeyMappingResetButton);
+            var keyMappingResetButton = GetMasterPlusMainWindow().GetElementFromChild(whichResetButton);
             keyMappingResetButton.DoClickPoint(1);
             ClickCommonDialog();
         }
 
-        private void CommonAssignKeyAndVerify(string keyValueNeedToInput, string assignWhichKeyGrid, Action<AT> assignAction , bool onlyVerify = false)
+        public void CommonAssignKeyAndVerify(string keyValueNeedToInput, string assignWhichKeyGrid, Action<AT> assignAction, bool onlyVerify = false)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
@@ -98,7 +98,7 @@ namespace CMTest.Project.MasterPlus
                         R.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
                     }
                 }
-                else if (keyValueNeedToInput.Equals(MPObj.EnableKeyCheckbox.Name))
+                else if (keyValueNeedToInput.Equals(MPObj.EnableKeyCheckbox.Name) || keyValueNeedToInput.Equals(""))
                 {
                     gridColorValue = KeyMappingGridColor.Green;
                     var reassignTitleValue = reassignDialog.GetElementFromDescendants(MPObj.ReassignTitleValue);
@@ -160,6 +160,7 @@ namespace CMTest.Project.MasterPlus
                     subItem.GetIAccessible().DoDefaultAction();
                 }, onlyVerify);
         }
+
         public void DisableKey(string disableWhichKeyGrid, bool onlyVerify = false)
         {
             CommonAssignKeyAndVerify(MPObj.DisableKeyCheckbox.Name, disableWhichKeyGrid,

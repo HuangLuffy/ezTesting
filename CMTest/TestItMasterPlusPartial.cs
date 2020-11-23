@@ -87,6 +87,13 @@ namespace CMTest
 
         private void _AssignLoop(IReadOnlyList<List<string>> loop, bool onlyVerify = false)
         {
+            var t = new List<string>();
+            for (var i = 0; i < loop.Count(); i++)
+            {
+                t.Add(loop.ElementAt(i)[2]);
+            }
+
+            var b = UtilIEnumerable.Distinct(t);
             for (var i = 0; i < loop.Count(); i++)
             {
                 if (!((i + 1) <= (loop.Count() - 1) && loop.ElementAt(i)[2].Equals(loop.ElementAt(i + 1)[2]) && onlyVerify))
@@ -106,13 +113,27 @@ namespace CMTest
                 }
             }
         }
+        private void _ResetLoop(IReadOnlyList<List<string>> loop)
+        {
+            var t = new List<string>();
+            for (var i = 0; i < loop.Count(); i++)
+            {
+                t.Add(loop.ElementAt(i)[2]);
+            }
+
+            var b = UtilIEnumerable.Distinct(t);
+            foreach (var item in t)
+            {
+                _mpTestFlows.Case_VerifyKeysValueAndColor(item);
+            }
+        }
         private dynamic Flow_KeyMappingBaseTest(string deviceName)
         {
             _mpTestFlows.IReporter.GetResultTestInfo().AttrDeviceModel = deviceName;
             _mpTestFlows.IReporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
-            _mpTestFlows.Case_LaunchMasterPlus(120);
-            _mpTestFlows.Case_SelectDeviceFromList(deviceName);
-            _mpTestFlows.Case_SelectKeyMappingTab(deviceName);
+            //_mpTestFlows.Case_LaunchMasterPlus(120);
+            //_mpTestFlows.Case_SelectDeviceFromList(deviceName);
+            //_mpTestFlows.Case_SelectKeyMappingTab(deviceName);
             var forTest = new List<List<string>>
             {
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.EMail, "A" },
@@ -135,8 +156,8 @@ namespace CMTest
             _mpTestFlows.Case_SelectDeviceFromList(deviceName);
             _mpTestFlows.Case_SelectKeyMappingTab(deviceName, false);
             _AssignLoop(forTest, true);
-
-
+            _mpTestFlows.Case_Reset(MPObj.ReassignCollapseButton);
+            _ResetLoop(forTest);
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }

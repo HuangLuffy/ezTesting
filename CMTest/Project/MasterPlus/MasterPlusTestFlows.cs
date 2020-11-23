@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using ATLib;
 using CMTest.Xml;
 using CommonLib;
 using CommonLib.Util;
@@ -114,26 +115,35 @@ namespace CMTest.Project.MasterPlus
         {
             IReporter.Exec(() =>
                 {
-                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     MpActions.SelectTab(deviceName);
                     if (reset)
                     {
-                        MpActions.ClickResetButton(deviceName);
+                        MpActions.ClickResetButton(MPObj.KeyMappingResetButton);
                     }
                 }
-                , IReporter.SetAsLines($"Select KeyMapping tab.", "Click Reset button.")
+                , IReporter.SetAsLines($"Click KeyMapping tab.", reset ? "Click Reset button." : "Go to KeyMapping tab.")
                 , $"Select successfully."
                 , "Failed to select KeyMapping tab."
+                , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
+        }
+        public void Case_Reset(ATElementStruct whichResetButton)
+        {
+            IReporter.Exec(() =>
+                {
+                    MpActions.ClickResetButton(whichResetButton);
+                }
+                , $"Click Reset button."
+                , $"Reset button can be clicked."
+                , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
         public void Case_AssignKeyOnReassignDialog(ScanCode scanCode, string assignWhichKey, bool onlyVerify = false)
         {
             IReporter.Exec(() =>
                 {
-                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     MpActions.AssignKeyOnReassignDialog(scanCode, assignWhichKey, onlyVerify);
                 }
-                , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {assignWhichKey}.",
+                , IReporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}.",
                     onlyVerify ? $"Check the assigned Value is {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Push {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
                 , IReporter.SetAsLines(onlyVerify ? $"The assigned Value is still {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Assign successfully.", "The Grid would be purple.")
                 , "Failed."
@@ -143,11 +153,10 @@ namespace CMTest.Project.MasterPlus
         {
             IReporter.Exec(() =>
                 {
-                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     MpActions.AssignKeyFromReassignMenu(whichMenuItem, whichMenuItemSubItem, assignWhichKey, onlyVerify);
                 }
-                , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {assignWhichKey}.",
-                    $"Open Reassignment menu.",
+                , IReporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}.",
+                    $"Open Reassignment Menu.",
                     onlyVerify ? $"Check the assigned Value is {whichMenuItemSubItem} on the Reassignment Dialog." : $"Choose {whichMenuItem} > {whichMenuItemSubItem}.")
                 , IReporter.SetAsLines(onlyVerify ? $"The assigned Value is still {whichMenuItemSubItem} on the Reassignment Dialog." : $"Assign successfully.", "The Grid would be purple.")
                 , "Failed."
@@ -157,10 +166,9 @@ namespace CMTest.Project.MasterPlus
         {
             IReporter.Exec(() =>
                 {
-                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     MpActions.DisableKey(disableWhichKey, onlyVerify);
                 }
-                , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {disableWhichKey}.",
+                , IReporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {disableWhichKey}.",
                     onlyVerify ? $"Check the {disableWhichKey} is disabled." : $"Set it disabled.")
                 , IReporter.SetAsLines(onlyVerify ? $"The {disableWhichKey} is still disabled." : $"Disable successfully.", "The Grid would be red.")
                 , "Failed."
@@ -170,12 +178,22 @@ namespace CMTest.Project.MasterPlus
         {
             IReporter.Exec(() =>
                 {
-                    var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     MpActions.EnableKey(enableWhichKey, onlyVerify);
                 }
-                , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {enableWhichKey}.",
+                , IReporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {enableWhichKey}.",
                     onlyVerify ? $"Check the {enableWhichKey} is enabled." : $"Set it enabled.")
                 , IReporter.SetAsLines(onlyVerify ? $"The {enableWhichKey} is still enabled and the key value is still the default value {enableWhichKey} on the Reassignment Dialog." : $"Enable successfully and the key value is default value {enableWhichKey} on the Reassignment Dialog.", "The Grid would be green.")
+                , "Failed."
+                , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
+        }
+        public void Case_VerifyKeysValueAndColor(string assignWhichKey)
+        {
+            IReporter.Exec(() =>
+                {
+                    MpActions.CommonAssignKeyAndVerify("", assignWhichKey, null, true);
+                }
+                , $"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}."
+                , IReporter.SetAsLines($"The key value is still the default value {assignWhichKey} on the Reassignment Dialog.", "The Grid would be green.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
