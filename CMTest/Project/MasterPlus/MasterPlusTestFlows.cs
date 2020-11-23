@@ -110,13 +110,16 @@ namespace CMTest.Project.MasterPlus
                 , "Failed to find the device."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
-        public void Case_SelectKeyMappingTab(string deviceName)
+        public void Case_SelectKeyMappingTab(string deviceName , bool reset = true)
         {
             IReporter.Exec(() =>
                 {
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
                     MpActions.SelectTab(deviceName);
-                    MpActions.ClickResetButton(deviceName);
+                    if (reset)
+                    {
+                        MpActions.ClickResetButton(deviceName);
+                    }
                 }
                 , IReporter.SetAsLines($"Select KeyMapping tab.", "Click Reset button.")
                 , $"Select successfully."
