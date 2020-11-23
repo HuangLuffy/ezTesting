@@ -158,7 +158,7 @@ namespace CMTest.Project.MasterPlus
             IReporter.Exec(() =>
                 {
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
-                    MpActions.DisableKey(disableWhichKey);
+                    MpActions.DisableKey(disableWhichKey, onlyVerify);
                 }
                 , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {disableWhichKey}.",
                     onlyVerify ? $"Check the assigned Value is disabled." : $"Set it disabled.")
@@ -171,7 +171,7 @@ namespace CMTest.Project.MasterPlus
             IReporter.Exec(() =>
                 {
                     var swMainWindow = MpActions.GetMasterPlusMainWindow();
-                    MpActions.EnableKey(enableWhichKey);
+                    MpActions.EnableKey(enableWhichKey, onlyVerify);
                 }
                 , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {enableWhichKey}.",
                     onlyVerify ? $"Check the assigned Value is enabled." : $"Set it enabled.")
