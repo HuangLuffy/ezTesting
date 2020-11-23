@@ -134,8 +134,8 @@ namespace CMTest.Project.MasterPlus
                     MpActions.AssignKeyOnReassignDialog(scanCode, assignWhichKey, onlyVerify);
                 }
                 , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {assignWhichKey}.",
-                    onlyVerify ? $"Check the assigned Value is {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}." : $"Push {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
-                , IReporter.SetAsLines(onlyVerify ? $"The assigned Value is still {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}." : $"Assign successfully.", "The Grid would be purple.")
+                    onlyVerify ? $"Check the assigned Value is {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Push {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
+                , IReporter.SetAsLines(onlyVerify ? $"The assigned Value is still {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Assign successfully.", "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
@@ -148,8 +148,8 @@ namespace CMTest.Project.MasterPlus
                 }
                 , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {assignWhichKey}.",
                     $"Open Reassignment menu.",
-                    onlyVerify ? $"Check the assigned Value is {whichMenuItemSubItem}." : $"Choose {whichMenuItem} > {whichMenuItemSubItem}.")
-                , IReporter.SetAsLines(onlyVerify ? $"The assigned Value is still {whichMenuItemSubItem}." : $"Assign successfully.", "The Grid would be purple.")
+                    onlyVerify ? $"Check the assigned Value is {whichMenuItemSubItem} on the Reassignment Dialog." : $"Choose {whichMenuItem} > {whichMenuItemSubItem}.")
+                , IReporter.SetAsLines(onlyVerify ? $"The assigned Value is still {whichMenuItemSubItem} on the Reassignment Dialog." : $"Assign successfully.", "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
@@ -161,8 +161,8 @@ namespace CMTest.Project.MasterPlus
                     MpActions.DisableKey(disableWhichKey, onlyVerify);
                 }
                 , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {disableWhichKey}.",
-                    onlyVerify ? $"Check the assigned Value is disabled." : $"Set it disabled.")
-                , IReporter.SetAsLines(onlyVerify ? $"The assigned Value is still disabled." : $"Disable successfully.", "The Grid would be red.")
+                    onlyVerify ? $"Check the {disableWhichKey} is disabled." : $"Set it disabled.")
+                , IReporter.SetAsLines(onlyVerify ? $"The {disableWhichKey} is still disabled." : $"Disable successfully.", "The Grid would be red.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
@@ -174,8 +174,8 @@ namespace CMTest.Project.MasterPlus
                     MpActions.EnableKey(enableWhichKey, onlyVerify);
                 }
                 , IReporter.SetAsLines($"Open Reassignment dialog for Single Keyboard Key {enableWhichKey}.",
-                    onlyVerify ? $"Check the assigned Value is enabled." : $"Set it enabled.")
-                , IReporter.SetAsLines(onlyVerify ? $"The assigned Value is still enabled." : $"enable successfully and the key value is default value.", "The Grid would be green.")
+                    onlyVerify ? $"Check the {enableWhichKey} is enabled." : $"Set it enabled.")
+                , IReporter.SetAsLines(onlyVerify ? $"The {enableWhichKey} is still enabled and the key value is still the default value {enableWhichKey} on the Reassignment Dialog." : $"Enable successfully and the key value is default value {enableWhichKey} on the Reassignment Dialog.", "The Grid would be green.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
