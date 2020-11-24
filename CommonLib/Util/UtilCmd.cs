@@ -103,20 +103,22 @@ namespace CommonLib.Util
                 menuOptions = WriteCmdMenu(menuOptions, true, false);
                 var input = ReadLine();
                 var result = FindMatchedFuncAndRun(optionDictionary, input, menuOptions);
-                if (result == null)
+                switch (result)
                 {
-                    continue;
-                }
-                else if (result.Equals(Result.BACK))
-                {
-                    if (parentOptionDictionary != null)
+                    case null:
+                        continue;
+                    case Result.BACK:
                     {
-                        ShowCmdMenu(parentOptionDictionary, null);
+                        if (parentOptionDictionary != null)
+                        {
+                            ShowCmdMenu(parentOptionDictionary, null);
+                        }
+                        break;
                     }
-                }
-                else if (result != null)
-                {
-                    return result;
+                    default:
+                    {
+                        return result;
+                    }
                 }
             }
         }

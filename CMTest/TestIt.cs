@@ -23,7 +23,7 @@ namespace CMTest
         private readonly UtilCmd _cmd = new UtilCmd();
         private readonly XmlOps _xmlOps = new XmlOps();
         private readonly MonitorAction _monitorAction = new MonitorAction();
-        private RemoteOS _remoteOS;
+        private RemoteOS _remoteOs;
         //public static object UtilRegrex { get; private set; }
         private readonly IDictionary<string, Func<dynamic>> _optionsTopMenu = new Dictionary<string, Func<dynamic>>();
         private readonly IDictionary<string, Func<dynamic>> _optionsXmlPlugInOutDeviceNames = new Dictionary<string, Func<dynamic>>();
@@ -31,13 +31,11 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-           MasterPlus.KeyMappingGridColor.GetVarName("#00ff00");
             _mpTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             GetKeyboardKeys();
             AssembleTopMenu();
         }
-
         private void AssembleTopMenu()
         {
             if (_optionsTopMenu.Any()) return;
@@ -59,8 +57,6 @@ namespace CMTest
                 return _cmd.ShowCmdMenu(_optionsTestsWithFuncs, _optionsTopMenu);
             });
         }
-
-
         public bool IsNeededRunCmdDirectly(string[] args)
         {
             if (args.Length < 2 || !args[0].Trim().Equals("-d", StringComparison.CurrentCultureIgnoreCase))
@@ -117,9 +113,9 @@ namespace CMTest
             var waitAnimation = UtilWait.WaitTimeElapseThread("Connecting...");
             try
             {
-                _remoteOS = new RemoteOS(remoteOsIp);
+                _remoteOs = new RemoteOS(remoteOsIp);
                 waitAnimation.Start();
-                _remoteOS.IsRemoteOsAvailable();
+                _remoteOs.IsRemoteOsAvailable();
                 waitAnimation.Abort();
                 UtilCmd.PressAnyContinue("The communication between the Local OS and the Remote OS established successfully. Press any key to continue.");
             }
