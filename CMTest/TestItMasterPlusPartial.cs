@@ -47,9 +47,8 @@ namespace CMTest
             {
                 if (!line.Contains("SC_KEY_")) continue;
                 var keys = UtilRegex.GetStringsFromDoubleQuo(line);
-                CMKeys.Add(line.Split(',')[0], keys);
+                CMKeys.Add(line.Split(',')[0].Replace("[    { ", ""), keys);
             }
-
         }
         private dynamic Flow_MasterPlus_LaunchAndCheckCrash()
         {
@@ -146,7 +145,7 @@ namespace CMTest
             _mpTestFlows.Case_SelectDeviceFromList(deviceName);
             _mpTestFlows.Case_SelectKeyMappingTab(deviceName, false);
             _AssignLoopVerifyLogic(keysNeedToAssignList, true);
-            _mpTestFlows.Case_Reset(MPObj.ReassignCollapseButton);
+            _mpTestFlows.Case_Reset(MPObj.KeyMappingResetButton);
             _ResetLoopVerifyLogic(keysNeedToAssignList);
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;

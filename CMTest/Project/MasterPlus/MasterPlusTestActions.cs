@@ -45,15 +45,13 @@ namespace CMTest.Project.MasterPlus
             var buttonClose = GetMasterPlusMainWindow().GetElementFromChild(MPObj.CloseMasterPlusButton);
             buttonClose.DoClickPoint(1);
             UtilWait.ForTrue(() => !UtilProcess.IsProcessExistedByName(this.SwProcessName), timeout);
-
         }
-
         public void SelectTestDevice(string deviceName, AT swMainWindow)
         {
             var deviceList = swMainWindow.GetElement(MPObj.DeviceList);
             //var devices = deviceList.GetElementsAllChild();
             //return devices.GetElementByIA(new ATElementStruct() { IADescription = deviceName });
-            var dut = deviceList.GetElementFromChild(new ATElementStruct() {Name = deviceName});
+            var dut = deviceList.GetElementFromChild(new ATElementStruct() { Name = deviceName });
             dut.DoClickPoint(waitTime: 1);
         }
         public void SelectTab(string deviceName)
@@ -71,7 +69,6 @@ namespace CMTest.Project.MasterPlus
             keyMappingResetButton.DoClickPoint(1);
             ClickCommonDialog();
         }
-
         public void CommonAssignKeyAndVerify(string keyValueNeedToInput, string assignWhichKeyGrid, Action<AT> assignAction, bool onlyVerify = false)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
@@ -203,13 +200,13 @@ namespace CMTest.Project.MasterPlus
         {
             XButton = 0,
             OKButton = 1,
-            CancelButton =2
+            CancelButton = 2
         }
         public void ClickCommonDialog(CommonDialogButtons whichButton = CommonDialogButtons.OKButton)
         {
             var commonDialogParent = GetMasterPlusMainWindow().GetElementFromChild(MPObj.CommonDialogParent, 3);
             var commonDialog = commonDialogParent.GetElementFromChild(MPObj.CommonDialog);
-            var commonDialogButtons = commonDialog.GetElementsFromChild(new ATElementStruct() {ControlType = ATElement.ControlType.Button});
+            var commonDialogButtons = commonDialog.GetElementsFromChild(new ATElementStruct() { ControlType = ATElement.ControlType.Button });
             commonDialogButtons.GetATCollection()[(int)whichButton].DoClickPoint(2);
         }
 
@@ -223,14 +220,16 @@ namespace CMTest.Project.MasterPlus
             {
                 var titleTotal = $"Reopen Times: {i} - Crash Times: {crashTimes}";
                 var logLines = UtilFile.ReadFileByLine(LogPathLaunch);
-                logLines.ForEach(line => UtilCmd.WriteLine(line));
+                logLines.ForEach(UtilCmd.WriteLine);
+                //logLines.ForEach(line => UtilCmd.WriteLine(line));
                 var launchLogTime = GetRestartLogTime();
                 var screenshotPath = Path.Combine(ScreenshotsPath, crashTimes.ToString());
                 UtilProcess.StartProcess(SwLnkPath);
                 Timeout = 1;
                 UtilCmd.WriteTitle($"{titleTotal} - Searching MP+ UI.");
                 var startTime = DateTime.Now;
-                var dialogWarning = UtilWait.ForAnyResultCatch(() => {
+                var dialogWarning = UtilWait.ForAnyResultCatch(() =>
+                {
                     UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - startTime).Seconds}s.");
                     SwMainWindow = new AT().GetElement(MPObj.MainWindow, Timeout);  // The MP+ will change after a while.
                     return SwMainWindow.GetElement(MPObj.DialogWarning, Timeout);
@@ -267,7 +266,8 @@ namespace CMTest.Project.MasterPlus
             Timeout = 1;
             UtilCmd.WriteTitle($"{titleTotal} - Searching MP+ UI.");
             var startTime = DateTime.Now;
-            var dialogWarning = UtilWait.ForAnyResultCatch(() => {
+            var dialogWarning = UtilWait.ForAnyResultCatch(() =>
+            {
                 UtilCmd.WriteTitle($"{titleTotal} - Searching Warning dialog of the MP+ in 60s. Time elapsed: {(DateTime.Now - startTime).Seconds}s.");
                 SwMainWindow = new AT().GetElement(MPObj.MainWindow, Timeout);  // The MP+ will change after a while.
                 return SwMainWindow.GetElement(MPObj.DialogWarning, Timeout);
