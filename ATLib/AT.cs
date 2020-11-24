@@ -107,7 +107,7 @@ namespace ATLib
                 {
                     return null;
                 }
-                throw new Exception("[ERROR]: GetElement. " + ex.Message + $"TreeScope:{(treeScope ?? "")} Name:{(name ?? "")} ControlType:{(controlType ?? "")} fullDescription:{(fullDescription ?? "")} ClassName:{(className ?? "")} AutomationId:{(automationId ?? "")}");
+                throw new Exception("[Failed to get:  " + $"{(treeScope == null ? "" : $"TreeScope is {treeScope}. ")}{(name == null ? "" : $"Name is {name}. ")}{(automationId == null ? "" : $"AutomationId is {automationId}. ")}{(className == null ? "" : $"ClassName is {className}. ")}{(controlType == null ? "" : $"ControlType is {controlType}. ")}{(fullDescription == null ? "" : $"FullDescription is {fullDescription}. ")} " + ex.Message);
             }
         }
         public ATS GetElements(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, bool returnNullWhenException = false)

@@ -13,7 +13,6 @@ namespace CMTest
     public partial class TestIt
     {
         private readonly IDictionary<string, Func<dynamic>> _optionsTestsWithFuncs = new Dictionary<string, Func<dynamic>>();
-        public readonly IDictionary<string, IEnumerable<string>> CMKeys = new Dictionary<string, IEnumerable<string>>();
         //IEnumerable<string> IReadOnlyList<string>
         private void AssembleMasterPlusPlugInOutTests(bool fromConf = true)
         {
@@ -42,14 +41,9 @@ namespace CMTest
 
         public void GetKeyboardKeys()
         {
-            var keyboardKeyLines = UtilFile.GetListByLine(_mpTestFlows.MpActions.ResourcesKeysRelativePath);
-            foreach (var line in keyboardKeyLines)
-            {
-                if (!line.Contains("SC_KEY_")) continue;
-                var keys = UtilRegex.GetStringsFromDoubleQuo(line);
-                CMKeys.Add(line.Split(',')[0].Replace("[    { ", ""), keys);
-            }
+            Hw.GetKeyboardKeys(_mpTestFlows.MpActions.ResourcesKeysRelativePath);
         }
+
         private dynamic Flow_MasterPlus_LaunchAndCheckCrash()
         {
             _mpTestFlows.Flow_LaunchAndCheckCrash();
@@ -75,9 +69,9 @@ namespace CMTest
             _mpTestFlows.Case_LaunchMasterPlus(60);
             _mpTestFlows.Case_SelectDeviceFromList(deviceName);
             _mpTestFlows.Case_SelectKeyMappingTab(deviceName);
-            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.A, "B");
-            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.B, "C");
-            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.C, "A");
+            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.SC_KEY_A, "B");
+            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.SC_KEY_B, "C");
+            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.SC_KEY_C, "A");
 
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;

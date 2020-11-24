@@ -13,57 +13,32 @@ namespace ATLib.Input
     {
         public enum ScanCode
         {/// <summary>The A key.</summary>
-            A = 30,
-            /// <summary>The B key.</summary>
-            B = 48,
-            /// <summary>The C key.</summary>
-            C = 46,
-            /// <summary>The D key.</summary>
-            D = 32,
-            /// <summary>The E key.</summary>
-            E = 18,
-            /// <summary>The F key.</summary>
-            F = 33,
-            /// <summary>The G key.</summary>
-            G = 34,
-            /// <summary>The H key.</summary>
-            H = 35,
-            /// <summary>The I key.</summary>
-            I = 23,
-            /// <summary>The J key.</summary>
-            J = 36,
-            /// <summary>The K key.</summary>
-            K = 37,
-            /// <summary>The L key.</summary>
-            L = 38,
-            /// <summary>The M key.</summary>
-            M = 50,
-            /// <summary>The N key.</summary>
-            N = 49,
-            /// <summary>The O key.</summary>
-            O = 24,
-            /// <summary>The P key.</summary>
-            P = 25,
-            /// <summary>The Q key.</summary>
-            Q = 16,
-            /// <summary>The R key.</summary>
-            R = 19,
-            /// <summary>The S key.</summary>
-            S = 31,
-            /// <summary>The T key.</summary>
-            T = 20,
-            /// <summary>The U key.</summary>
-            U = 22,
-            /// <summary>The V key.</summary>
-            V = 47,
-            /// <summary>The W key.</summary>
-            W = 17,
-            /// <summary>The X key.</summary>
-            X = 45,
-            /// <summary>The Y key.</summary>
-            Y = 21,
-            /// <summary>The Z key.</summary>
-            Z = 44,
+            SC_KEY_A = 30,
+            SC_KEY_B = 48,
+            SC_KEY_C = 46,
+            SC_KEY_D = 32,
+            SC_KEY_E = 18,
+            SC_KEY_F = 33,
+            SC_KEY_G = 34,
+            SC_KEY_H = 35,
+            SC_KEY_I = 23,
+            SC_KEY_J = 36,
+            SC_KEY_K = 37,
+            SC_KEY_L = 38,
+            SC_KEY_M = 50,
+            SC_KEY_N = 49,
+            SC_KEY_O = 24,
+            SC_KEY_P = 25,
+            SC_KEY_Q = 16,
+            SC_KEY_R = 19,
+            SC_KEY_S = 31,
+            SC_KEY_T = 20,
+            SC_KEY_U = 22,
+            SC_KEY_V = 47,
+            SC_KEY_W = 17,
+            SC_KEY_X = 45,
+            SC_KEY_Y = 21,
+            SC_KEY_Z = 44,
             ///// <summary>The left Windows logo key (Microsoft Natural Keyboard).</summary>
             //LWin = Z | Y,
             ///// <summary>The right Windows logo key (Microsoft Natural Keyboard).</summary>
