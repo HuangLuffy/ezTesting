@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using CommonLib;
@@ -18,7 +19,12 @@ namespace ATLib.Input
                 {"English", 0}, {"中文（简体）", 1}, {"繁體中文", 2}, {"Français", 3}, {"Deutsch", 4}, {"Italiano", 5}, {"日本語", 6}, {"Korean", 7}, {"Malay", 8},
                 {"Português (Portugal)", 9}, {"Русский", 10}, {"Español", 11}, {"Thai", 12}, {"Türkçe", 13}, {"Vietnamese", 14}
             };
-        
+
+        public static Language GetLanguage()
+        {
+            return new Language();
+        }
+
         public class Language
         {
             public Tuple<int, string, string> English = new Tuple<int, string, string>(0, "English", "English");

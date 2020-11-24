@@ -5,6 +5,7 @@ using CommonLib.Util;
 using CommonLib.Util.IO;
 using CommonLib.Util.OS;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -23,15 +24,56 @@ namespace CMTest.Project.MasterPlus
             _r = r;
         }
 
-        private void GetLanguageFromUi()
+        private new Tuple<int, string, string> GetLanguageFromUi()
         {
             var currentTab = GetMasterPlusMainWindow().GetElement(new ATElementStruct() { ControlType = ATElement.ControlType.Tab });
             var tabs = currentTab.GetElementsAllChild();
             var name = tabs.GetATCollection()[0].GetElementInfo().Name();
             if (name.Equals("OVERVIEW"))
             {
-    
+                return Hw.GetLanguage().English;
             }
+            if (name.Equals("概观"))
+            {
+                return Hw.GetLanguage().ChineseSimplified;
+            }
+            if (name.Equals("概觀"))
+            {
+                return Hw.GetLanguage().ChineseTraditional;
+            }
+            if (name.Equals("ÜBERSICHT"))
+            {
+                return Hw.GetLanguage().German;
+            }
+            if (name.Equals("INFORMACIÓN GENERAL"))
+            {
+                return Hw.GetLanguage().Spanish;
+            }
+            if (name.Equals("VUE D’ENSEMBLE"))
+            {
+                return Hw.GetLanguage().French;
+            }
+            if (name.Equals("DESCRIZIONE"))
+            {
+                return Hw.GetLanguage().Italian;
+            }
+            if (name.Equals("概要"))
+            {
+                return Hw.GetLanguage().Japanese;
+            }
+            if (name.Equals("개요"))
+            {
+                return Hw.GetLanguage().Korean;
+            }
+            if (name.Equals("GAMBARAN KESELURUHAN"))
+            {
+                return Hw.GetLanguage().Malay;
+            }
+            if (name.Equals("VISÃO GERAL"))
+            {
+                return Hw.GetLanguage().Portuguese;
+            }
+            return null;
         }
         public AT LaunchMasterPlus(string appFullPath, int timeout, bool killCurrentOne = true)
         {
