@@ -15,7 +15,7 @@ namespace CommonLib.Util
         /// <param name="value"></param>
         public static void Add<T>(this IEnumerable<T> collection, T value)
         {
-            (collection as List<T>).Add(value);
+            (collection as List<T>)?.Add(value);
         }
         /// <summary>
         /// 从集合中删除元素
@@ -26,7 +26,7 @@ namespace CommonLib.Util
         public static void Remove<T>(this IEnumerable<T> collection, T value)
         {
             //collection.ToList<T>().Remove(value);
-            (collection as List<T>).Remove(value);
+            ((List<T>) collection).Remove(value);
         }
         /// <summary>
         /// 检索集合中是否包含某个元素
@@ -37,12 +37,8 @@ namespace CommonLib.Util
         /// <returns></returns>
         public static bool Contains<T>(this IEnumerable<T> collection, T value)
         {
-            return (collection as List<T>).Contains(value);
+            return ((List<T>) collection).Contains(value);
         }
 
-        public static bool Distinct<T>(this IEnumerable<T> collection)
-        {
-            return (collection as List<T>).Distinct();
-        }
     }
 }

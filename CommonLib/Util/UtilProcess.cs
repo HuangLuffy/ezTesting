@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using CommonLib.Util.Log;
 
 namespace CommonLib.Util
@@ -9,11 +10,12 @@ namespace CommonLib.Util
     {
         public static bool IsProcessExistedByName(string name)
         {
-            foreach (var p in Process.GetProcessesByName(name))
-            {
-                return true;
-            }
-            return false;
+            return Process.GetProcessesByName(name).Any();
+            //foreach (var p in Process.GetProcessesByName(name))
+            //{
+            //    return true;
+            //}
+            //return false;
         }
         public static void KillProcessByName(string name)
         {
@@ -49,7 +51,7 @@ namespace CommonLib.Util
                 var a = p.StandardOutput.ReadToEnd();
             }
         }
-        public static void SingletonUI()
+        public static void SingletonUi()
         {
             try
             {
@@ -75,7 +77,7 @@ namespace CommonLib.Util
             {
                 using (var p = Process.Start(targetFullPath, para))
                 {
-                    p.WaitForExit();
+                    p?.WaitForExit();
                 }
             }
             catch (Exception ex)
@@ -85,7 +87,7 @@ namespace CommonLib.Util
         }
         public static void StartProcess(string targetFullPath, string para = "")
         {
-            using (var p = Process.Start(targetFullPath, para))
+            using (Process.Start(targetFullPath, para))
             {
                 //p.Start();
             }

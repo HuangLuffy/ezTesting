@@ -93,16 +93,16 @@ namespace ATLib.API
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Name"></param>
-        /// <param name="AutomationId"></param>
-        /// <param name="ClassName"></param>
-        /// <param name="FrameworkId"></param>
-        /// <param name="ControlType"></param>
-        /// <param name="Index"></param>
-        /// <param name="Timeout"></param>
-        /// <param name="IsEnabled"></param>
+        /// <param name="name"></param>
+        /// <param name="automationId"></param>
+        /// <param name="className"></param>
+        /// <param name="frameworkId"></param>
+        /// <param name="controlType"></param>
+        /// <param name="index"></param>
+        /// <param name="timeout"></param>
+        /// <param name="isEnabled"></param>
         /// <returns></returns>
-        public List<IntPtr> GetHwnds(string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string Timeout = null, string IsEnabled = null)
+        public List<IntPtr> GetHwnds(string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string index = null, string timeout = null, string isEnabled = null)
         {
             try
             {
@@ -110,8 +110,8 @@ namespace ATLib.API
                 var intPtr = IntPtr.Zero;
                 do
                 {
-                    intPtr = FindWindowEx(_container, intPtr, ClassName, null);
-                    if (IsHwndMatched(intPtr, Name, AutomationId))
+                    intPtr = FindWindowEx(_container, intPtr, className, null);
+                    if (IsHwndMatched(intPtr, name, automationId))
                     {
                         listIntPtr.Add(intPtr);
                     }
@@ -166,22 +166,22 @@ namespace ATLib.API
         /// 
         /// </summary>
         /// <param name="intPtr"></param>
-        /// <param name="Name"></param>
-        /// <param name="AutomationId"></param>
+        /// <param name="name"></param>
+        /// <param name="automationId"></param>
         /// <returns></returns>
-        public bool IsHwndMatched(IntPtr intPtr, string Name = null, string AutomationId = null)
+        public bool IsHwndMatched(IntPtr intPtr, string name = null, string automationId = null)
         {
             try
             {
-                if (Name == null)
-                    return AutomationId == null || GetDlgCtrlID(intPtr).ToString().ToLower().Equals(AutomationId.ToLower());
+                if (name == null)
+                    return automationId == null || GetDlgCtrlID(intPtr).ToString().ToLower().Equals(automationId.ToLower());
                 var s = new StringBuilder(512);
                 GetWindowText(intPtr, s, s.Capacity);
-                if (!s.ToString().ToLower().Equals(Name.ToLower()))
+                if (!s.ToString().ToLower().Equals(name.ToLower()))
                 {
                     return false;
                 }
-                return AutomationId == null || GetDlgCtrlID(intPtr).ToString().ToLower().Equals(AutomationId.ToLower());
+                return automationId == null || GetDlgCtrlID(intPtr).ToString().ToLower().Equals(automationId.ToLower());
             }
             catch (Exception)
             {

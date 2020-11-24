@@ -45,11 +45,9 @@ namespace CMTest
             var keyboardKeyLines = UtilFile.GetListByLine(_mpTestFlows.MpActions.ResourcesKeysRelativePath);
             foreach (var line in keyboardKeyLines)
             {
-                if (line.Contains("SC_KEY_"))
-                {
-                    var keys = UtilRegex.GetStringsFromDoubleQuo(line);
-                    CMKeys.Add(line.Split(',')[0], keys);
-                }
+                if (!line.Contains("SC_KEY_")) continue;
+                var keys = UtilRegex.GetStringsFromDoubleQuo(line);
+                CMKeys.Add(line.Split(',')[0], keys);
             }
 
         }
@@ -70,7 +68,8 @@ namespace CMTest
             _mpTestFlows.Flow_RestartSystemAndCheckDeviceRecognition(_xmlOps);
         }
 
-        private dynamic Flow_KeymappingTest(string deviceName)
+        #region MyRegion
+        private dynamic Flow_KeyMappingTest(string deviceName)
         {
             _mpTestFlows.IReporter.GetResultTestInfo().AttrDeviceModel = deviceName;
             _mpTestFlows.IReporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
@@ -85,81 +84,74 @@ namespace CMTest
             return MARK_FOUND_RESULT;
         }
 
-        private void _AssignLoop(IReadOnlyList<List<string>> loop, bool onlyVerify = false)
+        private void _AssignLoopVerifyLogic(IReadOnlyList<List<string>> loop, bool onlyVerify = false)
         {
-            var t = new List<string>();
             for (var i = 0; i < loop.Count(); i++)
             {
-                t.Add(loop.ElementAt(i)[2]);
-            }
-
-            var b = UtilIEnumerable.Distinct(t);
-            for (var i = 0; i < loop.Count(); i++)
-            {
-                if (!((i + 1) <= (loop.Count() - 1) && loop.ElementAt(i)[2].Equals(loop.ElementAt(i + 1)[2]) && onlyVerify))
+                if ((i + 1) <= (loop.Count() - 1) && loop.ElementAt(i)[2].Equals(loop.ElementAt(i + 1)[2]) &&
+                    onlyVerify) continue;
+                if (loop.ElementAt(i)[0].Equals(MPObj.DisableKeyCheckbox.Name))
                 {
-                    if (loop.ElementAt(i)[0].Equals(MPObj.DisableKeyCheckbox.Name))
-                    {
-                        _mpTestFlows.Case_DisableKey(loop.ElementAt(i)[2], onlyVerify);
-                    }
-                    else if (loop.ElementAt(i)[0].Equals(MPObj.EnableKeyCheckbox.Name))
-                    {
-                        _mpTestFlows.Case_EnableKey(loop.ElementAt(i)[2], onlyVerify);
-                    }
-                    else
-                    {
-                        _mpTestFlows.Case_AssignKeyFromReassignMenu(loop.ElementAt(i)[0], loop.ElementAt(i)[1], loop.ElementAt(i)[2], onlyVerify);
-                    }
+                    _mpTestFlows.Case_DisableKey(loop.ElementAt(i)[2], onlyVerify);
+                }
+                else if (loop.ElementAt(i)[0].Equals(MPObj.EnableKeyCheckbox.Name))
+                {
+                    _mpTestFlows.Case_EnableKey(loop.ElementAt(i)[2], onlyVerify);
+                }
+                else
+                {
+                    _mpTestFlows.Case_AssignKeyFromReassignMenu(loop.ElementAt(i)[0], loop.ElementAt(i)[1], loop.ElementAt(i)[2], onlyVerify);
                 }
             }
         }
-        private void _ResetLoop(IReadOnlyList<List<string>> loop)
+        private void _ResetLoopVerifyLogic(IReadOnlyList<List<string>> loop)
         {
             var t = new List<string>();
             for (var i = 0; i < loop.Count(); i++)
             {
                 t.Add(loop.ElementAt(i)[2]);
             }
-
-            var b = UtilIEnumerable.Distinct(t);
-            foreach (var item in t)
+            var b = t.Distinct();
+            foreach (var item in b)
             {
                 _mpTestFlows.Case_VerifyKeysValueAndColor(item);
             }
         }
         private dynamic Flow_KeyMappingBaseTest(string deviceName)
         {
+            var keysNeedToAssignList = new List<List<string>>
+            {
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.EMail, "A" },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Calculator, "B" },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.PlayPause, "C" },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Stop, "D" },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.PreviousTrack, "E" },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.NextTrack, "F" },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Mute, "G" },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeDown, "H" },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeUP, "I" },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.WebBrowser, "J" },
+                new List<string> { MPObj.DisableKeyCheckbox.Name, "", "K" },
+                new List<string> { MPObj.EnableKeyCheckbox.Name, "", "K" },
+                new List<string> { MPObj.DisableKeyCheckbox.Name, "", "L" }
+            };
             _mpTestFlows.IReporter.GetResultTestInfo().AttrDeviceModel = deviceName;
             _mpTestFlows.IReporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             //_mpTestFlows.Case_LaunchMasterPlus(120);
             //_mpTestFlows.Case_SelectDeviceFromList(deviceName);
             //_mpTestFlows.Case_SelectKeyMappingTab(deviceName);
-            var forTest = new List<List<string>>
-            {
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.EMail, "A" },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Calculator, "B" },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.PlayPause, "C" },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Stop, "D" },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.PreviousTrack, "E" },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.NextTrack, "F" },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.Mute, "G" },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeDown, "H" },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.VolumeUP, "I" },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.WebBrowser, "J" },
-                new List<string> { MPObj.DisableKeyCheckbox.Name, "", "K" },
-                new List<string> { MPObj.EnableKeyCheckbox.Name, "", "K" },
-                new List<string> { MPObj.DisableKeyCheckbox.Name, "", "L" }
-            };
-            _AssignLoop(forTest);
-            _mpTestFlows.Case_CloseMasterPlus(10);
-            _mpTestFlows.Case_LaunchMasterPlus(120);
-            _mpTestFlows.Case_SelectDeviceFromList(deviceName);
-            _mpTestFlows.Case_SelectKeyMappingTab(deviceName, false);
-            _AssignLoop(forTest, true);
+            //_AssignLoopVerifyLogic(forTest);
+            //_mpTestFlows.Case_CloseMasterPlus(10);
+            //_mpTestFlows.Case_LaunchMasterPlus(120);
+            //_mpTestFlows.Case_SelectDeviceFromList(deviceName);
+            //_mpTestFlows.Case_SelectKeyMappingTab(deviceName, false);
+            //_AssignLoopVerifyLogic(forTest, true);
             _mpTestFlows.Case_Reset(MPObj.ReassignCollapseButton);
-            _ResetLoop(forTest);
+            _ResetLoopVerifyLogic(keysNeedToAssignList);
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }
+        #endregion
+
     }
 }

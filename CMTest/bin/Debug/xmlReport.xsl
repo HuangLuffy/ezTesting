@@ -557,7 +557,7 @@
 				<td id="tdTime" style="cursor:hand;">Time(s)</td>
 			</tr>
 			<!--><xsl:apply-templates select="Report[Result='Fail'][position()&gt;=1 and position()&lt;=4]"><-->
-			<xsl:apply-templates select="testcase[position()&gt;=1 and position()&lt;=40]">
+			<xsl:apply-templates select="testcase[position()&gt;=1 and position()&lt;=400]">
 				<!--><xsl:sort data-type="text" select="DateTime" order="descending"/><-->
 				<xsl:sort data-type="number" select="Step" order="ascending"/>
 			</xsl:apply-templates>

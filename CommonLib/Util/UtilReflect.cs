@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace CommonLib.Util
 {
-    public class UtilReflect
+    public static class UtilReflect
     {
         public static FieldInfo[] GetFieldsInfoBy<T>(object obj)
         {
