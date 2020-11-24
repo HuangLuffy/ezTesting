@@ -111,7 +111,7 @@ namespace CommonLib.Util
                     {
                         if (parentOptionDictionary != null)
                         {
-                            ShowCmdMenu(parentOptionDictionary, null);
+                            ShowCmdMenu(parentOptionDictionary);
                         }
                         break;
                     }
