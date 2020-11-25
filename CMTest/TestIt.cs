@@ -33,7 +33,7 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            XmlTs _XmlTs = new XmlTs();
+            //XmlTs _XmlTs = new XmlTs();
             _mpTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();

@@ -23,7 +23,6 @@ namespace CMTest.Project.MasterPlus
         {
             _r = r;
         }
-
         private new Tuple<int, string, string, string> GetLanguageFromUi()
         {
             var currentTab = GetMasterPlusMainWindow().GetElement(new ATElementStruct() { ControlType = ATElement.ControlType.Tab });
