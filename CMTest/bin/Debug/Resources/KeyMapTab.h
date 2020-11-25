@@ -1,4 +1,312 @@
+﻿/**
+ * @file : KeyMapTab.h
+ *
+ * @brief : controlpad keyboard text map
+ *
+ * @date : 2019-10-11 15:31
+ *
+ * @author : min.yang
+ *
+ */
+
+#ifndef __INCLUDE_KEYMAPTAB_H
+#define __INCLUDE_KEYMAPTAB_H
+#include <vector>
+#include <QString>
+#include "app/CMSettings.h"
+#pragma execution_character_set("utf-8")    //solve garbled characters
+
+using namespace Settings;
+
+namespace CMData {
+
+namespace KeyMapTab {
+
+enum ScanCode
 {
+    SC_KEY_MACRO = 555,
+    SC_KEY_DEFAULT = 666,
+    SC_KEY_UNKNOWN = 1024,  //key not in table
+    SC_KEY_NO = 0,  //disable
+    SC_KEY_F1 = 59,
+    SC_KEY_F2,
+    SC_KEY_F3,
+    SC_KEY_F4,
+    SC_KEY_F5,
+    SC_KEY_F6,
+    SC_KEY_F7,
+    SC_KEY_F8,
+    SC_KEY_F9,
+    SC_KEY_F10,
+    SC_KEY_F11 = 87,
+    SC_KEY_F12,
+    SC_KEY_F13 = 777,
+    SC_KEY_F14,
+    SC_KEY_F15,
+    SC_KEY_F16,
+    SC_KEY_F17,
+    SC_KEY_F18,
+    SC_KEY_F19,
+    SC_KEY_F20,
+    SC_KEY_F21,
+    SC_KEY_F22,
+    SC_KEY_F23,
+    SC_KEY_F24,
+    SC_KEY_ESC = 1,
+    SC_KEY_1,
+    SC_KEY_2,
+    SC_KEY_3,
+    SC_KEY_4,
+    SC_KEY_5,
+    SC_KEY_6,
+    SC_KEY_7,
+    SC_KEY_8,
+    SC_KEY_9,
+    SC_KEY_0,
+    SC_KEY_NEG,         //-_
+    SC_KEY_EQUATION,    //=+
+    SC_KEY_BACKSPACE,
+    SC_KEY_TAB,
+    SC_KEY_Q,
+    SC_KEY_W,
+    SC_KEY_E,
+    SC_KEY_R,
+    SC_KEY_T,
+    SC_KEY_Y,
+    SC_KEY_U,
+    SC_KEY_I,
+    SC_KEY_O,
+    SC_KEY_P,
+    SC_KEY_L_BACKETS,   //[{
+    SC_KEY_R_BACKETS,   //]}
+    SC_KEY_CAP = 58,
+    SC_KEY_A = 30,
+    SC_KEY_S,
+    SC_KEY_D,
+    SC_KEY_F,
+    SC_KEY_G,
+    SC_KEY_H,
+    SC_KEY_J,
+    SC_KEY_K,
+    SC_KEY_L,
+    SC_KEY_SEMICOLON,   //;:
+    SC_KEY_APOSTROPHE,  //'"
+    SC_KEY_ENTER = 28,
+    SC_KEY_TILDE = 41,  //`~
+    SC_KEY_L_SHIFT,
+    SC_KEY_BACKSLASH,   //\|
+    SC_KEY_Z,
+    SC_KEY_X,
+    SC_KEY_C,
+    SC_KEY_V,
+    SC_KEY_B,
+    SC_KEY_N,
+    SC_KEY_M,
+    SC_KEY_COMMA,       //,<
+    SC_KEY_DOT,         //.>
+    SC_KEY_SLASH,       ///?
+    SC_KEY_R_SHIFT,
+    SC_KEY_L_CTRL = 29,
+    SC_KEY_L_WIN = 347,
+    SC_KEY_L_ALT = 56,
+    SC_KEY_SPACE,
+    SC_KEY_R_ALT = 312,
+    SC_KEY_R_WIN = 348,
+    SC_KEY_R_CTRL = 285,
+    SC_KEY_PRINT = 84,
+    SC_KEY_SCROLL = 70,
+    SC_KEY_PAUSE = 69,
+    SC_KEY_INSERT = 338,
+    SC_KEY_HOME = 327,
+    SC_KEY_PGUP = 329,
+    SC_KEY_DEL = 339,
+    SC_KEY_END = 335,
+    SC_KEY_PGDN = 337,
+    SC_KEY_UP_ARROW = 328,
+    SC_KEY_L_ARROW = 331,
+    SC_KEY_DN_ARROW = 336,
+    SC_KEY_R_ARROW = 333,
+    SC_KEY_NUM_LOCK = 325,
+    SC_KEY_NUM_DIV = 309,
+    SC_KEY_NUM_STAR = 55,
+    SC_KEY_NUM_7 = 71,
+    SC_KEY_NUM_8,
+    SC_KEY_NUM_9,
+    SC_KEY_NUM_NEG,
+    SC_KEY_NUM_4,
+    SC_KEY_NUM_5,
+    SC_KEY_NUM_6,
+    SC_KEY_NUM_PLUS,
+    SC_KEY_NUM_1,
+    SC_KEY_NUM_2,
+    SC_KEY_NUM_3,
+    SC_KEY_NUM_0,
+    SC_KEY_NUM_DOT,
+    SC_KEY_NUM_ENTER = 284,
+    //half button
+    SC_KEY_CODE42 = SC_KEY_BACKSLASH,   //left of iso enter
+    SC_LSHIFT_RIGHT_HALF = 86,
+    SC_RSHIFT_LEFT_HALF = 115,
+    SC_BACK_LEFT_HALF = 125,
+    SC_SPACE_LEFT_HALF = 123,
+    SC_SPACE_RIGHT_HALF_1 = 121,
+    SC_SPACE_RIGHT_HALF_2 = 112,
+    SC_NUM_PLUS_DOWN_HALF = 126,
+
+    //mouse key
+    SC_MOUSE_LEFT = 700,
+    SC_MOUSE_RIGHT,
+    SC_MOUSE_WHEEL,
+    SC_MOUSE_SCROLL_UP,
+    SC_MOUSE_SCROLL_DN,
+    SC_MOUSE_MIDDLE,
+    SC_MOUSE_BROWSER_FORWARD,
+    SC_MOUSE_BROWSER_BACKWARD,
+    SC_FN_MOUSE_LEF,
+    SC_FN_MOUSE_RIGHT,
+    SC_FN_MOUSE_WHEEL,
+    SC_FN_MOUSE_LEFT_SIDE_TOP,
+    SC_FN_MOUSE_LEFT_SIDE_BOTTOM,
+
+    //media key
+    SC_KEY_PLAY_PAUSE = 800,
+    SC_KEY_STOP,
+    SC_KEY_NEXT_TRACK,
+    SC_KEY_PRE_TRACK,
+    SC_KEY_VOL_DEC,
+    SC_KEY_VOL_INC,
+    SC_KEY_MUTE,
+    SC_KEY_MEDIA_SEL,
+
+    SC_KEY_MAIL = 810,
+    SC_KEY_CALCULATOR,
+    SC_KEY_MYCOMPUTER,
+    SC_KEY_W3SEARCH,
+    SC_KEY_W3HOME,
+    SC_KEY_W3BACK,
+    SC_KEY_W3FORWARD,
+    SC_KEY_W3STOP,
+    SC_KEY_W3REFRESH,
+    SC_KEY_FAVORITE,
+
+    //profile
+    SC_KEY_PROFILE_0 = 820,
+    SC_KEY_PROFILE_1,
+    SC_KEY_PROFILE_2,
+    SC_KEY_PROFILE_3,
+    SC_KEY_PROFILE_4,
+    SC_KEY_PROFILE_5,
+    SC_KEY_PROFILE_6,
+    SC_KEY_PROFILE_7,
+    SC_KEY_PROFILE_8,
+    SC_KEY_PROFILE_9,
+    SC_KEY_PROFILE_10,
+    SC_KEY_PROFILE_11,
+    SC_KEY_PROFILE_12,
+    SC_KEY_PROFILE_13,
+    SC_KEY_PROFILE_14,
+    SC_KEY_PROFILE_15,
+    SC_KEY_PROFILE_16,
+    SC_KEY_PROFILE_17,
+    SC_KEY_PROFILE_18,
+    SC_KEY_PROFILE_19,
+    SC_KEY_PROFILE_20,
+    SC_KEY_PROFILE_21,
+    SC_KEY_PROFILE_22,
+    SC_KEY_PROFILE_23,
+    SC_KEY_PROFILE_NEXT_CYCLE,
+    SC_KEY_PROFILE_PREV_CYCLE,
+    SC_KEY_CHANGE_LED_MODE,
+    SC_KEY_CHANGE_LED_COLOR,
+
+    //DPI
+    SC_KEY_DPI_SET_1 = 850,
+    SC_KEY_DPI_SET_2,
+    SC_KEY_DPI_SET_3,
+    SC_KEY_DPI_SET_4,
+    SC_KEY_DPI_SET_5,
+    SC_KEY_DPI_SET_6,
+    SC_KEY_DPI_SET_7,
+    SC_KEY_DPI_NEXT,
+    SC_KEY_DPI_PREV,
+    SC_KEY_DPI_NEXT_CYCLE,
+    SC_KEY_DPI_PREV_CYCLE,
+    SC_KEY_XY_ONOFF,
+
+    //LED BORDER
+    SC_KEY_BORDER_TOP_01 = 900,
+    SC_KEY_BORDER_TOP_02,
+    SC_KEY_BORDER_TOP_03,
+    SC_KEY_BORDER_TOP_04,
+    SC_KEY_BORDER_TOP_05,
+    SC_KEY_BORDER_TOP_06,
+    SC_KEY_BORDER_TOP_07,
+    SC_KEY_BORDER_TOP_08,
+    SC_KEY_BORDER_TOP_09,
+    SC_KEY_BORDER_TOP_10,
+    SC_KEY_BORDER_TOP_11,
+    SC_KEY_BORDER_TOP_12,
+    SC_KEY_BORDER_TOP_13,
+    SC_KEY_BORDER_TOP_14,
+    SC_KEY_BORDER_TOP_15,
+    SC_KEY_BORDER_TOP_16,
+    SC_KEY_BORDER_TOP_17,
+    SC_KEY_BORDER_TOP_18,
+    SC_KEY_BORDER_TOP_19,
+    SC_KEY_BORDER_TOP_20,
+
+    SC_KEY_BORDER_RIGHT_01,
+    SC_KEY_BORDER_RIGHT_02,
+    SC_KEY_BORDER_RIGHT_03,
+    SC_KEY_BORDER_RIGHT_04,
+    SC_KEY_BORDER_RIGHT_05,
+    SC_KEY_BORDER_RIGHT_06,
+    SC_KEY_BORDER_RIGHT_07,
+    SC_KEY_BORDER_RIGHT_08,
+    SC_KEY_BORDER_RIGHT_09,
+    SC_KEY_BORDER_RIGHT_10,
+
+    SC_KEY_BORDER_BOTTOM_01,
+    SC_KEY_BORDER_BOTTOM_02,
+    SC_KEY_BORDER_BOTTOM_03,
+    SC_KEY_BORDER_BOTTOM_04,
+    SC_KEY_BORDER_BOTTOM_05,
+    SC_KEY_BORDER_BOTTOM_06,
+    SC_KEY_BORDER_BOTTOM_07,
+    SC_KEY_BORDER_BOTTOM_08,
+    SC_KEY_BORDER_BOTTOM_09,
+    SC_KEY_BORDER_BOTTOM_10,
+    SC_KEY_BORDER_BOTTOM_11,
+    SC_KEY_BORDER_BOTTOM_12,
+    SC_KEY_BORDER_BOTTOM_13,
+    SC_KEY_BORDER_BOTTOM_14,
+    SC_KEY_BORDER_BOTTOM_15,
+    SC_KEY_BORDER_BOTTOM_16,
+    SC_KEY_BORDER_BOTTOM_17,
+    SC_KEY_BORDER_BOTTOM_18,
+    SC_KEY_BORDER_BOTTOM_19,
+    SC_KEY_BORDER_BOTTOM_20,
+
+    SC_KEY_BORDER_LEFT_01,
+    SC_KEY_BORDER_LEFT_02,
+    SC_KEY_BORDER_LEFT_03,
+    SC_KEY_BORDER_LEFT_04,
+    SC_KEY_BORDER_LEFT_05,
+    SC_KEY_BORDER_LEFT_06,
+    SC_KEY_BORDER_LEFT_07,
+    SC_KEY_BORDER_LEFT_08,
+    SC_KEY_BORDER_LEFT_09,
+    SC_KEY_BORDER_LEFT_10,
+
+    //Power Mode preset hotkey
+    SC_KEY_POWER_MODE_DISABLE = 1025,   //LOGO + D
+    SC_KEY_POWER_MODE_WORKING,          //LOGO + W
+    SC_KEY_POWER_MODE_PERFORMANCE,      //LOGO + P
+    SC_KEY_POWER_MODE_GAMING,           //LOGO + G
+};
+
+//scan code : text
+static std::map< int, std::vector< const char* > > KeyNameMap = {
                     //EN        ZH_CN       ZH_TW      FR         DE        IT          JA          KO        MS         PT         RU         ES         TH        TR          VI
     { SC_KEY_NO, {"DISABLE", "停用", "停用", "DÉSACTIVER", "DEAKTIVIEREN", "DISABILITA", "無効にする", "사용 안 함", "LUMPUHKAN", "DESATIVAR", "ОТКЛЮЧИТЬ", "DESHABILITAR", "ปิดใช้งาน", "DEVRE DIŞI BIRAK", "TẮT" } },
     { SC_KEY_ESC, { "ESC", "ESC", "ESC", "ESC", "ESC", "ESC", "ESC", "ESC", "ESC", "ESC", "ESC", "ESC", "ESC", "ESC", "ESC" } },
@@ -150,4 +458,104 @@
     { SC_KEY_POWER_MODE_WORKING, {"Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working" } },
     { SC_KEY_POWER_MODE_PERFORMANCE, {"Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance" } },
     { SC_KEY_POWER_MODE_GAMING, {"Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming" } }
+};
+
+static int activeLanguageIndex() {
+    static int languageIdx = 0;
+    static bool bInit = true;
+    if ( bInit ) {
+        QString active_language = CMSettings::instance()->value(LanguageKey, "English").toString();
+        QStringList lsLanguage;
+        lsLanguage << "English"
+                   << "ChineseSimplified"
+                   << "ChineseTraditional"
+                   << "French"
+                   << "German"
+                   << "Italian"
+                   << "Japanese"
+                   << "Korean"
+                   << "Malay"
+                   << "Portuguese"
+                   << "Russian"
+                   << "Spanish"
+                   << "Thai"
+                   << "Turkish"
+                   << "Vietnamese";
+        languageIdx = lsLanguage.indexOf(active_language);
+        if ( languageIdx < 0 ) {
+            languageIdx = 0;
+        }
+        bInit = false;
+    }
+    return languageIdx;
 }
+
+static int keyScanCode( const QString &strKeyName, bool bWrap = false ) {
+    int languageIdx = activeLanguageIndex();
+    std::map< int, std::vector< const char* > >::iterator _it = KeyNameMap.begin();
+    std::map< int, std::vector< const char* > >::iterator _end = KeyNameMap.end();
+    for ( ; _it != _end; ++_it ) {
+        const std::vector< const char * > &keys = _it->second;
+        if ( languageIdx < 0 || languageIdx >= keys.size() ) {
+            return SC_KEY_UNKNOWN;
+        }
+
+        QString strName = keys[languageIdx];
+        if ( !bWrap && strName.contains("\n") ) {
+            strName.replace("\n", "");
+        }
+
+        if ( strName.contains("&&") ) {
+            strName.replace("&&", "&");
+        }
+
+        if ( strKeyName != strName ) {
+            continue;
+        }
+
+        return _it->first;
+    }
+    return SC_KEY_UNKNOWN;
+}
+
+static QString KeyName( int iScanCode, bool bWrap = false )
+{
+    if ( iScanCode >= SC_KEY_PROFILE_0 && iScanCode <= SC_KEY_PROFILE_23 ) {
+        return QObject::tr("PROFILE") + QString::number(iScanCode - SC_KEY_PROFILE_0 + 1);
+    }
+
+    if ( iScanCode >= SC_KEY_DPI_SET_1 && iScanCode <= SC_KEY_DPI_SET_7 ) {
+        return QObject::tr("DPI LEVEL") + QString::number(iScanCode - SC_KEY_DPI_SET_1 + 1);
+    }
+
+    if ( KeyNameMap.find( iScanCode ) == KeyNameMap.end() ) {
+        return QObject::tr("UNKNOWN");
+    }
+
+    //installLanguage
+    int languageIdx = activeLanguageIndex();
+    if ( languageIdx >= KeyNameMap[ iScanCode ].size() ) {
+        languageIdx = 0;
+    }
+
+    if ( KeyNameMap[iScanCode].empty() ) {
+        return QObject::tr("UNKNOWN");
+    }
+
+    QString strName = KeyNameMap[ iScanCode ][ languageIdx ];
+    if ( !bWrap && strName.contains("\n") ) {
+        strName.replace("\n", "");
+    }
+
+    if ( strName.contains("&&") ) {
+        strName.replace("&&", "&");
+    }
+    return strName;
+}
+
+}   //end namespace KeyMapTab
+
+}   //end namespace CMData
+#endif
+
+
