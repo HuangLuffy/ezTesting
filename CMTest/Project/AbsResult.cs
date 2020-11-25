@@ -26,7 +26,8 @@ namespace CMTest.Project
         protected string ScreenshotsPath => Path.Combine(ResultTimePath, Const.Screenshots);
         protected readonly string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");
         private readonly string _screenshotsRelativePath;
-        public string ResourcesKeysRelativePath => Path.Combine(Const.Resources, "Keys.h");
+        public string ResourcesPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Const.Resources);
+        public string ResourcesKeysRelativePath => Path.Combine(Const.Resources, "KeyMapTab.h");
 
         public AbsResult()
         {

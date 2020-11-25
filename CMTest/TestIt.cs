@@ -37,6 +37,7 @@ namespace CMTest
             _mpTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();
+            //GetKeyboardKeys();
         }
         private void AssembleTopMenu()
         {

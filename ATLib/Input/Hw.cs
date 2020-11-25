@@ -27,26 +27,26 @@ namespace ATLib.Input
 
         public class Language
         {
-            public Tuple<int, string, string, string> English = new Tuple<int, string, string, string>(0, "English", "English", "OVERVIEW");
-            public Tuple<int, string, string, string> ChineseSimplified = new Tuple<int, string, string, string>(1, "中文（简体", "ChineseSimplified", "概观");
-            public Tuple<int, string, string, string> ChineseTraditional = new Tuple<int, string, string, string>(2, "繁體中文", "ChineseTraditional", "概觀");
-            public Tuple<int, string, string, string> French = new Tuple<int, string, string, string>(3, "Français", "French", "VUE D’ENSEMBLE");
-            public Tuple<int, string, string, string> German = new Tuple<int, string, string, string>(4, "Deutsch", "German", "ÜBERSICHT");
-            public Tuple<int, string, string, string> Italian = new Tuple<int, string, string, string>(5, "Italiano", "Italian", "DESCRIZIONE");
-            public Tuple<int, string, string, string> Japanese = new Tuple<int, string, string, string>(6, "日本語", "Japanese", "概要");
-            public Tuple<int, string, string, string> Korean = new Tuple<int, string, string, string>(7, "Korean", "Korean", "개요");
-            public Tuple<int, string, string, string> Malay = new Tuple<int, string, string, string>(8, "Malay", "Malay", "GAMBARAN KESELURUHAN");
-            public Tuple<int, string, string, string> Portuguese = new Tuple<int, string, string, string>(9, "Português (Portugal)", "Portuguese", "VISÃO GERAL");
-            public Tuple<int, string, string, string> Russian = new Tuple<int, string, string, string>(10, "Русский", "Russian", "ОБЩИЕ СВЕДЕНИЯ");
-            public Tuple<int, string, string, string> Spanish = new Tuple<int, string, string, string>(11, "Español", "Spanish", "INFORMACIÓN GENERAL");
-            public Tuple<int, string, string, string> Thai = new Tuple<int, string, string, string>(12, "Thai", "Thai", "ภาพรวม");
-            public Tuple<int, string, string, string> Turkish = new Tuple<int, string, string, string>(13, "Türkçe", "Turkish", "GENEL BAKIŞ");
-            public Tuple<int, string, string, string> Vietnamese = new Tuple<int, string, string, string>(14, "Vietnamese", "Vietnamese", "TỔNG QUAN");
+            public Tuple<int, string, string, string, string> English = new Tuple<int, string, string, string, string>(0, "English", "English", "OVERVIEW", "");
+            public Tuple<int, string, string, string, string> ChineseSimplified = new Tuple<int, string, string, string, string>(1, "中文（简体", "ChineseSimplified", "概观", "masterplus_zh_cn.ts");
+            public Tuple<int, string, string, string, string> ChineseTraditional = new Tuple<int, string, string, string, string>(2, "繁體中文", "ChineseTraditional", "概觀", "masterplus_zh_tw.ts");
+            public Tuple<int, string, string, string, string> French = new Tuple<int, string, string, string, string>(3, "Français", "French", "VUE D’ENSEMBLE", "masterplus_fr.ts");
+            public Tuple<int, string, string, string, string> German = new Tuple<int, string, string, string, string>(4, "Deutsch", "German", "ÜBERSICHT", "masterplus_de.ts");
+            public Tuple<int, string, string, string, string> Italian = new Tuple<int, string, string, string, string>(5, "Italiano", "Italian", "DESCRIZIONE", "masterplus_it.ts");
+            public Tuple<int, string, string, string, string> Japanese = new Tuple<int, string, string, string, string>(6, "日本語", "Japanese", "概要", "masterplus_ja.ts");
+            public Tuple<int, string, string, string, string> Korean = new Tuple<int, string, string, string, string>(7, "Korean", "Korean", "개요", "masterplus_ko.ts");
+            public Tuple<int, string, string, string, string> Malay = new Tuple<int, string, string, string, string>(8, "Malay", "Malay", "GAMBARAN KESELURUHAN", "masterplus_ms.ts");
+            public Tuple<int, string, string, string, string> Portuguese = new Tuple<int, string, string, string, string>(9, "Português (Portugal)", "Portuguese", "VISÃO GERAL", "masterplus_pt.ts");
+            public Tuple<int, string, string, string, string> Russian = new Tuple<int, string, string, string, string>(10, "Русский", "Russian", "ОБЩИЕ СВЕДЕНИЯ", "masterplus_ru.ts");
+            public Tuple<int, string, string, string, string> Spanish = new Tuple<int, string, string, string, string>(11, "Español", "Spanish", "INFORMACIÓN GENERAL", "masterplus_es.ts");
+            public Tuple<int, string, string, string, string> Thai = new Tuple<int, string, string, string, string>(12, "Thai", "Thai", "ภาพรวม", "masterplus_th.ts");
+            public Tuple<int, string, string, string, string> Turkish = new Tuple<int, string, string, string, string>(13, "Türkçe", "Turkish", "GENEL BAKIŞ", "masterplus_tr.ts");
+            public Tuple<int, string, string, string, string> Vietnamese = new Tuple<int, string, string, string, string>(14, "Vietnamese", "Vietnamese", "TỔNG QUAN", "masterplus_vi.ts");
 
             public string GetMasterPlusLanguage(string overview)
             {
-                var field =  typeof(Language).GetFields().FirstOrDefault((x) => ((Tuple<int, string, string, string>)x.GetValue(new Language())).Item4.Equals(overview));
-                return ((Tuple<int, string, string, string>)field.GetValue(new Language())).Item3;
+                var field =  typeof(Language).GetFields().FirstOrDefault((x) => ((Tuple<int, string, string, string, string>)x.GetValue(new Language())).Item4.Equals(overview));
+                return ((Tuple<int, string, string, string, string>)field.GetValue(new Language())).Item3;
             }
         }
 
@@ -214,7 +214,7 @@ namespace ATLib.Input
             var keyboardKeyLines = UtilFile.GetListByLine(filePath);
             foreach (var line in keyboardKeyLines)
             {
-                if (!line.Contains("SC_KEY_")) continue;
+                if (!line.Contains("{ SC_KEY")) continue;
                 var keys = UtilRegex.GetStringsFromDoubleQuo(line);
                 LocDic.Add(line.Split(',')[0].Replace("    { ", ""), keys);
                 //UtilFile.WriteFile("D:\\a.txt", line.Split(',')[0].Replace("    { ", "") + $" = -10,");
@@ -232,7 +232,7 @@ namespace ATLib.Input
         //{
         //    return LocDic[GetKeyVar(key)].ElementAt((int)language);
         //}
-        public static Tuple<int, string, string, string> Ak()
+        public static Tuple<int, string, string, string, string> Ak()
         {
             var name = "";
             if (name.Equals("OVERVIEW"))
