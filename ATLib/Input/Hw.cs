@@ -27,35 +27,27 @@ namespace ATLib.Input
 
         public class Language
         {
-            public Tuple<int, string, string> English = new Tuple<int, string, string>(0, "English", "English");
-            public Tuple<int, string, string> ChineseSimplified = new Tuple<int, string, string>(1, "中文（简体", "ChineseSimplified");
-            public Tuple<int, string, string> ChineseTraditional = new Tuple<int, string, string>(2, "繁體中文", "ChineseTraditional");
-            public Tuple<int, string, string> French = new Tuple<int, string, string>(3, "Français", "French");
-            public Tuple<int, string, string> German = new Tuple<int, string, string>(4, "Deutsch", "German");
-            public Tuple<int, string, string> Italian = new Tuple<int, string, string>(5, "Italiano", "Italian");
-            public Tuple<int, string, string> Japanese = new Tuple<int, string, string>(6, "日本語", "Japanese");
-            public Tuple<int, string, string> Korean = new Tuple<int, string, string>(7, "Korean", "Korean");
-            public Tuple<int, string, string> Malay = new Tuple<int, string, string>(8, "Malay", "Malay");
-            public Tuple<int, string, string> Portuguese = new Tuple<int, string, string>(9, "Português (Portugal)", "Portuguese");
-            public Tuple<int, string, string> Russian = new Tuple<int, string, string>(10, "Русский", "Russian");
-            public Tuple<int, string, string> Spanish = new Tuple<int, string, string>(11, "Español", "Spanish");
-            public Tuple<int, string, string> Thai = new Tuple<int, string, string>(12, "Thai", "Thai");
-            public Tuple<int, string, string> Turkish = new Tuple<int, string, string>(13, "Türkçe", "Turkish");
-            public Tuple<int, string, string> Vietnamese = new Tuple<int, string, string>(14, "Vietnamese", "Vietnamese");
-            //ZH_CN,
-            //ZH_TW,
-            //FR,
-            //DE,
-            //IT,
-            //JA,
-            //KO,
-            //MS,
-            //PT,
-            //RU,
-            //ES,
-            //TH,
-            //TR,
-            //VI
+            public Tuple<int, string, string, string> English = new Tuple<int, string, string, string>(0, "English", "English", "OVERVIEW");
+            public Tuple<int, string, string, string> ChineseSimplified = new Tuple<int, string, string, string>(1, "中文（简体", "ChineseSimplified", "概观");
+            public Tuple<int, string, string, string> ChineseTraditional = new Tuple<int, string, string, string>(2, "繁體中文", "ChineseTraditional", "概觀");
+            public Tuple<int, string, string, string> French = new Tuple<int, string, string, string>(3, "Français", "French", "VUE D’ENSEMBLE");
+            public Tuple<int, string, string, string> German = new Tuple<int, string, string, string>(4, "Deutsch", "German", "ÜBERSICHT");
+            public Tuple<int, string, string, string> Italian = new Tuple<int, string, string, string>(5, "Italiano", "Italian", "DESCRIZIONE");
+            public Tuple<int, string, string, string> Japanese = new Tuple<int, string, string, string>(6, "日本語", "Japanese", "概要");
+            public Tuple<int, string, string, string> Korean = new Tuple<int, string, string, string>(7, "Korean", "Korean", "개요");
+            public Tuple<int, string, string, string> Malay = new Tuple<int, string, string, string>(8, "Malay", "Malay", "GAMBARAN KESELURUHAN");
+            public Tuple<int, string, string, string> Portuguese = new Tuple<int, string, string, string>(9, "Português (Portugal)", "Portuguese", "VISÃO GERAL");
+            public Tuple<int, string, string, string> Russian = new Tuple<int, string, string, string>(10, "Русский", "Russian", "ОБЩИЕ СВЕДЕНИЯ");
+            public Tuple<int, string, string, string> Spanish = new Tuple<int, string, string, string>(11, "Español", "Spanish", "INFORMACIÓN GENERAL");
+            public Tuple<int, string, string, string> Thai = new Tuple<int, string, string, string>(12, "Thai", "Thai", "ภาพรวม");
+            public Tuple<int, string, string, string> Turkish = new Tuple<int, string, string, string>(13, "Türkçe", "Turkish", "GENEL BAKIŞ");
+            public Tuple<int, string, string, string> Vietnamese = new Tuple<int, string, string, string>(14, "Vietnamese", "Vietnamese", "TỔNG QUAN");
+
+            public string GetMasterPlusLanguage(string overview)
+            {
+                var field =  typeof(Language).GetFields().FirstOrDefault((x) => ((Tuple<int, string, string, string>)x.GetValue(new Language())).Item4.Equals(overview));
+                return ((Tuple<int, string, string, string>)field.GetValue(new Language())).Item3;
+            }
         }
 
 
@@ -240,5 +232,70 @@ namespace ATLib.Input
         //{
         //    return LocDic[GetKeyVar(key)].ElementAt((int)language);
         //}
+        public static Tuple<int, string, string, string> Ak()
+        {
+            var name = "";
+            if (name.Equals("OVERVIEW"))
+            {
+                return Hw.GetLanguage().English;
+            }
+            if (name.Equals("概观"))
+            {
+                return Hw.GetLanguage().ChineseSimplified;
+            }
+            if (name.Equals("概觀"))
+            {
+                return Hw.GetLanguage().ChineseTraditional;
+            }
+            if (name.Equals("ÜBERSICHT"))
+            {
+                return Hw.GetLanguage().German;
+            }
+            if (name.Equals("INFORMACIÓN GENERAL"))
+            {
+                return Hw.GetLanguage().Spanish;
+            }
+            if (name.Equals("VUE D’ENSEMBLE"))
+            {
+                return Hw.GetLanguage().French;
+            }
+            if (name.Equals("DESCRIZIONE"))
+            {
+                return Hw.GetLanguage().Italian;
+            }
+            if (name.Equals("概要"))
+            {
+                return Hw.GetLanguage().Japanese;
+            }
+            if (name.Equals("개요"))
+            {
+                return Hw.GetLanguage().Korean;
+            }
+            if (name.Equals("GAMBARAN KESELURUHAN"))
+            {
+                return Hw.GetLanguage().Malay;
+            }
+            if (name.Equals("VISÃO GERAL"))
+            {
+                return Hw.GetLanguage().Portuguese;
+            }
+            if (name.Equals("ОБЩИЕ СВЕДЕНИЯ"))
+            {
+                return Hw.GetLanguage().Russian;
+            }
+            if (name.Equals("ภาพรวม"))
+            {
+                return Hw.GetLanguage().Thai;
+            }
+            if (name.Equals("GENEL BAKIŞ"))
+            {
+                return Hw.GetLanguage().Turkish;
+            }
+            if (name.Equals("TỔNG QUAN"))
+            {
+                return Hw.GetLanguage().Vietnamese;
+            }
+            return null;
+        }
     }
 }

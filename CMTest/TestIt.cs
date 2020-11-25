@@ -3,6 +3,7 @@ using CMTest.Project.MasterPlus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ATLib.Input;
 using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
 using CMTest.Project.RemoteModule;
@@ -33,7 +34,6 @@ namespace CMTest
         {
             _mpTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
-            GetKeyboardKeys();
             AssembleTopMenu();
         }
         private void AssembleTopMenu()
