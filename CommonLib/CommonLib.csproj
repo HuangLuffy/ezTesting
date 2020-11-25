@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UtilCmdSimple.cs" />
     <Compile Include="UtilEnum.cs" />
     <Compile Include="Util\UtilCmd.cs" />
     <Compile Include="Util\UtilCapturer.cs" />
@@ -105,7 +106,7 @@
     <Compile Include="Util\Xml\XmlLinq.cs" />
     <Compile Include="Util\Xml\XmlSerialization.cs" />
     <Compile Include="Util\Xml\XmlTextWrite.cs" />
-    <Compile Include="Util\Xml\XmlTs.cs" />
+    <Compile Include="Util\Xml\XmlTrs.cs" />
     <Compile Include="Util\Zip\IZip.cs" />
     <Compile Include="Util\Zip\Zip7z.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,6 +7,7 @@ using ATLib.Input;
 using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
 using CMTest.Project.RemoteModule;
+using CommonLib;
 using CommonLib.Util.IO;
 using CommonLib.Util.Xml;
 
@@ -33,12 +34,47 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            //XmlTs _XmlTs = new XmlTs();
+            var cmd = new UtilCmdSimple();
+            var option1Screen = cmd.AddOption("option1",
+                () =>
+                {
+                    Console.WriteLine(1-1);
+
+                    return 1;
+                }
+            );
+            var option2Sub = cmd.AddOption("option2",
+                () =>
+                {
+                    Console.WriteLine(1-2);
+                    return 2;
+                }
+            );
+            var option1SubScreen = option1Screen.AddOption("option1",
+                () =>
+                {
+                    Console.WriteLine(2-1);
+                    return 1;
+                }
+            );
+            option1Screen.AddOption("option1",
+                () =>
+                {
+                    Console.WriteLine(3-1);
+                    return 1;
+                }
+            );
+
+
+
+            cmd.ShowCmdMenu();
+
             _mpTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();
             //GetKeyboardKeys();
         }
+
         private void AssembleTopMenu()
         {
             if (_optionsTopMenu.Any()) return;
@@ -129,9 +165,9 @@ namespace CMTest
                 throw;
             }
         }
-        private static string AddCommentForOption(string oriComment, string addedComment)
+        private static string AddCommentForOption(string oriOptionValue, string addedComment)
         {
-            return $"{oriComment}{OPTION_COMMENT_SEPARATOR_PREFIX}{addedComment}{OPTION_COMMENT_SEPARATOR_SUFFIX}";
+            return $"{oriOptionValue}{OPTION_COMMENT_SEPARATOR_PREFIX}{addedComment}{OPTION_COMMENT_SEPARATOR_SUFFIX}";
         }
         private static string RemoveCommentFromOption(string comment)
         {

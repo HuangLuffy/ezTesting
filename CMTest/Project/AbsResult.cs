@@ -18,7 +18,7 @@ namespace CMTest.Project
         }
 
         protected string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
-        protected string LogPathRestart = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
+        protected readonly string LogPathRestart = Path.Combine(ProjectPath.GetProjectFullPath(), "RestartLog.log");
         //public string ProjectPath => AppDomain.CurrentDomain.BaseDirectory;
         protected string ResultPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Const.Result);
         private readonly string _currentTestFolderName;

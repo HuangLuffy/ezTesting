@@ -7,11 +7,11 @@ using System.Xml.Linq;
 
 namespace CommonLib.Util.Xml
 {
-    public class XmlTs
+    public class XmlTrs
     {
         private readonly XmlLinq xmlLinq;
         private readonly IEnumerable<XElement> _contexts;
-        public XmlTs()
+        public XmlTrs()
         {
             xmlLinq = new XmlLinq(@"D:\Dev\CM\Auto\ts\masterplus_zh_cn.ts");
             _contexts = xmlLinq.GetXRoot().Elements("context");
