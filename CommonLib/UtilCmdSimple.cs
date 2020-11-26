@@ -13,14 +13,14 @@ namespace CommonLib
         private const string MARK_DO_NOTHING = "DO_NOTHING";
         private const string OPTION_COMMENT_SEPARATOR_PREFIX = " - \"";
         private const string OPTION_COMMENT_SEPARATOR_SUFFIX = "\"";
-        private Dictionary<string, Func<dynamic>> _currentFunDic;
+        private Dictionary<string, Func<dynamic>> _currentScreenDic;
         public const string StringConnector = ". ";
         private List<string> _listLastMenu = new List<string>();
         private List<string> _listCurrentMenu = new List<string>();
-        private IDictionary<string, UtilCmdSimple> _currentScreenDic = new Dictionary<string, UtilCmdSimple>();
+        private Dictionary<string, UtilCmdSimple> _subScreenDic = new Dictionary<string, UtilCmdSimple>();
         public UtilCmdSimple()
         {
-            _currentFunDic = new Dictionary<string, Func<dynamic>>();
+            _currentScreenDic = NewScreenDic();
         }
         public struct Result
         {
@@ -30,14 +30,16 @@ namespace CommonLib
             public const string SHOW_MENU_AGAIN = "Show Menu Again";
             public const string BACK = "Back";
         }
-
+        private Dictionary<string, Func<dynamic>> NewScreenDic()
+        {
+           return new Dictionary<string, Func<dynamic>>();
+        }
         public UtilCmdSimple AddOption(string option, Func<dynamic> func, string comment = "")
         {
             _currentScreenDic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), func);
-            var t = new UtilCmdSimple();
-            //_subScreenDic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), t);
-         
-            return t;
+            var newSubScreen = new UtilCmdSimple();
+            _subScreenDic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), newSubScreen);
+            return newSubScreen;
         }
         public List<string> WriteCmdMenu(bool clear = false, bool lineUpWithNumber = true, List<string> options = null)
         {
@@ -95,7 +97,6 @@ namespace CommonLib
             {
                 optionDictionary[t].Invoke();
             }
-
             if (t != null && _subScreenDic.ContainsKey(t) && _subScreenDic[t]._currentScreenDic.Count > 0)
             {
                 ShowCmdMenu(_subScreenDic[t]._currentScreenDic);

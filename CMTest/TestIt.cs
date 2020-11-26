@@ -38,29 +38,29 @@ namespace CMTest
             var option1Screen = cmd.AddOption("option1",
                 () =>
                 {
-                    Console.WriteLine(1-1);
+                    Console.WriteLine("1-1");
 
                     return 1;
                 }
             );
-            var option2Sub = cmd.AddOption("option2",
+            var option2Screen = cmd.AddOption("option2",
                 () =>
                 {
-                    Console.WriteLine(1-2);
+                    Console.WriteLine("1-2");
                     return 2;
                 }
             );
             var option1SubScreen = option1Screen.AddOption("option1",
                 () =>
                 {
-                    Console.WriteLine(2-1);
+                    Console.WriteLine("2-1");
                     return 1;
                 }
             );
-            option1Screen.AddOption("option1",
+            option1SubScreen.AddOption("option1",
                 () =>
                 {
-                    Console.WriteLine(3-1);
+                    Console.WriteLine("3-1");
                     return 1;
                 }
             );
