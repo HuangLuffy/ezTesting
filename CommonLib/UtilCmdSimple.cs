@@ -13,7 +13,7 @@ namespace CommonLib
         private const string MARK_DO_NOTHING = "DO_NOTHING";
         private const string OPTION_COMMENT_SEPARATOR_PREFIX = " - \"";
         private const string OPTION_COMMENT_SEPARATOR_SUFFIX = "\"";
-        private Dictionary<string, Func<dynamic>> _currentScreenDic;
+        private Dictionary<string, Func<UtilCmdSimple>> _currentScreenDic;
         public const string StringConnector = ". ";
         private List<string> _listLastMenu = new List<string>();
         private List<string> _listCurrentMenu = new List<string>();
@@ -30,11 +30,11 @@ namespace CommonLib
             public const string SHOW_MENU_AGAIN = "Show Menu Again";
             public const string BACK = "Back";
         }
-        private Dictionary<string, Func<dynamic>> NewScreenDic()
+        private Dictionary<string, Func<UtilCmdSimple>> NewScreenDic()
         {
-           return new Dictionary<string, Func<dynamic>>();
+           return new Dictionary<string, Func<UtilCmdSimple>>();
         }
-        public UtilCmdSimple AddOption(string option, Func<dynamic> func, string comment = "")
+        public UtilCmdSimple AddOption(string option, Func<UtilCmdSimple> func, string comment = "")
         {
             _currentScreenDic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), func);
             var newSubScreen = new UtilCmdSimple();
@@ -59,7 +59,7 @@ namespace CommonLib
             _listCurrentMenu = t;
             return t;
         }
-        public dynamic ShowCmdMenu(IDictionary<string, Func<dynamic>> optionDictionary = null, IDictionary<string, Func<dynamic>> parentOptionDictionary = null)
+        public dynamic ShowCmdMenu(IDictionary<string, Func<UtilCmdSimple>> optionDictionary = null, IDictionary<string, Func<UtilCmdSimple>> parentOptionDictionary = null)
         {
             if (optionDictionary == null)
             {
@@ -90,17 +90,19 @@ namespace CommonLib
                 }
             }
         }
-        private dynamic FindMatchedFuncAndRun(IDictionary<string, Func<dynamic>> optionDictionary, string selected, IEnumerable<string> comparedOptions)
+        private dynamic FindMatchedFuncAndRun(IDictionary<string, Func<UtilCmdSimple>> optionDictionary, string selected, IEnumerable<string> comparedOptions)
         {
             dynamic r = null;
             var matchedOption = FindMatchedOption<string>(optionDictionary.Keys.ToList(), selected, comparedOptions);
             if (matchedOption != null)
             {
-                r = optionDictionary[matchedOption].Invoke();
+                r = optionDictionary[matchedOption].Invoke(); 
             }
-            if (matchedOption != null && _subScreenDic.ContainsKey(matchedOption) && _subScreenDic[matchedOption]._currentScreenDic.Count > 0)
+
+            var a = r as UtilCmdSimple;
+            if (matchedOption != null && a._subScreenDic.ContainsKey(matchedOption) && a._subScreenDic[matchedOption]._currentScreenDic.Count > 0)
             {
-                ShowCmdMenu(_subScreenDic[matchedOption]._currentScreenDic);
+                ShowCmdMenu(a._subScreenDic[matchedOption]._currentScreenDic);
             }
 
             return r;  //t == null ? null : optionDictionary[t].Invoke();
@@ -154,7 +156,7 @@ namespace CommonLib
 
         private void AssembleTopMenu1(string option, Func<dynamic> func, string comment)
         {
-            var optionsTopMenu = new Dictionary<string, Func<dynamic>>();
+            var optionsTopMenu = new Dictionary<string, Func<UtilCmdSimple>>();
 
             //if (optionsTopMenu.Any()) return;
             //optionsTopMenu.Add(AddCommentForOption(OPTION_CONNECT_IP, _xmlOps.GetRemoteOsIp().Trim()), () => {
