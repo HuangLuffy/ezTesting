@@ -92,17 +92,18 @@ namespace CommonLib
         }
         private dynamic FindMatchedFuncAndRun(IDictionary<string, Func<dynamic>> optionDictionary, string selected, IEnumerable<string> comparedOptions)
         {
-            var t = FindMatchedOption<string>(optionDictionary.Keys.ToList(), selected, comparedOptions);
-            if (t != null)
+            dynamic r = null;
+            var matchedOption = FindMatchedOption<string>(optionDictionary.Keys.ToList(), selected, comparedOptions);
+            if (matchedOption != null)
             {
-                optionDictionary[t].Invoke();
+                r = optionDictionary[matchedOption].Invoke();
             }
-            if (t != null && _subScreenDic.ContainsKey(t) && _subScreenDic[t]._currentScreenDic.Count > 0)
+            if (matchedOption != null && _subScreenDic.ContainsKey(matchedOption) && _subScreenDic[matchedOption]._currentScreenDic.Count > 0)
             {
-                ShowCmdMenu(_subScreenDic[t]._currentScreenDic);
+                ShowCmdMenu(_subScreenDic[matchedOption]._currentScreenDic);
             }
 
-            return t;  //t == null ? null : optionDictionary[t].Invoke();
+            return r;  //t == null ? null : optionDictionary[t].Invoke();
         }
         private static T FindMatchedOption<T>(IReadOnlyList<string> listAll, string selected, IEnumerable<string> comparedOptions)
         {

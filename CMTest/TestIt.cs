@@ -40,28 +40,28 @@ namespace CMTest
                 {
                     Console.WriteLine("1-1");
 
-                    return 1;
+                    return 11;
                 }
             );
             var option2Screen = cmd.AddOption("option2",
                 () =>
                 {
                     Console.WriteLine("1-2");
-                    return 2;
+                    return 12;
                 }
             );
-            var option1SubScreen = option1Screen.AddOption("option1",
+            var option1SubScreen = option1Screen.AddOption("option21",
                 () =>
                 {
                     Console.WriteLine("2-1");
-                    return 1;
+                    return 21;
                 }
             );
-            option1SubScreen.AddOption("option1",
+            option1SubScreen.AddOption("option31",
                 () =>
                 {
                     Console.WriteLine("3-1");
-                    return 1;
+                    return 31;
                 }
             );
 
