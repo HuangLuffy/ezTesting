@@ -13,11 +13,12 @@ namespace CommonLib
         private const string MARK_DO_NOTHING = "DO_NOTHING";
         private const string OPTION_COMMENT_SEPARATOR_PREFIX = " - \"";
         private const string OPTION_COMMENT_SEPARATOR_SUFFIX = "\"";
-        private Dictionary<string, Func<UtilCmdSimple>> _currentScreenDic;
+        private Dictionary<string, Func<dynamic>> _currentScreenDic;
         public const string StringConnector = ". ";
         private List<string> _listLastMenu = new List<string>();
         private List<string> _listCurrentMenu = new List<string>();
-        private Dictionary<string, UtilCmdSimple> _subScreenDic = new Dictionary<string, UtilCmdSimple>();
+        //private Dictionary<string, UtilCmdSimple> _subScreenDic = new Dictionary<string, UtilCmdSimple>();
+        private IDictionary<string, Tuple<UtilCmdSimple, UtilCmdSimple>> _dic = new Dictionary<string, Tuple<UtilCmdSimple, UtilCmdSimple>>();
         public UtilCmdSimple()
         {
             _currentScreenDic = NewScreenDic();
@@ -30,15 +31,16 @@ namespace CommonLib
             public const string SHOW_MENU_AGAIN = "Show Menu Again";
             public const string BACK = "Back";
         }
-        private Dictionary<string, Func<UtilCmdSimple>> NewScreenDic()
+        private Dictionary<string, Func<dynamic>> NewScreenDic()
         {
-           return new Dictionary<string, Func<UtilCmdSimple>>();
+           return new Dictionary<string, Func<dynamic>>();
         }
-        public UtilCmdSimple AddOption(string option, Func<UtilCmdSimple> func, string comment = "")
+        public UtilCmdSimple AddOption(string option, Func<dynamic> func, string comment = "")
         {
             _currentScreenDic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), func);
             var newSubScreen = new UtilCmdSimple();
-            _subScreenDic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), newSubScreen);
+            _dic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), new Tuple<UtilCmdSimple, UtilCmdSimple>(this, newSubScreen));
+            //_subScreenDic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), newSubScreen);
             return newSubScreen;
         }
         public List<string> WriteCmdMenu(bool clear = false, bool lineUpWithNumber = true, List<string> options = null)
@@ -54,12 +56,12 @@ namespace CommonLib
                 Console.WriteLine(t[i - 1]);
             }
 
-            if (!IsMenuChanged(_listCurrentMenu, t)) return t;
-            _listLastMenu = _listCurrentMenu;
-            _listCurrentMenu = t;
+            //if (!IsMenuChanged(_listCurrentMenu, t)) return t;
+            //_listLastMenu = _listCurrentMenu;
+            //_listCurrentMenu = t;
             return t;
         }
-        public dynamic ShowCmdMenu(IDictionary<string, Func<UtilCmdSimple>> optionDictionary = null, IDictionary<string, Func<UtilCmdSimple>> parentOptionDictionary = null)
+        public dynamic ShowCmdMenu(IDictionary<string, Func<dynamic>> optionDictionary = null, IDictionary<string, Func<dynamic>> parentOptionDictionary = null)
         {
             if (optionDictionary == null)
             {
@@ -70,7 +72,7 @@ namespace CommonLib
             {
                 menuOptions = WriteCmdMenu(true, false, menuOptions);
                 var input = ReadLine();
-                var result = FindMatchedFuncAndRun(optionDictionary, input, menuOptions);
+                var result = FindMatchedFuncAndRun(input, menuOptions);
                 switch (result)
                 {
                     case null:
@@ -90,19 +92,21 @@ namespace CommonLib
                 }
             }
         }
-        private dynamic FindMatchedFuncAndRun(IDictionary<string, Func<UtilCmdSimple>> optionDictionary, string selected, IEnumerable<string> comparedOptions)
+        private dynamic FindMatchedFuncAndRun(string selected, IEnumerable<string> comparedOptions)
         {
             dynamic r = null;
-            var matchedOption = FindMatchedOption<string>(optionDictionary.Keys.ToList(), selected, comparedOptions);
+            var matchedOption = FindMatchedOption<string>(_currentScreenDic.Keys.ToList(), selected, comparedOptions);
             if (matchedOption != null)
             {
-                r = optionDictionary[matchedOption].Invoke(); 
+                r = _currentScreenDic[matchedOption].Invoke();
             }
-
-            var a = r as UtilCmdSimple;
-            if (matchedOption != null && a._subScreenDic.ContainsKey(matchedOption) && a._subScreenDic[matchedOption]._currentScreenDic.Count > 0)
+            if (matchedOption != null && _dic.ContainsKey(matchedOption) && _dic[matchedOption].Item2._currentScreenDic.Count > 0)
             {
-                ShowCmdMenu(a._subScreenDic[matchedOption]._currentScreenDic);
+                if (!_dic[matchedOption].Item2._currentScreenDic.ContainsKey(Result.BACK))
+                {
+                    _dic[matchedOption].Item2._currentScreenDic.Add(Result.BACK, () => ShowCmdMenu(_currentScreenDic));
+                }
+                _dic[matchedOption].Item2.ShowCmdMenu(_dic[matchedOption].Item2._currentScreenDic);
             }
 
             return r;  //t == null ? null : optionDictionary[t].Invoke();
@@ -156,7 +160,7 @@ namespace CommonLib
 
         private void AssembleTopMenu1(string option, Func<dynamic> func, string comment)
         {
-            var optionsTopMenu = new Dictionary<string, Func<UtilCmdSimple>>();
+            var optionsTopMenu = new Dictionary<string, Func<dynamic>>();
 
             //if (optionsTopMenu.Any()) return;
             //optionsTopMenu.Add(AddCommentForOption(OPTION_CONNECT_IP, _xmlOps.GetRemoteOsIp().Trim()), () => {
