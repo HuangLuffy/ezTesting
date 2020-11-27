@@ -164,9 +164,48 @@ namespace CommonLib.Util
             return $"{selectedNum.Trim()}{UtilCmd.StringConnector}{testName}".Equals(optionOneByOne);
             // return $"{selectedNum.Trim()}{UtilCmd.StringConnector}{testName}".Equals(RemoveCommentFromOption(optionOneByOne));
         }
+        //How to use it
+        //private void AssembleTopMenu()
+        //{
+        //    if (_optionsTopMenu.Any()) return;
+        //    _optionsTopMenu.Add(AddCommentForOption(OPTION_CONNECT_IP, _xmlOps.GetRemoteOsIp().Trim()), () => {
+        //        var remoteOsIp = _xmlOps.GetRemoteOsIp().Trim();
+        //        ConnectRemoteOsAvailable(remoteOsIp);
+        //        return _cmd.ShowCmdMenu(_optionsTopMenu);
+        //    });
+        //    _optionsTopMenu.Add(OPTION_INPUT_IP, () => {
+        //        CustomizeIp();
+        //        return _cmd.ShowCmdMenu(_optionsTopMenu);
+        //    });
+        //    _optionsTopMenu.Add(_portalTestFlows.PortalTestActions.SwName, () => {
+        //        AssemblePortalTests();
+        //        return _cmd.ShowCmdMenu(_optionsPortalTestsWithFuncs, _optionsTopMenu);
+        //    });
+        //    _optionsTopMenu.Add(_mpTestFlows.MpActions.SwName, () => {
+        //        AssembleMasterPlusPlugInOutTests();
+        //        return _cmd.ShowCmdMenu(_optionsTestsWithFuncs, _optionsTopMenu);
+        //    });
+        //}
+        //public void ShowTopMenu()
+        //{
+        //    try
+        //    {
+        //        var result = _cmd.ShowCmdMenu(_optionsTopMenu);
+        //        if (result.Equals(MARK_FOUND_RESULT))
+        //        {
+        //            UtilCmd.WriteLine(" >>>>>>>>>>>>>> Test Done!");
+        //        }
+        //        //_cmd.WriteCmdMenu(_optionsProjects, true);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var a = ex.Message;
+        //        //HandleWrongStepResult(ex.Message);
+        //        UtilCmd.PressAnyContinue();
+        //        ShowTopMenu();
+        //    }
+        //}
 
-
-        
 
     }
 }

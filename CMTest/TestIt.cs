@@ -34,41 +34,6 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            var cmd = new UtilCmdSimple();
-            var option1Screen = cmd.AddOption("option1",
-                () =>
-                {
-                    Console.WriteLine("1-1");
-
-                    return cmd;
-                }
-            );
-            var option2Screen = cmd.AddOption("option2",
-                () =>
-                {
-                    Console.WriteLine("1-2");
-                    return cmd;
-                }
-            );
-            var option1SubScreen = option1Screen.AddOption("option21",
-                () =>
-                {
-                    Console.WriteLine("2-1");
-                    return option1Screen;
-                }
-            );
-            option1SubScreen.AddOption("option31",
-                () =>
-                {
-                    Console.WriteLine("3-1");
-                    return option1SubScreen;
-                }
-            );
-
-
-
-            cmd.ShowCmdMenu();
-
             _mpTestFlows = new MasterPlusTestFlows();
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();

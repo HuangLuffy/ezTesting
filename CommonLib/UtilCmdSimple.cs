@@ -15,9 +15,6 @@ namespace CommonLib
         private const string OPTION_COMMENT_SEPARATOR_SUFFIX = "\"";
         private Dictionary<string, Func<dynamic>> _currentScreenDic;
         public const string StringConnector = ". ";
-        private List<string> _listLastMenu = new List<string>();
-        private List<string> _listCurrentMenu = new List<string>();
-        //private Dictionary<string, UtilCmdSimple> _subScreenDic = new Dictionary<string, UtilCmdSimple>();
         private IDictionary<string, Tuple<UtilCmdSimple, UtilCmdSimple>> _dic = new Dictionary<string, Tuple<UtilCmdSimple, UtilCmdSimple>>();
         public UtilCmdSimple()
         {
@@ -40,7 +37,6 @@ namespace CommonLib
             _currentScreenDic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), func);
             var newSubScreen = new UtilCmdSimple();
             _dic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), new Tuple<UtilCmdSimple, UtilCmdSimple>(this, newSubScreen));
-            //_subScreenDic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), newSubScreen);
             return newSubScreen;
         }
         public List<string> WriteCmdMenu(bool clear = false, bool lineUpWithNumber = true, List<string> options = null)
@@ -55,10 +51,6 @@ namespace CommonLib
                 t.Add(lineUpWithNumber ? $"{i.ToString()}{StringConnector}{options[i - 1]}" : $"{options[i - 1]}");
                 Console.WriteLine(t[i - 1]);
             }
-
-            //if (!IsMenuChanged(_listCurrentMenu, t)) return t;
-            //_listLastMenu = _listCurrentMenu;
-            //_listCurrentMenu = t;
             return t;
         }
         public dynamic ShowCmdMenu(IDictionary<string, Func<dynamic>> optionDictionary = null, IDictionary<string, Func<dynamic>> parentOptionDictionary = null)
@@ -108,8 +100,7 @@ namespace CommonLib
                 }
                 _dic[matchedOption].Item2.ShowCmdMenu(_dic[matchedOption].Item2._currentScreenDic);
             }
-
-            return r;  //t == null ? null : optionDictionary[t].Invoke();
+            return r;  
         }
         private static T FindMatchedOption<T>(IReadOnlyList<string> listAll, string selected, IEnumerable<string> comparedOptions)
         {
@@ -157,30 +148,6 @@ namespace CommonLib
         {
             return Console.ReadLine();
         }
-
-        private void AssembleTopMenu1(string option, Func<dynamic> func, string comment)
-        {
-            var optionsTopMenu = new Dictionary<string, Func<dynamic>>();
-
-            //if (optionsTopMenu.Any()) return;
-            //optionsTopMenu.Add(AddCommentForOption(OPTION_CONNECT_IP, _xmlOps.GetRemoteOsIp().Trim()), () => {
-            //    var remoteOsIp = _xmlOps.GetRemoteOsIp().Trim();
-            //    ConnectRemoteOsAvailable(remoteOsIp);
-            //    return _cmd.ShowCmdMenu(optionsTopMenu);
-            //});
-            //optionsTopMenu.Add(OPTION_INPUT_IP, () => {
-            //    CustomizeIp();
-            //    return _cmd.ShowCmdMenu(optionsTopMenu);
-            //});
-            //optionsTopMenu.Add(_portalTestFlows.PortalTestActions.SwName, () => {
-            //    AssemblePortalTests();
-            //    return _cmd.ShowCmdMenu(_optionsPortalTestsWithFuncs, optionsTopMenu);
-            //});
-            //optionsTopMenu.Add(_mpTestFlows.MpActions.SwName, () => {
-            //    AssembleMasterPlusPlugInOutTests();
-            //    return _cmd.ShowCmdMenu(_optionsTestsWithFuncs, optionsTopMenu);
-            //});
-        }
         private static bool IsMenuChanged(IReadOnlyList<string> a, IReadOnlyList<string> b)
         {
             if (a.Count != b.Count)
@@ -210,5 +177,37 @@ namespace CommonLib
         {
             return UtilRegex.GetMatchMidValue(comment, OPTION_COMMENT_SEPARATOR_PREFIX, OPTION_COMMENT_SEPARATOR_SUFFIX);
         }
+        //How to use it
+        //var cmd = new UtilCmdSimple();
+        //var option1Screen = cmd.AddOption("option1",
+        //    () =>
+        //    {
+        //        Console.WriteLine("1-1");
+
+        //        return cmd;
+        //    }
+        //);
+        //var option2Screen = cmd.AddOption("option2",
+        //    () =>
+        //    {
+        //        Console.WriteLine("1-2");
+        //        return cmd;
+        //    }
+        //);
+        //var option1SubScreen = option1Screen.AddOption("option21",
+        //    () =>
+        //    {
+        //        Console.WriteLine("2-1");
+        //        return option1Screen;
+        //    }
+        //);
+        //option1SubScreen.AddOption("option31",
+        //() =>
+        //{
+        //    Console.WriteLine("3-1");
+        //    return option1SubScreen;
+        //}
+        //);
+        //cmd.ShowCmdMenu();
     }
 }
