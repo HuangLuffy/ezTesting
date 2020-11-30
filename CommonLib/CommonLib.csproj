@@ -97,6 +97,7 @@
     <Compile Include="Util\UtilSysEnv.cs" />
     <Compile Include="Util\UtilTime.cs" />
     <Compile Include="Util\UtilWait.cs" />
+    <Compile Include="Util\UtilWmp.cs" />
     <Compile Include="Util\Var.cs" />
     <Compile Include="Util\VM\IVmControl.cs" />
     <Compile Include="Util\VM\Vm.cs" />

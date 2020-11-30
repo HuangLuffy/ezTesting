@@ -14,7 +14,7 @@ namespace CommonLib
         private const string OPTION_COMMENT_SEPARATOR_PREFIX = " - \"";
         private const string OPTION_COMMENT_SEPARATOR_SUFFIX = "\"";
         private Dictionary<string, Func<dynamic>> _currentScreenDic;
-        public const string StringConnector = ". ";
+        private const string StringConnector = ". ";
         private IDictionary<string, Tuple<UtilCmdSimple, UtilCmdSimple>> _dic = new Dictionary<string, Tuple<UtilCmdSimple, UtilCmdSimple>>();
         public UtilCmdSimple()
         {
@@ -39,7 +39,8 @@ namespace CommonLib
             _dic.Add(comment.Equals("") ? option : AddCommentForOption(option, comment), new Tuple<UtilCmdSimple, UtilCmdSimple>(this, newSubScreen));
             return newSubScreen;
         }
-        public List<string> WriteCmdMenu(bool clear = false, bool lineUpWithNumber = true, List<string> options = null)
+
+        private List<string> WriteCmdMenu(bool clear = false, bool lineUpWithNumber = true, IReadOnlyList<string> options = null)
         {
             var t = new List<string>();
             if (clear)
