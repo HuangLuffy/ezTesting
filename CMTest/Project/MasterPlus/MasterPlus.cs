@@ -159,6 +159,19 @@ namespace CMTest.Project.MasterPlus
                 public const string SC_KEY_9 = "9";
                 public const string SC_KEY_0 = "0";
             }
+            public class PunctuationKeysItems
+            {
+                public const string SC_KEY_NEG = "-_";
+                public const string SC_KEY_EQUATION = "=+";
+                public const string SC_KEY_L_BACKETS = "{[";
+                public const string SC_KEY_R_BACKETS = "}]";
+                public const string SC_KEY_BACKSLASH = "|\\";
+                public const string SC_KEY_SEMICOLON = ":;";
+                public const string SC_KEY_APOSTROPHE = "\"\"'";
+                public const string SC_KEY_COMMA = "<,";
+                public const string SC_KEY_DOT = ">.";
+                public const string SC_KEY_SLASH = "?/";
+            }
         }
     }
 }
