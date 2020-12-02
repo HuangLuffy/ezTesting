@@ -56,20 +56,62 @@ namespace CMTest.Project.MasterPlus
             public const string ModifierSpacingKeys = "Modifier & Spacing Keys";
             public const string NavigationKeys = "Navigation Keys";
             public const string NumpadKeys = "Numpad Keys";
-            public const string PunctuationKeys = "PunctuationKeys";
+            public const string PunctuationKeys = "Punctuation Keys";
             //Letters & Numbers, Macro, Media Keys, Misc Keys, Modifier & Spacing Keys, Navigation Keys, Numpad Keys, Punctuation Keys
             public class MediaKeysItems
             {
-                public const string PlayPause = "PLAY/PAUSE";
-                public const string Stop = "STOP";
-                public const string NextTrack = "NEXT TRACK";
-                public const string PreviousTrack = "PREVIOUS TRACK";
-                public const string VolumeDown = "VOLUME DOWN";
-                public const string VolumeUP = "VOLUME UP";
-                public const string Mute = "MUTE";
-                public const string EMail = "E-MAIL";
-                public const string Calculator = "CALCULATOR";
-                public const string WebBrowser = "WEB BROWSER";
+                public const string SC_KEY_PLAY_PAUSE = "PLAY/PAUSE";
+                public const string SC_KEY_STOP = "STOP";
+                public const string SC_KEY_NEXT_TRACK = "NEXT TRACK";
+                public const string SC_KEY_PRE_TRACK = "PREVIOUS TRACK";
+                public const string SC_KEY_VOL_DEC = "VOLUME DOWN";
+                public const string SC_KEY_VOL_INC = "VOLUME UP";
+                public const string SC_KEY_MUTE = "MUTE";
+                public const string SC_KEY_MAIL = "E-MAIL";
+                public const string SC_KEY_CALCULATOR = "CALCULATOR";
+                public const string SC_KEY_W3HOME = "WEB BROWSER";
+            }
+            public class LettersNumbersItems
+            {
+                public const string SC_KEY_A = "A";
+                public const string SC_KEY_B = "B";
+                public const string SC_KEY_C = "C";
+                public const string SC_KEY_D = "D";
+                public const string SC_KEY_E = "E";
+                public const string SC_KEY_F = "F";
+                public const string SC_KEY_G = "G";
+                public const string SC_KEY_H = "H";
+                public const string SC_KEY_I = "I";
+                public const string SC_KEY_O = "O";
+                public const string SC_KEY_P = "P";
+                public const string SC_KEY_Q = "Q";
+                public const string SC_KEY_R = "R";
+                public const string SC_KEY_S = "S";
+                public const string SC_KEY_T = "T";
+                public const string SC_KEY_U = "U";
+                public const string SC_KEY_V = "V";
+                public const string SC_KEY_W = "W";
+                public const string SC_KEY_X = "X";
+                public const string SC_KEY_Y = "Y";
+                public const string SC_KEY_Z = "Z";
+                public const string SC_KEY_1 = "1!";
+                public const string SC_KEY_2 = "2@";
+                public const string SC_KEY_3 = "3#";
+                public const string SC_KEY_4 = "4$";
+                public const string SC_KEY_5 = "5%";
+                public const string SC_KEY_6 = "6^";
+                public const string SC_KEY_7 = "7&";
+                public const string SC_KEY_8 = "8*";
+                public const string SC_KEY_9 = "9(";
+                public const string SC_KEY_0 = "0)";
+            }
+            public class MiscKeysItems
+            {
+                public const string SC_KEY_L_WIN = "L_WIN";
+                public const string SC_KEY_R_WIN = "R_WIN";
+                public const string SC_KEY_PRINT = "PRTSC";
+                public const string SC_KEY_SCROLL = "SCRLK";
+                public const string SC_KEY_PAUSE = "PAUSE";
             }
         }
     }

@@ -185,9 +185,26 @@ namespace CMTest.Project.MasterPlus
                     enableKeyCheckbox.DoClickPoint(1);
                 }, onlyVerify);
         }
+
+
+
+        //for ma
+        public void AssignInLoop(bool onlyVerify = false)
+        {
+            var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
+            var keys = assignContainer.GetElementsAllChild();
+            foreach (var key in keys.GetATCollection())
+            {
+                if (!key.GetElementInfo().IsOffscreen())
+                {
+                    AssignKeyFromReassignMenu("string whichMenuItem", "string whichMenuItemSubItem", key.GetElementInfo().Name(), onlyVerify);
+                }
+            }
+        }
+
         #endregion
 
-        public AT GetMasterPlusMainWindow(int timeout = 0)
+            public AT GetMasterPlusMainWindow(int timeout = 0)
         {
             return new AT().GetElementFromChild(MPObj.MainWindow, timeout);
         }
