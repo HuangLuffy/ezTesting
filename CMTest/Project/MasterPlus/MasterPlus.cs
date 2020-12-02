@@ -113,6 +113,52 @@ namespace CMTest.Project.MasterPlus
                 public const string SC_KEY_SCROLL = "SCRLK";
                 public const string SC_KEY_PAUSE = "PAUSE";
             }
+            public class ModifierSpacingKeysItems
+            {
+                public const string SC_KEY_TAB = "TAB";
+                public const string SC_KEY_CAP = "CAPSLK";
+                public const string SC_KEY_L_SHIFT = "L_SHIFT";
+                public const string SC_KEY_L_CTRL = "L_CTRL";
+                public const string SC_KEY_L_ALT = "L_ALT";
+                public const string SC_KEY_SPACE = "SPACE";
+                public const string SC_KEY_R_ALT = "R_ALT";
+                public const string SC_KEY_R_CTRL = "R_CTRL";
+                public const string SC_KEY_R_SHIFT = "R_SHIFT";
+                public const string SC_KEY_ENTER = "ENTER";
+                public const string SC_KEY_BACKSPACE = "BACKSPACE";
+            }
+            public class NavigationKeysItems
+            {
+                public const string SC_KEY_INSERT = "INS";
+                public const string SC_KEY_HOME = "HOME";
+                public const string SC_KEY_PGUP = "PGUP";
+                public const string SC_KEY_DEL = "DEL";
+                public const string SC_KEY_END = "END";
+                public const string SC_KEY_PGDN = "PGDN";
+                public const string SC_KEY_UP_ARROW = "^";
+                public const string SC_KEY_L_ARROW = "<";
+                public const string SC_KEY_DN_ARROW = "v";
+                public const string SC_KEY_R_ARROW = ">";
+            }
+            public class NumpadKeysItems
+            {
+                public const string SC_KEY_NUM_LOCK = "NUMLK";
+                public const string SC_KEY_NUM_DIV = "/";
+                public const string SC_KEY_NUM_STAR = "*";
+                public const string SC_KEY_NUM_NEG = "-";
+                public const string SC_KEY_NUM_PLUS = "+";
+                public const string SC_KEY_NUM_ENTER = "MP_ENTER";
+                public const string SC_KEY_1 = "1";
+                public const string SC_KEY_2 = "2";
+                public const string SC_KEY_3 = "3";
+                public const string SC_KEY_4 = "4";
+                public const string SC_KEY_5 = "5";
+                public const string SC_KEY_6 = "6";
+                public const string SC_KEY_7 = "7";
+                public const string SC_KEY_8 = "8";
+                public const string SC_KEY_9 = "9";
+                public const string SC_KEY_0 = "0";
+            }
         }
     }
 }
