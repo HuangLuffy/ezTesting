@@ -91,7 +91,11 @@ namespace CMTest.Project.MasterPlus
         {
             Name = "EnableKeyCheckbox"
         };
-
+        public static ATElementStruct ReassignCatalogListItem = new ATElementStruct()
+        {
+            Name = "ReassignCatalogListItem"
+        };
+        
         #endregion
     }
 }

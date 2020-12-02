@@ -83,9 +83,9 @@ namespace CMTest.Project.MasterPlus
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
             keyGridNeedToBeAssigned.DoClickPoint(1);
-            //var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
-            //For old 
-            var reassignDialog = GetMasterPlusMainWindow().GetElementFromDescendants(MPObj.ReassignDialog);
+            var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
+
+            //For old //var reassignDialog = GetMasterPlusMainWindow().GetElementFromDescendants(MPObj.ReassignDialog);
             if (!onlyVerify)
             {
                 assignAction.Invoke(reassignDialog);
@@ -161,6 +161,10 @@ namespace CMTest.Project.MasterPlus
                     var subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem }, returnNullWhenException: true);
                     if (subItem == null)
                     {
+                        if (reassignDropdown.GetElementFromChild(MPObj.ReassignCatalogListItem, returnNullWhenException: true) != null)
+                        {
+
+                        }
                         var whichCatalog = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItem });
                         whichCatalog.DoClickPoint(1);
                         subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
@@ -205,7 +209,7 @@ namespace CMTest.Project.MasterPlus
                     {
                         foreach (var lettersNumbersItem in lettersNumbersItems)
                         {
-                            AssignKeyFromReassignMenu(reassignMenuItem.ToString(), lettersNumbersItem.ToString(),
+                            AssignKeyFromReassignMenu(reassignMenuItem, lettersNumbersItem,
                                 key.GetElementInfo().Name(), onlyVerify);
                         }
                     }
