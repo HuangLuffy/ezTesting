@@ -197,5 +197,20 @@ namespace CMTest.Project.MasterPlus
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
+
+        //or ma
+        public void Case_AssignInLoop(bool onlyVerify = false)
+        {
+            IReporter.Exec(() =>
+                {
+                    MpActions.AssignInLoop();
+                }
+                , IReporter.SetAsLines($"12112.",
+                    $"Open Reassignment Menu.",
+                    onlyVerify ? $"Check the assigned Value is 111111" : $"Choose 22222.")
+                , IReporter.SetAsLines(onlyVerify ? $"2323." : $"Assign successfully.", "The Grid would be purple.")
+                , "Failed."
+                , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
+        }
     }
 }

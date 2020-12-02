@@ -59,7 +59,7 @@ namespace CMTest.Project.MasterPlus
         };
         public static ATElementStruct ReassignDialog = new ATElementStruct()
         {
-            ClassName = "QQuickPopupItem",
+            //ClassName = "QQuickPopupItem",
             Name = "ReassignDialog"
         };
         public static ATElementStruct ReassignDropdown = new ATElementStruct()

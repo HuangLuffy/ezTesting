@@ -83,7 +83,9 @@ namespace CMTest.Project.MasterPlus
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
             keyGridNeedToBeAssigned.DoClickPoint(1);
-            var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
+            //var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
+            //For old 
+            var reassignDialog = GetMasterPlusMainWindow().GetElementFromDescendants(MPObj.ReassignDialog);
             if (!onlyVerify)
             {
                 assignAction.Invoke(reassignDialog);
@@ -193,11 +195,20 @@ namespace CMTest.Project.MasterPlus
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keys = assignContainer.GetElementsAllChild();
+            var reassignMenuItems = typeof(MasterPlus.ReassignMenuItems).GetFields().Select((x) => x.GetValue(0).ToString());
+            var lettersNumbersItems = typeof(MasterPlus.ReassignMenuItems.LettersNumbersItems).GetFields().Select((x) => x.GetValue(0).ToString());
             foreach (var key in keys.GetATCollection())
             {
                 if (!key.GetElementInfo().IsOffscreen())
                 {
-                    AssignKeyFromReassignMenu("string whichMenuItem", "string whichMenuItemSubItem", key.GetElementInfo().Name(), onlyVerify);
+                    foreach (var reassignMenuItem in reassignMenuItems)
+                    {
+                        foreach (var lettersNumbersItem in lettersNumbersItems)
+                        {
+                            AssignKeyFromReassignMenu(reassignMenuItem.ToString(), lettersNumbersItem.ToString(),
+                                key.GetElementInfo().Name(), onlyVerify);
+                        }
+                    }
                 }
             }
         }
