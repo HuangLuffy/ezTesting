@@ -149,8 +149,28 @@ namespace CMTest.Project.MasterPlus
                     UtilTime.WaitTime(1);
                 }, onlyVerify);
         }
+        private string _theLastMenuItem = string.Empty;
 
-        public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid, bool onlyVerify = false)
+        private void collapseReassignMenus(AT reassignDropdown)
+        {
+            while (true)
+            {
+                var all = reassignDropdown.GetElementsAllChild(returnNullWhenException: true).GetATCollection();
+                if (!all.Any((x) => x.GetElementInfo().Name().Equals(MPObj.ReassignCatalogListItem.Name)))
+                {
+                    break;
+                }
+                for (var i = 0; i < all.Length; i++)
+                {
+                    if (all[i].GetElementInfo().Name().Equals(MPObj.ReassignCatalogListItem.Name))
+                    {
+                        all[i - 1].DoClickPoint(0.5);
+                        break;
+                    }
+                }
+            }
+        }
+        public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid, bool onlyVerify = false, Tuple<string, string, string> inEnglishItems= null)
         {
             CommonAssignKeyAndVerify(whichMenuItemSubItem, assignWhichKeyGrid,
                 (reassignDialog) =>
@@ -158,6 +178,19 @@ namespace CMTest.Project.MasterPlus
                     var reassignCollapseButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCollapseButton);
                     reassignCollapseButton.DoClickPoint(1);
                     var reassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown);
+                    ATS allReassignCatalogListItems = null;
+                    if (_theLastMenuItem.Equals(string.Empty) )
+                    {
+                        collapseReassignMenus(reassignDropdown);
+                        //allReassignCatalogListItems = reassignDropdown.GetElementsFromChild(MPObj.ReassignCatalogListItem, returnNullWhenException: true);
+                        if (allReassignCatalogListItems != null)
+                        {
+                            
+                        }
+                    }
+
+
+
                     var subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem }, returnNullWhenException: true);
                     if (subItem == null)
                     {
@@ -169,7 +202,7 @@ namespace CMTest.Project.MasterPlus
                         whichCatalog.DoClickPoint(1);
                         subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
                     }
-                    var ab = reassignDropdown.GetElementsFromChild(MPObj.ReassignCatalogListItem);
+                    //var ab = reassignDropdown.GetElementsFromChild(MPObj.ReassignCatalogListItem);
 
 
 
