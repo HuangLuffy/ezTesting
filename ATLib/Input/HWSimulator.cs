@@ -267,6 +267,9 @@
             private static extern uint SendInput(uint nInputs, ref INPUT pInputs, int cbSize);
             [DllImport("user32.dll")]
             private static extern int GetSystemMetrics(SystemMetric smIndex);
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+            public static extern void mouse_event(uint dwFlags, uint dx, uint dy, int cButtons, UIntPtr dwExtraInfo);
             enum SystemMetric
             {
                 SM_CXSCREEN = 0,
@@ -321,15 +324,19 @@
             {
                 NOTCLICK = 0,
                 LEFT = 1,
-                RIGHT = 2
+                RIGHT = 2,
+                WHEELUP = 3,
+                WHEELDown = 4
             }
+
             /// <summary>
             /// Move Mouse And Click Left
             /// </summary>
             /// <param name="x"></param>
             /// <param name="y"></param>
+            /// <param name="mk"></param>
             /// 
-            public static void MoveMouseAndClick(int x, int y, MouseKeys mk = MouseKeys.LEFT)
+            public static void MoveCursorAndDo(int x, int y, MouseKeys mk = MouseKeys.LEFT)
             {
                 INPUT mouseInput = new INPUT();
                 mouseInput.type = SendInputEventType.InputMouse;
@@ -346,19 +353,29 @@
                 {
                     mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_RIGHTDOWN;
                 }
-                else
+                else if(mk == MouseKeys.LEFT)
                 {
                     mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTDOWN;
+                }
+                else if (mk == MouseKeys.WHEELUP)
+                {
+                    mouse_event(2048, 0, 0, 120, (UIntPtr)0);
+                    return;
                 }
                 SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
                 if (mk == MouseKeys.RIGHT)
                 {
                     mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_RIGHTUP;
                 }
-                else
+                else if (mk == MouseKeys.LEFT)
                 {
                     mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTUP;
-                }   
+                }
+                else if (mk == MouseKeys.WHEELDown)
+                {
+                    mouse_event(2048, 0, 0, -120, (UIntPtr)0);
+                    return;
+                }
                 SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
             }
             /// <summary>
@@ -366,7 +383,7 @@
             /// </summary>
             public static void DragPointToPoint(int oX, int oY, int dX, int dY)
             {
-                INPUT mouseInput = new INPUT();
+                var mouseInput = new INPUT();
                 mouseInput.type = SendInputEventType.InputMouse;
                 mouseInput.mkhi.mi.dx = (oX * 65536) / GetSystemMetrics(SystemMetric.SM_CXSCREEN);
                 mouseInput.mkhi.mi.dy = (oY * 65536) / GetSystemMetrics(SystemMetric.SM_CYSCREEN);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Media;
+using System.Runtime.InteropServices;
 using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
 using CMTest.Project.RemoteModule;
@@ -35,8 +36,9 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-
             _mpTestFlows = new MasterPlusTestFlows();
+            _mpTestFlows.Case_AssignInLoop();
+
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();
             //GetKeyboardKeys();

@@ -122,7 +122,7 @@ namespace ATLib
             }
             try
             {
-                MoveMouseAndClick((int)ptClick.X + (int)x, (int)ptClick.Y + (int)y, mk);
+                MoveCursorAndDo((int)ptClick.X + (int)x, (int)ptClick.Y + (int)y, mk);
             }
             catch (Exception ex)
             {

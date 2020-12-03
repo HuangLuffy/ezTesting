@@ -169,6 +169,11 @@ namespace CMTest.Project.MasterPlus
                         whichCatalog.DoClickPoint(1);
                         subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
                     }
+                    var ab = reassignDropdown.GetElementsFromChild(MPObj.ReassignCatalogListItem);
+
+
+
+
                     subItem.GetIAccessible().DoDefaultAction();
                 }, onlyVerify);
         }
