@@ -112,23 +112,25 @@ namespace ATLib
         }
         public ATS GetElements(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, bool returnNullWhenException = false)
         {
-            try
+            var treeScopeVar = GetTreeScope(treeScope);
+            var condition = GetCondition(name, automationId, className, frameworkId, controlType, fullDescription);
+            AutomationElement = AutomationElement ?? AutomationElement.RootElement;
+            var aec = AutomationElement.FindAll(treeScopeVar, condition);
+            if (aec.Count == 0)
             {
-                var treeScopeVar = GetTreeScope(treeScope);
-                var condition = GetCondition(name, automationId, className, frameworkId, controlType, fullDescription);
-                AutomationElement = AutomationElement ?? AutomationElement.RootElement;
-                var aec = AutomationElement.FindAll(treeScopeVar, condition);
-                var at = new AT[aec.Count];
-                for (var i = 0; i < aec.Count; i++)
+                if (returnNullWhenException)
                 {
-                    at[i] = new AT(aec[i]); 
+                    return null;
                 }
-                return new ATS(at);
+                throw new Exception("[Failed to get:  " + $"{(treeScope == null ? "" : $"TreeScope is {treeScope}. ")}{(name == null ? "" : $"Name is {name}. ")}{(automationId == null ? "" : $"AutomationId is {automationId}. ")}{(className == null ? "" : $"ClassName is {className}. ")}{(controlType == null ? "" : $"ControlType is {controlType}. ")}{(fullDescription == null ? "" : $"FullDescription is {fullDescription}. ")} ");
             }
-            catch (Exception ex)
+            var at = new AT[aec.Count];
+            for (var i = 0; i < aec.Count; i++)
             {
-                throw new Exception("[ERROR]: GetElement. " + ex.Message + $"TreeScope:{(treeScope ?? "")} Name:{(name ?? "")} ControlType:{(controlType ?? "")} fullDescription:{(fullDescription ?? "")} ClassName:{(className ?? "")} AutomationId:{(automationId ?? "") }");
+                at[i] = new AT(aec[i]); 
             }
+            return new ATS(at);  //return count 0
+            //seems there is no exception since it can return count 0
         }
         /// <summary>
         /// 

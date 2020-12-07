@@ -326,7 +326,7 @@
                 LEFT = 1,
                 RIGHT = 2,
                 WHEELUP = 3,
-                WHEELDown = 4
+                WHEELDOWN = 4
             }
 
             /// <summary>
@@ -371,7 +371,7 @@
                 {
                     mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTUP;
                 }
-                else if (mk == MouseKeys.WHEELDown)
+                else if (mk == MouseKeys.WHEELDOWN)
                 {
                     mouse_event(2048, 0, 0, -120, (UIntPtr)0);
                     return;

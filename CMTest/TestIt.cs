@@ -36,6 +36,10 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
+
+            var aa = new List<string>() { "1", "2", "3" };
+            var b = aa.Find((x) => x.Equals("4"));
+            UtilTime.WaitTime(1);
             _mpTestFlows = new MasterPlusTestFlows();
             _mpTestFlows.Case_AssignInLoop();
 
