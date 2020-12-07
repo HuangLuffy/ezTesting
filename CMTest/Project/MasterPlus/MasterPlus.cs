@@ -48,17 +48,37 @@ namespace CMTest.Project.MasterPlus
             }
         }
 
+        //public static IEnumerable<Tuple<string, IEnumerable<Tuple<string, string>>>> ReassignMenuItemsList = null;
+
+        //{
+        //    [ReassignMenuItems.LettersNumbers] = { ["ReassignMenuItems.LettersNumbers"] = "" }
+        //};
+
         public class ReassignMenuItems
         {
-            public const string LettersNumbers = "Letters & Numbers";
-            public const string Macro = "Macro";
+            public const string LettersNumbers = "Letters & Numbers";//Letters &amp; Numbers
+            //public const string Macro = "Macro";
             public const string MediaKeys = "Media Keys";
             public const string MiscKeys = "MiscKeys";
-            public const string ModifierSpacingKeys = "Modifier & Spacing Keys";
+            public const string ModifierSpacingKeys = "Modifier & Spacing Keys";//MODIFIER &amp; SPACING KEYS
             public const string NavigationKeys = "Navigation Keys";
             public const string NumpadKeys = "Numpad Keys";
             public const string PunctuationKeys = "Punctuation Keys";
             //Letters & Numbers, Macro, Media Keys, Misc Keys, Modifier & Spacing Keys, Navigation Keys, Numpad Keys, Punctuation Keys
+            public static IEnumerable<Tuple<string, IEnumerable<Tuple<string, string>>>> GetReassignMenuItemsDic()
+            {
+                IEnumerable<Tuple<string, IEnumerable<Tuple<string, string>>>> tIEnumerable = new List<Tuple<string, IEnumerable<Tuple<string, string>>>>
+                {
+                    Tuple.Create(ReassignMenuItems.LettersNumbers, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.LettersNumbersItems))),
+                    Tuple.Create(ReassignMenuItems.MediaKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.MediaKeysItems))),
+                    Tuple.Create(ReassignMenuItems.MiscKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.MiscKeysItems))),
+                    Tuple.Create(ReassignMenuItems.ModifierSpacingKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.ModifierSpacingKeysItems))),
+                    Tuple.Create(ReassignMenuItems.NavigationKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.NavigationKeysItems))),
+                    Tuple.Create(ReassignMenuItems.NumpadKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.NumpadKeysItems))),
+                    Tuple.Create(ReassignMenuItems.PunctuationKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.PunctuationKeysItems)))
+                };
+                return tIEnumerable;
+            }
             public class MediaKeysItems
             {
                 public const string SC_KEY_PLAY_PAUSE = "PLAY/PAUSE";

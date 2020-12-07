@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -17,6 +18,32 @@ namespace CommonLib.Util
         {
             return obj.GetFields().First(x => x.GetValue(0).Equals(value)).Name;
             //typeof(ob).GetFields().First(x => x.GetValue(0).Equals("#00ff00")).Name;
+        }
+        public static IEnumerable<string> GetFieldsValues(Type obj)
+        {
+            return obj.GetFields().Select((x) => x.GetValue(0).ToString());
+        }
+        public static IEnumerable<string> GetFieldsNames(Type obj)
+        {
+            return obj.GetFields().Select((x) => x.Name.ToString());
+        }
+        public static IDictionary<string, string> GetFieldsNamesAndValuesDic(Type obj)
+        {
+            var tDic = new Dictionary<string, string>();
+            foreach (var field in obj.GetFields())
+            {
+                tDic.Add(field.Name, field.GetValue(0).ToString());
+            }
+            return tDic;
+        }
+        public static IEnumerable<Tuple<string, string>> GetFieldsNamesAndValuesList(Type obj)
+        {
+            IEnumerable<Tuple<string, string>> tIEnumerable = new List<Tuple<string, string>>();
+            foreach (var field in obj.GetFields())
+            {
+                tIEnumerable.Add(Tuple.Create(field.Name, field.GetValue(0).ToString()));
+            }
+            return tIEnumerable;
         }
     }
 }

@@ -252,15 +252,26 @@ namespace CMTest.Project.MasterPlus
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keys = assignContainer.GetElementsAllChild();
-            var reassignMenuItems = typeof(MasterPlus.ReassignMenuItems).GetFields().Select((x) => x.GetValue(0).ToString());
-            var lettersNumbersItems = typeof(MasterPlus.ReassignMenuItems.LettersNumbersItems).GetFields().Select((x) => x.GetValue(0).ToString());
+            //var reassignMenuItems = typeof(MasterPlus.ReassignMenuItems).GetFields().Select((x) => x.GetValue(0).ToString());
+            //var lettersNumbersItems = typeof(MasterPlus.ReassignMenuItems.LettersNumbersItems).GetFields().Select((x) => x.GetValue(0).ToString());
             foreach (var key in keys.GetATCollection())
             {
                 if (!key.GetElementInfo().IsOffscreen())
                 {
-                    foreach (var reassignMenuItem in reassignMenuItems)
+                    foreach (var reassignMenuSubItems in MasterPlus.ReassignMenuItems.GetReassignMenuItemsDic())
                     {
-                        foreach (var lettersNumbersItem in lettersNumbersItems)
+                        MasterPlus.ReassignMenuItems.GetReassignMenuItemsDic().Remove(reassignMenuSubItems);
+                        foreach (var subItem in reassignMenuSubItems.Item2)
+                        {
+                            AssignKeyFromReassignMenu(reassignMenuSubItems.Item1, subItem.Item2,
+                                key.GetElementInfo().Name(), onlyVerify);
+                        }
+                    }
+
+
+                    foreach (var reassignMenuItem in UtilReflect.GetFieldsValues(typeof(MasterPlus.ReassignMenuItems)))
+                    {
+                        foreach (var lettersNumbersItem in UtilReflect.GetFieldsValues(typeof(MasterPlus.ReassignMenuItems.LettersNumbersItems)))
                         {
                             AssignKeyFromReassignMenu(reassignMenuItem, lettersNumbersItem,
                                 key.GetElementInfo().Name(), onlyVerify);
