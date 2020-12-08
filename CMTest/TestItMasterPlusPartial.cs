@@ -117,19 +117,19 @@ namespace CMTest
 
             var keysNeedToAssignList = new List<List<string>>
             {
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, "A" },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, "B" },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE, "C" },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP, "D" },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PRE_TRACK, "E" },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_NEXT_TRACK, "F" },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MUTE, "G" },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_DEC, "H" },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_INC, "I" },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_W3HOME, "J" },
-                new List<string> { MPObj.DisableKeyCheckbox.Name, "", "K" },
-                new List<string> { MPObj.EnableKeyCheckbox.Name, "", "K" },
-                new List<string> { MPObj.DisableKeyCheckbox.Name, "", "L" }
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, "A" },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, "B" },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE, "C" },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP, "D" },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PRE_TRACK, "E" },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_NEXT_TRACK, "F" },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MUTE, "G" },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_DEC, "H" },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_INC, "I" },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_W3HOME, "J" },
+                //new List<string> { MPObj.DisableKeyCheckbox.Name, "", "K" },
+                //new List<string> { MPObj.EnableKeyCheckbox.Name, "", "K" },
+                //new List<string> { MPObj.DisableKeyCheckbox.Name, "", "L" }
             };
             _mpTestFlows.IReporter.GetResultTestInfo().AttrDeviceModel = deviceName;
             _mpTestFlows.IReporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;

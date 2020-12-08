@@ -173,7 +173,7 @@ namespace CMTest.Project.MasterPlus
         private void _ScrollMenuItemSubItem(AT reassignDropdown)
         {
             var left = (int)reassignDropdown.GetElementInfo().RectangleLeft() + 10;
-            var top = (int)reassignDropdown.GetElementInfo().RectangleTop() + 10;
+            var top = (int)reassignDropdown.GetElementInfo().RectangleTop() + 50;
             switch (_scrollNum)
             {
                 case 0:
@@ -181,9 +181,13 @@ namespace CMTest.Project.MasterPlus
                     UtilTime.WaitTime(1);
                     HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELDOWN);
                     UtilTime.WaitTime(1);
+                    HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELDOWN);
+                    UtilTime.WaitTime(1);
                     _scrollNum = 1;
                     break;
                 case 1:
+                    HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELUP);
+                    UtilTime.WaitTime(1);
                     HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELUP);
                     UtilTime.WaitTime(1);
                     HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELUP);
@@ -209,17 +213,19 @@ namespace CMTest.Project.MasterPlus
                     }
                     _theLastMenuItem = whichMenuItem;
                     allReassignCatalogListItems = reassignDropdown.GetElementsFromChild(MPObj.ReassignCatalogListItem, returnNullWhenException: true);
-                    AT subItem = null;
                     if (allReassignCatalogListItems == null)
                     {
                         var whichCatalog = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItem });
                         whichCatalog.DoClickPoint(1);
                     }
-                    subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem }, returnNullWhenException: true);
+                    var subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem }, returnNullWhenException: true);
                     if (subItem == null && whichMenuItem.Equals(MasterPlus.ReassignMenuItems.LettersNumbers))
                     {
                         _ScrollMenuItemSubItem(reassignDropdown);
                         reassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown); // refresh
+                    }
+                    if (subItem == null) // this extra if that just for the exception triggers by GetElementFromChild
+                    {
                         subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
                     }
                     subItem.GetIAccessible().DoDefaultAction();
@@ -252,12 +258,16 @@ namespace CMTest.Project.MasterPlus
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keys = assignContainer.GetElementsAllChild().GetATCollection();
-            var bbb = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList();
+            var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().ToList();
             foreach (var t in keys)
             {
                 if (!t.GetElementInfo().IsOffscreen())
                 {
-                    foreach (var reassignMenuSubItems in bbb)
+                    if (boolBreak)// add this here for when reassignMenuItemsList's count is 1
+                    {
+                        boolBreak = false;
+                    }
+                    foreach (var reassignMenuSubItems in reassignMenuItemsList)
                     {
                         if (boolBreak)
                         {

@@ -66,22 +66,14 @@ namespace CMTest.Project.MasterPlus
         }
         private static IEnumerable<ReassignMenuSubItem> GetReassignMenuSubItems(Type obj)
         {
-            var t = new List<ReassignMenuSubItem>();
-            foreach (var field in obj.GetFields())
-            {
-                var reassignMenuSubItem = new ReassignMenuSubItem();
-                reassignMenuSubItem.Name = field.Name;
-                reassignMenuSubItem.Value = field.GetValue(0).ToString();
-                t.Add(reassignMenuSubItem);
-            }
-            return t;
+            return obj.GetFields().Select(field => new ReassignMenuSubItem {Name = field.Name, Value = field.GetValue(0).ToString()}).ToList();
         }
         public class ReassignMenuItems
         {
             public const string LettersNumbers = "Letters & Numbers";//Letters &amp; Numbers
             //public const string Macro = "Macro";
             public const string MediaKeys = "Media Keys";
-            public const string MiscKeys = "MiscKeys";
+            public const string MiscKeys = "Misc Keys";
             public const string ModifierSpacingKeys = "Modifier & Spacing Keys";//MODIFIER &amp; SPACING KEYS
             public const string NavigationKeys = "Navigation Keys";
             public const string NumpadKeys = "Numpad Keys";
@@ -187,7 +179,7 @@ namespace CMTest.Project.MasterPlus
                 public const string SC_KEY_PGUP = "PGUP";
                 public const string SC_KEY_DEL = "DEL";
                 public const string SC_KEY_END = "END";
-                public const string SC_KEY_PGDN = "PGDN";
+                public const string SC_KEY_PGDN = "PGDN"; //SK622
                 public const string SC_KEY_UP_ARROW = "^";
                 public const string SC_KEY_L_ARROW = "<";
                 public const string SC_KEY_DN_ARROW = "v";
