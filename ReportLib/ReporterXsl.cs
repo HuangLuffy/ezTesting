@@ -259,6 +259,10 @@ namespace ReportLib
                     var currentTime = DateTime.Now;
                     action.Invoke();
                     elapsedTime = UtilTime.TimeElapsed(currentTime).Seconds;
+                    if (r.AttrMessage != null)
+                    {
+                        r.NodeResult = Reporter.Result.FAIL;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -276,11 +280,14 @@ namespace ReportLib
             AddTestStep(r, GetResultTestInfo());
         }
 
-        public void SetStepFailed(string errorMessage = "Failed", string commentOnWeb = "Failed", string imageName = "")
+        public void SetStepFailed(string errorMessage = "Failed", string commentOnWeb = "Failed", string imageName = "", bool blContinueTest = false)
         {
             CurrentTestCase.AttrMessage += $" [{errorMessage}]";
             Capture(CurrentTestCase, commentOnWeb);
-            throw new Exception(errorMessage);
+            if (!blContinueTest)
+            {
+                throw new Exception(errorMessage);
+            }
         }
     }
 }

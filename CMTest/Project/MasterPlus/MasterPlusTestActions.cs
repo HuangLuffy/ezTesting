@@ -78,7 +78,7 @@ namespace CMTest.Project.MasterPlus
             keyMappingResetButton.DoClickPoint(1);
             ClickCommonDialog();
         }
-        public void CommonAssignKeyAndVerify(string keyValueNeedToInput, string assignWhichKeyGrid, Action<AT> assignAction, bool onlyVerify = false)
+        public void CommonAssignKeyAndVerify(string keyValueNeedToInput, string assignWhichKeyGrid, Func<AT, bool> assignAction, bool onlyVerify = false)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
@@ -88,7 +88,8 @@ namespace CMTest.Project.MasterPlus
             //For old //var reassignDialog = GetMasterPlusMainWindow().GetElementFromDescendants(MPObj.ReassignDialog);
             if (!onlyVerify)
             {
-                assignAction.Invoke(reassignDialog);
+                var fail = assignAction.Invoke(reassignDialog);
+                if (fail) return;
             }
             VerifyAssignedKeyValueAndGridColor(keyGridNeedToBeAssigned, reassignDialog, keyValueNeedToInput);
         }
@@ -203,32 +204,50 @@ namespace CMTest.Project.MasterPlus
             CommonAssignKeyAndVerify(whichMenuItemSubItem, assignWhichKeyGrid,
                 (reassignDialog) =>
                 {
-                    var reassignCollapseButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCollapseButton);
-                    reassignCollapseButton.DoClickPoint(1);
-                    var reassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown);
-                    ATS allReassignCatalogListItems = null;
-                    if (_theLastMenuItem.Equals(string.Empty) || !_theLastMenuItem.Equals(whichMenuItem))
+                    try
                     {
-                        _CollapseReassignMenus(reassignDropdown);
+                        var reassignCollapseButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCollapseButton);
+                        reassignCollapseButton.DoClickPoint(1);
+                        var reassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown);
+                        ATS allReassignCatalogListItems = null;
+                        if (_theLastMenuItem.Equals(string.Empty) || !_theLastMenuItem.Equals(whichMenuItem))
+                        {
+                            _CollapseReassignMenus(reassignDropdown);
+                        }
+                        _theLastMenuItem = whichMenuItem;
+                        allReassignCatalogListItems = reassignDropdown.GetElementsFromChild(MPObj.ReassignCatalogListItem, returnNullWhenException: true);
+                        if (allReassignCatalogListItems == null)
+                        {
+                            var whichCatalog = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItem });
+                            whichCatalog.DoClickPoint(1);
+                        }
+                        var subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem }, returnNullWhenException: true);
+                        if (subItem == null && whichMenuItem.Equals(MasterPlus.ReassignMenuItems.LettersNumbers))
+                        {
+                            _ScrollMenuItemSubItem(reassignDropdown);
+                            reassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown); // refresh
+                        }
+                        if (subItem == null) // this extra if that just for the exception triggers by GetElementFromChild
+                        {
+                            subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
+                        }
+                        subItem.GetIAccessible().DoDefaultAction();
                     }
-                    _theLastMenuItem = whichMenuItem;
-                    allReassignCatalogListItems = reassignDropdown.GetElementsFromChild(MPObj.ReassignCatalogListItem, returnNullWhenException: true);
-                    if (allReassignCatalogListItems == null)
+                    catch (Exception e)
                     {
-                        var whichCatalog = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItem });
-                        whichCatalog.DoClickPoint(1);
+                        _r.SetStepFailed($"{whichMenuItemSubItem}: {e.Message}", $"{whichMenuItemSubItem}", blContinueTest: true);
+                        try
+                        {
+                            var closeButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCloseButton);
+                            closeButton.DoClickPoint(1);
+                            closeButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCloseButton);// if dropdown
+                            closeButton.DoClickPoint(1);
+                        }
+                        catch (Exception)
+                        {
+                            // ignored
+                        }
                     }
-                    var subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem }, returnNullWhenException: true);
-                    if (subItem == null && whichMenuItem.Equals(MasterPlus.ReassignMenuItems.LettersNumbers))
-                    {
-                        _ScrollMenuItemSubItem(reassignDropdown);
-                        reassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown); // refresh
-                    }
-                    if (subItem == null) // this extra if that just for the exception triggers by GetElementFromChild
-                    {
-                        subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
-                    }
-                    subItem.GetIAccessible().DoDefaultAction();
                 }, onlyVerify);
         }
 

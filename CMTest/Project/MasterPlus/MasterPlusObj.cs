@@ -79,6 +79,10 @@ namespace CMTest.Project.MasterPlus
         {
             FullDescriton = "ReassignSaveButton"
         };
+        public static ATElementStruct ReassignCloseButton = new ATElementStruct()
+        {
+            FullDescriton = "ReassignCloseButton"
+        };
         public static ATElementStruct ReassignCollapseButton = new ATElementStruct()
         {
             Name = "CollapseButton"
