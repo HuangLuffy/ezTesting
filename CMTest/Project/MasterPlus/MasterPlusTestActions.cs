@@ -258,17 +258,22 @@ namespace CMTest.Project.MasterPlus
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keys = assignContainer.GetElementsAllChild().GetATCollection().ToList();
-            var keyCount = keys.Count;
-            for (var i = keyCount - 1; i >= 4; i--)
-            {
-                keys.Remove(keys[i]);
-            }
+            //var keyCount = keys.Count;
+            //for (var i = keyCount - 1; i >= 4; i--)
+            //{
+            //    keys.Remove(keys[i]);
+            //}
             var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().ToList();
             var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen()).ToList();
-            
-            for(var i = 0; i < validKeys.Count(); i++) 
+            ReassignMenuOptionAndSubItems recordReassignMenuSubItems = null;
+            for (var i = 0; i < validKeys.Count(); i++) 
             {
-                if (!ReassignMenuItems.GetReassignMenuItemsList().Any()) // reassign items are less than keys
+                if (recordReassignMenuSubItems != null)
+                {
+                    reassignMenuItemsList.Remove(recordReassignMenuSubItems);
+                    recordReassignMenuSubItems = null;
+                }
+                if (!reassignMenuItemsList.Any()) // reassign items are less than keys
                 {
                     return;
                 }
@@ -290,7 +295,7 @@ namespace CMTest.Project.MasterPlus
                         reassignMenuSubItems.MenuSubItems.Remove(subItem);
                         if (!reassignMenuSubItems.MenuSubItems.Any())
                         {
-                            reassignMenuItemsList.Remove(reassignMenuSubItems);
+                            recordReassignMenuSubItems = reassignMenuSubItems;
                         }
                         if (i == (validKeys.Count() - 1))
                         {
