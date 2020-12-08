@@ -192,7 +192,7 @@ namespace CMTest.Project.MasterPlus
                 public const string SC_KEY_NUM_STAR = "*";
                 public const string SC_KEY_NUM_NEG = "-";
                 public const string SC_KEY_NUM_PLUS = "+";
-                public const string SC_KEY_NUM_ENTER = "MP_ENTER";
+                public const string SC_KEY_NUM_ENTER = "NP_ENTER";
                 public const string SC_KEY_1 = "1";
                 public const string SC_KEY_2 = "2";
                 public const string SC_KEY_3 = "3";
@@ -212,7 +212,7 @@ namespace CMTest.Project.MasterPlus
                 public const string SC_KEY_R_BACKETS = "}]";
                 public const string SC_KEY_BACKSLASH = "|\\";
                 public const string SC_KEY_SEMICOLON = ":;";
-                public const string SC_KEY_APOSTROPHE = "\"\"'";
+                public const string SC_KEY_APOSTROPHE = "\"'";
                 public const string SC_KEY_COMMA = "<,";
                 public const string SC_KEY_DOT = ">.";
                 public const string SC_KEY_SLASH = "?/";
