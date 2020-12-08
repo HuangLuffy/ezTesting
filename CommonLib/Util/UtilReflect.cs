@@ -45,5 +45,10 @@ namespace CommonLib.Util
             }
             return tIEnumerable;
         }
+        //public string GetMasterPlusLanguage(string overview)
+        //{
+        //    var field = typeof(Language).GetFields().FirstOrDefault((x) => ((Tuple<int, string, string, string, string>)x.GetValue(new Language())).Item4.Equals(overview));
+        //    return ((Tuple<int, string, string, string, string>)field.GetValue(new Language())).Item3;
+        //}
     }
 }

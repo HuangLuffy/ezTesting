@@ -246,35 +246,35 @@ namespace CMTest.Project.MasterPlus
         }
 
 
-
+        private bool boolBreak = false;
         //for ma
         public void AssignInLoop(bool onlyVerify = false)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
-            var keys = assignContainer.GetElementsAllChild();
-            //var reassignMenuItems = typeof(MasterPlus.ReassignMenuItems).GetFields().Select((x) => x.GetValue(0).ToString());
-            //var lettersNumbersItems = typeof(MasterPlus.ReassignMenuItems.LettersNumbersItems).GetFields().Select((x) => x.GetValue(0).ToString());
-            foreach (var key in keys.GetATCollection())
+            var keys = assignContainer.GetElementsAllChild().GetATCollection();
+            var bbb = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList();
+            foreach (var t in keys)
             {
-                if (!key.GetElementInfo().IsOffscreen())
+                if (!t.GetElementInfo().IsOffscreen())
                 {
-                    foreach (var reassignMenuSubItems in MasterPlus.ReassignMenuItems.GetReassignMenuItemsDic())
+                    foreach (var reassignMenuSubItems in bbb)
                     {
-                        MasterPlus.ReassignMenuItems.GetReassignMenuItemsDic().Remove(reassignMenuSubItems);
-                        foreach (var subItem in reassignMenuSubItems.Item2)
+                        if (boolBreak)
                         {
-                            AssignKeyFromReassignMenu(reassignMenuSubItems.Item1, subItem.Item2,
-                                key.GetElementInfo().Name(), onlyVerify);
+                            boolBreak = false;
+                            break;
                         }
-                    }
-
-
-                    foreach (var reassignMenuItem in UtilReflect.GetFieldsValues(typeof(MasterPlus.ReassignMenuItems)))
-                    {
-                        foreach (var lettersNumbersItem in UtilReflect.GetFieldsValues(typeof(MasterPlus.ReassignMenuItems.LettersNumbersItems)))
+                        foreach (var subItem in reassignMenuSubItems.MenuSubItems)
                         {
-                            AssignKeyFromReassignMenu(reassignMenuItem, lettersNumbersItem,
-                                key.GetElementInfo().Name(), onlyVerify);
+                            AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value,
+                            t.GetElementInfo().Name(), onlyVerify);
+                            reassignMenuSubItems.MenuSubItems.Remove(subItem);
+                            if (!reassignMenuSubItems.MenuSubItems.Any())
+                            {
+                                MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().Remove(reassignMenuSubItems);
+                            }
+                            boolBreak = true;
+                            break;
                         }
                     }
                 }

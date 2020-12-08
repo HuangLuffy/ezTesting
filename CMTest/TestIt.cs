@@ -36,7 +36,8 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            UtilTime.WaitTime(1);
+            //MasterPlus.ReassignMenuItems.GetReassignMenuItemsList();
+            //UtilTime.WaitTime(1);
             _mpTestFlows = new MasterPlusTestFlows();
             _mpTestFlows.Case_AssignInLoop();
 

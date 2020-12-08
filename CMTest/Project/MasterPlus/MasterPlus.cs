@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using CommonLib.Util;
 
@@ -53,7 +54,28 @@ namespace CMTest.Project.MasterPlus
         //{
         //    [ReassignMenuItems.LettersNumbers] = { ["ReassignMenuItems.LettersNumbers"] = "" }
         //};
-
+        public class ReassignMenuOptionAndSubItems
+        {
+            public string MenuOption { set; get; }
+            public IEnumerable<ReassignMenuSubItem> MenuSubItems;
+        }
+        public class ReassignMenuSubItem
+        {
+            public string Name { set; get; }
+            public string Value { set; get; }
+        }
+        private static IEnumerable<ReassignMenuSubItem> GetReassignMenuSubItems(Type obj)
+        {
+            var t = new List<ReassignMenuSubItem>();
+            foreach (var field in obj.GetFields())
+            {
+                var reassignMenuSubItem = new ReassignMenuSubItem();
+                reassignMenuSubItem.Name = field.Name;
+                reassignMenuSubItem.Value = field.GetValue(0).ToString();
+                t.Add(reassignMenuSubItem);
+            }
+            return t;
+        }
         public class ReassignMenuItems
         {
             public const string LettersNumbers = "Letters & Numbers";//Letters &amp; Numbers
@@ -65,32 +87,29 @@ namespace CMTest.Project.MasterPlus
             public const string NumpadKeys = "Numpad Keys";
             public const string PunctuationKeys = "Punctuation Keys";
             //Letters & Numbers, Macro, Media Keys, Misc Keys, Modifier & Spacing Keys, Navigation Keys, Numpad Keys, Punctuation Keys
-            public static IEnumerable<Tuple<string, IEnumerable<Tuple<string, string>>>> GetReassignMenuItemsDic()
+            public static IEnumerable<ReassignMenuOptionAndSubItems> GetReassignMenuItemsList()
             {
-                IEnumerable<Tuple<string, IEnumerable<Tuple<string, string>>>> tIEnumerable = new List<Tuple<string, IEnumerable<Tuple<string, string>>>>
+                IEnumerable<ReassignMenuOptionAndSubItems> t = new List<ReassignMenuOptionAndSubItems>();
+                var types = typeof(ReassignMenuItems).GetNestedTypes();
+                foreach (var type in types)
                 {
-                    Tuple.Create(ReassignMenuItems.LettersNumbers, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.LettersNumbersItems))),
-                    Tuple.Create(ReassignMenuItems.MediaKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.MediaKeysItems))),
-                    Tuple.Create(ReassignMenuItems.MiscKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.MiscKeysItems))),
-                    Tuple.Create(ReassignMenuItems.ModifierSpacingKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.ModifierSpacingKeysItems))),
-                    Tuple.Create(ReassignMenuItems.NavigationKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.NavigationKeysItems))),
-                    Tuple.Create(ReassignMenuItems.NumpadKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.NumpadKeysItems))),
-                    Tuple.Create(ReassignMenuItems.PunctuationKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.PunctuationKeysItems)))
-                };
-                return tIEnumerable;
-            }
-            public class MediaKeysItems
-            {
-                public const string SC_KEY_PLAY_PAUSE = "PLAY/PAUSE";
-                public const string SC_KEY_STOP = "STOP";
-                public const string SC_KEY_NEXT_TRACK = "NEXT TRACK";
-                public const string SC_KEY_PRE_TRACK = "PREVIOUS TRACK";
-                public const string SC_KEY_VOL_DEC = "VOLUME DOWN";
-                public const string SC_KEY_VOL_INC = "VOLUME UP";
-                public const string SC_KEY_MUTE = "MUTE";
-                public const string SC_KEY_MAIL = "E-MAIL";
-                public const string SC_KEY_CALCULATOR = "CALCULATOR";
-                public const string SC_KEY_W3HOME = "WEB BROWSER";
+                    t.Add(new ReassignMenuOptionAndSubItems()
+                    {
+                        MenuOption = typeof(ReassignMenuItems).GetFields().First((x) => x.Name.Equals(type.Name.Replace("Items", ""))).GetValue(0).ToString(),
+                        MenuSubItems = GetReassignMenuSubItems(type)
+                    });
+                }
+                //IEnumerable<Tuple<string, IEnumerable<Tuple<string, string>>>> tIEnumerable = new List<Tuple<string, IEnumerable<Tuple<string, string>>>>
+                //{
+                //    Tuple.Create(ReassignMenuItems.LettersNumbers, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.LettersNumbersItems))),
+                //    Tuple.Create(ReassignMenuItems.MediaKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.MediaKeysItems))),
+                //    Tuple.Create(ReassignMenuItems.MiscKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.MiscKeysItems))),
+                //    Tuple.Create(ReassignMenuItems.ModifierSpacingKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.ModifierSpacingKeysItems))),
+                //    Tuple.Create(ReassignMenuItems.NavigationKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.NavigationKeysItems))),
+                //    Tuple.Create(ReassignMenuItems.NumpadKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.NumpadKeysItems))),
+                //    Tuple.Create(ReassignMenuItems.PunctuationKeys, UtilReflect.GetFieldsNamesAndValuesList(typeof(MasterPlus.ReassignMenuItems.PunctuationKeysItems)))
+                //};
+                return t;
             }
             public class LettersNumbersItems
             {
@@ -125,6 +144,19 @@ namespace CMTest.Project.MasterPlus
                 public const string SC_KEY_8 = "8*";
                 public const string SC_KEY_9 = "9(";
                 public const string SC_KEY_0 = "0)";
+            }
+            public class MediaKeysItems
+            {
+                public const string SC_KEY_PLAY_PAUSE = "PLAY/PAUSE";
+                public const string SC_KEY_STOP = "STOP";
+                public const string SC_KEY_NEXT_TRACK = "NEXT TRACK";
+                public const string SC_KEY_PRE_TRACK = "PREVIOUS TRACK";
+                public const string SC_KEY_VOL_DEC = "VOLUME DOWN";
+                public const string SC_KEY_VOL_INC = "VOLUME UP";
+                public const string SC_KEY_MUTE = "MUTE";
+                public const string SC_KEY_MAIL = "E-MAIL";
+                public const string SC_KEY_CALCULATOR = "CALCULATOR";
+                public const string SC_KEY_W3HOME = "WEB BROWSER";
             }
             public class MiscKeysItems
             {
