@@ -205,10 +205,9 @@ namespace CMTest.Project.MasterPlus
                 {
                     MpActions.AssignInLoop();
                 }
-                , IReporter.SetAsLines($"12112.",
-                    $"Open Reassignment Menu.",
-                    onlyVerify ? $"Check the assigned Value is 111111" : $"Choose 22222.")
-                , IReporter.SetAsLines(onlyVerify ? $"2323." : $"Assign successfully.", "The Grid would be purple.")
+                , IReporter.SetAsLines($"Assign all keys on the Keyboard with all keys in Reassignment menu.",
+                    onlyVerify ? $"Check the all the assigned key work." : $"Check the all the assigned key work!")
+                , IReporter.SetAsLines(onlyVerify ? $"Check the all the assigned key work." : $"All the assigned key work.", "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }

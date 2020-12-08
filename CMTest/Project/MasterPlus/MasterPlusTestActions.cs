@@ -257,35 +257,50 @@ namespace CMTest.Project.MasterPlus
         public void AssignInLoop(bool onlyVerify = false)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
-            var keys = assignContainer.GetElementsAllChild().GetATCollection();
-            var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().ToList();
-            foreach (var t in keys)
+            var keys = assignContainer.GetElementsAllChild().GetATCollection().ToList();
+            var keyCount = keys.Count;
+            for (var i = keyCount - 1; i >= 4; i--)
             {
-                if (!t.GetElementInfo().IsOffscreen())
+                keys.Remove(keys[i]);
+            }
+            var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().ToList();
+            var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen()).ToList();
+            
+            for(var i = 0; i < validKeys.Count(); i++) 
+            {
+                if (!ReassignMenuItems.GetReassignMenuItemsList().Any()) // reassign items are less than keys
                 {
-                    if (boolBreak)// add this here for when reassignMenuItemsList's count is 1
+                    return;
+                }
+                if (boolBreak)// add this here for when reassignMenuItemsList's count is 1
+                {
+                    boolBreak = false;
+                }
+                foreach (var reassignMenuSubItems in reassignMenuItemsList)
+                {
+                    if (boolBreak)
                     {
                         boolBreak = false;
+                        break;
                     }
-                    foreach (var reassignMenuSubItems in reassignMenuItemsList)
+                    foreach (var subItem in reassignMenuSubItems.MenuSubItems)
                     {
-                        if (boolBreak)
+                        AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value,
+                            validKeys[i].GetElementInfo().Name(), onlyVerify);
+                        reassignMenuSubItems.MenuSubItems.Remove(subItem);
+                        if (!reassignMenuSubItems.MenuSubItems.Any())
                         {
-                            boolBreak = false;
-                            break;
+                            reassignMenuItemsList.Remove(reassignMenuSubItems);
                         }
-                        foreach (var subItem in reassignMenuSubItems.MenuSubItems)
+                        if (i == (validKeys.Count() - 1))
                         {
-                            AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value,
-                            t.GetElementInfo().Name(), onlyVerify);
-                            reassignMenuSubItems.MenuSubItems.Remove(subItem);
-                            if (!reassignMenuSubItems.MenuSubItems.Any())
+                            if (reassignMenuItemsList.Any() || reassignMenuSubItems.MenuSubItems.Any())
                             {
-                                MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().Remove(reassignMenuSubItems);
+                                i = -1;
                             }
-                            boolBreak = true;
-                            break;
                         }
+                        boolBreak = true;
+                        break;
                     }
                 }
             }
