@@ -170,45 +170,59 @@ namespace CMTest.Project.MasterPlus
         private int _scrollNum = 0;
         private void _CollapseReassignMenus(AT reassignDropdown)
         {
-            while (true)
+            try
             {
-                var all = reassignDropdown.GetElementsAllChild(returnNullWhenException: true).GetATCollection();
-                if (!all.Any((x) => x.GetElementInfo().Name().Equals(MPObj.ReassignCatalogListItem.Name)))
+                while (true)
                 {
-                    break;
+                    var all = reassignDropdown.GetElementsAllChild(returnNullWhenException: true).GetATCollection();
+                    if (!all.Any((x) => x.GetElementInfo().Name().Equals(MPObj.ReassignCatalogListItem.Name)))
+                    {
+                        break;
+                    }
+                    for (var i = 0; i < all.Length; i++)
+                    {
+                        if (!all[i].GetElementInfo().Name().Equals(MPObj.ReassignCatalogListItem.Name)) continue;
+                        all[i - 1].DoClickPoint(0.5);
+                        break;
+                    }
                 }
-                for (var i = 0; i < all.Length; i++)
-                {
-                    if (!all[i].GetElementInfo().Name().Equals(MPObj.ReassignCatalogListItem.Name)) continue;
-                    all[i - 1].DoClickPoint(0.5);
-                    break;
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to _CollapseReassignMenus. " + e.Message);
             }
         }
         private void _ScrollMenuItemSubItem(AT reassignDropdown)
         {
-            var left = (int)reassignDropdown.GetElementInfo().RectangleLeft() + 10;
-            var top = (int)reassignDropdown.GetElementInfo().RectangleTop() + 50;
-            switch (_scrollNum)
+            try
             {
-                case 0:
-                    HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELDOWN);
-                    UtilTime.WaitTime(1);
-                    HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELDOWN);
-                    UtilTime.WaitTime(1);
-                    HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELDOWN);
-                    UtilTime.WaitTime(1);
-                    _scrollNum = 1;
-                    break;
-                case 1:
-                    HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELUP);
-                    UtilTime.WaitTime(1);
-                    HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELUP);
-                    UtilTime.WaitTime(1);
-                    HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELUP);
-                    UtilTime.WaitTime(1);
-                    _scrollNum = 0;
-                    break;
+                var left = (int)reassignDropdown.GetElementInfo().RectangleLeft() + 10;
+                var top = (int)reassignDropdown.GetElementInfo().RectangleTop() + 50;
+                switch (_scrollNum)
+                {
+                    case 0:
+                        HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELDOWN);
+                        UtilTime.WaitTime(1);
+                        HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELDOWN);
+                        UtilTime.WaitTime(1);
+                        HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELDOWN);
+                        UtilTime.WaitTime(1);
+                        _scrollNum = 1;
+                        break;
+                    case 1:
+                        HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELUP);
+                        UtilTime.WaitTime(1);
+                        HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELUP);
+                        UtilTime.WaitTime(1);
+                        HWSimulator.HWSend.MoveCursorAndDo(left, top, HWSimulator.HWSend.MouseKeys.WHEELUP);
+                        UtilTime.WaitTime(1);
+                        _scrollNum = 0;
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+
             }
         }
         public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid, bool onlyVerify = false)

@@ -85,7 +85,7 @@ namespace CMTest.Project.MasterPlus
                 var types = typeof(ReassignMenuItems).GetNestedTypes();
                 foreach (var type in types)
                 {
-                    t.Add(new ReassignMenuOptionAndSubItems()
+                    t.Add(new ReassignMenuOptionAndSubItems
                     {
                         MenuOption = typeof(ReassignMenuItems).GetFields().First((x) => x.Name.Equals(type.Name.Replace("Items", ""))).GetValue(0).ToString(),
                         MenuSubItems = GetReassignMenuSubItems(type)
