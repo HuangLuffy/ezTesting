@@ -206,7 +206,7 @@ namespace CMTest.Project.MasterPlus
             //}
             public class PunctuationKeysItems
             {
-                public const string SC_KEY_NEG = "-_";
+                //public const string SC_KEY_NEG = "-_";
                 public const string SC_KEY_EQUATION = "=+1";
                 public const string SC_KEY_L_BACKETS = "{[1";
                 public const string SC_KEY_R_BACKETS = "}]";

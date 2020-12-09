@@ -14,7 +14,8 @@ namespace ReportLib
         private string CaptureRelativePath { set; get; }
         private Reporter.ResultTestInfo _ResultTestInfo { get; }
         private Reporter.ResultTestCase CurrentTestCase { set; get; }
-        public ReporterXsl(string pathReportXml, string xslPath = "", string captureRelativePath = "", Reporter.ResultTestInfo resultTestInfo = null)
+        private IReporter _Ireporter { set; get; }
+        public ReporterXsl(string pathReportXml, string xslPath , string captureRelativePath , Reporter.ResultTestInfo resultTestInfo)
         {
             PathReportXml = pathReportXml;
             if (!File.Exists(PathReportXml))
@@ -273,6 +274,7 @@ namespace ReportLib
                     Reporter.BlockCurrentCase = true;
                     r.NodeResult = Reporter.Result.FAIL;
                     r.AttrMessage = nodeErrorMessage += $" [{e.Message}]";
+                    //r.AttrMessage = _Ireporter.SetAsLines(nodeErrorMessage, $" [{e.Message}]");
                 }
                 Capture(r);
             }
@@ -282,7 +284,8 @@ namespace ReportLib
 
         public void SetStepFailed(string errorMessage = "Failed", string commentOnWeb = "Failed", string imageName = "", bool blContinueTest = false)
         {
-            CurrentTestCase.AttrMessage += $" [{errorMessage}]";
+            //CurrentTestCase.AttrMessage += $" [{errorMessage}]";
+            CurrentTestCase.AttrMessage = this.SetAsLines(CurrentTestCase.AttrMessage ?? "", $" [{errorMessage}]");
             Capture(CurrentTestCase, commentOnWeb);
             if (!blContinueTest)
             {

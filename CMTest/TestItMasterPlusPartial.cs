@@ -64,8 +64,8 @@ namespace CMTest
         #region MyRegion
         private dynamic Flow_KeyMappingTest(string deviceName)
         {
-            _mpTestFlows.IReporter.GetResultTestInfo().AttrDeviceModel = deviceName;
-            _mpTestFlows.IReporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            _mpTestFlows.Ireporter.GetResultTestInfo().AttrDeviceModel = deviceName;
+            _mpTestFlows.Ireporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             _mpTestFlows.Case_LaunchMasterPlus(60);
             _mpTestFlows.Case_SelectDeviceFromList(deviceName);
             _mpTestFlows.Case_SelectKeyMappingTab(deviceName);
@@ -131,8 +131,8 @@ namespace CMTest
                 //new List<string> { MPObj.EnableKeyCheckbox.Name, "", "K" },
                 //new List<string> { MPObj.DisableKeyCheckbox.Name, "", "L" }
             };
-            _mpTestFlows.IReporter.GetResultTestInfo().AttrDeviceModel = deviceName;
-            _mpTestFlows.IReporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
+            _mpTestFlows.Ireporter.GetResultTestInfo().AttrDeviceModel = deviceName;
+            _mpTestFlows.Ireporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             _mpTestFlows.Case_LaunchMasterPlus(120);
             _mpTestFlows.Case_SelectDeviceFromList(deviceName);
             _mpTestFlows.Case_SelectKeyMappingTab(deviceName);

@@ -19,7 +19,7 @@ namespace CMTest.Project.MasterPlus
     public class MasterPlusTestActions : MasterPlus
     {
         private IReporter _r;
-        public void SetReport(IReporter r)
+        public void SetIReport(IReporter r)
         {
             _r = r;
         }
