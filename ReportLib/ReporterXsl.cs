@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommonLib.Util.IO;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace ReportLib
         private string PathReportXml { get; }
         private string CaptureRelativePath { set; get; }
         private Reporter.ResultTestInfo _ResultTestInfo { get; }
-        private Reporter.ResultTestCase CurrentTestCase { set; get; }
+        public Reporter.ResultTestCase CurrentTestCase { set; get; }
         private IReporter _Ireporter { set; get; }
         public ReporterXsl(string pathReportXml, string xslPath , string captureRelativePath , Reporter.ResultTestInfo resultTestInfo)
         {
@@ -53,16 +54,19 @@ namespace ReportLib
         {
             return $"{line}~!~";
         }
+        public enum AddPrefix
+        {
+            Number
+        }
         public string SetAsLines(params string[] lines)
         {
-            var addNumber = !lines[0].StartsWith("1.");
+            //var addNumber = !lines[0].StartsWith("1.");
+            //var prefixString = "";
+
             var wholeLine = "";
             for (var i = 0; i < lines.Length; i++)
             {
-                if (addNumber)
-                {
-                    wholeLine += SetNewLine($"{i + 1}. {lines[i]}");
-                }
+                wholeLine += SetNewLine($"{i + 1}. {lines[i]}");
             }
             return wholeLine;
         }
@@ -70,7 +74,6 @@ namespace ReportLib
         {
             return $"{comment}@@@{link}";
         }
-
         private void CreateResultXml(string xslName = "xmlReport.xsl", string xslPath = "")
         {
             if (!xslPath.Equals(""))
@@ -182,7 +185,6 @@ namespace ReportLib
                 ModifyResultTestInfo(resultTestInfo);
             }
         }
-
         public void ModifyResultTestInfo(ResultTestInfo resultTestInfo)
             //(string project, string os, string language, string region, string time, string deviceModel, string deviceName, string testTotalNumber, string version, string name, string testName
             //, string testName, string testName, string testName, string testName, string testName)
@@ -213,26 +215,33 @@ namespace ReportLib
             rootElement.Attribute(AttrTbdsPercent).Value = resultTestInfo.AttrTbdsPercent ?? Reporter.DefaultContent;
             thisDoc.Save(PathReportXml);
         }
-        public void Capture(Reporter.ResultTestCase r = null, string commentOnWeb = "Step_End", string imageName = "", string capturesRelativePath = "",
+        public void Capture(string commentOnWeb = "Step_End", string imageName = "", string capturesRelativePath = "",
             UtilCapturer.ImageType imageType = UtilCapturer.ImageType.PNG)
         {
-            if (imageName.Equals(""))
+            try
             {
-                imageName = UtilTime.GetLongTimeString();
+                if (imageName.Equals(""))
+                {
+                    imageName = UtilTime.GetLongTimeString();
+                }
+                if (capturesRelativePath.Equals(""))
+                {
+                    capturesRelativePath = this.GetCaptureRelativePath();
+                    ;
+                }
+                var t = Path.Combine(capturesRelativePath, imageName);
+                var manualCheckLink = SetNeedToCheck(commentOnWeb,
+                    Path.Combine(capturesRelativePath.Split('\\').Last(), imageName + "." + imageType));
+                manualCheckLink = SetAsLink(manualCheckLink);
+                UtilCapturer.Capture(t, imageType);
+                if (CurrentTestCase != null)
+                {
+                    CurrentTestCase.NodeNeedToCheck += manualCheckLink;
+                }
             }
-
-            if (capturesRelativePath.Equals(""))
+            catch (Exception e)
             {
-                capturesRelativePath = this.GetCaptureRelativePath();
-;            }
-            var t = Path.Combine(capturesRelativePath, imageName);
-            var manualCheckLink = SetNeedToCheck(commentOnWeb,
-                Path.Combine(capturesRelativePath.Split('\\').Last(), imageName + "." + imageType));
-            manualCheckLink = SetAsLink(manualCheckLink);
-            UtilCapturer.Capture(t, imageType);
-            if (r != null)
-            {
-                r.NodeNeedToCheck += manualCheckLink;
+                throw new Exception("Capture image failed." + e.Message);
             }
         }
         public void Exec(Action action, string nodeDescription, string nodeExpectedResult, string nodeErrorMessage, WhenCaseFailed blockOrRun)
@@ -260,12 +269,12 @@ namespace ReportLib
                     var currentTime = DateTime.Now;
                     action.Invoke();
                     elapsedTime = UtilTime.TimeElapsed(currentTime).Seconds;
-                    if (r.AttrMessage != null)
+                    if (r.AttrMessage != null || r.ErrorMessages.Any())
                     {
                         r.NodeResult = Reporter.Result.FAIL;
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     if (blockOrRun == WhenCaseFailed.BlockAllLeftCases)
                     {
@@ -273,20 +282,28 @@ namespace ReportLib
                     }
                     Reporter.BlockCurrentCase = true;
                     r.NodeResult = Reporter.Result.FAIL;
-                    r.AttrMessage = nodeErrorMessage += $" [{e.Message}]";
-                    //r.AttrMessage = _Ireporter.SetAsLines(nodeErrorMessage, $" [{e.Message}]");
+                    //r.AttrMessage = nodeErrorMessage += $" [{e.Message}]";
+                    r.ErrorMessages.Add(CurrentTestCase.AttrMessage);
                 }
-                Capture(r);
+                Capture();
             }
             r.AttrTime = elapsedTime;
+            r.AttrMessage = this.SetAsLines(r.ErrorMessages.ToArray());
             AddTestStep(r, GetResultTestInfo());
         }
-
         public void SetStepFailed(string errorMessage = "Failed", string commentOnWeb = "Failed", string imageName = "", bool blContinueTest = false)
         {
             //CurrentTestCase.AttrMessage += $" [{errorMessage}]";
-            CurrentTestCase.AttrMessage = this.SetAsLines(CurrentTestCase.AttrMessage ?? "", $" [{errorMessage}]");
-            Capture(CurrentTestCase, commentOnWeb);
+            if (CurrentTestCase.AttrMessage != null)
+            {
+                if (!CurrentTestCase.AttrMessage.Equals("NA") && !CurrentTestCase.AttrMessage.Equals(""))
+                {
+                    CurrentTestCase.ErrorMessages.Add(CurrentTestCase.AttrMessage);
+                }
+            }
+            CurrentTestCase.ErrorMessages.Add(errorMessage);
+            //CurrentTestCase.AttrMessage = this.SetAsLines(CurrentTestCase.AttrMessage ?? "", $" [{errorMessage}]");
+            Capture(commentOnWeb);
             if (!blContinueTest)
             {
                 throw new Exception(errorMessage);

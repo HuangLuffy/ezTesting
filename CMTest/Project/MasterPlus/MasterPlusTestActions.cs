@@ -215,7 +215,8 @@ namespace CMTest.Project.MasterPlus
         public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid, bool onlyVerify = false)
         {
             var localWhichMenuItem = whichMenuItem;
-            var localWhichMenuItemSubItem = whichMenuItemSubItem;
+            var localWhichMenuItemSubItem = whichMenuItemSubItem; 
+            _r.Capture( "whichMenuItem", "whichMenuItemSubItem");
             CommonAssignKeyAndVerify(whichMenuItemSubItem, assignWhichKeyGrid,
                 (reassignDialog) =>
                 {

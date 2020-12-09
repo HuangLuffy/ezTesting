@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ReportLib
 {
@@ -60,10 +61,10 @@ namespace ReportLib
             public string NodeFailure { get; set; }
             public string AttrMessage { get; set; }
             public string AttrType { get; set; }
-
             public long AttrTime { get; set; }
             public string AttrClassname { get; set ; }
             public string AttrName { get; set; }
+            public readonly IEnumerable<string> ErrorMessages = new List<string>();
         }
         public const string NodeTestsuite = "testsuite";
         public const string AttrBlocks = "blocks";
