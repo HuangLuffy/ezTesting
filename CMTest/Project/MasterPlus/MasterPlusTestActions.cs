@@ -83,7 +83,6 @@ namespace CMTest.Project.MasterPlus
             var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
             keyGridNeedToBeAssigned.DoClickPoint(1);
             var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
-
             //For old //var reassignDialog = GetMasterPlusMainWindow().GetElementFromDescendants(MPObj.ReassignDialog);
             if (!onlyVerify)
             {
@@ -215,8 +214,7 @@ namespace CMTest.Project.MasterPlus
         public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid, bool onlyVerify = false)
         {
             var localWhichMenuItem = whichMenuItem;
-            var localWhichMenuItemSubItem = whichMenuItemSubItem; 
-            _r.Capture( "whichMenuItem", "whichMenuItemSubItem");
+            var localWhichMenuItemSubItem = whichMenuItemSubItem;
             CommonAssignKeyAndVerify(whichMenuItemSubItem, assignWhichKeyGrid,
                 (reassignDialog) =>
                 {
