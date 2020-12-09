@@ -568,16 +568,16 @@
 			<td nowrap="nowrap" style="text-align:center;">
 				<xsl:value-of select="step"/>
 			</td>
-			<td style="Width:650;text-align:left;">
+			<td style="Width:600;text-align:left;">
 				<xsl:value-of select="description"/>
 			</td>
-			<td style="Width:650;text-align:left;">
+			<td style="Width:600;text-align:left;">
 				<xsl:value-of select="expectedResult"/>
 			</td>
-			<td style="text-align:left;">
+			<td style="Width:300;text-align:left;">
 				<xsl:value-of select="failure/@message"/>
 			</td>
-			<td style="Width:120;text-align:left;">
+			<td style="Width:300;text-align:left;">
 				<xsl:value-of select="needToCheck"/>
 			</td>
 			<td ondblclick="CreateDataTable('Result', this);" style="text-align:center;cursor:hand;" nowrap="nowrap">

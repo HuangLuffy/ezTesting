@@ -208,8 +208,8 @@ namespace CMTest.Project.MasterPlus
             {
                 public const string SC_KEY_NEG = "-_";
                 public const string SC_KEY_EQUATION = "=+1";
-                public const string SC_KEY_L_BACKETS = "{[";
-                //public const string SC_KEY_R_BACKETS = "}]";
+                public const string SC_KEY_L_BACKETS = "{[1";
+                public const string SC_KEY_R_BACKETS = "}]";
                 //public const string SC_KEY_BACKSLASH = "|\\";
                 //public const string SC_KEY_SEMICOLON = ":;";
                 //public const string SC_KEY_APOSTROPHE = "\"'";
