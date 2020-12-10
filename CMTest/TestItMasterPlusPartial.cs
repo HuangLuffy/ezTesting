@@ -77,23 +77,23 @@ namespace CMTest
             return MARK_FOUND_RESULT;
         }
 
-        private void _AssignLoopVerifyLogic(IReadOnlyList<List<string>> loop, bool onlyVerify = false)
+        private void _AssignLoopVerifyLogic(IReadOnlyList<List<string>> loop, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             for (var i = 0; i < loop.Count(); i++)
             {
                 if ((i + 1) <= (loop.Count() - 1) && loop.ElementAt(i)[2].Equals(loop.ElementAt(i + 1)[2]) &&
-                    onlyVerify) continue;
+                    blAssignKey) continue;
                 if (loop.ElementAt(i)[0].Equals(MPObj.DisableKeyCheckbox.Name))
                 {
-                    _mpTestFlows.Case_DisableKey(loop.ElementAt(i)[2], onlyVerify);
+                    _mpTestFlows.Case_DisableKey(loop.ElementAt(i)[2], blAssignKey);
                 }
                 else if (loop.ElementAt(i)[0].Equals(MPObj.EnableKeyCheckbox.Name))
                 {
-                    _mpTestFlows.Case_EnableKey(loop.ElementAt(i)[2], onlyVerify);
+                    _mpTestFlows.Case_EnableKey(loop.ElementAt(i)[2], blAssignKey);
                 }
                 else
                 {
-                    _mpTestFlows.Case_AssignKeyFromReassignMenu(loop.ElementAt(i)[0], loop.ElementAt(i)[1], loop.ElementAt(i)[2], onlyVerify);
+                    _mpTestFlows.Case_AssignKeyFromReassignMenu(loop.ElementAt(i)[0], loop.ElementAt(i)[1], loop.ElementAt(i)[2], blAssignKey);
                 }
             }
         }
@@ -141,13 +141,12 @@ namespace CMTest
             _mpTestFlows.Case_LaunchMasterPlus(120);
             _mpTestFlows.Case_SelectDeviceFromList(deviceName);
             _mpTestFlows.Case_SelectKeyMappingTab(deviceName, false);
-            _AssignLoopVerifyLogic(keysNeedToAssignList, true);
+            _AssignLoopVerifyLogic(keysNeedToAssignList, false);
             _mpTestFlows.Case_Reset(MPObj.KeyMappingResetButton);
             _ResetLoopVerifyLogic(keysNeedToAssignList);
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }
         #endregion
-
     }
 }

@@ -77,14 +77,14 @@ namespace CMTest.Project.MasterPlus
             keyMappingResetButton.DoClickPoint(1);
             ClickCommonDialog();
         }
-        public void CommonAssignKeyAndVerify(string keyValueNeedToInput, string assignWhichKeyGrid, Action<AT> assignAction, bool onlyVerify = false)
+        public void CommonAssignKeyAndVerify(string keyValueNeedToInput, string assignWhichKeyGrid, Action<AT> assignAction, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
             keyGridNeedToBeAssigned.DoClickPoint(1);
             var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
             //For old //var reassignDialog = GetMasterPlusMainWindow().GetElementFromDescendants(MPObj.ReassignDialog);
-            if (!onlyVerify)
+            if (blAssignKey)
             {
                 try
                 {
@@ -156,7 +156,7 @@ namespace CMTest.Project.MasterPlus
                 _r.SetStepFailed($"Key {keyValueNeedToInput} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.", "colorWrong");
             }
         }
-        public void AssignKeyOnReassignDialog(ScanCode keyValueNeedToInputScanCode, string assignWhichKeyGrid, bool onlyVerify = false)
+        public void AssignKeyOnReassignDialog(ScanCode keyValueNeedToInputScanCode, string assignWhichKeyGrid, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             var keyValueNeedToInput = UtilEnum.GetEnumNameByValue<ScanCode>(keyValueNeedToInputScanCode);
             CommonAssignKeyAndVerify(keyValueNeedToInput, assignWhichKeyGrid,
@@ -164,7 +164,7 @@ namespace CMTest.Project.MasterPlus
                 {
                     KbEvent.Press(keyValueNeedToInputScanCode);
                     UtilTime.WaitTime(1);
-                }, onlyVerify);
+                }, blAssignKey);
         }
         private string _theLastMenuItem = string.Empty;
         private int _scrollNum = 0;
@@ -225,17 +225,17 @@ namespace CMTest.Project.MasterPlus
 
             }
         }
-        public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid, bool onlyVerify = false)
+        public void AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             var localWhichMenuItem = whichMenuItem;
             var localWhichMenuItemSubItem = whichMenuItemSubItem;
+            ATS allReassignCatalogListItems;
             CommonAssignKeyAndVerify(whichMenuItemSubItem, assignWhichKeyGrid,
                 (reassignDialog) =>
                 {
                     var reassignCollapseButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCollapseButton);
                     reassignCollapseButton.DoClickPoint(1);
                     var reassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown);
-                    ATS allReassignCatalogListItems = null;
                     if (_theLastMenuItem.Equals(string.Empty) || !_theLastMenuItem.Equals(whichMenuItem))
                     {
                         _CollapseReassignMenus(reassignDropdown);
@@ -258,32 +258,30 @@ namespace CMTest.Project.MasterPlus
                         subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem });
                     }
                     subItem.GetIAccessible().DoDefaultAction();
-                }, onlyVerify);
+                }, blAssignKey, blVerifyKeyWork);
         }
 
-        public void DisableKey(string disableWhichKeyGrid, bool onlyVerify = false)
+        public void DisableKey(string disableWhichKeyGrid, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             CommonAssignKeyAndVerify(MPObj.DisableKeyCheckbox.Name, disableWhichKeyGrid,
                 (reassignDialog) =>
                 {
                     var disableKeyCheckbox = reassignDialog.GetElementFromDescendants(MPObj.DisableKeyCheckbox);
                     disableKeyCheckbox.DoClickPoint(1);
-                }, onlyVerify);
+                }, blAssignKey, blVerifyKeyWork);
         }
-        public void EnableKey(string disableWhichKeyGrid, bool onlyVerify = false)
+        public void EnableKey(string disableWhichKeyGrid, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             CommonAssignKeyAndVerify(MPObj.EnableKeyCheckbox.Name, disableWhichKeyGrid,
                 (reassignDialog) =>
                 {
                     var enableKeyCheckbox = reassignDialog.GetElementFromDescendants(MPObj.EnableKeyCheckbox);
                     enableKeyCheckbox.DoClickPoint(1);
-                }, onlyVerify);
+                }, blAssignKey, blVerifyKeyWork);
         }
-
-
-        private bool boolBreak = false;
+        private bool _blBreak = false;
         //for ma
-        public void AssignInLoop(bool onlyVerify = false)
+        public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keys = assignContainer.GetElementsAllChild().GetATCollection().ToList();
@@ -306,21 +304,21 @@ namespace CMTest.Project.MasterPlus
                 {
                     return;
                 }
-                if (boolBreak)// add this here for when reassignMenuItemsList's count is 1
+                if (_blBreak)// add this here for when reassignMenuItemsList's count is 1
                 {
-                    boolBreak = false;
+                    _blBreak = false;
                 }
                 foreach (var reassignMenuSubItems in reassignMenuItemsList)
                 {
-                    if (boolBreak)
+                    if (_blBreak)
                     {
-                        boolBreak = false;
+                        _blBreak = false;
                         break;
                     }
                     foreach (var subItem in reassignMenuSubItems.MenuSubItems)
                     {
                         AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value,
-                            validKeys[i].GetElementInfo().Name(), onlyVerify);
+                            validKeys[i].GetElementInfo().Name(), blAssignKey);
                         reassignMenuSubItems.MenuSubItems.Remove(subItem);
                         if (!reassignMenuSubItems.MenuSubItems.Any())
                         {
@@ -333,7 +331,7 @@ namespace CMTest.Project.MasterPlus
                                 i = -1;
                             }
                         }
-                        boolBreak = true;
+                        _blBreak = true;
                         break;
                     }
                 }
