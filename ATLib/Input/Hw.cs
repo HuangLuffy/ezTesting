@@ -20,10 +20,10 @@ namespace ATLib.Input
                 {"Português (Portugal)", 9}, {"Русский", 10}, {"Español", 11}, {"Thai", 12}, {"Türkçe", 13}, {"Vietnamese", 14}
             };
 
-        public static Language GetLanguage()
-        {
-            return new Language();
-        }
+        //public static Language GetLanguage()
+        //{
+        //    return new Language();
+        //}
 
         public class LanguageItems
         {
@@ -47,21 +47,21 @@ namespace ATLib.Input
         }
         public class Language
         {
-            public LanguageItems English = new LanguageItems { Index = 0, Install = "English", English = "English", Overview = "OVERVIEW", TsFile = "" };
-            public LanguageItems ChineseSimplified = new LanguageItems { Index = 1, Install = "中文（简体", English = "ChineseSimplified", Overview = "概观", TsFile = "masterplus_zh_cn.ts"};
-            public LanguageItems ChineseTraditional = new LanguageItems(2, "繁體中文", "ChineseTraditional", "概觀", "masterplus_zh_tw.ts");
-            public LanguageItems French = new LanguageItems(3, "Français", "French", "VUE D’ENSEMBLE", "masterplus_fr.ts");
-            public LanguageItems German = new LanguageItems(4, "Deutsch", "German", "ÜBERSICHT", "masterplus_de.ts");
-            public LanguageItems Italian = new LanguageItems(5, "Italiano", "Italian", "DESCRIZIONE", "masterplus_it.ts");
-            public LanguageItems Japanese = new LanguageItems(6, "日本語", "Japanese", "概要", "masterplus_ja.ts");
-            public LanguageItems Korean = new LanguageItems(7, "Korean", "Korean", "개요", "masterplus_ko.ts");
-            public LanguageItems Malay = new LanguageItems(8, "Malay", "Malay", "GAMBARAN KESELURUHAN", "masterplus_ms.ts");
-            public LanguageItems Portuguese = new LanguageItems(9, "Português (Portugal)", "Portuguese", "VISÃO GERAL", "masterplus_pt.ts");
-            public LanguageItems Russian = new LanguageItems(10, "Русский", "Russian", "ОБЩИЕ СВЕДЕНИЯ", "masterplus_ru.ts");
-            public LanguageItems Spanish = new LanguageItems(11, "Español", "Spanish", "INFORMACIÓN GENERAL", "masterplus_es.ts");
-            public LanguageItems Thai = new LanguageItems(12, "Thai", "Thai", "ภาพรวม", "masterplus_th.ts");
-            public LanguageItems Turkish = new LanguageItems(13, "Türkçe", "Turkish", "GENEL BAKIŞ", "masterplus_tr.ts");
-            public LanguageItems Vietnamese = new LanguageItems(14, "Vietnamese", "Vietnamese", "TỔNG QUAN", "masterplus_vi.ts");
+            public static LanguageItems English = new LanguageItems { Index = 0, Install = "English", English = "English", Overview = "OVERVIEW", TsFile = "" };
+            public static LanguageItems ChineseSimplified = new LanguageItems { Index = 1, Install = "中文（简体", English = "ChineseSimplified", Overview = "概观", TsFile = "masterplus_zh_cn.ts"};
+            public static LanguageItems ChineseTraditional = new LanguageItems(2, "繁體中文", "ChineseTraditional", "概觀", "masterplus_zh_tw.ts");
+            public static LanguageItems French = new LanguageItems(3, "Français", "French", "VUE D’ENSEMBLE", "masterplus_fr.ts");
+            public static LanguageItems German = new LanguageItems(4, "Deutsch", "German", "ÜBERSICHT", "masterplus_de.ts");
+            public static LanguageItems Italian = new LanguageItems(5, "Italiano", "Italian", "DESCRIZIONE", "masterplus_it.ts");
+            public static LanguageItems Japanese = new LanguageItems(6, "日本語", "Japanese", "概要", "masterplus_ja.ts");
+            public static LanguageItems Korean = new LanguageItems(7, "Korean", "Korean", "개요", "masterplus_ko.ts");
+            public static LanguageItems Malay = new LanguageItems(8, "Malay", "Malay", "GAMBARAN KESELURUHAN", "masterplus_ms.ts");
+            public static LanguageItems Portuguese = new LanguageItems(9, "Português (Portugal)", "Portuguese", "VISÃO GERAL", "masterplus_pt.ts");
+            public static LanguageItems Russian = new LanguageItems(10, "Русский", "Russian", "ОБЩИЕ СВЕДЕНИЯ", "masterplus_ru.ts");
+            public static LanguageItems Spanish = new LanguageItems(11, "Español", "Spanish", "INFORMACIÓN GENERAL", "masterplus_es.ts");
+            public static LanguageItems Thai = new LanguageItems(12, "Thai", "Thai", "ภาพรวม", "masterplus_th.ts");
+            public static LanguageItems Turkish = new LanguageItems(13, "Türkçe", "Turkish", "GENEL BAKIŞ", "masterplus_tr.ts");
+            public static LanguageItems Vietnamese = new LanguageItems(14, "Vietnamese", "Vietnamese", "TỔNG QUAN", "masterplus_vi.ts");
 
 
             //public Tuple<int, string, string, string, string> English = new Tuple<int, string, string, string, string>(0, "English", "English", "OVERVIEW", "");
@@ -268,68 +268,67 @@ namespace ATLib.Input
         //{
         //    return LocDic[GetKeyVar(key)].ElementAt((int)language);
         //}
-        public static LanguageItems Ak()
+        public static LanguageItems GetLanguageItems(string configurationName)
         {
-            var name = "";
-            if (name.Equals("OVERVIEW"))
+            if (configurationName.Equals("OVERVIEW"))
             {
-                return Hw.GetLanguage().English;
+                return Language.English;
             }
-            if (name.Equals("概观"))
+            if (configurationName.Equals("概观"))
             {
-                return Hw.GetLanguage().ChineseSimplified;
+                return Language.ChineseSimplified;
             }
-            if (name.Equals("概觀"))
+            if (configurationName.Equals("概觀"))
             {
-                return Hw.GetLanguage().ChineseTraditional;
+                return Language.ChineseTraditional;
             }
-            if (name.Equals("ÜBERSICHT"))
+            if (configurationName.Equals("ÜBERSICHT"))
             {
-                return Hw.GetLanguage().German;
+                return Language.German;
             }
-            if (name.Equals("INFORMACIÓN GENERAL"))
+            if (configurationName.Equals("INFORMACIÓN GENERAL"))
             {
-                return Hw.GetLanguage().Spanish;
+                return Language.Spanish;
             }
-            if (name.Equals("VUE D’ENSEMBLE"))
+            if (configurationName.Equals("VUE D’ENSEMBLE"))
             {
-                return Hw.GetLanguage().French;
+                return Language.French;
             }
-            if (name.Equals("DESCRIZIONE"))
+            if (configurationName.Equals("DESCRIZIONE"))
             {
-                return Hw.GetLanguage().Italian;
+                return Language.Italian;
             }
-            if (name.Equals("概要"))
+            if (configurationName.Equals("概要"))
             {
-                return Hw.GetLanguage().Japanese;
+                return Language.Japanese;
             }
-            if (name.Equals("개요"))
+            if (configurationName.Equals("개요"))
             {
-                return Hw.GetLanguage().Korean;
+                return Language.Korean;
             }
-            if (name.Equals("GAMBARAN KESELURUHAN"))
+            if (configurationName.Equals("GAMBARAN KESELURUHAN"))
             {
-                return Hw.GetLanguage().Malay;
+                return Language.Malay;
             }
-            if (name.Equals("VISÃO GERAL"))
+            if (configurationName.Equals("VISÃO GERAL"))
             {
-                return Hw.GetLanguage().Portuguese;
+                return Language.Portuguese;
             }
-            if (name.Equals("ОБЩИЕ СВЕДЕНИЯ"))
+            if (configurationName.Equals("ОБЩИЕ СВЕДЕНИЯ"))
             {
-                return Hw.GetLanguage().Russian;
+                return Language.Russian;
             }
-            if (name.Equals("ภาพรวม"))
+            if (configurationName.Equals("ภาพรวม"))
             {
-                return Hw.GetLanguage().Thai;
+                return Language.Thai;
             }
-            if (name.Equals("GENEL BAKIŞ"))
+            if (configurationName.Equals("GENEL BAKIŞ"))
             {
-                return Hw.GetLanguage().Turkish;
+                return Language.Turkish;
             }
-            if (name.Equals("TỔNG QUAN"))
+            if (configurationName.Equals("TỔNG QUAN"))
             {
-                return Hw.GetLanguage().Vietnamese;
+                return Language.Vietnamese;
             }
             return null;
         }
