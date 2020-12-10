@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hook
 {
-    public static partial class HookManager
+    public static partial class Hook
     {
         /// <summary>
         /// Point结构定义X和Y坐标。

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Hook
 {
-    public static partial class HookManager
+    public static partial class Hook
     {
-        #region Windows 常量
+        #region Windows Const
 
         //值来自微软SKD中的 Winuser.h
         /// <summary>
@@ -114,7 +114,7 @@ namespace Hook
 
         #endregion
 
-        #region Windows API 函数导入
+        #region Windows API
 
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]

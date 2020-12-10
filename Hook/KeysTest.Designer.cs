@@ -2,7 +2,7 @@
 
 namespace Hook
 {
-    partial class Hook
+    partial class KeysTest
     {
         /// <summary>
         /// Required designer variable.
@@ -45,14 +45,14 @@ namespace Hook
             this.tb.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             this.tb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox1_KeyPressed);
             // 
-            // Hook
+            // KeysTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 443);
             this.Controls.Add(this.tb);
-            this.Name = "Hook";
-            this.Text = "Hook";
+            this.Name = "KeysTest";
+            this.Text = "KeysTest";
             this.ResumeLayout(false);
 
         }

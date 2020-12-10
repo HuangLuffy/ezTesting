@@ -34,7 +34,7 @@ namespace Hook
             {
                 if (m_MouseMove == null)
                 {
-                    HookManager.MouseMove += HookManager_MouseMove;
+                    Hook.MouseMove += HookManager_MouseMove;
                 }
                 m_MouseMove += value;
             }
@@ -44,7 +44,7 @@ namespace Hook
                 m_MouseMove -= value;
                 if (m_MouseMove == null)
                 {
-                    HookManager.MouseMove -= HookManager_MouseMove;
+                    Hook.MouseMove -= HookManager_MouseMove;
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace Hook
             {
                 if (m_MouseClick == null)
                 {
-                    HookManager.MouseClick += HookManager_MouseClick;
+                    Hook.MouseClick += HookManager_MouseClick;
                 }
                 m_MouseClick += value;
             }
@@ -77,7 +77,7 @@ namespace Hook
                 m_MouseClick -= value;
                 if (m_MouseClick == null)
                 {
-                    HookManager.MouseClick -= HookManager_MouseClick;
+                    Hook.MouseClick -= HookManager_MouseClick;
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace Hook
             {
                 if (m_MouseDown == null)
                 {
-                    HookManager.MouseDown += HookManager_MouseDown;
+                    Hook.MouseDown += HookManager_MouseDown;
                 }
                 m_MouseDown += value;
             }
@@ -111,7 +111,7 @@ namespace Hook
                 m_MouseDown -= value;
                 if (m_MouseDown == null)
                 {
-                    HookManager.MouseDown -= HookManager_MouseDown;
+                    Hook.MouseDown -= HookManager_MouseDown;
                 }
             }
         }
@@ -136,7 +136,7 @@ namespace Hook
             {
                 if (m_MouseUp == null)
                 {
-                    HookManager.MouseUp += HookManager_MouseUp;
+                    Hook.MouseUp += HookManager_MouseUp;
                 }
                 m_MouseUp += value;
             }
@@ -146,7 +146,7 @@ namespace Hook
                 m_MouseUp -= value;
                 if (m_MouseUp == null)
                 {
-                    HookManager.MouseUp -= HookManager_MouseUp;
+                    Hook.MouseUp -= HookManager_MouseUp;
                 }
             }
         }
@@ -170,7 +170,7 @@ namespace Hook
             {
                 if (m_MouseDoubleClick == null)
                 {
-                    HookManager.MouseDoubleClick += HookManager_MouseDoubleClick;
+                    Hook.MouseDoubleClick += HookManager_MouseDoubleClick;
                 }
                 m_MouseDoubleClick += value;
             }
@@ -180,7 +180,7 @@ namespace Hook
                 m_MouseDoubleClick -= value;
                 if (m_MouseDoubleClick == null)
                 {
-                    HookManager.MouseDoubleClick -= HookManager_MouseDoubleClick;
+                    Hook.MouseDoubleClick -= HookManager_MouseDoubleClick;
                 }
             }
         }
@@ -205,7 +205,7 @@ namespace Hook
             {
                 if (m_MouseMoveExt == null)
                 {
-                    HookManager.MouseMoveExt += HookManager_MouseMoveExt;
+                    Hook.MouseMoveExt += HookManager_MouseMoveExt;
                 }
                 m_MouseMoveExt += value;
             }
@@ -215,7 +215,7 @@ namespace Hook
                 m_MouseMoveExt -= value;
                 if (m_MouseMoveExt == null)
                 {
-                    HookManager.MouseMoveExt -= HookManager_MouseMoveExt;
+                    Hook.MouseMoveExt -= HookManager_MouseMoveExt;
                 }
             }
         }
@@ -239,7 +239,7 @@ namespace Hook
             {
                 if (m_MouseClickExt == null)
                 {
-                    HookManager.MouseClickExt += HookManager_MouseClickExt;
+                    Hook.MouseClickExt += HookManager_MouseClickExt;
                 }
                 m_MouseClickExt += value;
             }
@@ -249,7 +249,7 @@ namespace Hook
                 m_MouseClickExt -= value;
                 if (m_MouseClickExt == null)
                 {
-                    HookManager.MouseClickExt -= HookManager_MouseClickExt;
+                    Hook.MouseClickExt -= HookManager_MouseClickExt;
                 }
             }
         }
@@ -279,7 +279,7 @@ namespace Hook
             {
                 if (m_KeyPress == null)
                 {
-                    HookManager.KeyPress += HookManager_KeyPress;
+                    Hook.KeyPress += HookManager_KeyPress;
                 }
                 m_KeyPress += value;
             }
@@ -288,7 +288,7 @@ namespace Hook
                 m_KeyPress -= value;
                 if (m_KeyPress == null)
                 {
-                    HookManager.KeyPress -= HookManager_KeyPress;
+                    Hook.KeyPress -= HookManager_KeyPress;
                 }
             }
         }
@@ -312,7 +312,7 @@ namespace Hook
             {
                 if (m_KeyUp == null)
                 {
-                    HookManager.KeyUp += HookManager_KeyUp;
+                    Hook.KeyUp += HookManager_KeyUp;
                 }
                 m_KeyUp += value;
             }
@@ -321,7 +321,7 @@ namespace Hook
                 m_KeyUp -= value;
                 if (m_KeyUp == null)
                 {
-                    HookManager.KeyUp -= HookManager_KeyUp;
+                    Hook.KeyUp -= HookManager_KeyUp;
                 }
             }
         }
@@ -345,7 +345,7 @@ namespace Hook
             {
                 if (m_KeyDown == null)
                 {
-                    HookManager.KeyDown += HookManager_KeyDown;
+                    Hook.KeyDown += HookManager_KeyDown;
                 }
                 m_KeyDown += value;
             }
@@ -354,7 +354,7 @@ namespace Hook
                 m_KeyDown -= value;
                 if (m_KeyDown == null)
                 {
-                    HookManager.KeyDown -= HookManager_KeyDown;
+                    Hook.KeyDown -= HookManager_KeyDown;
                 }
             }
         }

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Hook
 {
-    public static partial class HookManager
+    public static partial class Hook
     {
         /// <summary>
         /// 该CallWndProc钩子程序与调用SetWindowsHookEx函数一起使用的应用程序定义的或者库定义的回调函数。
@@ -19,7 +19,7 @@ namespace Hook
         /// </summary>
         private delegate int HookProc(int nCode, int wParam, IntPtr lParam);
 
-        #region 鼠标钩子处理
+        #region MouseHookHandle
 
         /// <summary>
         /// 此字段不客观需要的，但我们需要保持一个供参考的将被传递给非托管代码的委托。为了避免GC把它清理干净。
@@ -223,7 +223,7 @@ namespace Hook
 
         #endregion
 
-        #region 键盘钩子程序
+        #region KeyboardHookHandle
 
         /// <summary>
         /// 此字段不客观需要的，但我们需要保持一个供参考的将被传递给非托管代码的委托。
