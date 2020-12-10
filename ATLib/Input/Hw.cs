@@ -268,7 +268,7 @@ namespace ATLib.Input
         //{
         //    return LocDic[GetKeyVar(key)].ElementAt((int)language);
         //}
-        public static Tuple<int, string, string, string, string> Ak()
+        public static LanguageItems Ak()
         {
             var name = "";
             if (name.Equals("OVERVIEW"))
