@@ -17,6 +17,8 @@ XunitTest/obj/*
 XunitTest/bin/*
 OpenIt/obj/*
 OpenIt/bin/*
+Hook/obj/*
+Hook/bin/*
 RemoteLib/obj/*
 RemoteLib/bin/*
 CMTest/obj/*

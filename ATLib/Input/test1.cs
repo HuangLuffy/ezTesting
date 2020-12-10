@@ -4,83 +4,72 @@ using System.Windows.Forms;
 
 namespace ATLib.Input
 {
-    public class test1
+    public class HookDll
     {
-        public static void RightClick(int x, int y)
+        private KBDLLHOOKSTRUCT kbdllhs;
+        private IntPtr iHookHandle = IntPtr.Zero;
+        private GCHandle _hookProcHandle;
+        public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SetWindowsHookEx(int hookid, HookProc pfnhook, IntPtr hinst, int threadid);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern bool UnhookWindowsHookEx(IntPtr hhook);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern IntPtr CallNextHookEx(IntPtr hhook, int code, IntPtr wparam, IntPtr lparam);
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        private static extern IntPtr GetModuleHandle(string lpModuleName);
+        [DllImport("Kernel32.dll", EntryPoint = "RtlMoveMemory")]
+        public static extern void CopyMemory(ref KBDLLHOOKSTRUCT Source, IntPtr Destination, int Length);
+
+        private const int WH_KEYBOARD = 13;
+
+        public void DisableKBDHook()
         {
-            NativeStructs.Input input = new NativeStructs.Input
+            try
             {
-                type = NativeEnums.SendInputEventType.Mouse,
-                mouseInput = new NativeStructs.MouseInput
+                if (iHookHandle != IntPtr.Zero)
                 {
-                    dx = 0,
-                    dy = 0,
-                    mouseData = 0,
-                    dwFlags = NativeEnums.MouseEventFlags.Absolute | NativeEnums.MouseEventFlags.RightDown | NativeEnums.MouseEventFlags.Move,
-                    time = 0,
-                    dwExtraInfo = IntPtr.Zero,
-                },
-            };
-
-            var primaryScreen = Screen.PrimaryScreen;
-            input.mouseInput.dx = Convert.ToInt32((x - primaryScreen.Bounds.Left) * 65536 / primaryScreen.Bounds.Width);
-            input.mouseInput.dy = Convert.ToInt32((y - primaryScreen.Bounds.Top) * 65536 / primaryScreen.Bounds.Height);
-            NativeMethods.SendInput(1, ref input, Marshal.SizeOf(input));
-            input.mouseInput.dwFlags = NativeEnums.MouseEventFlags.Absolute | NativeEnums.MouseEventFlags.RightUp | NativeEnums.MouseEventFlags.Move;
-            NativeMethods.SendInput(1, ref input, Marshal.SizeOf(input));
+                    UnhookWindowsHookEx(iHookHandle);
+                }
+                _hookProcHandle.Free();
+                iHookHandle = IntPtr.Zero;
+            }
+            catch
+            {
+                return;
+            }
         }
-
-        internal static class NativeMethods
+        public void EnableKBDHook()
         {
-            [DllImport("user32.dll", SetLastError = true)]
-            internal static extern uint SendInput(uint nInputs, ref NativeStructs.Input pInputs, int cbSize);
+            HookProc hookProc = new HookProc(KBDDelegate);
+            _hookProcHandle = GCHandle.Alloc(hookProc);
+            iHookHandle = SetWindowsHookEx(WH_KEYBOARD, hookProc, GetModuleHandle("HookDll.dll"), 0);
+            if (iHookHandle == IntPtr.Zero)
+            {
+                throw new System.Exception("错误,钩子失败!");
+            }
         }
-
-        internal static class NativeStructs
+        public IntPtr KBDDelegate(int iCode, IntPtr wParam, IntPtr lParam)
         {
-            [StructLayout(LayoutKind.Sequential)]
-            internal struct Input
-            {
-                public NativeEnums.SendInputEventType type;
-                public MouseInput mouseInput;
-            }
+            kbdllhs = new KBDLLHOOKSTRUCT();
+            CopyMemory(ref kbdllhs, lParam, 20);
 
-            [StructLayout(LayoutKind.Sequential)]
-            internal struct MouseInput
-            {
-                public int dx;
-                public int dy;
-                public uint mouseData;
-                public NativeEnums.MouseEventFlags dwFlags;
-                public uint time;
-                public IntPtr dwExtraInfo;
-            }
+            //结果就在这里了^_^
+            int iHookCode = kbdllhs.vkCode;
+            DisableKBDHook();
+            EnableKBDHook();
+            return CallNextHookEx(iHookHandle, iCode, wParam, lParam);
         }
-
-        internal static class NativeEnums
-        {
-            internal enum SendInputEventType : int
-            {
-                Mouse = 0,
-                Keyboard = 1,
-                Hardware = 2,
-            }
-
-            [Flags]
-            internal enum MouseEventFlags : uint
-            {
-                Move = 0x0001,
-                LeftDown = 0x0002,
-                LeftUp = 0x0004,
-                RightDown = 0x0008,
-                RightUp = 0x0010,
-                MiddleDown = 0x0020,
-                MiddleUp = 0x0040,
-                XDown = 0x0080,
-                XUp = 0x0100,
-                Wheel = 0x0800,
-                Absolute = 0x8000,
-            }
-        }
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KBDLLHOOKSTRUCT
+    {
+        public int vkCode;
+        public int scanCode;
+        public int flags;
+        public int time;
+        public int dwExtraInfo;
     }
 }

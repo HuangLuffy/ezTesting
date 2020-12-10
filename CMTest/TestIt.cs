@@ -6,6 +6,8 @@ using System.Data;
 using System.Linq;
 using System.Media;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using ATLib.Input;
 using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
 using CMTest.Project.RemoteModule;
@@ -36,8 +38,8 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            //MasterPlus.ReassignMenuItems.GetReassignMenuItemsList();
-            //UtilTime.WaitTime(1);
+            HookDll aa = new HookDll();
+            aa.EnableKBDHook();
             _mpTestFlows = new MasterPlusTestFlows();
             _mpTestFlows.Case_AssignInLoop();
 
@@ -45,7 +47,13 @@ namespace CMTest
             AssembleTopMenu();
             //GetKeyboardKeys();
         }
-
+        private void txtRemark_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+            {
+                //codes what you want
+            }
+        }
         private void AssembleTopMenu()
         {
             if (_optionsTopMenu.Any()) return;

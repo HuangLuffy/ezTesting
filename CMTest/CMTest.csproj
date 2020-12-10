@@ -77,6 +77,7 @@
     <Compile Include="Project\MasterPlus\MasterPlusTestActions.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusObj.cs" />
     <Compile Include="Project\MasterPlus\MasterPlusTestFlows.cs" />
+    <Compile Include="Project\MasterPlus\MasterPlusTestKeyMappingActions.cs" />
     <Compile Include="Project\RemoteModule\Apis.cs" />
     <Compile Include="Project\RemoteModule\MonitorAction.cs" />
     <Compile Include="Project\RemoteModule\MonitorModule.cs" />

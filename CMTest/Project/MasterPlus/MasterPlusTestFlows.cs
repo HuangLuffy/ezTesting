@@ -137,52 +137,52 @@ namespace CMTest.Project.MasterPlus
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
-        public void Case_AssignKeyOnReassignDialog(ScanCode scanCode, string assignWhichKey, bool onlyVerify = false)
+        public void Case_AssignKeyOnReassignDialog(ScanCode scanCode, string assignWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignKeyOnReassignDialog(scanCode, assignWhichKey, onlyVerify);
+                    MpActions.AssignKeyOnReassignDialog(scanCode, assignWhichKey, blAssignKey);
                 }
                 , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}.",
-                    onlyVerify ? $"Check the assigned Value is {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Push {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
-                , Ireporter.SetAsLines(onlyVerify ? $"The assigned Value is still {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Assign successfully.", "The Grid would be purple.")
+                    blAssignKey ? $"Check the assigned Value is {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Push {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
+                , Ireporter.SetAsLines(blAssignKey ? $"The assigned Value is still {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Assign successfully.", "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
-        public void Case_AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKey, bool onlyVerify = false)
+        public void Case_AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignKeyFromReassignMenu(whichMenuItem, whichMenuItemSubItem, assignWhichKey, onlyVerify);
+                    MpActions.AssignKeyFromReassignMenu(whichMenuItem, whichMenuItemSubItem, assignWhichKey, blAssignKey);
                 }
                 , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}.",
                     $"Open Reassignment Menu.",
-                    onlyVerify ? $"Check the assigned Value is {whichMenuItemSubItem} on the Reassignment Dialog." : $"Choose {whichMenuItem} > {whichMenuItemSubItem}.")
-                , Ireporter.SetAsLines(onlyVerify ? $"The assigned Value is still {whichMenuItemSubItem} on the Reassignment Dialog." : $"Assign successfully.", "The Grid would be purple.")
+                    blAssignKey ? $"Check the assigned Value is {whichMenuItemSubItem} on the Reassignment Dialog." : $"Choose {whichMenuItem} > {whichMenuItemSubItem}.")
+                , Ireporter.SetAsLines(blAssignKey ? $"The assigned Value is still {whichMenuItemSubItem} on the Reassignment Dialog." : $"Assign successfully.", "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
-        public void Case_DisableKey(string disableWhichKey, bool onlyVerify = false)
+        public void Case_DisableKey(string disableWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.DisableKey(disableWhichKey, onlyVerify);
+                    MpActions.DisableKey(disableWhichKey, blAssignKey);
                 }
                 , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {disableWhichKey}.",
-                    onlyVerify ? $"Check the {disableWhichKey} is disabled." : $"Set it disabled.")
-                , Ireporter.SetAsLines(onlyVerify ? $"The {disableWhichKey} is still disabled." : $"Disable successfully.", "The Grid would be red.")
+                    blAssignKey ? $"Check the {disableWhichKey} is disabled." : $"Set it disabled.")
+                , Ireporter.SetAsLines(blAssignKey ? $"The {disableWhichKey} is still disabled." : $"Disable successfully.", "The Grid would be red.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
-        public void Case_EnableKey(string enableWhichKey, bool onlyVerify = false)
+        public void Case_EnableKey(string enableWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.EnableKey(enableWhichKey, onlyVerify);
+                    MpActions.EnableKey(enableWhichKey, blAssignKey);
                 }
                 , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {enableWhichKey}.",
-                    onlyVerify ? $"Check the {enableWhichKey} is enabled." : $"Set it enabled.")
-                , Ireporter.SetAsLines(onlyVerify ? $"The {enableWhichKey} is still enabled and the key value is still the default value {enableWhichKey} on the Reassignment Dialog." : $"Enable successfully and the key value is default value {enableWhichKey} on the Reassignment Dialog.", "The Grid would be green.")
+                    blAssignKey ? $"Check the {enableWhichKey} is enabled." : $"Set it enabled.")
+                , Ireporter.SetAsLines(blAssignKey ? $"The {enableWhichKey} is still enabled and the key value is still the default value {enableWhichKey} on the Reassignment Dialog." : $"Enable successfully and the key value is default value {enableWhichKey} on the Reassignment Dialog.", "The Grid would be green.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
@@ -199,15 +199,15 @@ namespace CMTest.Project.MasterPlus
         }
 
         //or ma
-        public void Case_AssignInLoop(bool onlyVerify = false)
+        public void Case_AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
                     MpActions.AssignInLoop();
                 }
                 , Ireporter.SetAsLines($"Assign all keys on the Keyboard with all keys in Reassignment menu.",
-                    onlyVerify ? $"Check the all the assigned key work." : $"Check the all the assigned key work!")
-                , Ireporter.SetAsLines(onlyVerify ? $"Check the all the assigned key work." : $"All the assigned key work.", "The Grid would be purple.")
+                    blAssignKey ? $"Check the all the assigned key work." : $"Check the all the assigned key work!")
+                , Ireporter.SetAsLines(blAssignKey ? $"Check the all the assigned key work." : $"All the assigned key work.", "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
