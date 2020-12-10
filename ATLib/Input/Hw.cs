@@ -27,6 +27,18 @@ namespace ATLib.Input
 
         public class LanguageItems
         {
+            public LanguageItems()
+            {
+
+            }
+            public LanguageItems(int v1, string v2, string v3, string v4, string v5)
+            {
+                this.Index = v1;
+                this.Install = v2;
+                this.English = v3;
+                this.Overview = v4;
+                this.TsFile = v5;
+            }
             public int Index { set; get; }
             public string Install { set; get; }
             public string English { set; get; }
@@ -37,19 +49,19 @@ namespace ATLib.Input
         {
             public LanguageItems English = new LanguageItems { Index = 0, Install = "English", English = "English", Overview = "OVERVIEW", TsFile = "" };
             public LanguageItems ChineseSimplified = new LanguageItems { Index = 1, Install = "中文（简体", English = "ChineseSimplified", Overview = "概观", TsFile = "masterplus_zh_cn.ts"};
-            public Tuple<int, string, string, string, string> ChineseTraditional = new Tuple<int, string, string, string, string>(2, "繁體中文", "ChineseTraditional", "概觀", "masterplus_zh_tw.ts");
-            public Tuple<int, string, string, string, string> French = new Tuple<int, string, string, string, string>(3, "Français", "French", "VUE D’ENSEMBLE", "masterplus_fr.ts");
-            public Tuple<int, string, string, string, string> German = new Tuple<int, string, string, string, string>(4, "Deutsch", "German", "ÜBERSICHT", "masterplus_de.ts");
-            public Tuple<int, string, string, string, string> Italian = new Tuple<int, string, string, string, string>(5, "Italiano", "Italian", "DESCRIZIONE", "masterplus_it.ts");
-            public Tuple<int, string, string, string, string> Japanese = new Tuple<int, string, string, string, string>(6, "日本語", "Japanese", "概要", "masterplus_ja.ts");
-            public Tuple<int, string, string, string, string> Korean = new Tuple<int, string, string, string, string>(7, "Korean", "Korean", "개요", "masterplus_ko.ts");
-            public Tuple<int, string, string, string, string> Malay = new Tuple<int, string, string, string, string>(8, "Malay", "Malay", "GAMBARAN KESELURUHAN", "masterplus_ms.ts");
-            public Tuple<int, string, string, string, string> Portuguese = new Tuple<int, string, string, string, string>(9, "Português (Portugal)", "Portuguese", "VISÃO GERAL", "masterplus_pt.ts");
-            public Tuple<int, string, string, string, string> Russian = new Tuple<int, string, string, string, string>(10, "Русский", "Russian", "ОБЩИЕ СВЕДЕНИЯ", "masterplus_ru.ts");
-            public Tuple<int, string, string, string, string> Spanish = new Tuple<int, string, string, string, string>(11, "Español", "Spanish", "INFORMACIÓN GENERAL", "masterplus_es.ts");
-            public Tuple<int, string, string, string, string> Thai = new Tuple<int, string, string, string, string>(12, "Thai", "Thai", "ภาพรวม", "masterplus_th.ts");
-            public Tuple<int, string, string, string, string> Turkish = new Tuple<int, string, string, string, string>(13, "Türkçe", "Turkish", "GENEL BAKIŞ", "masterplus_tr.ts");
-            public Tuple<int, string, string, string, string> Vietnamese = new Tuple<int, string, string, string, string>(14, "Vietnamese", "Vietnamese", "TỔNG QUAN", "masterplus_vi.ts");
+            public LanguageItems ChineseTraditional = new LanguageItems(2, "繁體中文", "ChineseTraditional", "概觀", "masterplus_zh_tw.ts");
+            public LanguageItems French = new LanguageItems(3, "Français", "French", "VUE D’ENSEMBLE", "masterplus_fr.ts");
+            public LanguageItems German = new LanguageItems(4, "Deutsch", "German", "ÜBERSICHT", "masterplus_de.ts");
+            public LanguageItems Italian = new LanguageItems(5, "Italiano", "Italian", "DESCRIZIONE", "masterplus_it.ts");
+            public LanguageItems Japanese = new LanguageItems(6, "日本語", "Japanese", "概要", "masterplus_ja.ts");
+            public LanguageItems Korean = new LanguageItems(7, "Korean", "Korean", "개요", "masterplus_ko.ts");
+            public LanguageItems Malay = new LanguageItems(8, "Malay", "Malay", "GAMBARAN KESELURUHAN", "masterplus_ms.ts");
+            public LanguageItems Portuguese = new LanguageItems(9, "Português (Portugal)", "Portuguese", "VISÃO GERAL", "masterplus_pt.ts");
+            public LanguageItems Russian = new LanguageItems(10, "Русский", "Russian", "ОБЩИЕ СВЕДЕНИЯ", "masterplus_ru.ts");
+            public LanguageItems Spanish = new LanguageItems(11, "Español", "Spanish", "INFORMACIÓN GENERAL", "masterplus_es.ts");
+            public LanguageItems Thai = new LanguageItems(12, "Thai", "Thai", "ภาพรวม", "masterplus_th.ts");
+            public LanguageItems Turkish = new LanguageItems(13, "Türkçe", "Turkish", "GENEL BAKIŞ", "masterplus_tr.ts");
+            public LanguageItems Vietnamese = new LanguageItems(14, "Vietnamese", "Vietnamese", "TỔNG QUAN", "masterplus_vi.ts");
 
 
             //public Tuple<int, string, string, string, string> English = new Tuple<int, string, string, string, string>(0, "English", "English", "OVERVIEW", "");
