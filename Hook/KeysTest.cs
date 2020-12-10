@@ -36,5 +36,10 @@ namespace Hook
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tb.Clear();
+        }
     }
 }

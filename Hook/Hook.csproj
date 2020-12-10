@@ -88,4 +88,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)"CMTest\bin\Debug</PostBuildEvent>
+  </PropertyGroup>
 </Project>

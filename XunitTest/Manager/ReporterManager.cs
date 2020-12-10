@@ -7,7 +7,7 @@ namespace XUnitTest.Manager
         private static IReporter _iReporter;
         public static IReporter GeReporter(string pathReportXml, IReporter iReporter = null)
         {
-            return _iReporter = iReporter ?? new ReporterXsl(pathReportXml);
+            return _iReporter = iReporter ?? new ReporterXsl(pathReportXml, "string xslPath", "string captureRelativePath", new Reporter.ResultTestInfo());
         }
     }
 }
