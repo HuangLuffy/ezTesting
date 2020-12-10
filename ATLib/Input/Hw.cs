@@ -10,7 +10,7 @@ using CommonLib.Util.IO;
 
 namespace ATLib.Input
 {
-    public static class Hw
+    public class Hw
     {
         private static readonly IDictionary<string, IEnumerable<string>> LocDic = new Dictionary<string, IEnumerable<string>>();
         //public static string CurrentLanguage = Language.EN
@@ -25,10 +25,18 @@ namespace ATLib.Input
             return new Language();
         }
 
+        public class LanguageItems
+        {
+            public int Index { set; get; }
+            public string Install { set; get; }
+            public string English { set; get; }
+            public string Overview { set; get; }
+            public string TsFile { set; get; }
+        }
         public class Language
         {
-            public Tuple<int, string, string, string, string> English = new Tuple<int, string, string, string, string>(0, "English", "English", "OVERVIEW", "");
-            public Tuple<int, string, string, string, string> ChineseSimplified = new Tuple<int, string, string, string, string>(1, "中文（简体", "ChineseSimplified", "概观", "masterplus_zh_cn.ts");
+            public LanguageItems English = new LanguageItems { Index = 0, Install = "English", English = "English", Overview = "OVERVIEW", TsFile = "" };
+            public LanguageItems ChineseSimplified = new LanguageItems { Index = 1, Install = "中文（简体", English = "ChineseSimplified", Overview = "概观", TsFile = "masterplus_zh_cn.ts"};
             public Tuple<int, string, string, string, string> ChineseTraditional = new Tuple<int, string, string, string, string>(2, "繁體中文", "ChineseTraditional", "概觀", "masterplus_zh_tw.ts");
             public Tuple<int, string, string, string, string> French = new Tuple<int, string, string, string, string>(3, "Français", "French", "VUE D’ENSEMBLE", "masterplus_fr.ts");
             public Tuple<int, string, string, string, string> German = new Tuple<int, string, string, string, string>(4, "Deutsch", "German", "ÜBERSICHT", "masterplus_de.ts");
@@ -43,11 +51,27 @@ namespace ATLib.Input
             public Tuple<int, string, string, string, string> Turkish = new Tuple<int, string, string, string, string>(13, "Türkçe", "Turkish", "GENEL BAKIŞ", "masterplus_tr.ts");
             public Tuple<int, string, string, string, string> Vietnamese = new Tuple<int, string, string, string, string>(14, "Vietnamese", "Vietnamese", "TỔNG QUAN", "masterplus_vi.ts");
 
-            public string GetMasterPlusLanguage(string overview)
-            {
-                var field =  typeof(Language).GetFields().FirstOrDefault((x) => ((Tuple<int, string, string, string, string>)x.GetValue(new Language())).Item4.Equals(overview));
-                return ((Tuple<int, string, string, string, string>)field.GetValue(new Language())).Item3;
-            }
+
+            //public Tuple<int, string, string, string, string> English = new Tuple<int, string, string, string, string>(0, "English", "English", "OVERVIEW", "");
+            //public Tuple<int, string, string, string, string> ChineseSimplified = new Tuple<int, string, string, string, string>(1, "中文（简体", "ChineseSimplified", "概观", "masterplus_zh_cn.ts");
+            //public Tuple<int, string, string, string, string> ChineseTraditional = new Tuple<int, string, string, string, string>(2, "繁體中文", "ChineseTraditional", "概觀", "masterplus_zh_tw.ts");
+            //public Tuple<int, string, string, string, string> French = new Tuple<int, string, string, string, string>(3, "Français", "French", "VUE D’ENSEMBLE", "masterplus_fr.ts");
+            //public Tuple<int, string, string, string, string> German = new Tuple<int, string, string, string, string>(4, "Deutsch", "German", "ÜBERSICHT", "masterplus_de.ts");
+            //public Tuple<int, string, string, string, string> Italian = new Tuple<int, string, string, string, string>(5, "Italiano", "Italian", "DESCRIZIONE", "masterplus_it.ts");
+            //public Tuple<int, string, string, string, string> Japanese = new Tuple<int, string, string, string, string>(6, "日本語", "Japanese", "概要", "masterplus_ja.ts");
+            //public Tuple<int, string, string, string, string> Korean = new Tuple<int, string, string, string, string>(7, "Korean", "Korean", "개요", "masterplus_ko.ts");
+            //public Tuple<int, string, string, string, string> Malay = new Tuple<int, string, string, string, string>(8, "Malay", "Malay", "GAMBARAN KESELURUHAN", "masterplus_ms.ts");
+            //public Tuple<int, string, string, string, string> Portuguese = new Tuple<int, string, string, string, string>(9, "Português (Portugal)", "Portuguese", "VISÃO GERAL", "masterplus_pt.ts");
+            //public Tuple<int, string, string, string, string> Russian = new Tuple<int, string, string, string, string>(10, "Русский", "Russian", "ОБЩИЕ СВЕДЕНИЯ", "masterplus_ru.ts");
+            //public Tuple<int, string, string, string, string> Spanish = new Tuple<int, string, string, string, string>(11, "Español", "Spanish", "INFORMACIÓN GENERAL", "masterplus_es.ts");
+            //public Tuple<int, string, string, string, string> Thai = new Tuple<int, string, string, string, string>(12, "Thai", "Thai", "ภาพรวม", "masterplus_th.ts");
+            //public Tuple<int, string, string, string, string> Turkish = new Tuple<int, string, string, string, string>(13, "Türkçe", "Turkish", "GENEL BAKIŞ", "masterplus_tr.ts");
+            //public Tuple<int, string, string, string, string> Vietnamese = new Tuple<int, string, string, string, string>(14, "Vietnamese", "Vietnamese", "TỔNG QUAN", "masterplus_vi.ts");
+            //public string GetMasterPlusLanguage(string overview)
+            //{
+            //    var field =  typeof(Language).GetFields().FirstOrDefault((x) => ((Tuple<int, string, string, string, string>)x.GetValue(new Language())).Item4.Equals(overview));
+            //    return ((Tuple<int, string, string, string, string>)field.GetValue(new Language())).Item3;
+            //}
         }
 
 
