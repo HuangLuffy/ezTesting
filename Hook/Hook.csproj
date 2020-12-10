@@ -46,12 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalEventProvider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Hook.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Hook.Designer.cs">
       <DependentUpon>Hook.cs</DependentUpon>
     </Compile>
+    <Compile Include="HookManager.Callback.cs" />
+    <Compile Include="HookManager.cs" />
+    <Compile Include="HookManager.Structures.cs" />
+    <Compile Include="HookManager.Windows.cs" />
+    <Compile Include="MouseEventExtArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Hook.resx">

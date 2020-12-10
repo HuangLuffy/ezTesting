@@ -30,26 +30,28 @@ namespace Hook
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.tb = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // richTextBox1
+            // tb
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(51, 50);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(394, 200);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
-            //this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_KeyPressed());
-            this.richTextBox1.KeyPress += new KeyPressEventHandler(this.richTextBox1_KeyPressed);
+            this.tb.Location = new System.Drawing.Point(12, 12);
+            this.tb.Name = "tb";
+            this.tb.ReadOnly = true;
+            this.tb.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.tb.Size = new System.Drawing.Size(473, 419);
+            this.tb.TabIndex = 0;
+            this.tb.Text = "";
+            this.tb.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.tb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox1_KeyPressed);
             // 
-            // Form1
+            // Hook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(512, 292);
-            this.Controls.Add(this.richTextBox1);
-            this.Name = "Form1";
+            this.ClientSize = new System.Drawing.Size(497, 443);
+            this.Controls.Add(this.tb);
+            this.Name = "Hook";
             this.Text = "Hook";
             this.ResumeLayout(false);
 
@@ -57,7 +59,7 @@ namespace Hook
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox tb;
     }
 }
 
