@@ -25,16 +25,16 @@ namespace ATLib.API
         /// 
         /// </summary>
         /// <param name="listIntPtr"></param>
-        /// <param name="Name"></param>
-        /// <param name="AutomationId"></param>
-        /// <param name="ClassName"></param>
-        /// <param name="FrameworkId"></param>
-        /// <param name="ControlType"></param>
-        /// <param name="Index"></param>
-        /// <param name="Timeout"></param>
-        /// <param name="IsEnabled"></param>
+        /// <param name="name"></param>
+        /// <param name="automationId"></param>
+        /// <param name="className"></param>
+        /// <param name="frameworkId"></param>
+        /// <param name="controlType"></param>
+        /// <param name="index"></param>
+        /// <param name="timeout"></param>
+        /// <param name="isEnabled"></param>
         /// <returns></returns>
-        public IntPtr GetHwnd(List<IntPtr> listIntPtr = null, string Name = null, string AutomationId = null, string ClassName = null, string FrameworkId = null, string ControlType = null, string Index = null, string Timeout = null, string IsEnabled = null)
+        public IntPtr GetHwnd(List<IntPtr> listIntPtr = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string index = null, string timeout = null, string isEnabled = null)
         {
             try
             {
@@ -49,8 +49,8 @@ namespace ATLib.API
                     do
                     {
                         _container = listIntPtr[i];
-                        intPtrLoop = FindWindowEx(_container, intPtrLoop, ClassName, null);
-                        if (IsHwndMatched(intPtrLoop, Name, AutomationId))
+                        intPtrLoop = FindWindowEx(_container, intPtrLoop, className, null);
+                        if (IsHwndMatched(intPtrLoop, name, automationId))
                         {
                             return intPtrLoop;
                         }

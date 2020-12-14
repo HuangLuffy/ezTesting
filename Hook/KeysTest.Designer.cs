@@ -71,7 +71,7 @@ namespace Hook
             // labelHide
             // 
             this.labelHide.AutoSize = true;
-            this.labelHide.Location = new System.Drawing.Point(491, 389);
+            this.labelHide.Location = new System.Drawing.Point(500, 389);
             this.labelHide.Name = "labelHide";
             this.labelHide.Size = new System.Drawing.Size(0, 12);
             this.labelHide.TabIndex = 3;
