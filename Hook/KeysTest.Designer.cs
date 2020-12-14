@@ -33,6 +33,7 @@ namespace Hook
             this.tb = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.labelHide = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tb
@@ -67,17 +68,27 @@ namespace Hook
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // labelHide
+            // 
+            this.labelHide.AutoSize = true;
+            this.labelHide.Location = new System.Drawing.Point(491, 389);
+            this.labelHide.Name = "labelHide";
+            this.labelHide.Size = new System.Drawing.Size(0, 12);
+            this.labelHide.TabIndex = 3;
+            // 
             // KeysTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 443);
+            this.Controls.Add(this.labelHide);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tb);
             this.Name = "KeysTest";
             this.Text = "KeysTest";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -86,6 +97,7 @@ namespace Hook
         private System.Windows.Forms.RichTextBox tb;
         private Button button1;
         private Button button2;
+        private Label labelHide;
     }
 }
 
