@@ -74,8 +74,6 @@ namespace CMTest.Project.MasterPlus
             keyMappingResetButton.DoClickPoint(1);
             ClickCommonDialog();
         }
-        
-
         public AT GetMasterPlusMainWindow(int timeout = 0)
         {
             return new AT().GetElementFromChild(MPObj.MainWindow, timeout);

@@ -34,10 +34,11 @@ namespace Hook
         }
         private void HookManager_KeyDown(object sender, KeyEventArgs e)
         {
-            var k = e.KeyCode.ToString();
+            tb.Clear();
+            var k = e.KeyCode.ToString() + "\n";
             tb.AppendText(k);
             AddValueToLabel(k);
-
+            tb.AppendText(e.KeyValue.ToString());
             tb.ScrollToCaret();
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e)
