@@ -38,8 +38,6 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            HookDll aa = new HookDll();
-            aa.EnableKBDHook();
             _mpTestFlows = new MasterPlusTestFlows();
             _mpTestFlows.Case_AssignInLoop();
 

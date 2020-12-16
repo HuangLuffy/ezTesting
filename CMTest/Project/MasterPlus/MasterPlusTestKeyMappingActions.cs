@@ -235,6 +235,9 @@ namespace CMTest.Project.MasterPlus
         public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
+
+            assignContainer.Spy();
+
             var keys = assignContainer.GetElementsAllChild().GetATCollection().ToList();
             //var keyCount = keys.Count;
             //for (var i = keyCount - 1; i >= 4; i--)

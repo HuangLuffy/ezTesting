@@ -140,17 +140,23 @@ namespace ATLib
         {
             try
             {
+                UtilTime.WaitTime(2);
                 //AT atObj = null;
                 AutomationElement = AutomationElement ?? AutomationElement.RootElement;  //System.Windows.Automation.Condition.TrueCondition
-                var t = AutomationElement.FindAll(System.Windows.Automation.TreeScope.Descendants, Condition.TrueCondition);
+                var t = AutomationElement.RootElement.FindAll(System.Windows.Automation.TreeScope.Descendants, Condition.TrueCondition);
                 Console.WriteLine(t.Count);
                 //AutomationElementCollection t = this.me.FindAll(System.Windows.Automation.TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, System.Windows.Automation.ControlType.Pane));
                 foreach (AutomationElement item in t)
                 {
                     try
                     {
-                        Console.WriteLine(
-                            $"[{item.Current.Name.ToString()}] [{item.Current.ControlType.ProgrammaticName.ToString()}] [{item.Current.ClassName.ToString()}] [{item.Current.AutomationId}]");
+                        if (item.Current.Name.ToLower().Equals("a"))
+                        {
+                            Console.WriteLine("121212");
+                            Console.WriteLine(
+                                $"[{item.Current.Name.ToString()}] [{item.Current.ControlType.ProgrammaticName.ToString()}] [{item.Current.ClassName.ToString()}] [{item.Current.FullDescription}]");
+                        }
+                        
                     }
                     catch (Exception ex)
                     {
