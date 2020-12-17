@@ -173,10 +173,10 @@ namespace ATLib.Input
             public static KeyPros SC_KEY_EQUATION = new KeyPros() { ScanCode = 13, KeyValue = 187, Flag = 0, KeyCode = "Oemplus", VarName = nameof(SC_KEY_EQUATION), UiaName = "=+" };
             public static KeyPros SC_KEY_BACKSPACE = new KeyPros() { ScanCode = 14, KeyValue = 8, Flag = 0, KeyCode = "Back", VarName = nameof(SC_KEY_BACKSPACE), UiaName = "BACKSPACE" };
             public static KeyPros SC_KEY_TAB = new KeyPros() { ScanCode = 15, KeyValue = 9, Flag = 0, KeyCode = "Tab", VarName = nameof(SC_KEY_TAB), UiaName = "TAB" };
-            public static KeyPros SC_KEY_L_BACKETS = new KeyPros() { ScanCode = 26, KeyValue = 219, Flag = 0, KeyCode = "OemOpenBrackets", VarName = nameof(SC_KEY_L_BACKETS), UiaName = "" };
-            public static KeyPros SC_KEY_R_BACKETS = new KeyPros() { ScanCode = 27, KeyValue = 221, Flag = 0, KeyCode = "Oem6", VarName = nameof(SC_KEY_R_BACKETS), UiaName = "" };
-            public static KeyPros SC_KEY_BACKSLASH = new KeyPros() { ScanCode = 43, KeyValue = 220, Flag = 0, KeyCode = "Oem5", VarName = nameof(SC_KEY_BACKSLASH), UiaName = "" };
-            public static KeyPros SC_KEY_CAP = new KeyPros() { ScanCode = 58, KeyValue = 20, Flag = 0, KeyCode = "Capital", VarName = nameof(SC_KEY_CAP), UiaName = "" };
+            public static KeyPros SC_KEY_L_BACKETS = new KeyPros() { ScanCode = 26, KeyValue = 219, Flag = 0, KeyCode = "OemOpenBrackets", VarName = nameof(SC_KEY_L_BACKETS), UiaName = "{[" };
+            public static KeyPros SC_KEY_R_BACKETS = new KeyPros() { ScanCode = 27, KeyValue = 221, Flag = 0, KeyCode = "Oem6", VarName = nameof(SC_KEY_R_BACKETS), UiaName = "}]" };
+            public static KeyPros SC_KEY_BACKSLASH = new KeyPros() { ScanCode = 43, KeyValue = 220, Flag = 0, KeyCode = "Oem5", VarName = nameof(SC_KEY_BACKSLASH), UiaName = "|\\" };
+            public static KeyPros SC_KEY_CAP = new KeyPros() { ScanCode = 58, KeyValue = 20, Flag = 0, KeyCode = "Capital", VarName = nameof(SC_KEY_CAP), UiaName = "CAPSLK" };
             public static KeyPros SC_KEY_SEMICOLON = new KeyPros() { ScanCode = 39, KeyValue = 186, Flag = 0, KeyCode = "Oem1", VarName = nameof(SC_KEY_SEMICOLON), UiaName = "" };
             public static KeyPros SC_KEY_APOSTROPHE = new KeyPros() { ScanCode = 40, KeyValue = 222, Flag = 0, KeyCode = "Oem7", VarName = nameof(SC_KEY_APOSTROPHE), UiaName = "" };
             public static KeyPros SC_KEY_ENTER = new KeyPros() { ScanCode = 28, KeyValue = 13, Flag = 0, KeyCode = "Return", VarName = nameof(SC_KEY_ENTER), UiaName = "" };
