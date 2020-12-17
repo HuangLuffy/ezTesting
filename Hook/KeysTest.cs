@@ -35,7 +35,7 @@ namespace Hook
         private void HookManager_KeyDown(object sender, KeyEventArgs e)
         {
             tb.Clear();
-            var k = e.KeyCode.ToString() + "\n";
+            ;var k = e.KeyCode.ToString() + "\n";
             tb.AppendText(k);
             AddValueToLabel(k);
             tb.AppendText(e.KeyValue.ToString());
