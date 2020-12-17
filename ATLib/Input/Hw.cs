@@ -172,7 +172,7 @@ namespace ATLib.Input
             public static KeyPros SC_KEY_NEG = new KeyPros() { ScanCode = 12, KeyValue = 189, Flag = 0, KeyCode = "OemMinus", VarName = nameof(SC_KEY_NEG), UiaName = "-_" };
             public static KeyPros SC_KEY_EQUATION = new KeyPros() { ScanCode = 13, KeyValue = 187, Flag = 0, KeyCode = "Oemplus", VarName = nameof(SC_KEY_EQUATION), UiaName = "=+" };
             public static KeyPros SC_KEY_BACKSPACE = new KeyPros() { ScanCode = 14, KeyValue = 8, Flag = 0, KeyCode = "Back", VarName = nameof(SC_KEY_BACKSPACE), UiaName = "BACKSPACE" };
-            public static KeyPros SC_KEY_TAB = new KeyPros() { ScanCode = 15, KeyValue = 9, Flag = 0, KeyCode = "Tab", VarName = nameof(SC_KEY_TAB), UiaName = "" };
+            public static KeyPros SC_KEY_TAB = new KeyPros() { ScanCode = 15, KeyValue = 9, Flag = 0, KeyCode = "Tab", VarName = nameof(SC_KEY_TAB), UiaName = "TAB" };
             public static KeyPros SC_KEY_L_BACKETS = new KeyPros() { ScanCode = 26, KeyValue = 219, Flag = 0, KeyCode = "OemOpenBrackets", VarName = nameof(SC_KEY_L_BACKETS), UiaName = "" };
             public static KeyPros SC_KEY_R_BACKETS = new KeyPros() { ScanCode = 27, KeyValue = 221, Flag = 0, KeyCode = "Oem6", VarName = nameof(SC_KEY_R_BACKETS), UiaName = "" };
             public static KeyPros SC_KEY_BACKSLASH = new KeyPros() { ScanCode = 43, KeyValue = 220, Flag = 0, KeyCode = "Oem5", VarName = nameof(SC_KEY_BACKSLASH), UiaName = "" };
