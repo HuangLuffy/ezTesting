@@ -21,6 +21,10 @@ namespace CommonLib.Util.ComBus
             else
             {
                 OpenSerialPort();
+
+                var info = Operations.ReadDo(Convert.ToInt16(_addr), Convert.ToInt16(1));
+                var rst = SendInfo(info);
+
             }
         }
         public void OpenSerialPort()
