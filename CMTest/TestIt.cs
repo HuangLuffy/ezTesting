@@ -12,6 +12,7 @@ using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
 using CMTest.Project.RemoteModule;
 using CommonLib;
+using CommonLib.Util.ComBus;
 using CommonLib.Util.IO;
 using CommonLib.Util.Xml;
 
@@ -38,6 +39,8 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
+            Com c = new Com();
+            c.Load();
             _mpTestFlows = new MasterPlusTestFlows();
             _mpTestFlows.Case_AssignInLoop();
 

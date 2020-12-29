@@ -234,10 +234,16 @@ namespace CMTest.Project.MasterPlus
         //for ma
         public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
+
+            var damApp = new AT().GetElement(name: "DAM测试软件");
+            var doControl = damApp.GetElement(name: "DO控制", treeScope: AT.TreeScope.Descendants);
+            var button1 = doControl.GetElement(name: "R1_2");
+            var button2 = doControl.GetElement(name: "C1_10");
+            button1.DoClick(waitTime: 0);
+            button2.DoClick();
+
+            UtilTime.WaitTime(10);
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
-
-            assignContainer.Spy();
-
             var keys = assignContainer.GetElementsAllChild().GetATCollection().ToList();
             //var keyCount = keys.Count;
             //for (var i = keyCount - 1; i >= 4; i--)
