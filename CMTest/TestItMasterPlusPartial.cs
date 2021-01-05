@@ -38,11 +38,14 @@ namespace CMTest
             _optionsXmlPlugInOutDeviceNames.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
         }
 
-        public void GetKeyboardKeys()
+        public void GetMatrixFromFile()
         {
             Hw.GetKeyboardKeys(_mpTestFlows.MpActions.ResourcesKeysRelativePath);
         }
-
+        public void GetKeyboardKeysFromKeyMapTabFile()
+        {
+            Hw.GetMatrixFromRelayControllerAndAssembleToKeys(_mpTestFlows.MpActions.MatrixRelativePath);
+        }
         private dynamic Flow_MasterPlus_LaunchAndCheckCrash()
         {
             _mpTestFlows.Flow_LaunchAndCheckCrash();

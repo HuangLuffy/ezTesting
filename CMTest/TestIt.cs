@@ -52,7 +52,7 @@ namespace CMTest
 
             _portalTestFlows = new PortalTestFlows();
             AssembleTopMenu();
-            //GetKeyboardKeys();
+            //GetKeyboardKeysFromKeyMapTabFile();
         }
         private void txtRemark_KeyDown(object sender, KeyEventArgs e)
         {

@@ -406,6 +406,16 @@ namespace ATLib.Input
                 //UtilFile.WriteFile("D:\\a.txt", line.Split(',')[0].Replace("    { ", "") + $" = -10,");
             }
         }
+        public static void GetMatrixFromRelayControllerAndAssembleToKeys(string filePath)
+        {
+            var lines = UtilFile.GetListByLine(filePath);
+            foreach (var line in lines)
+            {
+                if (!line.Contains("=")) continue;
+                LocDic.Add(line.Split(',')[0].Replace("    { ", ""), keys);
+
+            }
+        }
         public static KBKeys GetScanCode(KBKeys key)
         {
             return key;
