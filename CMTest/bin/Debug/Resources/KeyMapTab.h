@@ -297,12 +297,6 @@ enum ScanCode
     SC_KEY_BORDER_LEFT_08,
     SC_KEY_BORDER_LEFT_09,
     SC_KEY_BORDER_LEFT_10,
-
-    //Power Mode preset hotkey
-    SC_KEY_POWER_MODE_DISABLE = 1025,   //LOGO + D
-    SC_KEY_POWER_MODE_WORKING,          //LOGO + W
-    SC_KEY_POWER_MODE_PERFORMANCE,      //LOGO + P
-    SC_KEY_POWER_MODE_GAMING,           //LOGO + G
 };
 
 //scan code : text
@@ -349,7 +343,7 @@ static std::map< int, std::vector< const char* > > KeyNameMap = {
     { SC_KEY_P, { "P", "P", "P", "P", "P", "P", "P", "P\nㅖ    ㅔ", "P", "P", "P\nЗ", "P", "P    ญ\nย", "P", "P" } },
     { SC_KEY_L_BACKETS, { "{\n[", "{\n[", "{\n[", "¨\n^", "Ü", "é    {\nè    [", "`\n@", "{\n[", "{\n[", "*\n+    ¨", "{\n[    Х", "^\n`    [", "{    ฐ\n[    บ", "Ğ", "{\n[" } },
     { SC_KEY_R_BACKETS, { "}\n]", "}\n]", "}\n]", "£\n$    ¤", "*\n+    ~", "*    }\n+    ]", "{\n[", "}\n]", "}\n]", "`\n´", "}\n]    Ъ", "*\n+    ]", "}    ,\n]    ล", "Ü\n~", "}\n]" } },
-    { SC_KEY_BACKSLASH, { "|\n\\", "|\n\\", "|\n\\", "µ\n*", "'\n#", "§\nù", "}\n]", "|\n₩", "|\n\\", "^\n~", "|\n\\    /", "ç\n}", "|    ฅ\n\\    ฃ", "", "|\n\\" } },
+    { SC_KEY_BACKSLASH, { "|\n\\", "|\n\\", "|\n\\", "µ\n*", "'\n#", "§\nù", "}\n]", "|\n₩", "|\n\\", "^\n~", "|\n\\    /", "ç\n}", "|    ฅ\n\\    ฃ", ">\n< |", "|\n\\" } },
     { SC_KEY_CAP, { "CAPSLK", "CAPSLK", "CAPSLK", "VERR\nMAJ", "CAPSLK", "MAIUSC", "CAPSLK\n英数", "CAPSLK", "CAPSLK", "CAPSLK", "CAPSLK", "CAPSLK", "CAPSLK", "CAPSLK", "CAPSLK" } },
     { SC_KEY_A, { "A", "A", "A", "Q", "A", "A", "A", "A\nㅁ", "A", "A", "A\nФ", "A", "A    ฤ\nฟ", "A", "A" } },
     { SC_KEY_S, { "S", "S", "S", "S", "S", "S", "S", "S\nㄴ", "S", "S", "S\nЫ", "S", "S    ฆ\nห", "S", "S" } },
@@ -369,7 +363,7 @@ static std::map< int, std::vector< const char* > > KeyNameMap = {
     { SC_KEY_C, { "C", "C", "C", "C", "C", "C", "C", "C\nㅊ", "C", "C", "C\nС", "C", "C    ฉ\nแ", "C", "C" } },
     { SC_KEY_V, { "V", "V", "V", "V", "V", "V", "V", "V\nㅍ", "V", "V", "V\nМ", "V", "V    ฮ\nอ", "V", "V" } },
     { SC_KEY_B, { "B", "B", "B", "B", "B", "B", "B", "B\nㅠ", "B", "B", "B\nИ", "B", "B    ฺ\n  ิ", "B", "B" } },
-    { SC_KEY_N, { "N", "N", "N", "N", "N", "N", "N", "N\nㅜ", "N", "N", "N\nТ", "N", "\n", "N", "N" } },
+    { SC_KEY_N, { "N", "N", "N", "N", "N", "N", "N", "N\nㅜ", "N", "N", "N\nТ", "N", "N  ์ \n ื", "N", "N" } },
     { SC_KEY_M, { "M", "M", "M", "?\n,", "M\nµ", "M", "M", "M\nㅡ", "M", "M", "M\nЬ", "M", "M    ?\nท", "M", "M" } },
     { SC_KEY_COMMA, { "<\n,", "<\n,", "<\n,", ".\n;", ";\n,", ";\n,", "<\n,", "<\n,", "<\n,", ";\n,", "<\n,    Б", ";\n,", "<    ฒ\n,    ม", "Ö", "<\n," } },
     { SC_KEY_DOT, { ">\n.", ">\n.", ">\n.", "/:", ":\n.", ":\n.", ">\n.", ">\n.", ">\n.", ":\n.", ">\n.    Ю", ":\n.", ">    ฬ\n.    ใ", "Ç", ">\n." } },
@@ -425,7 +419,7 @@ static std::map< int, std::vector< const char* > > KeyNameMap = {
     { SC_KEY_PRE_TRACK, {"PREVIOUS TRACK", "上一首", "上一首", "MORCEAU PRÉC", "VORHERIGER TITEL", "TRACCIA PRECEDENTE", "前の曲", "이전 트랙", "TREK SEBELUMNYA", "FAIXA ANTERIOR", "ПРЕДЫДУЩИЙ ТРЕК", "PISTA ANTERIOR", "แทร็กก่อนหน้า", "ÖNCEKİ PARÇA", "BÀI TRƯỚC" } },
     { SC_KEY_VOL_INC, {"VOLUME UP", "增加音量", "音量升高", "VOLUME PLUS", "LAUTSTÄRKE ERHÖHEN", "VOLUME SU", "音量を上げる", "볼륨 증가", "NAIK KELANTANGAN", "AUMENTAR O VOLUME", "УВЕЛИЧИТЬ ГРОМКОСТЬ", "SUBIR VOLUMEN", "เพิ่มระดับเสียง", "SES YÜKSELT", "TĂNG ÂM LƯỢNG" } },
     { SC_KEY_VOL_DEC, {"VOLUME DOWN", "减少音量", "音量降低", "VOLUME MOINS", "LAUTSTÄRKE VERRINGERN", "VOLUME GIÙ", "音量を下げる", "볼륨 감소", "TURUN KELANTANGAN ", "DIMINUIR O VOLUME", "УМЕНЬШИТЬ ГРОМКОСТЬ", "BAJAR VOLUMEN", "ลดระดับเสียง", "SES AZALT", "GIẢM ÂM LƯỢNG" } },
-    { SC_KEY_MUTE, {"MUTE", "静音", "靜音", "MUTE", "STUMM", "disattivare", "消音", "음소거", "BIS", "SEM SOM", "ОТКЛ. ЗВУКА", "SILENCIO", "ปิดเสียง", "SESSİZ", "TẮT ÂM" } },
+    { SC_KEY_MUTE, {"MUTE", "静音", "靜音", "MUTE", "STUMM", "DISATTIVARE", "消音", "음소거", "BIS", "SEM SOM", "ОТКЛ. ЗВУКА", "SILENCIO", "ปิดเสียง", "SESSİZ", "TẮT ÂM" } },
     { SC_KEY_MEDIA_SEL, {"MEDIA PLAYER", "媒体播放器", "媒體播放器", "LECTEUR MULTIMÉDIA", "MEDIENPLAYER", "LETTORE MULTIMEDIALE", "メディアプレーヤー", "미디어 플레이어", "PEMAIN MEDIA", "LEITOR MULTIMÉDIA", "МЕДИАПЛЕЕР", "REPRODUCTOR MULTIMEDIA", "เครื่องเล่นมีเดีย", "MEDYA OYNATICI", "TRÌNH PHÁT MEDIA" } },
     { SC_KEY_MAIL, {"E-MAIL", "电子邮件", "電子郵件", "E-MAIL", "E-MAIL", "E-MAIL", "電子メール", "이메일", "E-MEL", "E-MAIL", "ЭЛ. ПОЧТА", "CORREO ELECTRÓNICO", "อีเมล", "E-POSTA", "EMAIL" } },
     { SC_KEY_CALCULATOR, {"CALCULATOR", "计算器", "計算機", "CALCULATRICE", "RECHNER", "CALCOLATRICE", "計算機", "계산기", "KALKULATOR", "CALCULADORA", "КАЛЬКУЛЯТОР", "CALCULADORA", "เครื่องคิดเลข", "HESAP MAKİNESİ", "MÁY TÍNH" } },
@@ -453,11 +447,7 @@ static std::map< int, std::vector< const char* > > KeyNameMap = {
     { SC_KEY_DPI_NEXT,{"DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]","DPI[+]"}},
     { SC_KEY_DPI_PREV,{"DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]","DPI[-]"}},
     { SC_KEY_DPI_NEXT_CYCLE, {"DPI CYCLE[+]", "DPI 循环[+]", "DPI 循環 [+]", "CYCLE DPI[+]", "DPI-ZYKLUS [+]", "CICLO DPI[+]", "DPI サイクル [+]", "DPI 사이클[+]", "KITARAN DPI[+]", "CICLO DE PPP [+]", "ПЕРЕКЛЮЧЕНИЕ РАЗРЕШЕНИЯ[+]", "RECORRER[+] PPP", "รอบ DPI [+]", "DPI DÖNGÜSÜ [+]", "VÒNG DPI [+]" } },
-    { SC_KEY_DPI_PREV_CYCLE, {"DPI CYCLE[-]", "DPI 循环[-]", "DPI 循環 [-]", "CYCLE DPI[-]", "DPI-ZYKLUS [-]", "CICLO DPI[-]", "DPI サイクル [-]", "DPI 사이클[-]", "KITARAN DPI[-]", "CICLO DE PPP [-]", "ПЕРЕКЛЮЧЕНИЕ РАЗРЕШЕНИЯ[-]", "RECORRER[-] PPP", "รอบ DPI [-]", "DPI DÖNGÜSÜ [-]", "VÒNG DPI [-]" } },
-    { SC_KEY_POWER_MODE_DISABLE, {"Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable", "Power Mode:Disable" } },
-    { SC_KEY_POWER_MODE_WORKING, {"Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working", "Power Mode:Working" } },
-    { SC_KEY_POWER_MODE_PERFORMANCE, {"Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance", "Power Mode:Performance" } },
-    { SC_KEY_POWER_MODE_GAMING, {"Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming", "Power Mode:Gaming" } }
+    { SC_KEY_DPI_PREV_CYCLE, {"DPI CYCLE[-]", "DPI 循环[-]", "DPI 循環 [-]", "CYCLE DPI[-]", "DPI-ZYKLUS [-]", "CICLO DPI[-]", "DPI サイクル [-]", "DPI 사이클[-]", "KITARAN DPI[-]", "CICLO DE PPP [-]", "ПЕРЕКЛЮЧЕНИЕ РАЗРЕШЕНИЯ[-]", "RECORRER[-] PPP", "รอบ DPI [-]", "DPI DÖNGÜSÜ [-]", "VÒNG DPI [-]" } }
 };
 
 static int activeLanguageIndex() {

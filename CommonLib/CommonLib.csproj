@@ -65,7 +65,7 @@
     <Compile Include="UtilCmdSimple.cs" />
     <Compile Include="UtilEnum.cs" />
     <Compile Include="Util\ComBus\CalcRTU.cs" />
-    <Compile Include="Util\ComBus\Com.cs" />
+    <Compile Include="Util\ComBus\UtilSerialRelayController.cs" />
     <Compile Include="Util\ComBus\Operations.cs" />
     <Compile Include="Util\UtilCmd.cs" />
     <Compile Include="Util\UtilCapturer.cs" />

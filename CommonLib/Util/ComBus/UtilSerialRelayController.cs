@@ -5,40 +5,56 @@ using System.Threading;
 
 namespace CommonLib.Util.ComBus
 {
-    public class Com
+    public class UtilSerialRelayController
     {
         private static SerialPort _comm = new SerialPort();
-        private int _addr = 254;
+        private readonly int _addr = 254;
+        private string _workablePortName = "";
         public void Load()
         {
             var comPorts = SerialPort.GetPortNames();
             Array.Sort(comPorts);
-
-            if (_comm.IsOpen)
+            foreach (var portName in comPorts)
             {
-                _comm.Close();
+                try
+                {
+                    OpenSerialPort(portName);
+                }
+                catch (Exception)
+                {
+                    //ignored.
+                }
+                if (!_workablePortName.Equals(""))
+                {
+                    return;
+                }
             }
-            else
-            {
-                OpenSerialPort();
-
-                var info = Operations.ReadDo(Convert.ToInt16(_addr), Convert.ToInt16(1));
-                var rst = SendInfo(info);
-
-            }
+            throw new Exception($"No any Relay Controller found.");
         }
-        public void OpenSerialPort()
+        public void OpenSerialPort(string portName = null)
         {
+            portName = portName ?? _workablePortName;
             //关闭时点击，则设置好端口，波特率后打开
             try
             {
-                _comm.PortName = "COM3"; //串口名 COM1
+                if (_comm.IsOpen)
+                {
+                    _comm.Close();
+                }
+                _comm.PortName = portName; //串口名 COM1
                 _comm.BaudRate = 9600; //波特率  9600
                 _comm.DataBits = 8; // 数据位 8
                 _comm.ReadBufferSize = 4096;
                 _comm.StopBits = StopBits.One;
                 _comm.Parity = Parity.None;
                 _comm.Open();
+                var info = Operations.ReadDo(Convert.ToInt16(_addr), Convert.ToInt16(1));
+                var rst = SendInfo(info);
+                if (rst == null)
+                {
+                    throw new Exception($"No any Relay Controller found. {_comm.PortName}.");
+                }
+                _workablePortName = portName;
             }
             catch (Exception e)
             {
@@ -49,11 +65,21 @@ namespace CommonLib.Util.ComBus
             }
             //return true;
         }
+
+
+
+        public void SendMockKeys(int io)
+        {
+            OpenDo(3);
+            OpenDo(11);
+            CloseDo(11);
+            CloseDo(3);
+        }
+
         private void OpenDo(int io)
         {
             var info = Operations.WriteDo(Convert.ToInt16(_addr), io - 1, true);
             var rst = SendInfo(info);
-
         }
         private void CloseDo(int io)
         {
