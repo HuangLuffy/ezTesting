@@ -68,7 +68,7 @@ namespace CommonLib.Util.ComBus
 
 
 
-        public void SendMockKeys(int io)
+        public void SendMockKeys(string key)
         {
             OpenDo(3);
             OpenDo(11);

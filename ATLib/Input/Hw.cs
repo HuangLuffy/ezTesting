@@ -409,12 +409,9 @@ namespace ATLib.Input
         public static void GetMatrixFromRelayControllerAndAssembleToKeys(string filePath)
         {
             var lines = UtilFile.GetListByLine(filePath);
-            IDictionary<string, string> _dic = new Dictionary<string, string>();
             foreach (var line in lines)
             {
                 if (!line.Contains("=") && line.Contains("{ SC_KEY")) continue;
-                //_dic[line.Split('=')[0].Trim().ToUpper()] = line.Split('=')[1].Trim().ToUpper();
-                //typeof(KbKeys).GetFields().ToList().ForEach(x => ((KeyPros)x.GetValue("")).Port = _dic[x.Name]);
                 ((KeyPros)(typeof(KbKeys).GetFields().First(x => x.Name.Equals(line.Split('=')[0].Trim().ToUpper())).GetValue(""))).Port = line.Split('=')[1].Trim().ToUpper();
             }
         }
