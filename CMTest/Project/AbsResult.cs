@@ -27,8 +27,8 @@ namespace CMTest.Project
         protected readonly string RestartScreenshotPath = Path.Combine("Screenshots\\Restart");
         private readonly string _screenshotsRelativePath;
         public string ResourcesPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Const.Resources);
-        public string ResourcesKeysRelativePath => Path.Combine(Const.Resources, "KeyMapTab.h");
-        public string MatrixRelativePath => Path.Combine(Const.Resources, "Matrix.cs");
+        public string ResourcesKeysRelativePath = Path.Combine(Const.Resources, "KeyMapTab.h");
+        public string MatrixRelativePath = Path.Combine(Const.Resources, "Matrix.cs");
         public AbsResult()
         {
             _currentTestFolderName = GetTestTimeString();//This function would run twice if put it with "public string CurrentTestFolderName";

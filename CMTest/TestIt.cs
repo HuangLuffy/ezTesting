@@ -40,19 +40,15 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            var field = typeof(KBKeys).GetFields();
-
-
-
-            UtilSerialRelayController usb = new UtilSerialRelayController();
-            usb.Load();
-
+            //UtilSerialRelayController usb = new UtilSerialRelayController();
+            //usb.Load();
             _mpTestFlows = new MasterPlusTestFlows();
             _mpTestFlows.Case_AssignInLoop();
 
             _portalTestFlows = new PortalTestFlows();
-            AssembleTopMenu();
+            //AssembleTopMenu();
             //GetKeyboardKeysFromKeyMapTabFile();
+            GetMatrixFromFile();
         }
         private void txtRemark_KeyDown(object sender, KeyEventArgs e)
         {

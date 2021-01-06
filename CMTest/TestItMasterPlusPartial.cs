@@ -40,11 +40,11 @@ namespace CMTest
 
         public void GetMatrixFromFile()
         {
-            Hw.GetKeyboardKeys(_mpTestFlows.MpActions.ResourcesKeysRelativePath);
+            Hw.GetMatrixFromRelayControllerAndAssembleToKeys(_mpTestFlows.MpActions.MatrixRelativePath);
         }
         public void GetKeyboardKeysFromKeyMapTabFile()
         {
-            Hw.GetMatrixFromRelayControllerAndAssembleToKeys(_mpTestFlows.MpActions.MatrixRelativePath);
+            Hw.GetKeyboardKeys(_mpTestFlows.MpActions.ResourcesKeysRelativePath);
         }
         private dynamic Flow_MasterPlus_LaunchAndCheckCrash()
         {
