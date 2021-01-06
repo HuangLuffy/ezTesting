@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E24EC4C9-0469-4510-B3EC-322794C6D7B7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Hook</RootNamespace>
-    <AssemblyName>Hook</AssemblyName>
+    <RootNamespace>KeysSpy</RootNamespace>
+    <AssemblyName>KeysSpy</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -49,11 +49,11 @@
     <Compile Include="GlobalEventProvider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="KeysTest.cs">
+    <Compile Include="KeysSpy.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="KeysTest.Designer.cs">
-      <DependentUpon>KeysTest.cs</DependentUpon>
+    <Compile Include="KeysSpy.Designer.cs">
+      <DependentUpon>KeysSpy.cs</DependentUpon>
     </Compile>
     <Compile Include="HookCallback.cs" />
     <Compile Include="Hook.cs" />
@@ -62,8 +62,8 @@
     <Compile Include="MouseEventExtArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="KeysTest.resx">
-      <DependentUpon>KeysTest.cs</DependentUpon>
+    <EmbeddedResource Include="KeysSpy.resx">
+      <DependentUpon>KeysSpy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -73,6 +73,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

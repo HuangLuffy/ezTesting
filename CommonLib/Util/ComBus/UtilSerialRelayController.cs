@@ -66,14 +66,15 @@ namespace CommonLib.Util.ComBus
             //return true;
         }
 
-
-
-        public void SendMockKeys(string key)
+        public void SendMockKeys(string key, double waitTime = 0)
         {
-            OpenDo(3);
-            OpenDo(11);
-            CloseDo(11);
-            CloseDo(3);
+            var key1 = Convert.ToInt16(key.Split(',')[0].Trim());
+            var key2 = Convert.ToInt16(key.Split(',')[1].Trim());
+            OpenDo(key1);
+            OpenDo(key2);
+            UtilTime.WaitTime(waitTime);
+            CloseDo(key2);
+            CloseDo(key1);
         }
 
         private void OpenDo(int io)

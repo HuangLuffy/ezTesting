@@ -42,7 +42,7 @@ namespace Hook
             this.tb.Name = "tb";
             this.tb.ReadOnly = true;
             this.tb.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.tb.Size = new System.Drawing.Size(473, 374);
+            this.tb.Size = new System.Drawing.Size(473, 485);
             this.tb.TabIndex = 0;
             this.tb.Text = "";
             this.tb.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -50,7 +50,7 @@ namespace Hook
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 408);
+            this.button1.Location = new System.Drawing.Point(12, 523);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -60,7 +60,7 @@ namespace Hook
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(410, 408);
+            this.button2.Location = new System.Drawing.Point(410, 523);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -80,13 +80,13 @@ namespace Hook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(497, 443);
+            this.ClientSize = new System.Drawing.Size(497, 572);
             this.Controls.Add(this.labelHide);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tb);
             this.Name = "KeysTest";
-            this.Text = "KeysTest";
+            this.Text = "KeysSpy";
             this.ResumeLayout(false);
             this.PerformLayout();
 

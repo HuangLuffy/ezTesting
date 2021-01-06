@@ -92,6 +92,10 @@ namespace CommonLib.Util
                 //p.Start();
             }
         }
+        public static Process StartProcessReturn(string targetFullPath, string para = "")
+        {
+            return Process.Start(targetFullPath, para);
+        }
         public static int StartProcessGetInt(string targetFullPath, string para = "")
         {
             try

@@ -86,8 +86,6 @@ namespace ATLib.Input
             //}
         }
 
-
-
         public enum Language1
         {
             EN,

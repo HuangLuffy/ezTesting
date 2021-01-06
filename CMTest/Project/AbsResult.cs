@@ -29,6 +29,7 @@ namespace CMTest.Project
         public string ResourcesPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Const.Resources);
         public string ResourcesKeysRelativePath = Path.Combine(Const.Resources, "KeyMapTab.h");
         public string MatrixRelativePath = Path.Combine(Const.Resources, "Matrix.cs");
+        public string KeySpyRelativePath = Path.Combine(Const.Resources, "KeysSpy.exe");
         public AbsResult()
         {
             _currentTestFolderName = GetTestTimeString();//This function would run twice if put it with "public string CurrentTestFolderName";

@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMTest", "CMTest\CMTest.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteLib", "RemoteLib\RemoteLib.csproj", "{0A5E2A02-1A8C-45BE-92AC-76034EC0E844}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hook", "Hook\Hook.csproj", "{E24EC4C9-0469-4510-B3EC-322794C6D7B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeysSpy", "Hook\KeysSpy.csproj", "{E24EC4C9-0469-4510-B3EC-322794C6D7B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

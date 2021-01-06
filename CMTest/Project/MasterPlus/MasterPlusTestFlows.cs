@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using ATLib;
 using ATLib.Input;
+using CMTest.Tool;
 using CMTest.Xml;
 using CommonLib;
 using CommonLib.Util;
@@ -212,6 +213,15 @@ namespace CMTest.Project.MasterPlus
                 , Ireporter.SetAsLines(blAssignKey ? $"Check the all the assigned key work." : $"All the assigned key work.", "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
+        }
+
+
+        public void Case_ForTest()
+        {
+            KeysTest _keysTest = new KeysTest(this.MpActions.KeySpyRelativePath);
+
+            UtilSerialRelayController usb = new UtilSerialRelayController();
+            usb.Load();
         }
     }
 }

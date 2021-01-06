@@ -85,6 +85,7 @@
     <Compile Include="Project\MasterPlusPer\PortalObj.cs" />
     <Compile Include="Project\MasterPlusPer\PortalTestActions.cs" />
     <Compile Include="Project\RemoteModule\RemoteOS.cs" />
+    <Compile Include="Tool\KeysTest.cs" />
     <Compile Include="Vm\VMObj.cs" />
     <Compile Include="Vm\VmOps.cs" />
     <Compile Include="Project\SWCommonActions.cs" />

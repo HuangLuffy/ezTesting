@@ -37,7 +37,6 @@ namespace CMTest
             }
             _optionsXmlPlugInOutDeviceNames.Add(UtilCmd.Result.BACK, _cmd.MenuGoBack);
         }
-
         public void GetMatrixFromFile()
         {
             Hw.GetMatrixFromRelayControllerAndAssembleToKeys(_mpTestFlows.MpActions.MatrixRelativePath);
@@ -51,18 +50,15 @@ namespace CMTest
             _mpTestFlows.Flow_LaunchAndCheckCrash();
             return MARK_FOUND_RESULT;
         }
-
         private dynamic Flow_MasterPlus_LaunchTest()
         {
             _mpTestFlows.Flow_LaunchTest();
             return MARK_FOUND_RESULT;
         }
-
         public void RestartSystemAndCheckDeviceRecognition()
         {
             _mpTestFlows.Flow_RestartSystemAndCheckDeviceRecognition(_xmlOps);
         }
-
         #region MyRegion
         private dynamic Flow_KeyMappingTest(string deviceName)
         {
@@ -78,7 +74,6 @@ namespace CMTest
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }
-
         private void _AssignLoopVerifyLogic(IReadOnlyList<List<string>> loop, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             for (var i = 0; i < loop.Count(); i++)
@@ -114,9 +109,7 @@ namespace CMTest
         }
         private dynamic Flow_KeyMappingBaseTest(string deviceName)
         {
-            _mpTestFlows.Case_AssignInLoop();
-
-
+            //_mpTestFlows.Case_AssignInLoop();
             var keysNeedToAssignList = new List<List<string>>
             {
                 //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, "A" },
