@@ -26,12 +26,14 @@ namespace Hook
         {
             tb.AppendText(e.KeyChar.ToString());
             tb.ScrollToCaret();
-        } 
+        }
 
         private void AddValueToLabel(string keyValue)
         {
             labelHide.Text += labelHide.Text.Equals("") ? keyValue : " * " + keyValue;
         }
+        private IEnumerable<string> ignoreEventList = new List<string>(){ "LMenu", "RMenu", "LWin", "RWin", "Capital" };
+
         private void HookManager_KeyDown(object sender, KeyEventArgs e)
         {
             var k = e.KeyCode.ToString() + "\n";
@@ -39,9 +41,12 @@ namespace Hook
             //AddValueToLabel(k);
             //tb.AppendText(e.KeyValue.ToString());
             //tb.ScrollToCaret();
-            if (e.KeyCode.ToString().Equals("LMenu"))
+            foreach (var item in ignoreEventList)
             {
-                e.Handled = true;
+                if (e.KeyCode.ToString().Equals(item))
+                {
+                    e.Handled = true;
+                }
             }
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e)
