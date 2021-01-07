@@ -45,7 +45,7 @@ namespace CMTest
             //AssembleTopMenu();
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
-            _mpTestFlows.Case_ForTest();
+            _mpTestFlows.Case_CheckAllKeysOnRelayController();
         }
         private void txtRemark_KeyDown(object sender, KeyEventArgs e)
         {

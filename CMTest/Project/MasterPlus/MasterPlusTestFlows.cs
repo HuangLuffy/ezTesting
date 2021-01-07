@@ -219,9 +219,8 @@ namespace CMTest.Project.MasterPlus
         }
 
 
-        public void Case_ForTest()
+        public void Case_CheckAllKeysOnRelayController()
         {
-
             KeysSpyOp _KeysSpyOp = new KeysSpyOp(this.MpActions.KeySpyRelativePath);
             UtilSerialRelayController _Usb = new UtilSerialRelayController();
             _Usb.Load();
@@ -240,18 +239,15 @@ namespace CMTest.Project.MasterPlus
                         if (!_KeysSpyOp.GetContentList().ElementAt(0).Equals(v.KeyCode))
                         {
                             //throw new Exception("");
-                            Console.WriteLine($"xxxxxxxxx{v.KeyCode} -- [{v.Port}]");
+                            Console.WriteLine($"Inconsistent keys - Actual: [{_KeysSpyOp.GetContentList().ElementAt(0)}] -- Expected:[{v.KeyCode}] Port:[{v.Port}]");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"{v.KeyCode} ++ [{v.Port}]");
+                        Console.WriteLine($"No key captured - Expected:[{v.KeyCode}] Port:[{v.Port}]");
                     }
                 }
             });
-
-
-            _Usb.Load();
         }
     }
 }
