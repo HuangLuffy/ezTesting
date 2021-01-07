@@ -39,6 +39,10 @@ namespace Hook
             //AddValueToLabel(k);
             //tb.AppendText(e.KeyValue.ToString());
             //tb.ScrollToCaret();
+            if (e.KeyCode.ToString().Equals("LMenu"))
+            {
+                e.Handled = true;
+            }
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
