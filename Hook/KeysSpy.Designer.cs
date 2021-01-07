@@ -42,6 +42,7 @@ namespace Hook
             this.tb.Name = "tb";
             this.tb.ReadOnly = true;
             this.tb.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.tb.ShortcutsEnabled = false;
             this.tb.Size = new System.Drawing.Size(473, 485);
             this.tb.TabIndex = 0;
             this.tb.Text = "";
