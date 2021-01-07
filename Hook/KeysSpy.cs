@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Hook
 {
-    public partial class KeysTest : Form
+    public partial class KeysSpy : Form
     {
-        public KeysTest()
+        public KeysSpy()
         {
             InitializeComponent();
             Hook.KeyDown += HookManager_KeyDown;
@@ -38,7 +38,7 @@ namespace Hook
             tb.AppendText(k);
             //AddValueToLabel(k);
             //tb.AppendText(e.KeyValue.ToString());
-            tb.ScrollToCaret();
+            //tb.ScrollToCaret();
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
@@ -49,6 +49,7 @@ namespace Hook
         {
             tb.Clear();
             labelHide.Text = "";
+            tb.Text = "";
         }
 
         private void button2_Click(object sender, EventArgs e)

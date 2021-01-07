@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using ATLib;
@@ -12,6 +14,7 @@ using CommonLib.Util.OS;
 using CommonLib.Util.Project;
 using Nancy;
 using ReportLib;
+using static ATLib.Input.Hw;
 using static ATLib.Input.KbEvent;
 
 namespace CMTest.Project.MasterPlus
@@ -218,10 +221,37 @@ namespace CMTest.Project.MasterPlus
 
         public void Case_ForTest()
         {
-            KeysTest _keysTest = new KeysTest(this.MpActions.KeySpyRelativePath);
 
-            UtilSerialRelayController usb = new UtilSerialRelayController();
-            usb.Load();
+            KeysSpyOp _KeysSpyOp = new KeysSpyOp(this.MpActions.KeySpyRelativePath);
+            UtilSerialRelayController _Usb = new UtilSerialRelayController();
+            _Usb.Load();
+            _KeysSpyOp.ClickClear();
+            //var s = _KeysSpyOp.GetContentList();
+            //var c = typeof(Hw.KbKeys).GetFields().ToList().FindAll((x) => !((KeyPros)x.GetValue("")).Port.Equals(""));
+            typeof(Hw.KbKeys).GetFields().ToList().ForEach((x) => {
+                var v = (KeyPros)(x.GetValue(""));
+                if (!v.Port.Equals(""))
+                {
+                    _KeysSpyOp.ClickClear();
+                    _Usb.SendMockKeys(v.Port);
+                    UtilTime.WaitTime(1);
+                    if (_KeysSpyOp.GetContentList() != null)
+                    {
+                        if (!_KeysSpyOp.GetContentList().ElementAt(0).Equals(v.KeyCode))
+                        {
+                            //throw new Exception("");
+                            Console.WriteLine($"xxxxxxxxx{v.KeyCode} + [{_KeysSpyOp.GetContentList().ElementAt(0)}]");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{v.KeyCode} + [null]");
+                    }
+                }
+            });
+
+
+            _Usb.Load();
         }
     }
 }

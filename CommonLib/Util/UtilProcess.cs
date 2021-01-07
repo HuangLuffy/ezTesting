@@ -19,6 +19,7 @@ namespace CommonLib.Util
         }
         public static void KillProcessByName(string name)
         {
+            name = name.Contains(".exe") ? name.Replace(".exe", "") : name;
             foreach (var p in Process.GetProcessesByName(name))
             {
                 p.Kill();

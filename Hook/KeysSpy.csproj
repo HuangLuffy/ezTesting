@@ -90,6 +90,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)"CMTest\bin\Debug</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)"CMTest\bin\Debug\Resources</PostBuildEvent>
   </PropertyGroup>
 </Project>

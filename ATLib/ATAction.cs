@@ -68,6 +68,19 @@ namespace ATLib
                 throw new Exception("DoExpand error. " + ex);
             }
         }
+        public string DoGetDocumentValue(double waitTime = 0.1)
+        {
+            try
+            {
+                var t = (ValuePattern)AutomationElement.GetCurrentPattern(ValuePattern.Pattern);
+                Thread.Sleep((int)(waitTime * 1000));
+                return t.Current.Value;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DoSelect error. " + ex);
+            }
+        }
         public void DoSelect(double waitTime = 0.1)
         {
             try
@@ -80,7 +93,6 @@ namespace ATLib
             {
                 throw new Exception("DoSelect error. " + ex);
             }
-            Thread.Sleep((int)(waitTime * 1000));
         }
         /// <summary>
         /// 
@@ -183,12 +195,12 @@ namespace ATLib
                 try
                 {
                     _scrollPattern?.ScrollVertical(ScrollAmount.LargeDecrement);
+                    Thread.Sleep((int)(waitTime * 1000));
                 }
                 catch (Exception ex)
                 {
                     throw new Exception("ScrollVerticalTop error. " + ex);
                 }
-                Thread.Sleep((int)(waitTime * 1000));
             }
         }
         /// <summary>

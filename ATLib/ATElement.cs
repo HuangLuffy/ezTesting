@@ -255,6 +255,10 @@ namespace ATLib
             /// 
             /// </summary>
             public const string ToolTip = "ToolTip";
+            /// <summary>
+            /// 
+            /// </summary>
+            public const string Document = "Document";
         }
         /// <summary>
         /// 
@@ -501,6 +505,10 @@ namespace ATLib
             if (ctrlType.Equals(ControlType.MenuBar))
             {
                 return System.Windows.Automation.ControlType.MenuBar;
+            }
+            if (ctrlType.Equals(ControlType.Document))
+            {
+                return System.Windows.Automation.ControlType.Document;
             }
             throw new Exception("Failed to get ControlType " + ctrlType + ".");
         }

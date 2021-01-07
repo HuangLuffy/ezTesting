@@ -16,7 +16,7 @@ namespace Hook
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new KeysTest());
+            Application.Run(new KeysSpy());
         }
     }
 }

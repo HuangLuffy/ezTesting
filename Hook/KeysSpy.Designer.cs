@@ -2,7 +2,7 @@
 
 namespace Hook
 {
-    partial class KeysTest
+    partial class KeysSpy
     {
         /// <summary>
         /// Required designer variable.
@@ -76,7 +76,7 @@ namespace Hook
             this.labelHide.Size = new System.Drawing.Size(0, 12);
             this.labelHide.TabIndex = 3;
             // 
-            // KeysTest
+            // KeysSpy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -85,7 +85,7 @@ namespace Hook
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tb);
-            this.Name = "KeysTest";
+            this.Name = "KeysSpy";
             this.Text = "KeysSpy";
             this.ResumeLayout(false);
             this.PerformLayout();
