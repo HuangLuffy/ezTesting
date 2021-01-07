@@ -239,12 +239,12 @@ namespace CMTest.Project.MasterPlus
                         if (!_KeysSpyOp.GetContentList().ElementAt(0).Equals(v.KeyCode))
                         {
                             //throw new Exception("");
-                            Console.WriteLine($"Inconsistent keys - Actual: [{_KeysSpyOp.GetContentList().ElementAt(0)}] -- Expected:[{v.KeyCode}] Port:[{v.Port}]");
+                            Console.WriteLine($"Inconsistent keys - Actual: [{_KeysSpyOp.GetContentList().ElementAt(0)}] -- Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"No key captured - Expected:[{v.KeyCode}] Port:[{v.Port}]");
+                        Console.WriteLine($"No key captured - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
                     }
                 }
             });
