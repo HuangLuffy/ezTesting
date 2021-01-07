@@ -85,7 +85,11 @@ namespace Hook
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tb);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(513, 611);
+            this.MinimumSize = new System.Drawing.Size(513, 611);
             this.Name = "KeysSpy";
+            this.ShowIcon = false;
             this.Text = "KeysSpy";
             this.ResumeLayout(false);
             this.PerformLayout();

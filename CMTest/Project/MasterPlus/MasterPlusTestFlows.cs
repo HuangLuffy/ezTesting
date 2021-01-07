@@ -233,19 +233,19 @@ namespace CMTest.Project.MasterPlus
                 if (!v.Port.Equals(""))
                 {
                     _KeysSpyOp.ClickClear();
-                    _Usb.SendMockKeys(v.Port);
+                    _Usb.SendMockKeys(v.Port, 0.3);
                     UtilTime.WaitTime(1);
                     if (_KeysSpyOp.GetContentList() != null)
                     {
                         if (!_KeysSpyOp.GetContentList().ElementAt(0).Equals(v.KeyCode))
                         {
                             //throw new Exception("");
-                            Console.WriteLine($"xxxxxxxxx{v.KeyCode} + [{_KeysSpyOp.GetContentList().ElementAt(0)}]");
+                            Console.WriteLine($"xxxxxxxxx{v.KeyCode} -- [{v.Port}]");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"{v.KeyCode} + [null]");
+                        Console.WriteLine($"{v.KeyCode} ++ [{v.Port}]");
                     }
                 }
             });
