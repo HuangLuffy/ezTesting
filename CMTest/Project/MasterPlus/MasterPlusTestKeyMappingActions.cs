@@ -222,9 +222,9 @@ namespace CMTest.Project.MasterPlus
                     enableKeyCheckbox.DoClickPoint(1);
                 }, blAssignKey, blVerifyKeyWork);
         }
-        public void AssignKeyOnReassignDialog(KeyPros pressedKey, string assignWhichKeyGrid, bool blScanCode = false, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void AssignKeyOnReassignDialog(KeyPros pressedKey, KeyPros assignWhichKeyGrid, bool blScanCode = false, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
-            CommonAssignKeyAndVerify(pressedKey.UiaName, assignWhichKeyGrid,
+            CommonAssignKeyAndVerify(pressedKey.UiaName, assignWhichKeyGrid.UiaName,
                 (reassignDialog) =>
                 {
                     if (blScanCode)

@@ -147,7 +147,7 @@ namespace CMTest.Project.MasterPlus
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignKeyOnReassignDialog(pressedKey, assignWhichKeyGrid.UiaName, blScanCode, blAssignKey, blVerifyKeyWork);
+                    MpActions.AssignKeyOnReassignDialog(pressedKey, assignWhichKeyGrid, blScanCode, blAssignKey, blVerifyKeyWork);
                 }
                 , Ireporter.SetAsLines($"Open Reassignment Dialog for a single Keyboard Key {assignWhichKeyGrid.UiaName}.",
                     blAssignKey ? $"Push {pressedKey.UiaName}." : $"Check the assigned Value is {pressedKey.UiaName} on the Reassignment Dialog.")

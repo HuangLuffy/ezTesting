@@ -274,7 +274,7 @@ namespace ReportLib
                         r.NodeResult = Reporter.Result.FAIL;
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     if (blockOrRun == WhenCaseFailed.BlockAllLeftCases)
                     {
@@ -283,7 +283,7 @@ namespace ReportLib
                     Reporter.BlockCurrentCase = true;
                     r.NodeResult = Reporter.Result.FAIL;
                     //r.AttrMessage = nodeErrorMessage += $" [{e.Message}]";
-                    r.ErrorMessages.Add(CurrentTestCase.AttrMessage);
+                    r.ErrorMessages.Add(CurrentTestCase.AttrMessage ?? e.Message);
                 }
                 Capture();
             }
