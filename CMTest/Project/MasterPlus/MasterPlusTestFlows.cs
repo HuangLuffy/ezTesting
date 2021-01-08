@@ -143,11 +143,11 @@ namespace CMTest.Project.MasterPlus
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
-        public void Case_AssignKeyOnReassignDialog(ScanCode scanCode, string assignWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void Case_AssignKeyOnReassignDialog(string pressedKey, string assignWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignKeyOnReassignDialog(scanCode, assignWhichKey, blAssignKey);
+                    MpActions.AssignKeyOnReassignDialog(pressedKey, assignWhichKey, blAssignKey);
                 }
                 , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}.",
                     blAssignKey ? $"Check the assigned Value is {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Push {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
@@ -218,7 +218,6 @@ namespace CMTest.Project.MasterPlus
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
 
-
         public void Case_CheckAllKeysOnRelayController()
         {
             KeysSpyOp _KeysSpyOp = new KeysSpyOp(this.MpActions.KeySpyRelativePath);
@@ -232,14 +231,14 @@ namespace CMTest.Project.MasterPlus
                 if (!v.Port.Equals(""))
                 {
                     _KeysSpyOp.ClickClear();
-                    _Usb.SendMockKeys(v.Port, 0.3);
+                    _Usb.SendMockKeys(v.Port, 0.1);
                     UtilTime.WaitTime(1);
                     if (_KeysSpyOp.GetContentList() != null)
                     {
                         if (!_KeysSpyOp.GetContentList().ElementAt(0).Equals(v.KeyCode))
                         {
                             //throw new Exception("");
-                            Console.WriteLine($"Inconsistent keys - Actual: [{_KeysSpyOp.GetContentList().ElementAt(0)}] -- Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
+                            Console.WriteLine($"Inconsistent keys - Actual: [{_KeysSpyOp.GetContentList().ElementAt(0)}] - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
                         }
                     }
                     else

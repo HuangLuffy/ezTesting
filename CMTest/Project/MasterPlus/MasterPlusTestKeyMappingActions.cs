@@ -220,13 +220,13 @@ namespace CMTest.Project.MasterPlus
                     enableKeyCheckbox.DoClickPoint(1);
                 }, blAssignKey, blVerifyKeyWork);
         }
-        public void AssignKeyOnReassignDialog(ScanCode keyValueNeedToInputScanCode, string assignWhichKeyGrid, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void AssignKeyOnReassignDialog(string pressedKey, string assignWhichKeyGrid, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
-            var keyValueNeedToInput = UtilEnum.GetEnumNameByValue<ScanCode>(keyValueNeedToInputScanCode);
+            var keyValueNeedToInput = UtilEnum.GetEnumNameByValue<ScanCode>(pressedKey);
             CommonAssignKeyAndVerify(keyValueNeedToInput, assignWhichKeyGrid,
                 (reassignDialog) =>
                 {
-                    KbEvent.Press(keyValueNeedToInputScanCode);
+                    KbEvent.Press(pressedKey);
                     UtilTime.WaitTime(1);
                 }, blAssignKey, blVerifyKeyWork);
         }
