@@ -9,7 +9,7 @@ namespace CommonLib.Util.ComBus
     {
         private static SerialPort _comm = new SerialPort();
         private readonly int _addr = 254;
-        private string _workablePortName = "";
+        private static string _workablePortName = "";
         public void Load()
         {
             var comPorts = SerialPort.GetPortNames();
@@ -31,16 +31,21 @@ namespace CommonLib.Util.ComBus
             }
             throw new Exception($"No any Relay Controller found.");
         }
+        public void CloseComm()
+        {
+            if (_comm.IsOpen)
+            {
+                _comm.Close();
+                _workablePortName = "";
+            }
+        }
         public void OpenSerialPort(string portName = null)
         {
             portName = portName ?? _workablePortName;
             //关闭时点击，则设置好端口，波特率后打开
             try
             {
-                if (_comm.IsOpen)
-                {
-                    _comm.Close();
-                }
+                CloseComm();
                 _comm.PortName = portName; //串口名 COM1
                 _comm.BaudRate = 9600; //波特率  9600
                 _comm.DataBits = 8; // 数据位 8
@@ -66,15 +71,16 @@ namespace CommonLib.Util.ComBus
             //return true;
         }
 
-        public void SendMockKeys(string key, double waitTime = 0)
+        public void SendToPort(string key, double closingTime = 0, double waitTime = 0)
         {
             var key1 = Convert.ToInt16(key.Split(',')[0].Trim());
             var key2 = Convert.ToInt16(key.Split(',')[1].Trim());
             OpenDo(key1);
             OpenDo(key2);
-            UtilTime.WaitTime(waitTime);
+            UtilTime.WaitTime(closingTime);
             CloseDo(key2);
             CloseDo(key1);
+            UtilTime.WaitTime(waitTime);
         }
 
         private void OpenDo(int io)

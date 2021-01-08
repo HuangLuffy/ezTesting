@@ -227,13 +227,13 @@ namespace ReportLib
                 if (capturesRelativePath.Equals(""))
                 {
                     capturesRelativePath = this.GetCaptureRelativePath();
-                    ;
                 }
                 var t = Path.Combine(capturesRelativePath, imageName);
                 var manualCheckLink = SetNeedToCheck(commentOnWeb,
                     Path.Combine(capturesRelativePath.Split('\\').Last(), imageName + "." + imageType));
                 manualCheckLink = SetAsLink(manualCheckLink);
                 UtilCapturer.Capture(t, imageType);
+                UtilTime.WaitTime(0.5);
                 if (CurrentTestCase != null)
                 {
                     CurrentTestCase.NodeNeedToCheck += manualCheckLink;

@@ -12,6 +12,8 @@ using ATLib.Input;
 using CommonLib;
 using static ATLib.Input.KbEvent;
 using ReportLib;
+using static ATLib.Input.Hw;
+using CommonLib.Util.ComBus;
 
 namespace CMTest.Project.MasterPlus
 {
@@ -60,13 +62,13 @@ namespace CMTest.Project.MasterPlus
 
         }
 
-        private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string keyValueNeedToInput)
+        private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string pressedKey)
         {
             var gridColorValue = KeyMappingGridColor.Purple;
             try
             {
                 var assignedValue = reassignDialog.GetElementFromDescendants(MPObj.AssignedValue, returnNullWhenException: true);
-                if (keyValueNeedToInput.Equals(MPObj.DisableKeyCheckbox.Name))
+                if (pressedKey.Equals(MPObj.DisableKeyCheckbox.Name))
                 {
                     gridColorValue = KeyMappingGridColor.Red;
                     if (assignedValue != null && !assignedValue.GetElementInfo().IsOffscreen())
@@ -74,7 +76,7 @@ namespace CMTest.Project.MasterPlus
                         _r.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
                     }
                 }
-                else if (keyValueNeedToInput.Equals(MPObj.EnableKeyCheckbox.Name) || keyValueNeedToInput.Equals(""))
+                else if (pressedKey.Equals(MPObj.EnableKeyCheckbox.Name) || pressedKey.Equals(""))
                 {
                     gridColorValue = KeyMappingGridColor.Green;
                     var reassignTitleValue = reassignDialog.GetElementFromDescendants(MPObj.ReassignTitleValue);
@@ -87,9 +89,9 @@ namespace CMTest.Project.MasterPlus
                 {
                     gridColorValue = KeyMappingGridColor.Purple;
                     var value = assignedValue.GetElementInfo().FullDescription();
-                    if (!value.Equals(keyValueNeedToInput))
+                    if (!value.Equals(pressedKey))
                     {
-                        _r.SetStepFailed($"Input {keyValueNeedToInput}, but get {value}.", "assignedValueWrong");
+                        _r.SetStepFailed($"Input {pressedKey}, but get {value}.", "assignedValueWrong");
                     }
                 }
             }
@@ -104,7 +106,7 @@ namespace CMTest.Project.MasterPlus
             }
             if (!keyGridNeedToBeAssigned.GetElementInfo().FullDescription().Equals(gridColorValue))
             {
-                _r.SetStepFailed($"Key {keyValueNeedToInput} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.", "colorWrong");
+                _r.SetStepFailed($"Key {pressedKey} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.", "colorWrong");
             }
         }
         private string _theLastMenuItem = string.Empty;
@@ -220,14 +222,19 @@ namespace CMTest.Project.MasterPlus
                     enableKeyCheckbox.DoClickPoint(1);
                 }, blAssignKey, blVerifyKeyWork);
         }
-        public void AssignKeyOnReassignDialog(string pressedKey, string assignWhichKeyGrid, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void AssignKeyOnReassignDialog(KeyPros pressedKey, string assignWhichKeyGrid, bool blScanCode = false, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
-            var keyValueNeedToInput = UtilEnum.GetEnumNameByValue<ScanCode>(pressedKey);
-            CommonAssignKeyAndVerify(keyValueNeedToInput, assignWhichKeyGrid,
+            CommonAssignKeyAndVerify(pressedKey.UiaName, assignWhichKeyGrid,
                 (reassignDialog) =>
                 {
-                    KbEvent.Press(pressedKey);
-                    UtilTime.WaitTime(1);
+                    if (blScanCode)
+                    {
+                        KbEvent.Press(pressedKey.ScanCode);
+                    }
+                    else
+                    {
+                        MasterPlusTestFlows.Usrc.SendToPort(pressedKey.Port);
+                    }
                 }, blAssignKey, blVerifyKeyWork);
         }
         private bool _blBreak = false;

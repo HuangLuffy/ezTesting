@@ -67,9 +67,9 @@ namespace CMTest
             _mpTestFlows.Case_LaunchMasterPlus(60);
             _mpTestFlows.Case_SelectDeviceFromList(deviceName);
             _mpTestFlows.Case_SelectKeyMappingTab(deviceName);
-            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.SC_KEY_A, "B");
-            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.SC_KEY_B, "C");
-            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.SC_KEY_C, "A");
+            ///_mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.SC_KEY_A, "B");
+            //_mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.SC_KEY_B, "C");
+            //_mpTestFlows.Case_AssignKeyOnReassignDialog(KbEvent.ScanCode.SC_KEY_C, "A");
 
             _mpTestFlows.LaunchTestReport();
             return MARK_FOUND_RESULT;

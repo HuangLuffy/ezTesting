@@ -16,6 +16,7 @@ using CommonLib.Util.ComBus;
 using CommonLib.Util.IO;
 using CommonLib.Util.Xml;
 using static ATLib.Input.Hw;
+using static ATLib.Input.KbEvent;
 
 namespace CMTest
 {
@@ -45,6 +46,10 @@ namespace CMTest
             //AssembleTopMenu();
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
+            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbKeys.SC_KEY_C, KbKeys.SC_KEY_A);
+
+
+
             _mpTestFlows.Case_CheckAllKeysOnRelayController();
         }
         private void txtRemark_KeyDown(object sender, KeyEventArgs e)

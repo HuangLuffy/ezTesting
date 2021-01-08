@@ -378,7 +378,7 @@ namespace ATLib.Input
         }
         [DllImport("user32.dll", SetLastError = true)]
         static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
-        public static void Press(ScanCode key, bool up)
+        private static void Press(ScanCode key, bool up)
         {
             //var a = Convert.ToInt32("1E", 16);
             const int KEYEVENTF_EXTENDEDKEY = 0x1;
@@ -397,6 +397,26 @@ namespace ATLib.Input
         {
             Press(key, false);
             Press(key, true);
+        }
+        public static void Press(int key)
+        {
+            Press(key, false);
+            Press(key, true);
+        }
+        private static void Press(int key, bool up)
+        {
+            //var a = Convert.ToInt32("1E", 16);
+            const int KEYEVENTF_EXTENDEDKEY = 0x1;
+            const int KEYEVENTF_KEYUP = 0x2;
+            if (up)
+            {
+                //keybd_event((byte)key, 30, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, (UIntPtr)0);
+                keybd_event((byte)key, (byte)(key), KEYEVENTF_KEYUP, (UIntPtr)0);
+            }
+            else
+            {
+                keybd_event((byte)key, (byte)(key), 0, (UIntPtr)0);
+            }
         }
         //PressKey(Keys.A, false);
         //PressKey(Keys.A, true);

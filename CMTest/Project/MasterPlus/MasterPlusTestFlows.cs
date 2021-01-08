@@ -27,11 +27,10 @@ namespace CMTest.Project.MasterPlus
             public const string OPTION_LAUNCH_CHECK_CRASH = "Launch and check crash";
             public const string OPTION_TEST = "Test";
         }
-
         private static readonly long TEST_TIMES = 99999999;
         public readonly IReporter Ireporter;
         public readonly MasterPlusTestActions MpActions;
-
+        public static UtilSerialRelayController Usrc = new UtilSerialRelayController();
         public MasterPlusTestFlows()
         {
             MpActions = new MasterPlusTestActions();
@@ -54,6 +53,7 @@ namespace CMTest.Project.MasterPlus
                     AttrBlocks = 0
                 });
             MpActions.SetIReport(Ireporter);
+            Usrc.Load();
         }
 
         public void LaunchTestReport()
@@ -143,15 +143,15 @@ namespace CMTest.Project.MasterPlus
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
-        public void Case_AssignKeyOnReassignDialog(string pressedKey, string assignWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void Case_AssignKeyOnReassignDialog(KeyPros pressedKey, KeyPros assignWhichKeyGrid, bool blScanCode = false, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignKeyOnReassignDialog(pressedKey, assignWhichKey, blAssignKey);
+                    MpActions.AssignKeyOnReassignDialog(pressedKey, assignWhichKeyGrid.UiaName, blScanCode, blAssignKey, blVerifyKeyWork);
                 }
-                , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}.",
-                    blAssignKey ? $"Check the assigned Value is {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Push {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)}.")
-                , Ireporter.SetAsLines(blAssignKey ? $"The assigned Value is still {UtilEnum.GetEnumNameByValue<ScanCode>(scanCode)} on the Reassignment Dialog." : $"Assign successfully.", "The Grid would be purple.")
+                , Ireporter.SetAsLines($"Open Reassignment Dialog for a single Keyboard Key {assignWhichKeyGrid.UiaName}.",
+                    blAssignKey ? $"Push {pressedKey.UiaName}." : $"Check the assigned Value is {pressedKey.UiaName} on the Reassignment Dialog.")
+                , Ireporter.SetAsLines(blAssignKey ? $"Assign successfully." : $"The assigned Value is still {pressedKey.UiaName} on the Reassignment Dialog.", "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
@@ -231,7 +231,7 @@ namespace CMTest.Project.MasterPlus
                 if (!v.Port.Equals(""))
                 {
                     _KeysSpyOp.ClickClear();
-                    _Usb.SendMockKeys(v.Port, 0.1);
+                    _Usb.SendToPort(v.Port, 0.1);
                     UtilTime.WaitTime(1);
                     if (_KeysSpyOp.GetContentList() != null)
                     {
