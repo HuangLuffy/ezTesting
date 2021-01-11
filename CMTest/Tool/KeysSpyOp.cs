@@ -10,7 +10,7 @@ namespace CMTest.Tool
 {
     public class KeysSpyOp
     {
-        private AT app = null;
+        private static AT app = null;
         private readonly string _appPath = null;
         public KeysSpyOp(string appPath)
         {
@@ -18,11 +18,14 @@ namespace CMTest.Tool
         }
         public void Load()
         {
-            UtilProcess.KillProcessByName(System.IO.Path.GetFileName(_appPath));
-            UtilTime.WaitTime(1);
-            var p = UtilProcess.StartProcessReturn(_appPath);
-            UtilWait.ForTrue(() => p.MainWindowHandle != IntPtr.Zero, 3);
-            app = new AT().GetElementFromHwnd(p.MainWindowHandle);
+            if (app == null)
+            {
+                UtilProcess.KillProcessByName(System.IO.Path.GetFileName(_appPath));
+                UtilTime.WaitTime(1);
+                var p = UtilProcess.StartProcessReturn(_appPath);
+                UtilWait.ForTrue(() => p.MainWindowHandle != IntPtr.Zero, 3);
+                app = new AT().GetElementFromHwnd(p.MainWindowHandle);
+            }
         }
         //public IEnumerable<string> KeysList { get => _keysList; set => _keysList = value; }
 
