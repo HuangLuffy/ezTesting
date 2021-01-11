@@ -410,8 +410,10 @@ namespace ATLib.Input
             var lines = UtilFile.GetListByLine(filePath);
             foreach (var line in lines)
             {
-                if (!line.Contains("=") && line.Contains("{ SC_KEY")) continue;
-                ((KeyPros)(typeof(KbKeys).GetFields().First(x => x.Name.Equals(line.Split('=')[0].Trim().ToUpper())).GetValue(""))).Port = line.Split('=')[1].Trim().ToUpper();
+                if (line.Contains("=") && line.Contains("SC_KEY"))
+                {
+                    ((KeyPros)(typeof(KbKeys).GetFields().First(x => x.Name.Equals(line.Split('=')[0].Trim().ToUpper())).GetValue(""))).Port = line.Split('=')[1].Trim().ToUpper();
+                }          
             }
         }
         public static KbKeys GetScanCode(KbKeys key)

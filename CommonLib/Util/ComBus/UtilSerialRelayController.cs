@@ -70,8 +70,7 @@ namespace CommonLib.Util.ComBus
             }
             //return true;
         }
-
-        public void SendToPort(string key, double closingTime = 0, double waitTime = 0)
+        public void SendToPort(string key, double closingTime = 0.2, double waitTime = 0)
         {
             var key1 = Convert.ToInt16(key.Split(',')[0].Trim());
             var key2 = Convert.ToInt16(key.Split(',')[1].Trim());
