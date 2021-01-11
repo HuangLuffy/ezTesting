@@ -20,7 +20,7 @@ namespace CMTest.Project.MasterPlus
     public partial class MasterPlusTestActions
     {
         #region KeyMapping
-        public void CommonAssignKeyAndVerify(string keyValueNeedToInput, string assignWhichKeyGrid, Action<AT> assignAction, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void CommonAssignKeyAndVerify(string pressedKey, string assignWhichKeyGrid, Action<AT> assignAction, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
@@ -50,14 +50,14 @@ namespace CMTest.Project.MasterPlus
                     return; // do not verify when failed
                 }
             }
-            VerifyAssignedKeyValueAndGridColor(keyGridNeedToBeAssigned, reassignDialog, keyValueNeedToInput);
+            VerifyAssignedKeyValueAndGridColor(keyGridNeedToBeAssigned, reassignDialog, pressedKey);
             if (blVerifyKeyWork)
             {
-                VerifyKeyWork(keyGridNeedToBeAssigned, keyValueNeedToInput);
+                VerifyKeyWork(keyGridNeedToBeAssigned, pressedKey);
             }
         }
 
-        private void VerifyKeyWork(AT keyGridNeedToBeAssigned, string keyValueNeedToInput)
+        private void VerifyKeyWork(AT keyGridNeedToBeAssigned, string pressedKey)
         {
 
         }
