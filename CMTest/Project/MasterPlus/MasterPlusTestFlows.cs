@@ -232,18 +232,18 @@ namespace CMTest.Project.MasterPlus
                 {
                     _KeysSpyOp.ClickClear();
                     _Usb.SendToPort(v.Port, 0.1);
-                    UtilTime.WaitTime(1);
+                    //UtilTime.WaitTime(1);
                     if (_KeysSpyOp.GetContentList() != null)
                     {
                         if (!_KeysSpyOp.GetContentList().ElementAt(0).Equals(v.KeyCode))
                         {
                             //throw new Exception("");
-                            Console.WriteLine($"Inconsistent keys - Actual: [{_KeysSpyOp.GetContentList().ElementAt(0)}] - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
+                            Console.WriteLine($"Inconsistent keys - VarName: [{_KeysSpyOp.GetContentList().ElementAt(0)}] - Actual: [{_KeysSpyOp.GetContentList().ElementAt(0)}] - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"No key captured - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
+                        Console.WriteLine($"No key captured - VarName: [{_KeysSpyOp.GetContentList().ElementAt(0)}] - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
                     }
                 }
             });

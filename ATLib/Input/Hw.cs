@@ -199,13 +199,13 @@ namespace ATLib.Input
             public static KeyPros SC_KEY_DEL = new KeyPros() { ScanCode = 83, KeyValue = 46, Flag = 0, KeyCode = "Delete", VarName = nameof(SC_KEY_DEL), UiaName = "DEL", Port = "" };
             public static KeyPros SC_KEY_END = new KeyPros() { ScanCode = 79, KeyValue = 35, Flag = 0, KeyCode = "End", VarName = nameof(SC_KEY_END), UiaName = "END", Port = "" };
             public static KeyPros SC_KEY_PGDN = new KeyPros() { ScanCode = 81, KeyValue = 34, Flag = 0, KeyCode = "Next", VarName = nameof(SC_KEY_PGDN), UiaName = "PGDN", Port = "" };
-            public static KeyPros SC_KEY_UP_ARROW = new KeyPros() { ScanCode = 72, KeyValue = 38, Flag = 0, KeyCode = "Up", VarName = nameof(SC_KEY_L_ARROW), UiaName = "^", Port = "" };
-            public static KeyPros SC_KEY_L_ARROW = new KeyPros() { ScanCode = 75, KeyValue = 37, Flag = 0, KeyCode = "Left", VarName = nameof(SC_KEY_A), UiaName = "<", Port = "" };
+            public static KeyPros SC_KEY_UP_ARROW = new KeyPros() { ScanCode = 72, KeyValue = 38, Flag = 0, KeyCode = "Up", VarName = nameof(SC_KEY_UP_ARROW), UiaName = "^", Port = "" };
+            public static KeyPros SC_KEY_L_ARROW = new KeyPros() { ScanCode = 75, KeyValue = 37, Flag = 0, KeyCode = "Left", VarName = nameof(SC_KEY_L_ARROW), UiaName = "<", Port = "" };
             public static KeyPros SC_KEY_DN_ARROW = new KeyPros() { ScanCode = 80, KeyValue = 40, Flag = 0, KeyCode = "Down", VarName = nameof(SC_KEY_DN_ARROW), UiaName = "v", Port = "" };
             public static KeyPros SC_KEY_R_ARROW = new KeyPros() { ScanCode = 77, KeyValue = 39, Flag = 0, KeyCode = "Right", VarName = nameof(SC_KEY_R_ARROW), UiaName = ">", Port = "" };
             public static KeyPros SC_KEY_NUM_LOCK = new KeyPros() { ScanCode = 69, KeyValue = 144, Flag = 0, KeyCode = "NumLock", VarName = nameof(SC_KEY_NUM_LOCK), UiaName = "NUMLK", Port = "" };
             public static KeyPros SC_KEY_NUM_DIV = new KeyPros() { ScanCode = 53, KeyValue = 111, Flag = 0, KeyCode = "Divide", VarName = nameof(SC_KEY_NUM_DIV), UiaName = "/", Port = "" };
-            public static KeyPros SC_KEY_NUM_STAR = new KeyPros() { ScanCode = 55, KeyValue = 106, Flag = 0, KeyCode = "Multiple", VarName = nameof(SC_KEY_NUM_STAR), UiaName = "*", Port = "" };
+            public static KeyPros SC_KEY_NUM_STAR = new KeyPros() { ScanCode = 55, KeyValue = 106, Flag = 0, KeyCode = "Multiply", VarName = nameof(SC_KEY_NUM_STAR), UiaName = "*", Port = "" };
             public static KeyPros SC_KEY_NUM_NEG = new KeyPros() { ScanCode = 74, KeyValue = 109, Flag = 0, KeyCode = "Subtract", VarName = nameof(SC_KEY_NUM_NEG), UiaName = "-", Port = "" };
             public static KeyPros SC_KEY_NUM_7 = new KeyPros() { ScanCode = 71, KeyValue = 103, Flag = 0, KeyCode = "NumPad7", VarName = nameof(SC_KEY_NUM_7), UiaName = "7", Port = "" };
             public static KeyPros SC_KEY_NUM_8 = new KeyPros() { ScanCode = 72, KeyValue = 104, Flag = 0, KeyCode = "NumPad8", VarName = nameof(SC_KEY_NUM_8), UiaName = "8", Port = "" };

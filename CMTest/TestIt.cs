@@ -46,7 +46,8 @@ namespace CMTest
             //AssembleTopMenu();
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
-            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbKeys.SC_KEY_C, KbKeys.SC_KEY_A);
+            _mpTestFlows.Case_CheckAllKeysOnRelayController();
+            //_mpTestFlows.Case_AssignKeyOnReassignDialog(KbKeys.SC_KEY_C, KbKeys.SC_KEY_A);
 
 
 
