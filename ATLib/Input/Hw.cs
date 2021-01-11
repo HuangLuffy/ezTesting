@@ -221,6 +221,7 @@ namespace ATLib.Input
             public static KeyPros SC_KEY_NUM_DOT = new KeyPros() { ScanCode = 83, KeyValue = 110, Flag = 0, KeyCode = "Decimal", VarName = nameof(SC_KEY_NUM_DOT), UiaName = ".", Port = "" };
             public static KeyPros SC_KEY_NUM_ENTER = new KeyPros() { ScanCode = 28, KeyValue = 13, Flag = 1, KeyCode = "Return", VarName = nameof(SC_KEY_NUM_ENTER), UiaName = "NP_ENTER", Port = "" };
 
+            public static KeyPros SC_KEY_LOGO = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_LOGO), UiaName = "DISABLE", Port = "" };
             public static KeyPros SC_KEY_NO = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_NO), UiaName = "DISABLE", Port = "" };
 
             public static KeyPros SC_KEY_PLAY_PAUSE = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_PLAY_PAUSE), UiaName = "", Port = "" };
