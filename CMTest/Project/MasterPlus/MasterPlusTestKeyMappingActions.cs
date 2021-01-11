@@ -59,9 +59,23 @@ namespace CMTest.Project.MasterPlus
 
         private void VerifyKeyWork(AT keyGridNeedToBeAssigned, string pressedKey)
         {
+            if (pressedKey.Equals(MPObj.DisableKeyCheckbox.Name))
+            {
 
+            }
+            else if (pressedKey.Equals(MPObj.EnableKeyCheckbox.Name) || pressedKey.Equals(""))
+            {
+
+            }
+            else
+            {
+                var key = Hw.KbKeys.GetScKeyByUiaName(pressedKey);
+                if (true)
+                {
+                    _r.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
+                }
+            }
         }
-
         private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string pressedKey)
         {
             var gridColorValue = KeyMappingGridColor.Purple;
@@ -233,7 +247,7 @@ namespace CMTest.Project.MasterPlus
                     }
                     else
                     {
-                        MasterPlusTestFlows.Usrc.SendToPort(pressedKey.Port);
+                        TestIt.Usrc.SendToPort(pressedKey.Port);
                     }
                 }, blAssignKey, blVerifyKeyWork);
         }
@@ -271,7 +285,7 @@ namespace CMTest.Project.MasterPlus
                     foreach (var subItem in reassignMenuSubItems.MenuSubItems)
                     {
                         AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value,
-                            validKeys[i].GetElementInfo().Name(), blAssignKey);
+                            validKeys[i].GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
                         reassignMenuSubItems.MenuSubItems.Remove(subItem);
                         if (!reassignMenuSubItems.MenuSubItems.Any())
                         {

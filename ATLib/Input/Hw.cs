@@ -255,6 +255,11 @@ namespace ATLib.Input
             public static KeyPros SC_KEY_POWER_MODE_WORKING = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_POWER_MODE_WORKING), UiaName = "", Port = "" };
             public static KeyPros SC_KEY_POWER_MODE_PERFORMANCE = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_POWER_MODE_PERFORMANCE), UiaName = "", Port = "" };
             public static KeyPros SC_KEY_POWER_MODE_GAMING = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_POWER_MODE_GAMING), UiaName = "", Port = "" };
+            public static KeyPros GetScKeyByUiaName(string uiaName)
+            {
+                return (KeyPros)typeof(Hw.KbKeys).GetFields().First((x) => ((KeyPros)x.GetValue("")).UiaName.Equals(uiaName)).GetValue("");
+            }
+
         }
         //public enum Keys
         //{

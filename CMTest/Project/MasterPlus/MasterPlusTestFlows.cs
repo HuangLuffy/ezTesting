@@ -30,7 +30,6 @@ namespace CMTest.Project.MasterPlus
         private static readonly long TEST_TIMES = 99999999;
         public readonly IReporter Ireporter;
         public readonly MasterPlusTestActions MpActions;
-        public static UtilSerialRelayController Usrc = new UtilSerialRelayController();
         public MasterPlusTestFlows()
         {
             MpActions = new MasterPlusTestActions();
@@ -219,21 +218,19 @@ namespace CMTest.Project.MasterPlus
 
         public void Case_CheckAllKeysOnRelayController()
         {
-            KeysSpyOp _KeysSpyOp = new KeysSpyOp(this.MpActions.KeySpyRelativePath);
-            _KeysSpyOp.ClickClear();
+            TestIt.Kso.Load();
+            TestIt.Kso.ClickClear();
             typeof(Hw.KbKeys).GetFields().ToList().ForEach((x) => {
                 var v = (KeyPros)(x.GetValue(""));
                 if (!v.Port.Equals(""))
                 {
-                    _KeysSpyOp.ClickClear();
-                    Usrc.SendToPort(v.Port);
-                    //UtilTime.WaitTime(1);
-                    if (_KeysSpyOp.GetContentList() != null)
+                    TestIt.Kso.ClickClear();
+                    TestIt.Usrc.SendToPort(v.Port);
+                    if (TestIt.Kso.GetContentList() != null)
                     {
-                        if (!_KeysSpyOp.GetContentList().ElementAt(0).Equals(v.KeyCode))
+                        if (!TestIt.Kso.GetContentList().ElementAt(0).Equals(v.KeyCode))
                         {
-                            //throw new Exception("");
-                            Console.WriteLine($"Inconsistent keys - VarName: [{v.VarName}] - Actual: [{_KeysSpyOp.GetContentList().ElementAt(0)}] - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
+                            Console.WriteLine($"Inconsistent keys - VarName: [{v.VarName}] - Actual: [{TestIt.Kso.GetContentList().ElementAt(0)}] - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
                         }
                     }
                     else

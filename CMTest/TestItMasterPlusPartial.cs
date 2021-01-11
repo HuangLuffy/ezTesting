@@ -7,6 +7,8 @@ using System.Linq;
 using ATLib.Input;
 using CommonLib.Util.IO;
 using System.Text.RegularExpressions;
+using CommonLib.Util.ComBus;
+using CMTest.Tool;
 
 namespace CMTest
 {
@@ -109,6 +111,7 @@ namespace CMTest
         }
         private dynamic Flow_KeyMappingBaseTest(string deviceName)
         {
+            Kso.Load();
             //_mpTestFlows.Case_AssignInLoop();
             var keysNeedToAssignList = new List<List<string>>
             {

@@ -17,6 +17,7 @@ using CommonLib.Util.IO;
 using CommonLib.Util.Xml;
 using static ATLib.Input.Hw;
 using static ATLib.Input.KbEvent;
+using CMTest.Tool;
 
 namespace CMTest
 {
@@ -33,6 +34,8 @@ namespace CMTest
         private readonly UtilCmd _cmd = new UtilCmd();
         private readonly XmlOps _xmlOps = new XmlOps();
         private readonly MonitorAction _monitorAction = new MonitorAction();
+        public static UtilSerialRelayController Usrc = new UtilSerialRelayController();
+        public static KeysSpyOp Kso;
         private RemoteOS _remoteOs;
         //public static object UtilRegrex { get; private set; }
         private readonly IDictionary<string, Func<dynamic>> _optionsTopMenu = new Dictionary<string, Func<dynamic>>();
@@ -48,7 +51,7 @@ namespace CMTest
             GetMatrixFromFile();
             _mpTestFlows.Case_CheckAllKeysOnRelayController();
             //_mpTestFlows.Case_AssignKeyOnReassignDialog(KbKeys.SC_KEY_C, KbKeys.SC_KEY_A);
-
+            new KeysSpyOp(_mpTestFlows.MpActions.KeySpyRelativePath);
 
 
             _mpTestFlows.Case_CheckAllKeysOnRelayController();
