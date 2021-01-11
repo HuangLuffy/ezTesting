@@ -53,7 +53,6 @@ namespace CMTest.Project.MasterPlus
                     AttrBlocks = 0
                 });
             MpActions.SetIReport(Ireporter);
-            Usrc.Load();
         }
 
         public void LaunchTestReport()
@@ -221,17 +220,13 @@ namespace CMTest.Project.MasterPlus
         public void Case_CheckAllKeysOnRelayController()
         {
             KeysSpyOp _KeysSpyOp = new KeysSpyOp(this.MpActions.KeySpyRelativePath);
-            UtilSerialRelayController _Usb = new UtilSerialRelayController();
-            _Usb.Load();
             _KeysSpyOp.ClickClear();
-            //var s = _KeysSpyOp.GetContentList();
-            //var c = typeof(Hw.KbKeys).GetFields().ToList().FindAll((x) => !((KeyPros)x.GetValue("")).Port.Equals(""));
             typeof(Hw.KbKeys).GetFields().ToList().ForEach((x) => {
                 var v = (KeyPros)(x.GetValue(""));
                 if (!v.Port.Equals(""))
                 {
                     _KeysSpyOp.ClickClear();
-                    _Usb.SendToPort(v.Port, 0.2);
+                    Usrc.SendToPort(v.Port);
                     //UtilTime.WaitTime(1);
                     if (_KeysSpyOp.GetContentList() != null)
                     {

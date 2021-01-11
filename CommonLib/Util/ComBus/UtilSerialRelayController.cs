@@ -10,7 +10,7 @@ namespace CommonLib.Util.ComBus
         private static SerialPort _comm = new SerialPort();
         private readonly int _addr = 254;
         private static string _workablePortName = "";
-        public void Load()
+        private void Load()
         {
             var comPorts = SerialPort.GetPortNames();
             Array.Sort(comPorts);
@@ -39,7 +39,7 @@ namespace CommonLib.Util.ComBus
                 _workablePortName = "";
             }
         }
-        public void OpenSerialPort(string portName = null)
+        private void OpenSerialPort(string portName = null)
         {
             portName = portName ?? _workablePortName;
             //关闭时点击，则设置好端口，波特率后打开
@@ -72,6 +72,10 @@ namespace CommonLib.Util.ComBus
         }
         public void SendToPort(string key, double closingTime = 0.2, double waitTime = 0)
         {
+            if (_workablePortName.Equals(""))
+            {
+                Load();
+            }
             var key1 = Convert.ToInt16(key.Split(',')[0].Trim());
             var key2 = Convert.ToInt16(key.Split(',')[1].Trim());
             OpenDo(key1);
