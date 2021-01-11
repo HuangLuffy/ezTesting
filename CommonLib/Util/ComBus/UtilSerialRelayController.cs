@@ -29,7 +29,7 @@ namespace CommonLib.Util.ComBus
                     return;
                 }
             }
-            throw new Exception($"No any Relay Controller found.");
+            throw new Exception($"No any Relay Controller found or the relevant port occupied.");
         }
         public void CloseComm()
         {
@@ -70,7 +70,7 @@ namespace CommonLib.Util.ComBus
             }
             //return true;
         }
-        public void SendToPort(string key, double closingTime = 0.2, double waitTime = 0)
+        public void SendToPort(string key, double DisconnectingTime = 0.2, double waitTime = 0)
         {
             if (_workablePortName.Equals(""))
             {
@@ -80,7 +80,7 @@ namespace CommonLib.Util.ComBus
             var key2 = Convert.ToInt16(key.Split(',')[1].Trim());
             OpenDo(key1);
             OpenDo(key2);
-            UtilTime.WaitTime(closingTime);
+            UtilTime.WaitTime(DisconnectingTime);
             CloseDo(key2);
             CloseDo(key1);
             UtilTime.WaitTime(waitTime);
