@@ -15,6 +15,10 @@ namespace ATLib
         {
             return ats;
         }
+        public IEnumerable<AT> GetATList()
+        {
+            return ats.ToList();
+        }
         public int Length()
         {
             try

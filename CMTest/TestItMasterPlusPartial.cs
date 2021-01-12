@@ -82,18 +82,16 @@ namespace CMTest
             {
                 if ((i + 1) <= (loop.Count() - 1) && loop.ElementAt(i)[2].Equals(loop.ElementAt(i + 1)[2]) &&
                     blAssignKey) continue;
-                if (loop.ElementAt(i)[0].Equals(MPObj.DisableKeyCheckbox.Name))
-                {
+                _mpTestFlows.MpActions.DifferentFlowForDifferentPressedKey(loop.ElementAt(i)[0],
+                () => {
                     _mpTestFlows.Case_DisableKey(loop.ElementAt(i)[2], blAssignKey);
-                }
-                else if (loop.ElementAt(i)[0].Equals(MPObj.EnableKeyCheckbox.Name))
-                {
+                },
+                () => {
                     _mpTestFlows.Case_EnableKey(loop.ElementAt(i)[2], blAssignKey);
-                }
-                else
-                {
+                },
+                () => {
                     _mpTestFlows.Case_AssignKeyFromReassignMenu(loop.ElementAt(i)[0], loop.ElementAt(i)[1], loop.ElementAt(i)[2], blAssignKey);
-                }
+                });
             }
         }
         private void _ResetLoopVerifyLogic(IReadOnlyList<List<string>> loop)
@@ -111,7 +109,7 @@ namespace CMTest
         }
         private dynamic Flow_KeyMappingBaseTest(string deviceName)
         {
-            //_mpTestFlows.Case_AssignInLoop();
+            _mpTestFlows.Case_AssignInLoop();
             var keysNeedToAssignList = new List<List<string>>
             {
                 //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, "A" },

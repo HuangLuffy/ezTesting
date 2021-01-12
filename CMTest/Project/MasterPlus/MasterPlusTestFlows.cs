@@ -218,24 +218,18 @@ namespace CMTest.Project.MasterPlus
 
         public void Case_CheckAllKeysOnRelayController()
         {
-            TestIt.Kso.ClickClear();
             typeof(Hw.KbKeys).GetFields().ToList().ForEach((x) => {
                 var v = (KeyPros)(x.GetValue(""));
                 if (!v.Port.Equals(""))
                 {
-                    TestIt.Kso.ClickClear();
-                    TestIt.Usrc.SendToPort(v.Port);
-                    if (TestIt.Kso.GetContentList() != null)
+                    try
                     {
-                        if (!TestIt.Kso.GetContentList().ElementAt(0).Equals(v.KeyCode))
-                        {
-                            Console.WriteLine($"Inconsistent keys - VarName: [{v.VarName}] - Actual: [{TestIt.Kso.GetContentList().ElementAt(0)}] - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
-                        }
+                        TestIt.SendUsbKeyAndCheck(v, v.KeyCode);
                     }
-                    else
+                    catch (Exception e)
                     {
-                        Console.WriteLine($"No key captured - VarName: [{v.VarName}] - Expected:[{v.KeyCode}] Port:[{v.Port}] Ui:[{v.UiaName}]");
-                    }
+                        Console.WriteLine(e.Message);
+                    }           
                 }
             });
         }

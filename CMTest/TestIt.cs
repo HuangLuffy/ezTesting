@@ -45,7 +45,7 @@ namespace CMTest
         public TestIt()
         {
             _mpTestFlows = new MasterPlusTestFlows();
-            new KeysSpyOp(_mpTestFlows.MpActions.KeySpyRelativePath);
+            Kso = new KeysSpyOp(_mpTestFlows.MpActions.KeySpyRelativePath);
             _portalTestFlows = new PortalTestFlows();
             //AssembleTopMenu();
             GetKeyboardKeysFromKeyMapTabFile();
@@ -73,7 +73,7 @@ namespace CMTest
             {    
                 if (!string.Join("", actualResultList.ToArray()).Equals(expectedResult))
                 {
-                    throw new Exception($"Inconsistent keys. - VarName: [{key.VarName}] - Actual: [{actualResultList.ToArray()}] - Expected:[{expectedResult}] Port:[{key.Port}] Ui:[{key.UiaName}]");
+                    throw new Exception($"Inconsistent keys. - VarName: [{key.VarName}] - Actual: [{string.Join("", actualResultList.ToArray())}] - Expected:[{expectedResult}] Port:[{key.Port}] Ui:[{key.UiaName}]");
                 }
             }
             else

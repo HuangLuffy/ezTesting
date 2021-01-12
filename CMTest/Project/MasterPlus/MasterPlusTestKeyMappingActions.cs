@@ -56,7 +56,7 @@ namespace CMTest.Project.MasterPlus
                 VerifyKeyWork(keyGridNeedToBeAssigned, pressedKey);
             }
         }
-        private void DifferentFlowForDifferentPressedKey(string pressedKey, Action disableKeyCheckboxAction, Action enableKeyCheckboxAction, Action assignedAction)
+        public void DifferentFlowForDifferentPressedKey(string pressedKey, Action disableKeyCheckboxAction, Action enableKeyCheckboxAction, Action assignedAction)
         {
             if (pressedKey.Equals(MPObj.DisableKeyCheckbox.Name))
             {
@@ -73,16 +73,16 @@ namespace CMTest.Project.MasterPlus
         }
         private void VerifyKeyWork(AT keyGridNeedToBeAssigned, string pressedKey)
         {
+            var key = Hw.KbKeys.GetScKeyByUiaName(keyGridNeedToBeAssigned.GetElementInfo().Name());
             DifferentFlowForDifferentPressedKey(pressedKey,
                 () => {
-                        
+                    TestIt.SendUsbKeyAndCheck(key, null);
                 },
                 () => {
-                        
+                    TestIt.SendUsbKeyAndCheck(key, key.KeyCode);
                 },
                 () => {
-                    var key = Hw.KbKeys.GetScKeyByUiaName(keyGridNeedToBeAssigned.GetElementInfo().Name());
-                    TestIt.SendUsbKeyAndCheck(key);
+                    TestIt.SendUsbKeyAndCheck(key, pressedKey);
                 });
         }
         private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string pressedKey)
@@ -262,8 +262,13 @@ namespace CMTest.Project.MasterPlus
         //for ma
         public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
-            var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
-            var keys = assignContainer.GetElementsAllChild().GetATCollection().ToList();
+            //var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
+            //var keys = assignContainer.GetElementsAllChild().GetATCollection().ToList();
+
+            var keys = GetMasterPlusMainWindow().GetElementsAllChild().GetATList().Where(x => x.GetElementInfo().FullDescription().StartsWith("#"));
+
+
+
             var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().ToList();
             var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen()).ToList();
             ReassignMenuOptionAndSubItems recordReassignMenuSubItems = null;
