@@ -73,22 +73,17 @@ namespace CMTest.Project.MasterPlus
         }
         private void VerifyKeyWork(AT keyGridNeedToBeAssigned, string pressedKey)
         {
-            if (pressedKey.Equals(MPObj.DisableKeyCheckbox.Name))
-            {
-
-            }
-            else if (pressedKey.Equals(MPObj.EnableKeyCheckbox.Name) || pressedKey.Equals(""))
-            {
-
-            }
-            else
-            {
-                var key = Hw.KbKeys.GetScKeyByUiaName(pressedKey);
-                if (true)
-                {
-                    _r.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
-                }
-            }
+            DifferentFlowForDifferentPressedKey(pressedKey,
+                () => {
+                        
+                },
+                () => {
+                        
+                },
+                () => {
+                    var key = Hw.KbKeys.GetScKeyByUiaName(keyGridNeedToBeAssigned.GetElementInfo().Name());
+                    TestIt.SendUsbKeyAndCheck(key);
+                });
         }
         private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string pressedKey)
         {
@@ -96,38 +91,30 @@ namespace CMTest.Project.MasterPlus
             try
             {
                 var assignedValue = reassignDialog.GetElementFromDescendants(MPObj.AssignedValue, returnNullWhenException: true);
-
-
-
-
-
-
-                if (pressedKey.Equals(MPObj.DisableKeyCheckbox.Name))
-                {
-                    gridColorValue = KeyMappingGridColor.Red;
-                    if (assignedValue != null && !assignedValue.GetElementInfo().IsOffscreen())
-                    {
-                        _r.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
-                    }
-                }
-                else if (pressedKey.Equals(MPObj.EnableKeyCheckbox.Name) || pressedKey.Equals(""))
-                {
-                    gridColorValue = KeyMappingGridColor.Green;
-                    var reassignTitleValue = reassignDialog.GetElementFromDescendants(MPObj.ReassignTitleValue);
-                    if (assignedValue.GetElementInfo().FullDescription() != reassignTitleValue.GetElementInfo().FullDescription())
-                    {
-                        _r.SetStepFailed($"The assigned key is not restored to {reassignTitleValue.GetElementInfo().FullDescription()} when enabling it.", "assignedValueNotRestored");
-                    }
-                }
-                else
-                {
-                    gridColorValue = KeyMappingGridColor.Purple;
-                    var value = assignedValue.GetElementInfo().FullDescription();
-                    if (!value.Equals(pressedKey))
-                    {
-                        _r.SetStepFailed($"Input {pressedKey}, but get {value}.", "assignedValueWrong");
-                    }
-                }
+                DifferentFlowForDifferentPressedKey(pressedKey, 
+                    () => {
+                        gridColorValue = KeyMappingGridColor.Red;
+                        if (assignedValue != null && !assignedValue.GetElementInfo().IsOffscreen())
+                        {
+                            _r.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
+                        }
+                    }, 
+                    () => {
+                        gridColorValue = KeyMappingGridColor.Green;
+                        var reassignTitleValue = reassignDialog.GetElementFromDescendants(MPObj.ReassignTitleValue);
+                        if (assignedValue.GetElementInfo().FullDescription() != reassignTitleValue.GetElementInfo().FullDescription())
+                        {
+                            _r.SetStepFailed($"The assigned key is not restored to {reassignTitleValue.GetElementInfo().FullDescription()} when enabling it.", "assignedValueNotRestored");
+                        }
+                    }, 
+                    () => {
+                        gridColorValue = KeyMappingGridColor.Purple;
+                        var value = assignedValue.GetElementInfo().FullDescription();
+                        if (!value.Equals(pressedKey))
+                        {
+                            _r.SetStepFailed($"Input {pressedKey}, but get {value}.", "assignedValueWrong");
+                        }
+                    });
             }
             catch (Exception e)
             {
@@ -140,7 +127,7 @@ namespace CMTest.Project.MasterPlus
             }
             if (!keyGridNeedToBeAssigned.GetElementInfo().FullDescription().Equals(gridColorValue))
             {
-                _r.SetStepFailed($"Key {pressedKey} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.", "colorWrong");
+                _r.SetStepFailed($"Key {pressedKey} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.", "WrongColor");
             }
         }
         private string _theLastMenuItem = string.Empty;

@@ -70,7 +70,7 @@ namespace CommonLib.Util.ComBus
             }
             //return true;
         }
-        public void SendToPort(string key, double DisconnectingTime = 0.2, double waitTime = 0)
+        public void SendToPort(string key, double DisconnectingTime = 0.2, double executedWait = 0)
         {
             if (_workablePortName.Equals(""))
             {
@@ -83,7 +83,7 @@ namespace CommonLib.Util.ComBus
             UtilTime.WaitTime(DisconnectingTime);
             CloseDo(key2);
             CloseDo(key1);
-            UtilTime.WaitTime(waitTime);
+            UtilTime.WaitTime(executedWait);
         }
 
         private void OpenDo(int io)

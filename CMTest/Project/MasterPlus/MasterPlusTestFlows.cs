@@ -218,7 +218,6 @@ namespace CMTest.Project.MasterPlus
 
         public void Case_CheckAllKeysOnRelayController()
         {
-            TestIt.Kso.Load();
             TestIt.Kso.ClickClear();
             typeof(Hw.KbKeys).GetFields().ToList().ForEach((x) => {
                 var v = (KeyPros)(x.GetValue(""));

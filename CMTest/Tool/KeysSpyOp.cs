@@ -31,14 +31,19 @@ namespace CMTest.Tool
 
         public void ClickClear()
         {
+            Load();
             app.GetElementFromChild(new ATElementStruct() { Name = "Clear"}).DoClick();
         }
         public void ClickClose()
         {
-            app.GetElementFromChild(new ATElementStruct() { Name = "Close" }).DoClick();
+            if (app != null)
+            {
+                app.GetElementFromChild(new ATElementStruct() { Name = "Close" }).DoClick();
+            }
         }
         public IEnumerable<string> GetContentList()
         {
+            Load();
             var c = app.GetElementFromChild(new ATElementStruct() { Name = "RichEdit Control" }).DoGetDocumentValue();
             if (!c.Equals("\r"))
             {

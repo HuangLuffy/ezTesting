@@ -56,11 +56,29 @@ namespace CMTest
 
             _mpTestFlows.Case_CheckAllKeysOnRelayController();
         }
-        private void txtRemark_KeyDown(object sender, KeyEventArgs e)
+        public static void SendUsbKeyAndCheck(KeyPros key, string expectedResult = null)
         {
-            if (e.KeyCode == Keys.Up)
+            TestIt.Kso.ClickClear();
+            TestIt.Usrc.SendToPort(key.Port, executedWait:0.3);
+            var actualResultList = TestIt.Kso.GetContentList();
+            if (expectedResult == null)
             {
-                //codes what you want
+                if (actualResultList != null)
+                {
+                    throw new Exception($"The key still has output. - VarName: [{key.VarName}] - Actual: [{TestIt.Kso.GetContentList().ElementAt(0)}] - Expected:[No any output] Port:[{key.Port}] Ui:[{key.UiaName}]");
+                }
+                return;
+            }
+            if (actualResultList != null)
+            {    
+                if (!string.Join("", actualResultList.ToArray()).Equals(expectedResult))
+                {
+                    throw new Exception($"Inconsistent keys. - VarName: [{key.VarName}] - Actual: [{actualResultList.ToArray()}] - Expected:[{expectedResult}] Port:[{key.Port}] Ui:[{key.UiaName}]");
+                }
+            }
+            else
+            {
+                throw new Exception($"No key captured. - VarName: [{key.VarName}] - Expected:[{expectedResult}] Port:[{key.Port}] Ui:[{key.UiaName}]");
             }
         }
         private void AssembleTopMenu()

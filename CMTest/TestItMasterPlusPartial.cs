@@ -111,7 +111,6 @@ namespace CMTest
         }
         private dynamic Flow_KeyMappingBaseTest(string deviceName)
         {
-            Kso.Load();
             //_mpTestFlows.Case_AssignInLoop();
             var keysNeedToAssignList = new List<List<string>>
             {
