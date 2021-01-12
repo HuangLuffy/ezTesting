@@ -22,11 +22,13 @@ namespace CMTest.Project.MasterPlus
         #region KeyMapping
         public void CommonAssignKeyAndVerify(string pressedKey, string assignWhichKeyGrid, Action<AT> assignAction, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
-            var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
-            var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
+            //var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
+            //var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
+
+            var keyGridNeedToBeAssigned = GetAllKbGridKeys().First(x => x.GetElementInfo().Name().Equals(assignWhichKeyGrid));
+
             keyGridNeedToBeAssigned.DoClickPoint(1);
             var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
-            //For old //var reassignDialog = GetMasterPlusMainWindow().GetElementFromDescendants(MPObj.ReassignDialog);
             if (blAssignKey)
             {
                 try
@@ -258,16 +260,16 @@ namespace CMTest.Project.MasterPlus
                     }
                 }, blAssignKey, blVerifyKeyWork);
         }
+        private IEnumerable<AT> GetAllKbGridKeys()
+        {
+            var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer, returnNullWhenException: true);
+            return assignContainer != null ? assignContainer.GetElementsAllChild().GetATCollection().ToList() : GetMasterPlusMainWindow().GetElementsAllChild().GetATList().Where(x => x.GetElementInfo().FullDescription().StartsWith("#"));
+        }
         private bool _blBreak = false;
         //for ma
         public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
-            //var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
-            //var keys = assignContainer.GetElementsAllChild().GetATCollection().ToList();
-
-            var keys = GetMasterPlusMainWindow().GetElementsAllChild().GetATList().Where(x => x.GetElementInfo().FullDescription().StartsWith("#"));
-
-
+            var keys = GetAllKbGridKeys();
 
             var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().ToList();
             var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen()).ToList();

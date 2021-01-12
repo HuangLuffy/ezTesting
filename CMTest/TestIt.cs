@@ -30,7 +30,7 @@ namespace CMTest
         private const string OPTION_CONNECT_IP = "Connect the Remote IP if it is correct";
         private const string OPTION_INPUT_IP = "Input your Remote IP";
         private readonly PortalTestFlows _portalTestFlows;
-        private readonly MasterPlusTestFlows _mpTestFlows;
+        private readonly MasterPlusTestCases _MpCases;
         private readonly UtilCmd _cmd = new UtilCmd();
         private readonly XmlOps _xmlOps = new XmlOps();
         private readonly MonitorAction _monitorAction = new MonitorAction();
@@ -44,17 +44,16 @@ namespace CMTest
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
         public TestIt()
         {
-            _mpTestFlows = new MasterPlusTestFlows();
-            Kso = new KeysSpyOp(_mpTestFlows.MpActions.KeySpyRelativePath);
+            _MpCases = new MasterPlusTestCases();
+            Kso = new KeysSpyOp(_MpCases.MpActions.KeySpyRelativePath);
             _portalTestFlows = new PortalTestFlows();
             //AssembleTopMenu();
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
-            //_mpTestFlows.Case_CheckAllKeysOnRelayController();
-            _mpTestFlows.Case_AssignKeyOnReassignDialog(KbKeys.SC_KEY_C, KbKeys.SC_KEY_A);
+            _MpCases.Case_CheckAllKeysOnRelayController();
 
 
-            _mpTestFlows.Case_CheckAllKeysOnRelayController();
+            //_MpCases.Case_CheckAllKeysOnRelayController();
         }
         public static void SendUsbKeyAndCheck(KeyPros key, string expectedResult = null)
         {
@@ -97,7 +96,7 @@ namespace CMTest
                 AssemblePortalTests();
                 return _cmd.ShowCmdMenu(_optionsPortalTestsWithFuncs, _optionsTopMenu);
             } );
-                 _optionsTopMenu.Add(_mpTestFlows.MpActions.SwName, () => {
+                 _optionsTopMenu.Add(_MpCases.MpActions.SwName, () => {
                 AssembleMasterPlusPlugInOutTests();
                 return _cmd.ShowCmdMenu(_optionsTestsWithFuncs, _optionsTopMenu);
             });
