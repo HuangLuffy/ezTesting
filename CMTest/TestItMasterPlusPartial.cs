@@ -134,7 +134,7 @@ namespace CMTest
             _MpCases.Case_SelectKeyMappingTab(deviceName);
             _AssignLoopVerifyLogic(keysNeedToAssignList);
             _MpCases.Case_CloseMasterPlus(10);
-            _MpCases.Case_LaunchMasterPlus(120);
+            _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
             _MpCases.Case_SelectDeviceFromList(deviceName);
             _MpCases.Case_SelectKeyMappingTab(deviceName, false);
             _AssignLoopVerifyLogic(keysNeedToAssignList, false);

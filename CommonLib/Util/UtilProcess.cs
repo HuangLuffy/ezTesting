@@ -8,6 +8,15 @@ namespace CommonLib.Util
 {
     public static class UtilProcess
     {
+        //UtilProcess.KillProcessByName(System.IO.Path.GetFileName(_appPath));
+
+        public static void KillAllProcessesByName(params string[] ps)
+        {
+            foreach (var p in ps)
+            {
+                KillProcessByName(p); UtilTime.WaitTime(0.2);
+            }
+        }
         public static bool IsProcessExistedByName(string name)
         {
             return Process.GetProcessesByName(name).Any();
