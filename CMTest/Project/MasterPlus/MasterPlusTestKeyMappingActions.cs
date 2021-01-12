@@ -56,7 +56,21 @@ namespace CMTest.Project.MasterPlus
                 VerifyKeyWork(keyGridNeedToBeAssigned, pressedKey);
             }
         }
-
+        private void DifferentFlowForDifferentPressedKey(string pressedKey, Action disableKeyCheckboxAction, Action enableKeyCheckboxAction, Action assignedAction)
+        {
+            if (pressedKey.Equals(MPObj.DisableKeyCheckbox.Name))
+            {
+                disableKeyCheckboxAction.Invoke();
+            }
+            else if (pressedKey.Equals(MPObj.EnableKeyCheckbox.Name) || pressedKey.Equals(""))
+            {
+                enableKeyCheckboxAction.Invoke();
+            }
+            else
+            {
+                assignedAction.Invoke();
+            }
+        }
         private void VerifyKeyWork(AT keyGridNeedToBeAssigned, string pressedKey)
         {
             if (pressedKey.Equals(MPObj.DisableKeyCheckbox.Name))
@@ -82,6 +96,12 @@ namespace CMTest.Project.MasterPlus
             try
             {
                 var assignedValue = reassignDialog.GetElementFromDescendants(MPObj.AssignedValue, returnNullWhenException: true);
+
+
+
+
+
+
                 if (pressedKey.Equals(MPObj.DisableKeyCheckbox.Name))
                 {
                     gridColorValue = KeyMappingGridColor.Red;
