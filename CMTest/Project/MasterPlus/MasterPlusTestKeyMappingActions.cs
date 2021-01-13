@@ -94,9 +94,13 @@ namespace CMTest.Project.MasterPlus
                     TestIt.SendUsbKeyAndCheck(key, key.KeyCode);
                 },
                 () => {
-                    if (true)
+                    if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE))
                     {
-                        UtilProcess.KillAllProcessesByName("msedge", "iexplore.exe", "chrome");
+
+                    }
+                    else if (true)
+                    {
+                        UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
                         UtilTime.WaitTime(1);
                     }
                     TestIt.SendUsbKeyAndCheck(key, pressedKey);
