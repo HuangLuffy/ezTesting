@@ -46,7 +46,7 @@ namespace ATLib
         }
         public ATS GetElements(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Children, bool returnNullWhenException = false)
         {
-            return GetElements(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.FullDescriton, returnNullWhenException);
+            return GetElements(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.FullDescriton, aTElementStruct.AccessKey, returnNullWhenException);
         }
         public AT GetIAElementFromATS(ATElementStruct iAElementStruct, ATS ats, bool returnNullWhenException = false)
         {
@@ -69,13 +69,13 @@ namespace ATLib
         }
         public AT GetElement(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Descendants, bool checkEnabled = false, bool returnNullWhenException = false)
         {
-            return GetElement(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.FullDescriton, aTElementStruct.Index, timeout, checkEnabled, returnNullWhenException);
+            return GetElement(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.FullDescriton, aTElementStruct.AccessKey, aTElementStruct.Index, timeout, checkEnabled, returnNullWhenException);
         }
         public void WaitForVanishedBySearch(ATElementStruct aTElementStruct, int timeout = -1, string treeScope = TreeScope.Descendants)
         {
             try
             {
-                UtilWait.ForTrue(() => (GetElement(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.FullDescriton, aTElementStruct.Index, -1, false, true) == null), timeout);
+                UtilWait.ForTrue(() => (GetElement(treeScope, aTElementStruct.Name, aTElementStruct.AutomationId, aTElementStruct.ClassName, aTElementStruct.FrameworkId, aTElementStruct.ControlType, aTElementStruct.FullDescriton, aTElementStruct.AccessKey, aTElementStruct.Index, -1, false, true) == null), timeout);
                 //UtilWait.ForTrue(() =>
                 //{
                 //    return (GetElement(TreeScope, ATElementStruct.Name, ATElementStruct.AutomationId, ATElementStruct.ClassName, ATElementStruct.FrameworkId, ATElementStruct.ControlType, ATElementStruct.Index, -1, false, true) == null);
