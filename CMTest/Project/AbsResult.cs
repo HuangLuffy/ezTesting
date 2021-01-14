@@ -15,6 +15,7 @@ namespace CMTest.Project
             public const string Screenshots = "Screenshots";
             public const string Result = "Result";
             public const string Resources = "Resources";
+            public const string Media = "Media";
         }
 
         protected string LogPathLaunch => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "launch.log");
@@ -30,6 +31,7 @@ namespace CMTest.Project
         public string ResourcesKeysRelativePath = Path.Combine(Const.Resources, "KeyMapTab.h");
         public string MatrixRelativePath = Path.Combine(Const.Resources, "Matrix.cs");
         public string KeySpyRelativePath = Path.Combine(Const.Resources, "KeysSpy.exe");
+        public string MediaFolderPath => Path.Combine(ResourcesPath, Const.Media);
         public AbsResult()
         {
             _currentTestFolderName = GetTestTimeString();//This function would run twice if put it with "public string CurrentTestFolderName";

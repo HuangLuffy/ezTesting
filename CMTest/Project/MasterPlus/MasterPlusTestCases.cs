@@ -19,7 +19,7 @@ using static ATLib.Input.KbEvent;
 
 namespace CMTest.Project.MasterPlus
 {
-    public class MasterPlusTestFlows
+    public class MasterPlusTestCases
     {
         public struct TestNames
         {
@@ -30,7 +30,7 @@ namespace CMTest.Project.MasterPlus
         private static readonly long TEST_TIMES = 99999999;
         public readonly IReporter Ireporter;
         public readonly MasterPlusTestActions MpActions;
-        public MasterPlusTestFlows()
+        public MasterPlusTestCases()
         {
             MpActions = new MasterPlusTestActions();
             MpActions.Initialize();

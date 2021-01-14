@@ -96,6 +96,7 @@ namespace CMTest.Project.MasterPlus
                 () => {
                     if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE))
                     {
+                        UtilWmp.StartWmpWithMedias(Path.Combine(this.MediaFolderPath, "1.mp3"), Path.Combine(this.MediaFolderPath, "2.mp3"), Path.Combine(this.MediaFolderPath, "3.mp3"));
 
                     }
                     else if (true)

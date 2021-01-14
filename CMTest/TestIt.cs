@@ -18,6 +18,7 @@ using CommonLib.Util.Xml;
 using static ATLib.Input.Hw;
 using static ATLib.Input.KbEvent;
 using CMTest.Tool;
+using System.IO;
 
 namespace CMTest
 {
@@ -50,6 +51,8 @@ namespace CMTest
             //AssembleTopMenu();
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
+
+
             _MpCases.Case_CheckAllKeysOnRelayController();
 
 
