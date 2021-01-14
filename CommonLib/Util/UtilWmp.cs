@@ -9,19 +9,15 @@ namespace CommonLib.Util
             var para = "";
             for (int i = 0; i < medias.Length; i++)
             {
-                para += medias[0];
+                para += medias[i];
                 if (medias.Length - 1 > i)
                 {
                     para += " / ";
                 }
             }
-            foreach (var m in medias)
-            {
-                para += m;
-            }
             return UtilProcess.StartProcessReturn("wmplayer.exe", $"{para}");
         }
-        public void As()
+        private void As()
         {
             UtilProcess.StartProcess("wmplayer.exe", @"C:\Users\Administrator\Desktop\music\2\1.mp3 / C:\Users\Administrator\Desktop\music\2\2.mp3  / C:\Users\Administrator\Desktop\music\2\3.mp3");
 
