@@ -96,7 +96,7 @@ namespace CMTest.Project.MasterPlus
                 () => {
                     if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE))
                     {
-                        LaunchWmplayer();
+                        var wmpWindow = LaunchAndGetWmplayer();
 
                     }
                     else if (true)
@@ -107,12 +107,12 @@ namespace CMTest.Project.MasterPlus
                     TestIt.SendUsbKeyAndCheck(key, pressedKey);
                 });
         }
-        private void LaunchWmplayer()
+        private AT LaunchAndGetWmplayer()
         {
             UtilProcess.KillAllProcessesByName("wmplayer");
             UtilTime.WaitTime(1);
             var p = UtilWmp.StartWmpWithMedias(Path.Combine(this.MediaFolderPath, "1.mp3"), Path.Combine(this.MediaFolderPath, "2.mp3"), Path.Combine(this.MediaFolderPath, "3.mp3"));
-            var wmpWindow = new AT().GetElementFromHwndAndWaitAppears(p.MainWindowHandle);
+            return new AT().GetElementFromHwndAndWaitAppears(p.MainWindowHandle);
         }
         private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string pressedKey)
         {
