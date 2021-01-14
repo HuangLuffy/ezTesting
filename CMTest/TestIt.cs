@@ -52,6 +52,7 @@ namespace CMTest
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
 
+            UtilWmp.StartWmpWithMedias(Path.Combine(_MpCases.MpActions.MediaFolderPath, "1.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "2.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "3.mp3"));
 
             _MpCases.Case_CheckAllKeysOnRelayController();
 

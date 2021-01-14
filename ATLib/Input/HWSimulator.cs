@@ -295,6 +295,23 @@
                 SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
             }
             /// <summary>
+            /// Click left mouse button
+            /// </summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            public static void MoveMouseTo(int x, int y)
+            {
+                INPUT mouseInput = new INPUT
+                {
+                    type = SendInputEventType.InputMouse
+                };
+                mouseInput.mkhi.mi.dx = (x * 65536) / GetSystemMetrics(SystemMetric.SM_CXSCREEN);
+                mouseInput.mkhi.mi.dy = (y * 65536) / GetSystemMetrics(SystemMetric.SM_CYSCREEN);
+                mouseInput.mkhi.mi.mouseData = 0;
+                mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE | MouseEventFlags.MOUSEEVENTF_ABSOLUTE;
+                SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+            }
+            /// <summary>
             /// Click Start Button
             /// </summary>
             public static void ClickStart()
@@ -427,8 +444,10 @@
             }
             public static void MoveMouseButton()
             {
-                INPUT mouseDownInput = new INPUT();
-                mouseDownInput.type = SendInputEventType.InputMouse;
+                INPUT mouseDownInput = new INPUT
+                {
+                    type = SendInputEventType.InputMouse
+                };
                 mouseDownInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE;
                 SendInput(1, ref mouseDownInput, Marshal.SizeOf(new INPUT()));
             }
