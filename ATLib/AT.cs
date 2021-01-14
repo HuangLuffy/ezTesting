@@ -275,6 +275,25 @@ namespace ATLib
                 throw;
             }
         }
+        //UtilWait.ForTrue(() => p.MainWindowHandle != IntPtr.Zero, 3);
+        //var wmpWindow = new AT().GetElementFromHwnd(p.MainWindowHandle);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="intPtr"></param>
+        public AT GetElementFromHwndAndWaitAppears(IntPtr intPtr, double waitTime = 2)
+        {
+            try
+            {
+                UtilWait.ForTrue(() => intPtr != IntPtr.Zero, waitTime);
+                var wmpWindow = new AT().GetElementFromHwnd(intPtr);
+                return new AT(AutomationElement.FromHandle(intPtr));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetElementFromHwndAndWaitAppears error. " + ex.Message);
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

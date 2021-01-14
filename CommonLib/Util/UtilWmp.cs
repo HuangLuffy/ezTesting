@@ -1,8 +1,10 @@
-﻿namespace CommonLib.Util
+﻿using System.Diagnostics;
+
+namespace CommonLib.Util
 {
     public class UtilWmp
     {
-        public static void StartWmpWithMedias(params string[] medias)
+        public static Process StartWmpWithMedias(params string[] medias)
         {
             var para = "";
             for (int i = 0; i < medias.Length; i++)
@@ -17,7 +19,7 @@
             {
                 para += m;
             }
-            UtilProcess.StartProcess("wmplayer.exe", $"{para}");
+            return UtilProcess.StartProcessReturn("wmplayer.exe", $"{para}");
         }
         public void As()
         {

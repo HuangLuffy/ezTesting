@@ -5,7 +5,7 @@ namespace CommonLib.Util
 {
     public static class UtilWait
     {
-        private const int MaxWaitTimeInSec = 60;
+        private const double MaxWaitTimeInSec = 60;
         private const int IntervalInSec = 1;
         private static readonly int CompMaxWaitTimeInSec = -1;
         private static readonly int CompIntervalInSec = -1;
@@ -16,7 +16,7 @@ namespace CommonLib.Util
             public const string AnyResult = "ANY_RESULT"; // suits for either getting result or getting exception
             public const string ForTrue = "FOR_TRUE";
         }
-        public static bool ForTrueCatch<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)
+        public static bool ForTrueCatch<T>(Func<T> action, double maxWaitTimeInSec =-1, int intervalInSec = -1)
         {
             try
             {
@@ -28,19 +28,19 @@ namespace CommonLib.Util
             }
             return true;
         }
-        public static T ForNonNull<T>(Func<T> action, int maxWaitTimeInSec = -1, int intervalInSec = -1)
+        public static T ForNonNull<T>(Func<T> action, double maxWaitTimeInSec = -1, int intervalInSec = -1)
         {
             return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.NonNullResult);
         }
-        public static T ForTrue<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)
+        public static T ForTrue<T>(Func<T> action, double maxWaitTimeInSec =-1, int intervalInSec = -1)
         {
             return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.ForTrue);
         }
-        public static T ForAnyResult<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1)
+        public static T ForAnyResult<T>(Func<T> action, double maxWaitTimeInSec =-1, int intervalInSec = -1)
         {
             return ForWhat(action, maxWaitTimeInSec, intervalInSec, ResultType.AnyResult);
         }
-        public static T ForAnyResultCatch<T>(Func<T> action, int maxWaitTimeInSec = -1, int intervalInSec = -1)
+        public static T ForAnyResultCatch<T>(Func<T> action, double maxWaitTimeInSec = -1, int intervalInSec = -1)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace CommonLib.Util
                 return default(T);
             } 
         }
-        private static T ForWhat<T>(Func<T> action, int maxWaitTimeInSec =-1, int intervalInSec = -1, dynamic expectedResult = null)
+        private static T ForWhat<T>(Func<T> action, double maxWaitTimeInSec =-1, int intervalInSec = -1, dynamic expectedResult = null)
         {
             var exceptionMsg = "";
             if (maxWaitTimeInSec == -1)
