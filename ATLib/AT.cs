@@ -1,5 +1,6 @@
 ﻿using CommonLib.Util;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Automation;
 using static System.String;
@@ -281,13 +282,13 @@ namespace ATLib
         /// 
         /// </summary>
         /// <param name="intPtr"></param>
-        public AT GetElementFromHwndAndWaitAppears(IntPtr intPtr, double waitTime = 2)
+        public AT GetElementFromHwndAndWaitAppears(Process process, double waitTime = 3)
         {
             try
             {
-                UtilWait.ForTrue(() => intPtr != IntPtr.Zero, waitTime);
-                var wmpWindow = new AT().GetElementFromHwnd(intPtr);
-                return new AT(AutomationElement.FromHandle(intPtr));
+                UtilWait.ForTrue(() => process.MainWindowHandle != IntPtr.Zero, waitTime);
+                var wmpWindow = new AT().GetElementFromHwnd(process.MainWindowHandle);
+                return new AT(AutomationElement.FromHandle(process.MainWindowHandle));
             }
             catch (Exception ex)
             {

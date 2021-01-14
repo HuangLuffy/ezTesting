@@ -112,8 +112,9 @@ namespace CMTest.Project.MasterPlus
             UtilProcess.KillAllProcessesByName("wmplayer");
             UtilTime.WaitTime(1);
             var p = UtilWmp.StartWmpWithMedias(Path.Combine(this.MediaFolderPath, "1.mp3"), Path.Combine(this.MediaFolderPath, "2.mp3"), Path.Combine(this.MediaFolderPath, "3.mp3"));
-            HWSimulator.HWSend.MoveMouseTo(1,1);
-            return new AT().GetElementFromHwndAndWaitAppears(p.MainWindowHandle);
+            var wmpWindow = new AT().GetElementFromHwndAndWaitAppears(p);
+            //HWSimulator.HWSend.MoveMouseTo(wmpWindow.GetElementInfo().RectangleLeft, 1);
+            return wmpWindow;
         }
         private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string pressedKey)
         {

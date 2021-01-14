@@ -793,6 +793,28 @@ namespace ATLib
                     throw new Exception($"Failed to get RectangleTop. {ex}");
                 }
             }
+            public double RectangleRight()
+            {
+                try
+                {
+                    return current.BoundingRectangle.Right;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to get RectangleRight. {ex}");
+                }
+            }
+            public double RectangleBottom()
+            {
+                try
+                {
+                    return current.BoundingRectangle.Bottom;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to get RectangleBottom. {ex}");
+                }
+            }
         }
     }
 }

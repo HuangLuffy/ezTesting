@@ -19,6 +19,7 @@ using static ATLib.Input.Hw;
 using static ATLib.Input.KbEvent;
 using CMTest.Tool;
 using System.IO;
+using ATLib;
 
 namespace CMTest
 {
@@ -52,8 +53,10 @@ namespace CMTest
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
 
-            UtilWmp.StartWmpWithMedias(Path.Combine(_MpCases.MpActions.MediaFolderPath, "1.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "2.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "3.mp3"));
-
+            UtilProcess.KillAllProcessesByName("wmplayer");
+            UtilTime.WaitTime(1);
+            var p =UtilWmp.StartWmpWithMedias(Path.Combine(_MpCases.MpActions.MediaFolderPath, "1.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "2.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "3.mp3"));
+            var wmpWindow = new AT().GetElementFromHwndAndWaitAppears(p);
             _MpCases.Case_CheckAllKeysOnRelayController();
 
 
