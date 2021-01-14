@@ -301,12 +301,15 @@ namespace ReportLib
                     CurrentTestCase.ErrorMessages.Add(CurrentTestCase.AttrMessage);
                 }
             }
-            CurrentTestCase.ErrorMessages.Add(errorMessage);
             //CurrentTestCase.AttrMessage = this.SetAsLines(CurrentTestCase.AttrMessage ?? "", $" [{errorMessage}]");
             Capture(commentOnWeb, imageName);
             if (!blContinueTest)
             {
                 throw new Exception(errorMessage);
+            }
+            else
+            {
+                CurrentTestCase.ErrorMessages.Add(errorMessage);
             }
         }
     }

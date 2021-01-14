@@ -66,7 +66,7 @@ namespace CMTest.Project.MasterPlus
             {
                 disableKeyCheckboxAction.Invoke();
             }
-            else if (pressedKey.Equals(MPObj.EnableKeyCheckbox.Name) || pressedKey.Equals(""))
+            else if (pressedKey.Equals(MPObj.EnableKeyCheckbox.Name))
             {
                 enableKeyCheckboxAction.Invoke();
             }
