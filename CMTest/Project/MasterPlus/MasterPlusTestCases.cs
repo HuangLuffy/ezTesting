@@ -149,11 +149,11 @@ namespace CMTest.Project.MasterPlus
                 }
                 , Ireporter.SetAsLines($"Open Reassignment Dialog for a single Keyboard Key {assignWhichKeyGrid.UiaName}.",
                     blAssignKey ? $"Push {pressedKey.UiaName}." : $"Check the assigned Value is {pressedKey.UiaName} on the Reassignment Dialog.")
-                , Ireporter.SetAsLines(blAssignKey ? $"Assign successfully." : $"The assigned Value is still {pressedKey.UiaName} on the Reassignment Dialog.", "The Grid would be purple.")
+                , Ireporter.SetAsLines(blAssignKey ? $"Assign successfully." : $"The assigned Value is still {pressedKey.UiaName} on the Reassignment Dialog.", pressedKey.UiaName.Equals(assignWhichKeyGrid.UiaName) ? "The Grid would be green." : "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
-        public void Case_AssignKeyFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void Case_SelectItemFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
@@ -162,7 +162,7 @@ namespace CMTest.Project.MasterPlus
                 , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}.",
                     $"Open Reassignment Menu.",
                     blAssignKey ? $"Choose {whichMenuItem} > {whichMenuItemSubItem}." : $"Check the assigned Value is {whichMenuItemSubItem} on the Reassignment Dialog.")
-                , Ireporter.SetAsLines(blAssignKey ? $"Assign successfully." : $"The assigned Value is still {whichMenuItemSubItem} on the Reassignment Dialog.", "The Grid would be purple.")
+                , Ireporter.SetAsLines(blAssignKey ? $"Assign successfully." : $"The assigned Value is still {whichMenuItemSubItem} on the Reassignment Dialog.", whichMenuItemSubItem.Equals(assignWhichKey) ? "The Grid would be green." : "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }

@@ -105,7 +105,7 @@
     <Compile Include="Util\VM\IVmControl.cs" />
     <Compile Include="Util\VM\Vm.cs" />
     <Compile Include="Util\VM\VmCmdControl.cs" />
-    <Compile Include="Util\WinApi.cs" />
+    <Compile Include="Util\UtilWinApi.cs" />
     <Compile Include="Util\Xml\IXml.cs" />
     <Compile Include="Util\Xml\XmlLinq.cs" />
     <Compile Include="Util\Xml\XmlSerialization.cs" />

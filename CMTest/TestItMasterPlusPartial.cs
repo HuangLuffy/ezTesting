@@ -93,11 +93,11 @@ namespace CMTest
                 () => {
                     if (loop.ElementAt(i)[0].Equals(""))
                     {
-                        _MpCases.Case_AssignKeyOnReassignDialog(KbKeys.GetScKeyByVarName(loop.ElementAt(i)[1]), KbKeys.GetScKeyByVarName(loop.ElementAt(i)[2]));
+                        _MpCases.Case_AssignKeyOnReassignDialog(KbKeys.GetScKeyByUiaName(loop.ElementAt(i)[1]), KbKeys.GetScKeyByUiaName(loop.ElementAt(i)[2]));
                     }
                     else
                     {
-                        _MpCases.Case_AssignKeyFromReassignMenu(loop.ElementAt(i)[0], loop.ElementAt(i)[1], loop.ElementAt(i)[2], blAssignKey);
+                        _MpCases.Case_SelectItemFromReassignMenu(loop.ElementAt(i)[0], loop.ElementAt(i)[1], loop.ElementAt(i)[2], blAssignKey);
                     }  
                 });
             }
@@ -132,7 +132,11 @@ namespace CMTest
                 //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_W3HOME, KbKeys.SC_KEY_J.UiaName },
                 //new List<string> { MPObj.DisableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
                 //new List<string> { MPObj.EnableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
-                new List<string> { "", KbKeys.SC_KEY_N.VarName, KbKeys.SC_KEY_N.VarName },
+                new List<string> { "", KbKeys.SC_KEY_N.UiaName, KbKeys.SC_KEY_N.UiaName },
+                new List<string> { "", KbKeys.SC_KEY_D.UiaName, KbKeys.SC_KEY_M.UiaName },
+                new List<string> { "", KbKeys.SC_KEY_R_SHIFT.UiaName, KbKeys.SC_KEY_R_SHIFT.UiaName },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_W3HOME, KbKeys.SC_KEY_J.UiaName },
+                new List<string> { MasterPlus.ReassignMenuItems.LettersNumbers, MasterPlus.ReassignMenuItems.LettersNumbersItems.SC_KEY_0, KbKeys.SC_KEY_0.UiaName },
             };
             _MpCases.Ireporter.GetResultTestInfo().AttrDeviceModel = deviceName;
             _MpCases.Ireporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;

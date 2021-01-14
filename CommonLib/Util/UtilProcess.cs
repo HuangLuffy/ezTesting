@@ -70,8 +70,8 @@ namespace CommonLib.Util
                     foreach (var p in Process.GetProcessesByName(currentP.ProcessName))
                     {
                         if (p.Id == currentP.Id) continue;
-                        WinApi.SetForegroundWindow(p.MainWindowHandle);
-                        WinApi.ShowWindowAsync(p.MainWindowHandle, WinApi.SwRestore);
+                        UtilWinApi.SetForegroundWindow(p.MainWindowHandle);
+                        UtilWinApi.ShowWindowAsync(p.MainWindowHandle, UtilWinApi.SwRestore);
                         currentP.Kill();
                     }
                 }

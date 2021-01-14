@@ -166,7 +166,7 @@ namespace ATLib.Input
             public static KeyPros SC_KEY_7 = new KeyPros() { ScanCode = 8, KeyValue = 55, Flag = 0, KeyCode = "D7", VarName = nameof(SC_KEY_7), UiaName = "7&", Port = "" };
             public static KeyPros SC_KEY_8 = new KeyPros() { ScanCode = 9, KeyValue = 56, Flag = 0, KeyCode = "D8", VarName = nameof(SC_KEY_8), UiaName = "8*", Port = "" };
             public static KeyPros SC_KEY_9 = new KeyPros() { ScanCode = 10, KeyValue = 57, Flag = 0, KeyCode = "D9", VarName = nameof(SC_KEY_9), UiaName = "9(", Port = "" };
-            public static KeyPros SC_KEY_0 = new KeyPros() { ScanCode = 11, KeyValue = 48, Flag = 0, KeyCode = "D0", VarName = nameof(SC_KEY_0), UiaName = "0(", Port = "" };
+            public static KeyPros SC_KEY_0 = new KeyPros() { ScanCode = 11, KeyValue = 48, Flag = 0, KeyCode = "D0", VarName = nameof(SC_KEY_0), UiaName = "0)", Port = "" };
             public static KeyPros SC_KEY_NEG = new KeyPros() { ScanCode = 12, KeyValue = 189, Flag = 0, KeyCode = "OemMinus", VarName = nameof(SC_KEY_NEG), UiaName = "-_", Port = "" };
             public static KeyPros SC_KEY_EQUATION = new KeyPros() { ScanCode = 13, KeyValue = 187, Flag = 0, KeyCode = "Oemplus", VarName = nameof(SC_KEY_EQUATION), UiaName = "=+", Port = "" };
             public static KeyPros SC_KEY_BACKSPACE = new KeyPros() { ScanCode = 14, KeyValue = 8, Flag = 0, KeyCode = "Back", VarName = nameof(SC_KEY_BACKSPACE), UiaName = "BACKSPACE", Port = "" };

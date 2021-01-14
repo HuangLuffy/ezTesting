@@ -23,7 +23,7 @@ namespace CMTest.Project.MasterPlus
         public void CommonAssignKeyAndVerify(string pressedKey, string assignWhichKeyGrid, Action<AT> assignAction, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             var masterPlusMainWindow = GetMasterPlusMainWindow();
-            WinApi.SetForegroundWindow(masterPlusMainWindow.GetElementInfo().GetHwnd());
+            UtilWinApi.SetForegroundWindow(masterPlusMainWindow.GetElementInfo().GetHwnd());
             //var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             //var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
 
@@ -94,7 +94,7 @@ namespace CMTest.Project.MasterPlus
                     }
                     else
                     {
-                        TestIt.SendUsbKeyAndCheck(key, pressedKey);
+                        TestIt.SendUsbKeyAndCheck(key, Hw.KbKeys.GetScKeyByUiaName(pressedKey).KeyCode);
                     }
                 });
         }
@@ -135,6 +135,10 @@ namespace CMTest.Project.MasterPlus
                         if (!value.Equals(pressedKey))
                         {
                             _r.RecordActionFailedDuringCaseRunning($"Input {pressedKey}, but get {value}.", "assignedValueWrong");
+                        }
+                        if (keyGridNeedToBeAssigned.GetElementInfo().Name().Equals(pressedKey))
+                        {
+                            gridColorValue = KeyMappingGridColor.Green;
                         }
                     });
             }
