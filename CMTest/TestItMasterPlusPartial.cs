@@ -113,8 +113,8 @@ namespace CMTest
             //_MpCases.Case_AssignInLoop();
             var keysNeedToAssignList = new List<List<string>>
             {
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, KbKeys.SC_KEY_A.UiaName },
-                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, KbKeys.SC_KEY_B.UiaName },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, KbKeys.SC_KEY_A.UiaName },
+                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, KbKeys.SC_KEY_B.UiaName },
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE, KbKeys.SC_KEY_C.UiaName },
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP, KbKeys.SC_KEY_D.UiaName },
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PRE_TRACK, KbKeys.SC_KEY_E.UiaName },

@@ -22,13 +22,15 @@ namespace CMTest.Project.MasterPlus
         #region KeyMapping
         public void CommonAssignKeyAndVerify(string pressedKey, string assignWhichKeyGrid, Action<AT> assignAction, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
+            var masterPlusMainWindow = GetMasterPlusMainWindow();
+            WinApi.SetForegroundWindow(masterPlusMainWindow.GetElementInfo().GetHwnd());
             //var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             //var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
 
             var keyGridNeedToBeAssigned = GetAllKbGridKeys().First(x => x.GetElementInfo().Name().Equals(assignWhichKeyGrid));
 
             keyGridNeedToBeAssigned.DoClickPoint(1);
-            var reassignDialog = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDialog);
+            var reassignDialog = masterPlusMainWindow.GetElementFromChild(MPObj.ReassignDialog);
             if (blAssignKey)
             {
                 try
@@ -75,16 +77,6 @@ namespace CMTest.Project.MasterPlus
         }
         private void VerifyKeyWork(AT keyGridNeedToBeAssigned, string pressedKey)
         {
-            //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, KbKeys.SC_KEY_A.UiaName },
-            //    new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, KbKeys.SC_KEY_B.UiaName },
-            //    new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE, KbKeys.SC_KEY_C.UiaName },
-            //    new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP, KbKeys.SC_KEY_D.UiaName },
-            //    new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PRE_TRACK, KbKeys.SC_KEY_E.UiaName },
-            //    new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_NEXT_TRACK, KbKeys.SC_KEY_F.UiaName },
-            //    new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MUTE, KbKeys.SC_KEY_G.UiaName },
-            //    new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_DEC, KbKeys.SC_KEY_H.UiaName },
-            //    new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_INC, KbKeys.SC_KEY_I.UiaName },
-            //    new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_W3HOME, KbKeys.SC_KEY_J.UiaName },
             var key = Hw.KbKeys.GetScKeyByUiaName(keyGridNeedToBeAssigned.GetElementInfo().Name());
             DifferentFlowForDifferentPressedKey(pressedKey,
                 () => {
@@ -94,42 +86,16 @@ namespace CMTest.Project.MasterPlus
                     TestIt.SendUsbKeyAndCheck(key, key.KeyCode);
                 },
                 () => {
-                    if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE))
+                    var f = typeof(MasterPlus.ReassignMenuItems.MediaKeysItems).GetFields().FirstOrDefault(x => x.GetValue("").Equals(pressedKey));
+                    if (f != null)
                     {
-                        var wmpWindow = LaunchAndGetWmplayer();
-                        var sliderbar = wmpWindow.GetElementFromDescendants(new ATElementStruct() { ControlType = AT.ControlType.Slider});
-                        TestIt.Usrc.SendToPort(key.Port);
-                        var barValue1 = sliderbar.DoGetValue(0);
-                        UtilTime.WaitTime(0.5);
-                        var barValue2 = sliderbar.DoGetValue(0);
-                        if (!barValue1.Equals(barValue2))
-                        {
-                            _r.RecordActionFailedDuringCaseRunning($"Pause is not working.", "PauseIsNotWorking", blContinueTest:true);
-                        }
-                        TestIt.Usrc.SendToPort(key.Port);
-                        barValue1 = sliderbar.DoGetValue(0);
-                        UtilTime.WaitTime(0.5);
-                        barValue2 = sliderbar.DoGetValue(0);
-                        if (barValue1.Equals(barValue2))
-                        {
-                            _r.RecordActionFailedDuringCaseRunning($"Play is not working.", "PlayIsNotWorking", blContinueTest: true);
-                        }
+                        var key1 = Hw.KbKeys.GetScKeyByVarName(f.Name);
+                        TestIt.SendUsbKeyAndCheck(key, key1.KeyCode);
                     }
-                    else if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP))
+                    else
                     {
-                        var wmpWindow = LaunchAndGetWmplayer();
-                        var stopButton = wmpWindow.GetElementFromDescendants(new ATElementStruct() { ControlType = AT.ControlType.Slider });
-
-                        //Ctrl+S
-                        UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
-                        UtilTime.WaitTime(1);
+                        TestIt.SendUsbKeyAndCheck(key, pressedKey);
                     }
-                    else if (true)
-                    {
-                        UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
-                        UtilTime.WaitTime(1);
-                    }
-                    TestIt.SendUsbKeyAndCheck(key, pressedKey);
                 });
         }
         private AT LaunchAndGetWmplayer()

@@ -32,7 +32,8 @@ namespace Hook
         {
             labelHide.Text += labelHide.Text.Equals("") ? keyValue : " * " + keyValue;
         }
-        private IEnumerable<string> ignoreEventList = new List<string>(){ "LMenu", "RMenu", "LWin", "RWin", "Capital", "Return", "Space" };
+        private IEnumerable<string> ignoreEventList = new List<string>(){ "LMenu", "RMenu", "LWin", "RWin", "Capital", "Return", "Space", "MediaPlayPause"
+            , "MediaStop", "MediaNextTrack", "MediaPreviousTrack", "VolumeUp", "VolumeDown", "VolumeMute", "LaunchMail", "LaunchApplication2", "BrowserHome"};
 
         private void HookManager_KeyDown(object sender, KeyEventArgs e)
         {

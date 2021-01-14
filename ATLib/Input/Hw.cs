@@ -224,19 +224,19 @@ namespace ATLib.Input
             public static KeyPros SC_KEY_LOGO = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_LOGO), UiaName = "DISABLE", Port = "" };
             public static KeyPros SC_KEY_NO = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_NO), UiaName = "DISABLE", Port = "" };
 
-            public static KeyPros SC_KEY_PLAY_PAUSE = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_PLAY_PAUSE), UiaName = "", Port = "" };
-            public static KeyPros SC_KEY_STOP = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_STOP), UiaName = "", Port = "" };
-            public static KeyPros SC_KEY_NEXT_TRACK = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_NEXT_TRACK), UiaName = "", Port = "" };
-            public static KeyPros SC_KEY_PRE_TRACK = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_PRE_TRACK), UiaName = "", Port = "" };
-            public static KeyPros SC_KEY_VOL_INC = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_VOL_INC), UiaName = "", Port = "" };
-            public static KeyPros SC_KEY_VOL_DEC = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_VOL_DEC), UiaName = "", Port = "" };
-            public static KeyPros SC_KEY_MUTE = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_MUTE), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_PLAY_PAUSE = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "MediaPlayPause", VarName = nameof(SC_KEY_PLAY_PAUSE), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_STOP = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "MediaStop", VarName = nameof(SC_KEY_STOP), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_NEXT_TRACK = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "MediaNextTrack", VarName = nameof(SC_KEY_NEXT_TRACK), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_PRE_TRACK = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "MediaPreviousTrack", VarName = nameof(SC_KEY_PRE_TRACK), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_VOL_INC = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "VolumeUp", VarName = nameof(SC_KEY_VOL_INC), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_VOL_DEC = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "VolumeDown", VarName = nameof(SC_KEY_VOL_DEC), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_MUTE = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "VolumeMute", VarName = nameof(SC_KEY_MUTE), UiaName = "", Port = "" };
             public static KeyPros SC_KEY_MEDIA_SEL = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_MEDIA_SEL), UiaName = "", Port = "" };
-            public static KeyPros SC_KEY_MAIL = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_MAIL), UiaName = "", Port = "" };
-            public static KeyPros SC_KEY_CALCULATOR = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_CALCULATOR), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_MAIL = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "LaunchMail", VarName = nameof(SC_KEY_MAIL), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_CALCULATOR = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "LaunchApplication2", VarName = nameof(SC_KEY_CALCULATOR), UiaName = "", Port = "" };
             public static KeyPros SC_KEY_MYCOMPUTER = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_MYCOMPUTER), UiaName = "", Port = "" };
             public static KeyPros SC_KEY_W3SEARCH = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_W3SEARCH), UiaName = "", Port = "" };
-            public static KeyPros SC_KEY_W3HOME = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_W3HOME), UiaName = "", Port = "" };
+            public static KeyPros SC_KEY_W3HOME = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "BrowserHome", VarName = nameof(SC_KEY_W3HOME), UiaName = "", Port = "" };
             public static KeyPros SC_KEY_W3BACK = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_W3BACK), UiaName = "", Port = "" };
             public static KeyPros SC_KEY_W3FORWARD = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_W3FORWARD), UiaName = "", Port = "" };
             public static KeyPros SC_KEY_W3STOP = new KeyPros() { ScanCode = -10, KeyValue = -10, Flag = 0, KeyCode = "", VarName = nameof(SC_KEY_W3STOP), UiaName = "", Port = "" };
@@ -259,7 +259,10 @@ namespace ATLib.Input
             {
                 return (KeyPros)typeof(Hw.KbKeys).GetFields().First((x) => ((KeyPros)x.GetValue("")).UiaName.Equals(uiaName)).GetValue("");
             }
-
+            public static KeyPros GetScKeyByVarName(string varName)
+            {
+                return (KeyPros)typeof(Hw.KbKeys).GetFields().First((x) => ((KeyPros)x.GetValue("")).VarName.Equals(varName)).GetValue("");
+            }
         }
         //public enum Keys
         //{
@@ -500,3 +503,39 @@ namespace ATLib.Input
         }
     }
 }
+//if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE))
+//{
+//    var wmpWindow = LaunchAndGetWmplayer();
+//    var sliderbar = wmpWindow.GetElementFromDescendants(new ATElementStruct() { ControlType = AT.ControlType.Slider});
+//    TestIt.Usrc.SendToPort(key.Port);
+//    var barValue1 = sliderbar.DoGetValue(0);
+//    UtilTime.WaitTime(0.5);
+//    var barValue2 = sliderbar.DoGetValue(0);
+//    if (!barValue1.Equals(barValue2))
+//    {
+//        _r.RecordActionFailedDuringCaseRunning($"Pause is not working.", "PauseIsNotWorking", blContinueTest:true);
+//    }
+//    TestIt.Usrc.SendToPort(key.Port);
+//    barValue1 = sliderbar.DoGetValue(0);
+//    UtilTime.WaitTime(0.5);
+//    barValue2 = sliderbar.DoGetValue(0);
+//    if (barValue1.Equals(barValue2))
+//    {
+//        _r.RecordActionFailedDuringCaseRunning($"Play is not working.", "PlayIsNotWorking", blContinueTest: true);
+//    }
+//}
+//else if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP))
+//{
+//    var wmpWindow = LaunchAndGetWmplayer();
+//    TestIt.Usrc.SendToPort(key.Port);
+//    var stopButton = wmpWindow.GetElementFromDescendants(new ATElementStruct() { AccessKey = "Ctrl+S" });
+//    if (stopButton.GetElementInfo().IsEnabled())
+//    {
+//        _r.RecordActionFailedDuringCaseRunning($"Stop is not working.", "StopIsNotWorking", blContinueTest: true);
+//    }
+//}
+//else if (true)
+//{
+//    UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
+//    UtilTime.WaitTime(1);
+//}
