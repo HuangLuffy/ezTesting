@@ -117,6 +117,10 @@ namespace CMTest.Project.MasterPlus
                     }
                     else if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP))
                     {
+                        var wmpWindow = LaunchAndGetWmplayer();
+                        var stopButton = wmpWindow.GetElementFromDescendants(new ATElementStruct() { ControlType = AT.ControlType.Slider });
+
+                        //Ctrl+S
                         UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
                         UtilTime.WaitTime(1);
                     }
