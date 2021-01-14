@@ -9,6 +9,7 @@
         public int? Index = null;
         public string ControlType = null;
         public string FullDescriton = null;
+        public string AccessKey = null;
         public string IADescription = null;
     }
 }

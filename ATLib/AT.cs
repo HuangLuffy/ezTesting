@@ -87,13 +87,13 @@ namespace ATLib
                 throw new Exception($"This element still exists. {ex.Message}" );
             }
         }
-        public AT GetElement(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, int? index = null, int timeout = -1, bool checkEnabled = false, bool returnNullWhenException = false)
+        public AT GetElement(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, string accessKey = null, int? index = null, int timeout = -1, bool checkEnabled = false, bool returnNullWhenException = false)
         {
             try
             {
                 AutomationElement = AutomationElement ?? AutomationElement.RootElement;
                 var treeScopeVar = GetTreeScope(treeScope);
-                var condition = GetCondition(name, automationId, className, frameworkId, controlType, fullDescription);
+                var condition = GetCondition(name, automationId, className, frameworkId, controlType, fullDescription, accessKey);
                 var atObj = timeout <= 0 ? GetElementByHandler(AutomationElement, treeScopeVar, condition, name, automationId, className, index) : UtilWait.ForAnyResult(() => GetElementByHandler(AutomationElement, treeScopeVar, condition, name, automationId, className, index), timeout);
                 if (checkEnabled != true) return atObj;
                 if (!atObj.GetElementInfo().IsEnabled())
@@ -108,10 +108,10 @@ namespace ATLib
                 {
                     return null;
                 }
-                throw new Exception("Failed to get: " + $"{(treeScope == null ? "" : $"TreeScope is {treeScope}. ")}{(name == null ? "" : $"Name is {name}. ")}{(automationId == null ? "" : $"AutomationId is {automationId}. ")}{(className == null ? "" : $"ClassName is {className}. ")}{(controlType == null ? "" : $"ControlType is {controlType}. ")}{(fullDescription == null ? "" : $"FullDescription is {fullDescription}. ")} " + ex.Message);
+                throw new Exception("Failed to get: " + $"{(treeScope == null ? "" : $"TreeScope is {treeScope}. ")}{(name == null ? "" : $"Name is {name}. ")}{(automationId == null ? "" : $"AutomationId is {automationId}. ")}{(className == null ? "" : $"ClassName is {className}. ")}{(controlType == null ? "" : $"ControlType is {controlType}. ")}{(fullDescription == null ? "" : $"FullDescription is {fullDescription}. ")}{(accessKey == null ? "" : $"accessKey is {accessKey}. ")} " + ex.Message);
             }
         }
-        public ATS GetElements(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, bool returnNullWhenException = false)
+        public ATS GetElements(string treeScope = null, string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, string accessKey = null, bool returnNullWhenException = false)
         {
             var treeScopeVar = GetTreeScope(treeScope);
             var condition = GetCondition(name, automationId, className, frameworkId, controlType, fullDescription);
@@ -123,7 +123,7 @@ namespace ATLib
                 {
                     return null;
                 }
-                throw new Exception("Failed to get: " + $"{(treeScope == null ? "" : $"TreeScope is {treeScope}. ")}{(name == null ? "" : $"Name is {name}. ")}{(automationId == null ? "" : $"AutomationId is {automationId}. ")}{(className == null ? "" : $"ClassName is {className}. ")}{(controlType == null ? "" : $"ControlType is {controlType}. ")}{(fullDescription == null ? "" : $"FullDescription is {fullDescription}. ")} ");
+                throw new Exception("Failed to get: " + $"{(treeScope == null ? "" : $"TreeScope is {treeScope}. ")}{(name == null ? "" : $"Name is {name}. ")}{(automationId == null ? "" : $"AutomationId is {automationId}. ")}{(className == null ? "" : $"ClassName is {className}. ")}{(controlType == null ? "" : $"ControlType is {controlType}. ")}{(fullDescription == null ? "" : $"FullDescription is {fullDescription}. ")}{(accessKey == null ? "" : $"accessKey is {accessKey}. ")} ");
             }
             var at = new AT[aec.Count];
             for (var i = 0; i < aec.Count; i++)

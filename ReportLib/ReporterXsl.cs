@@ -291,7 +291,7 @@ namespace ReportLib
             r.AttrMessage = this.SetAsLines(r.ErrorMessages.ToArray());
             AddTestStep(r, GetResultTestInfo());
         }
-        public void SetStepFailed(string errorMessage = "Failed", string commentOnWeb = "Failed", string imageName = "", bool blContinueTest = false)
+        public void RecordActionFailedDuringCaseRunning(string errorMessage = "Failed", string commentOnWeb = "Failed", string imageName = "", bool blContinueTest = false)
         {
             //CurrentTestCase.AttrMessage += $" [{errorMessage}]";
             if (CurrentTestCase.AttrMessage != null)
@@ -303,7 +303,7 @@ namespace ReportLib
             }
             CurrentTestCase.ErrorMessages.Add(errorMessage);
             //CurrentTestCase.AttrMessage = this.SetAsLines(CurrentTestCase.AttrMessage ?? "", $" [{errorMessage}]");
-            Capture(commentOnWeb);
+            Capture(commentOnWeb, imageName);
             if (!blContinueTest)
             {
                 throw new Exception(errorMessage);

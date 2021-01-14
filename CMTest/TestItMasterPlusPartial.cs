@@ -110,11 +110,11 @@ namespace CMTest
         }
         private dynamic Suit_KeyMappingBaseTest(string deviceName)
         {
-            _MpCases.Case_AssignInLoop();
+            //_MpCases.Case_AssignInLoop();
             var keysNeedToAssignList = new List<List<string>>
             {
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, KbKeys.SC_KEY_A.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, KbKeys.SC_KEY_B.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, KbKeys.SC_KEY_A.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, KbKeys.SC_KEY_B.UiaName },
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE, KbKeys.SC_KEY_C.UiaName },
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP, KbKeys.SC_KEY_D.UiaName },
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PRE_TRACK, KbKeys.SC_KEY_E.UiaName },
@@ -129,9 +129,9 @@ namespace CMTest
             };
             _MpCases.Ireporter.GetResultTestInfo().AttrDeviceModel = deviceName;
             _MpCases.Ireporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
-            _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
-            _MpCases.Case_SelectDeviceFromList(deviceName);
-            _MpCases.Case_SelectKeyMappingTab(deviceName);
+            //_MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
+            //_MpCases.Case_SelectDeviceFromList(deviceName);
+            //_MpCases.Case_SelectKeyMappingTab(deviceName);
             _AssignLoopVerifyLogic(keysNeedToAssignList);
             _MpCases.Case_CloseMasterPlus(10);
             _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);

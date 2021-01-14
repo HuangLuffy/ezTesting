@@ -37,7 +37,7 @@ namespace CMTest.Project.MasterPlus
                 }
                 catch (Exception e)
                 {
-                    _r.SetStepFailed($"{e.Message}", $"{e.Message}", blContinueTest: true);
+                    _r.RecordActionFailedDuringCaseRunning($"{e.Message}", $"{e.Message}", blContinueTest: true);
                     try
                     {
                         var closeButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCloseButton);
@@ -94,20 +94,38 @@ namespace CMTest.Project.MasterPlus
                     TestIt.SendUsbKeyAndCheck(key, key.KeyCode);
                 },
                 () => {
-                if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE))
-                {
-                    var wmpWindow = LaunchAndGetWmplayer();
-                    var sliderbar = wmpWindow.GetElementFromDescendants(new ATElementStruct() { ControlType = AT.ControlType.Slider});
-                    var barValue1 = sliderbar.DoGetValue(0);
-                    UtilTime.WaitTime(0.5);
-                    var barValue2 = sliderbar.DoGetValue(0);
-                }
-                else if (true)
-                {
-                    UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
-                    UtilTime.WaitTime(1);
-                }
-                TestIt.SendUsbKeyAndCheck(key, pressedKey);
+                    if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE))
+                    {
+                        var wmpWindow = LaunchAndGetWmplayer();
+                        var sliderbar = wmpWindow.GetElementFromDescendants(new ATElementStruct() { ControlType = AT.ControlType.Slider});
+                        TestIt.Usrc.SendToPort(key.Port);
+                        var barValue1 = sliderbar.DoGetValue(0);
+                        UtilTime.WaitTime(0.5);
+                        var barValue2 = sliderbar.DoGetValue(0);
+                        if (!barValue1.Equals(barValue2))
+                        {
+                            _r.RecordActionFailedDuringCaseRunning($"Pause is not working.", "PauseIsNotWorking", blContinueTest:true);
+                        }
+                        TestIt.Usrc.SendToPort(key.Port);
+                        barValue1 = sliderbar.DoGetValue(0);
+                        UtilTime.WaitTime(0.5);
+                        barValue2 = sliderbar.DoGetValue(0);
+                        if (barValue1.Equals(barValue2))
+                        {
+                            _r.RecordActionFailedDuringCaseRunning($"Play is not working.", "PlayIsNotWorking", blContinueTest: true);
+                        }
+                    }
+                    else if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP))
+                    {
+                        UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
+                        UtilTime.WaitTime(1);
+                    }
+                    else if (true)
+                    {
+                        UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
+                        UtilTime.WaitTime(1);
+                    }
+                    TestIt.SendUsbKeyAndCheck(key, pressedKey);
                 });
         }
         private AT LaunchAndGetWmplayer()
@@ -130,7 +148,7 @@ namespace CMTest.Project.MasterPlus
                         gridColorValue = KeyMappingGridColor.Red;
                         if (assignedValue != null && !assignedValue.GetElementInfo().IsOffscreen())
                         {
-                            _r.SetStepFailed($"Reassign textbox is still there.", "ReassignTextboxStillThere");
+                            _r.RecordActionFailedDuringCaseRunning($"Reassign textbox is still there.", "ReassignTextboxStillThere");
                         }
                     }, 
                     () => {
@@ -138,7 +156,7 @@ namespace CMTest.Project.MasterPlus
                         var reassignTitleValue = reassignDialog.GetElementFromDescendants(MPObj.ReassignTitleValue);
                         if (assignedValue.GetElementInfo().FullDescription() != reassignTitleValue.GetElementInfo().FullDescription())
                         {
-                            _r.SetStepFailed($"The assigned key is not restored to {reassignTitleValue.GetElementInfo().FullDescription()} when enabling it.", "assignedValueNotRestored");
+                            _r.RecordActionFailedDuringCaseRunning($"The assigned key is not restored to {reassignTitleValue.GetElementInfo().FullDescription()} when enabling it.", "assignedValueNotRestored");
                         }
                     }, 
                     () => {
@@ -146,7 +164,7 @@ namespace CMTest.Project.MasterPlus
                         var value = assignedValue.GetElementInfo().FullDescription();
                         if (!value.Equals(pressedKey))
                         {
-                            _r.SetStepFailed($"Input {pressedKey}, but get {value}.", "assignedValueWrong");
+                            _r.RecordActionFailedDuringCaseRunning($"Input {pressedKey}, but get {value}.", "assignedValueWrong");
                         }
                     });
             }
@@ -161,7 +179,7 @@ namespace CMTest.Project.MasterPlus
             }
             if (!keyGridNeedToBeAssigned.GetElementInfo().FullDescription().Equals(gridColorValue))
             {
-                _r.SetStepFailed($"Key {pressedKey} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.", "WrongColor");
+                _r.RecordActionFailedDuringCaseRunning($"Key {pressedKey} in not in {KeyMappingGridColor.GetVarName(gridColorValue)} color.", "WrongColor");
             }
         }
         private string _theLastMenuItem = string.Empty;

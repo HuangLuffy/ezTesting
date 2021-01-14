@@ -53,6 +53,8 @@ namespace CMTest
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
 
+
+            this.Suit_KeyMappingBaseTest("SK652");
             UtilProcess.KillAllProcessesByName("wmplayer");
             UtilTime.WaitTime(1);
             var p =UtilWmp.StartWmpWithMedias(Path.Combine(_MpCases.MpActions.MediaFolderPath, "1.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "2.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "3.mp3"));

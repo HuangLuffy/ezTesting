@@ -566,11 +566,15 @@ namespace ATLib
         /// <param name="frameworkId"></param>
         /// <param name="controlType"></param>
         /// <returns></returns>
-        protected static Condition GetCondition(string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null)
+        protected static Condition GetCondition(string name = null, string automationId = null, string className = null, string frameworkId = null, string controlType = null, string fullDescription = null, string accessKey = null)
         {
             var conditionList = new List<Condition>();
             try
             {
+                if (!string.IsNullOrEmpty(accessKey) && !accessKey.Contains(Var.Mark.Wildcard) && !accessKey.Contains(Var.Mark.Or) && !accessKey.Contains(Var.Mark.And))
+                {
+                    conditionList.Add(new PropertyCondition(AutomationElement.AccessKeyProperty, accessKey));
+                }
                 if (!string.IsNullOrEmpty(name) && !name.Contains(Var.Mark.Wildcard) && !name.Contains(Var.Mark.Or) && !name.Contains(Var.Mark.And))
                 {
                     conditionList.Add(new PropertyCondition(AutomationElement.NameProperty, name));
