@@ -57,6 +57,10 @@ namespace CMTest
             UtilTime.WaitTime(1);
             var p =UtilWmp.StartWmpWithMedias(Path.Combine(_MpCases.MpActions.MediaFolderPath, "1.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "2.mp3"), Path.Combine(_MpCases.MpActions.MediaFolderPath, "3.mp3"));
             var wmpWindow = new AT().GetElementFromHwndAndWaitAppears(p);
+            var sliderbar = wmpWindow.GetElementFromDescendants(new ATElementStruct() { ControlType = AT.ControlType.Slider });
+            var barValue1 = sliderbar.DoGetValue();
+            UtilTime.WaitTime(0.5);
+            var barValue2 = sliderbar.DoGetValue();
             _MpCases.Case_CheckAllKeysOnRelayController();
 
 

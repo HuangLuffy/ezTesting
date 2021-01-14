@@ -94,17 +94,20 @@ namespace CMTest.Project.MasterPlus
                     TestIt.SendUsbKeyAndCheck(key, key.KeyCode);
                 },
                 () => {
-                    if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE))
-                    {
-                        var wmpWindow = LaunchAndGetWmplayer();
-
-                    }
-                    else if (true)
-                    {
-                        UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
-                        UtilTime.WaitTime(1);
-                    }
-                    TestIt.SendUsbKeyAndCheck(key, pressedKey);
+                if (pressedKey.Equals(MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE))
+                {
+                    var wmpWindow = LaunchAndGetWmplayer();
+                    var sliderbar = wmpWindow.GetElementFromDescendants(new ATElementStruct() { ControlType = AT.ControlType.Slider});
+                    var barValue1 = sliderbar.DoGetValue(0);
+                    UtilTime.WaitTime(0.5);
+                    var barValue2 = sliderbar.DoGetValue(0);
+                }
+                else if (true)
+                {
+                    UtilProcess.KillAllProcessesByName("msedge", "iexplore", "chrome");
+                    UtilTime.WaitTime(1);
+                }
+                TestIt.SendUsbKeyAndCheck(key, pressedKey);
                 });
         }
         private AT LaunchAndGetWmplayer()
@@ -113,7 +116,7 @@ namespace CMTest.Project.MasterPlus
             UtilTime.WaitTime(1);
             var p = UtilWmp.StartWmpWithMedias(Path.Combine(this.MediaFolderPath, "1.mp3"), Path.Combine(this.MediaFolderPath, "2.mp3"), Path.Combine(this.MediaFolderPath, "3.mp3"));
             var wmpWindow = new AT().GetElementFromHwndAndWaitAppears(p);
-            //HWSimulator.HWSend.MoveMouseTo(wmpWindow.GetElementInfo().RectangleLeft, 1);
+            HWSimulator.HWSend.MoveMouseTo((int)(wmpWindow.GetElementInfo().RectangleRight() - wmpWindow.GetElementInfo().RectangleLeft())/2, (int)(wmpWindow.GetElementInfo().RectangleBottom() - wmpWindow.GetElementInfo().RectangleTop()) / 2);
             return wmpWindow;
         }
         private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string pressedKey)

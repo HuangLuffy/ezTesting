@@ -68,7 +68,8 @@ namespace ATLib
                 throw new Exception("DoExpand error. " + ex);
             }
         }
-        public string DoGetDocumentValue(double waitTime = 0.1)
+        //For Document, Slider .....
+        public string DoGetValue(double waitTime = 0.1)
         {
             try
             {

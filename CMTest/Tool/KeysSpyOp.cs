@@ -44,7 +44,7 @@ namespace CMTest.Tool
         public IEnumerable<string> GetContentList()
         {
             Load();
-            var c = app.GetElementFromChild(new ATElementStruct() { Name = "RichEdit Control" }).DoGetDocumentValue();
+            var c = app.GetElementFromChild(new ATElementStruct() { Name = "RichEdit Control" }).DoGetValue();
             if (!c.Equals("\r"))
             {
                 return UtilString.GetSplitArray(c, "\r").Reverse();

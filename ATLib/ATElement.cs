@@ -259,6 +259,10 @@ namespace ATLib
             /// 
             /// </summary>
             public const string Document = "Document";
+            /// <summary>
+            /// 
+            /// </summary>
+            public const string Slider = "Slider";
         }
         /// <summary>
         /// 
@@ -509,6 +513,10 @@ namespace ATLib
             if (ctrlType.Equals(ControlType.Document))
             {
                 return System.Windows.Automation.ControlType.Document;
+            }
+            if (ctrlType.Equals(ControlType.Slider))
+            {
+                return System.Windows.Automation.ControlType.Slider;
             }
             throw new Exception("Failed to get ControlType " + ctrlType + ".");
         }
