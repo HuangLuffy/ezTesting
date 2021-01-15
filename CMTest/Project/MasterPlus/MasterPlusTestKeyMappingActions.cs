@@ -117,7 +117,7 @@ namespace CMTest.Project.MasterPlus
                         gridColorValue = KeyMappingGridColor.Red;
                         if (assignedValue != null && !assignedValue.GetElementInfo().IsOffscreen())
                         {
-                            _r.RecordActionFailedDuringCaseRunning($"Reassign textbox is still there.", "ReassignTextboxStillThere");
+                            _r.RecordActionFailedDuringCaseRunning($"The Key is not disabled, the reassignable textbox is still there.", "ReassignTextboxStillThere");
                         }
                     }, 
                     () => {

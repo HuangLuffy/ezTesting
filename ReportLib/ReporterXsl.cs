@@ -260,6 +260,10 @@ namespace ReportLib
             else if (BlockCurrentCase && blockOrRun != WhenCaseFailed.StillRunThisCase)
             {
                 r.NodeResult = Reporter.Result.BLOCK;
+                if (BlockCurrentCase && blockOrRun == WhenCaseFailed.BlockAllLeftCases)
+                {
+                    Reporter.BlockAllLeftCasesAnyway = true;
+                }
             }
             else
             {

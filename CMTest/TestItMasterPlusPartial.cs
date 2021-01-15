@@ -81,8 +81,8 @@ namespace CMTest
         {
             for (var i = 0; i < loop.Count(); i++)
             {
-                //if ((i + 1) <= (loop.Count() - 1) && loop.ElementAt(i)[2].Equals(loop.ElementAt(i + 1)[2]) &&
-                //    blAssignKey) continue;
+                if ((i + 1) <= (loop.Count() - 1) && loop.ElementAt(i)[2].Equals(loop.ElementAt(i + 1)[2]) &&
+                    blAssignKey) continue;
                 _MpCases.MpActions.DifferentFlowForDifferentPressedKey(loop.ElementAt(i)[0],
                 () => {
                     _MpCases.Case_DisableKey(loop.ElementAt(i)[2], blAssignKey, blVerifyKeyWork);
@@ -130,8 +130,8 @@ namespace CMTest
                 //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_DEC, KbKeys.SC_KEY_H.UiaName },
                 //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_INC, KbKeys.SC_KEY_I.UiaName },
                 //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_W3HOME, KbKeys.SC_KEY_J.UiaName },
-                //new List<string> { MPObj.DisableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
-                //new List<string> { MPObj.EnableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
+                new List<string> { MPObj.DisableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
+                new List<string> { MPObj.EnableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
                 new List<string> { "", KbKeys.SC_KEY_D.UiaName, KbKeys.SC_KEY_L.UiaName },
             };
             _MpCases.Ireporter.GetResultTestInfo().AttrDeviceModel = deviceName;
