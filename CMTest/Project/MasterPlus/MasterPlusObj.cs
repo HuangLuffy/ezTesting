@@ -37,6 +37,16 @@ namespace CMTest.Project.MasterPlus
         {
             Name = "DeviceList"
         };
+        public static ATElementStruct ResetButton = new ATElementStruct()
+        {
+            Name = "RESET"
+        };
+        #region Tabs
+        public static ATElementStruct KeyMappingTab = new ATElementStruct()
+        {
+            Name = "KEY MAPPING"
+        };
+        #endregion
 
         #region KeyMapping
 
@@ -82,6 +92,10 @@ namespace CMTest.Project.MasterPlus
         public static ATElementStruct ReassignCloseButton = new ATElementStruct()
         {
             FullDescriton = "ReassignCloseButton"
+        };
+        public static ATElementStruct ReassignCancelButton = new ATElementStruct()
+        {
+            FullDescriton = "ReassignCancelButton"
         };
         public static ATElementStruct ReassignCollapseButton = new ATElementStruct()
         {

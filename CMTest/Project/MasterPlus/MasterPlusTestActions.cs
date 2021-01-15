@@ -60,18 +60,25 @@ namespace CMTest.Project.MasterPlus
             //var devices = deviceList.GetElementsAllChild();
             //return devices.GetElementByIA(new ATElementStruct() { IADescription = deviceName });
             var dut = deviceList.GetElementFromChild(new ATElementStruct() { Name = deviceName });
-            dut.DoClickPoint(waitTime: 1);
+            //dut.DoClickPoint(waitTime: 1);
+            dut.DoClick(2);
         }
-        public void SelectTab(string deviceName)
+        public void SelectTab(ATElementStruct whichTab)
         {
-            var currentTab = GetMasterPlusMainWindow().GetElement(new ATElementStruct() { ControlType = ATElement.ControlType.Tab });
-            var tabs = currentTab.GetElementsAllChild();
-            tabs.GetATCollection()[GetTabIndexByTabCount(tabs.GetATCollection().Length)].DoClickPoint(1);
+            var currentTabbar = GetMasterPlusMainWindow().GetElement(new ATElementStruct() { ControlType = ATElement.ControlType.Tab });
+            //var tabs = currentTab.GetElementsAllChild();
+            //tabs.GetATCollection()[GetTabIndexByTabCount(tabs.GetATCollection().Length)].DoClickPoint(1);
+            var targetTab = currentTabbar.GetElementFromChild(whichTab);
+            if (targetTab.GetElementInfo().ToggleState().Equals("Off"))
+            {
+                targetTab.DoClickPoint(1);
+                UtilWait.ForTrue(() => targetTab.GetElementInfo().ToggleState().Equals("On"), 3, 1);
+            }
         }
-        public void ClickResetButton(ATElementStruct whichResetButton)
+        public void ClickResetButton(ATElementStruct whichResetButton = null)
         {
-            var keyMappingResetButton = GetMasterPlusMainWindow().GetElementFromChild(whichResetButton);
-            keyMappingResetButton.DoClickPoint(1);
+            var resetButton = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ResetButton);
+            resetButton.DoClickPoint(1);
             ClickCommonDialog();
         }
         public AT GetMasterPlusMainWindow(int timeout = 0)
@@ -85,12 +92,11 @@ namespace CMTest.Project.MasterPlus
                 if (UtilProcess.IsProcessExistedByName("RENEW"))
                 {
                     UtilProcess.KillProcessByName("RENEW");
-                    UtilTime.WaitTime(1);
                 }
                 var mainWindow = GetMasterPlusMainWindow();
                 mainWindow.GetElement(MPObj.DeviceList);
                 return mainWindow;
-            }, timeout);
+            }, timeout, 2);
         }
         public enum CommonDialogButtons
         {

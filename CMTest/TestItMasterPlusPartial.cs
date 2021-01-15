@@ -69,7 +69,7 @@ namespace CMTest
             _MpCases.Ireporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
             _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
             _MpCases.Case_SelectDeviceFromList(deviceName);
-            _MpCases.Case_SelectKeyMappingTab(deviceName);
+            _MpCases.Case_SelectTab(MPObj.KeyMappingTab);
             _MpCases.Case_AssignKeyOnReassignDialog(KbKeys.SC_KEY_A, KbKeys.SC_KEY_B);
             _MpCases.Case_AssignKeyOnReassignDialog(KbKeys.SC_KEY_B, KbKeys.SC_KEY_C);
             _MpCases.Case_AssignKeyOnReassignDialog(KbKeys.SC_KEY_C, KbKeys.SC_KEY_A);
@@ -85,24 +85,24 @@ namespace CMTest
                 //    blAssignKey) continue;
                 _MpCases.MpActions.DifferentFlowForDifferentPressedKey(loop.ElementAt(i)[0],
                 () => {
-                    _MpCases.Case_DisableKey(loop.ElementAt(i)[2], blAssignKey);
+                    _MpCases.Case_DisableKey(loop.ElementAt(i)[2], blAssignKey, blVerifyKeyWork);
                 },
                 () => {
-                    _MpCases.Case_EnableKey(loop.ElementAt(i)[2], blAssignKey);
+                    _MpCases.Case_EnableKey(loop.ElementAt(i)[2], blAssignKey, blVerifyKeyWork);
                 },
                 () => {
                     if (loop.ElementAt(i)[0].Equals(""))
                     {
-                        _MpCases.Case_AssignKeyOnReassignDialog(KbKeys.GetScKeyByUiaName(loop.ElementAt(i)[1]), KbKeys.GetScKeyByUiaName(loop.ElementAt(i)[2]));
+                        _MpCases.Case_AssignKeyOnReassignDialog(KbKeys.GetScKeyByUiaName(loop.ElementAt(i)[1]), KbKeys.GetScKeyByUiaName(loop.ElementAt(i)[2]), false, blAssignKey, blVerifyKeyWork);
                     }
                     else
                     {
-                        _MpCases.Case_SelectItemFromReassignMenu(loop.ElementAt(i)[0], loop.ElementAt(i)[1], loop.ElementAt(i)[2], blAssignKey);
+                        _MpCases.Case_SelectItemFromReassignMenu(loop.ElementAt(i)[0], loop.ElementAt(i)[1], loop.ElementAt(i)[2], blAssignKey, blVerifyKeyWork);
                     }  
                 });
             }
         }
-        private void _ResetLoopVerifyLogic(IReadOnlyList<List<string>> loop)
+        private void _ResetLoopVerifyLogic(IReadOnlyList<List<string>> loop, bool blAssignKey = false, bool blVerifyKeyWork = true)
         {
             var t = new List<string>();
             for (var i = 0; i < loop.Count(); i++)
@@ -112,7 +112,7 @@ namespace CMTest
             var b = t.Distinct();
             foreach (var item in b)
             {
-                _MpCases.Case_VerifyKeysValueAndColor(item);
+                _MpCases.Case_VerifyKeysValueAndColor(item, item, null, blAssignKey, blVerifyKeyWork);
             }
         }
         private dynamic Suit_KeyMappingBaseTest(string deviceName)
@@ -120,34 +120,30 @@ namespace CMTest
             //_MpCases.Case_AssignInLoop();
             var keysNeedToAssignList = new List<List<string>>
             {
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, KbKeys.SC_KEY_A.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, KbKeys.SC_KEY_B.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE, KbKeys.SC_KEY_C.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP, KbKeys.SC_KEY_D.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PRE_TRACK, KbKeys.SC_KEY_E.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_NEXT_TRACK, KbKeys.SC_KEY_F.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MUTE, KbKeys.SC_KEY_G.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_DEC, KbKeys.SC_KEY_H.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_INC, KbKeys.SC_KEY_I.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_W3HOME, KbKeys.SC_KEY_J.UiaName },
-                new List<string> { MPObj.DisableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
-                new List<string> { MPObj.EnableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
-                new List<string> { "", KbKeys.SC_KEY_N.UiaName, KbKeys.SC_KEY_N.UiaName },
-                new List<string> { "", KbKeys.SC_KEY_D.UiaName, KbKeys.SC_KEY_M.UiaName },
-                new List<string> { "", KbKeys.SC_KEY_R_SHIFT.UiaName, KbKeys.SC_KEY_R_SHIFT.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_W3HOME, KbKeys.SC_KEY_J.UiaName },
-                new List<string> { MasterPlus.ReassignMenuItems.LettersNumbers, MasterPlus.ReassignMenuItems.LettersNumbersItems.SC_KEY_0, KbKeys.SC_KEY_0.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, KbKeys.SC_KEY_A.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, KbKeys.SC_KEY_B.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE, KbKeys.SC_KEY_C.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_STOP, KbKeys.SC_KEY_D.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PRE_TRACK, KbKeys.SC_KEY_E.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_NEXT_TRACK, KbKeys.SC_KEY_F.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MUTE, KbKeys.SC_KEY_G.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_DEC, KbKeys.SC_KEY_H.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_VOL_INC, KbKeys.SC_KEY_I.UiaName },
+                //new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_W3HOME, KbKeys.SC_KEY_J.UiaName },
+                //new List<string> { MPObj.DisableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
+                //new List<string> { MPObj.EnableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
+                new List<string> { "", KbKeys.SC_KEY_D.UiaName, KbKeys.SC_KEY_L.UiaName },
             };
             _MpCases.Ireporter.GetResultTestInfo().AttrDeviceModel = deviceName;
             _MpCases.Ireporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
-            //_MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
-            //_MpCases.Case_SelectDeviceFromList(deviceName);
-            //_MpCases.Case_SelectKeyMappingTab(deviceName);
+            _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
+            _MpCases.Case_SelectDeviceFromList(deviceName);
+            _MpCases.Case_SelectTab(MPObj.KeyMappingTab);
             _AssignLoopVerifyLogic(keysNeedToAssignList);
             _MpCases.Case_CloseMasterPlus(10);
             _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
             _MpCases.Case_SelectDeviceFromList(deviceName);
-            _MpCases.Case_SelectKeyMappingTab(deviceName, false);
+            _MpCases.Case_SelectTab(MPObj.KeyMappingTab, false);
             _AssignLoopVerifyLogic(keysNeedToAssignList, false);
             _MpCases.Case_Reset(MPObj.KeyMappingResetButton);
             _ResetLoopVerifyLogic(keysNeedToAssignList);

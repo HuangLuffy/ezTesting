@@ -111,21 +111,21 @@ namespace CMTest.Project.MasterPlus
                     MpActions.SelectTestDevice(deviceName, swMainWindow);
                 }
                 , $"Select {deviceName} from MasterPlus."
-                , $"{deviceName} can be found."
+                , $"{deviceName} can be found. (For now, cannot verify if this selection was successful.)"
                 , "Failed to find the device."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
-        public void Case_SelectKeyMappingTab(string deviceName , bool reset = true)
+        public void Case_SelectTab(ATElementStruct whichTab , bool reset = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.SelectTab(deviceName);
+                    MpActions.SelectTab(whichTab);
                     if (reset)
                     {
-                        MpActions.ClickResetButton(MPObj.KeyMappingResetButton);
+                        MpActions.ClickResetButton();
                     }
                 }
-                , Ireporter.SetAsLines($"Click KeyMapping tab.", reset ? "Click Reset button." : "Go to KeyMapping tab.")
+                , Ireporter.SetAsLines($"Click {whichTab.Name} tab.", reset ? "Click Reset button." : $"Go to {whichTab.Name} tab.")
                 , $"Select successfully."
                 , "Failed to select KeyMapping tab."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
@@ -137,7 +137,7 @@ namespace CMTest.Project.MasterPlus
                     MpActions.ClickResetButton(whichResetButton);
                 }
                 , $"Click Reset button."
-                , $"Reset button can be clicked."
+                , $"NA."
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
@@ -190,14 +190,14 @@ namespace CMTest.Project.MasterPlus
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
-        public void Case_VerifyKeysValueAndColor(string assignWhichKey)
+        public void Case_VerifyKeysValueAndColor(string pressedKey, string assignWhichKeyGrid, Action<AT> assignAction, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.CommonAssignKeyAndVerify("", assignWhichKey, null, true);
+                    MpActions.CommonAssignKeyAndVerify(pressedKey, assignWhichKeyGrid, null, false, true);
                 }
-                , $"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}."
-                , Ireporter.SetAsLines($"The key value is still the default value {assignWhichKey} on the Reassignment Dialog.", "The Grid would be green.")
+                , $"Open Reassignment Dialog for Single Keyboard Key {assignWhichKeyGrid}."
+                , Ireporter.SetAsLines($"The key value is still the default value {assignWhichKeyGrid} on the Reassignment Dialog.", $"The key works as {assignWhichKeyGrid}.", "The Grid would be green.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }

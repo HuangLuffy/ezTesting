@@ -53,7 +53,6 @@ namespace CMTest
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
 
-            
 
             this.Suit_KeyMappingBaseTest("SK652");
             UtilProcess.KillAllProcessesByName("wmplayer");

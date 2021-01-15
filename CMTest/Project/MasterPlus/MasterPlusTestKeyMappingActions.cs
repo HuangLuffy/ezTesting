@@ -26,7 +26,6 @@ namespace CMTest.Project.MasterPlus
             UtilWinApi.SetForegroundWindow(masterPlusMainWindow.GetElementInfo().GetHwnd());
             //var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer);
             //var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
-
             var keyGridNeedToBeAssigned = GetAllKbGridKeys().First(x => x.GetElementInfo().Name().Equals(assignWhichKeyGrid));
 
             keyGridNeedToBeAssigned.DoClickPoint(1);
@@ -54,7 +53,7 @@ namespace CMTest.Project.MasterPlus
                     return; // do not verify when failed
                 }
             }
-            VerifyAssignedKeyValueAndGridColor(keyGridNeedToBeAssigned, reassignDialog, pressedKey);
+            VerifyAssignedKeyValueAndGridColor(keyGridNeedToBeAssigned, reassignDialog, pressedKey, blAssignKey);
             if (blVerifyKeyWork)
             {
                 VerifyKeyWork(keyGridNeedToBeAssigned, pressedKey);
@@ -107,7 +106,7 @@ namespace CMTest.Project.MasterPlus
             HWSimulator.HWSend.MoveMouseTo((int)(wmpWindow.GetElementInfo().RectangleRight() - wmpWindow.GetElementInfo().RectangleLeft())/2, (int)(wmpWindow.GetElementInfo().RectangleBottom() - wmpWindow.GetElementInfo().RectangleTop()) / 2);
             return wmpWindow;
         }
-        private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string pressedKey)
+        private void VerifyAssignedKeyValueAndGridColor(AT keyGridNeedToBeAssigned, AT reassignDialog, string pressedKey, bool blAssignKey)
         {
             var gridColorValue = KeyMappingGridColor.Purple;
             try
@@ -287,7 +286,12 @@ namespace CMTest.Project.MasterPlus
         private IEnumerable<AT> GetAllKbGridKeys()
         {
             var assignContainer = GetMasterPlusMainWindow().GetElementFromChild(MPObj.AssignContainer, returnNullWhenException: true);
-            return assignContainer != null ? assignContainer.GetElementsAllChild().GetATCollection().ToList() : GetMasterPlusMainWindow().GetElementsAllChild().GetATList().Where(x => x.GetElementInfo().FullDescription().StartsWith("#"));
+            var r = assignContainer != null ? assignContainer.GetElementsAllChild().GetATCollection().ToList() : GetMasterPlusMainWindow().GetElementsAllChild().GetATList().Where(x => x.GetElementInfo().FullDescription().StartsWith("#"));
+            if (r.Count() == 0)
+            {
+                throw new Exception("Can not find any virtual keys on the UI.");
+            }
+            return r;
         }
         private bool _blBreak = false;
         //for ma

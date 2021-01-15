@@ -98,6 +98,7 @@
     <Compile Include="Util\UtilString.cs" />
     <Compile Include="Util\Struct\Path.cs" />
     <Compile Include="Util\UtilSysEnv.cs" />
+    <Compile Include="Util\UtilTaskbar.cs" />
     <Compile Include="Util\UtilTime.cs" />
     <Compile Include="Util\UtilWait.cs" />
     <Compile Include="Util\UtilWmp.cs" />
