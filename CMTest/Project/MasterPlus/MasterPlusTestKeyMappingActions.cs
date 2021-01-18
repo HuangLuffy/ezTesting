@@ -291,7 +291,14 @@ namespace CMTest.Project.MasterPlus
             {
                 throw new Exception("Can not find any virtual keys on the UI.");
             }
-            return r;
+
+            IEnumerable<AT> t = new List<AT>
+            {
+                r.ElementAt(0),
+                r.ElementAt(1),
+                r.ElementAt(2)
+            };
+            return t;
         }
         private bool _blBreak = false;
         //for ma
@@ -306,7 +313,7 @@ namespace CMTest.Project.MasterPlus
             {
                 if (recordReassignMenuSubItems != null)
                 {
-                    reassignMenuItemsList.Remove(recordReassignMenuSubItems);
+                    reassignMenuItemsList.Remove(recordReassignMenuSubItems); //remove null list  
                     recordReassignMenuSubItems = null;
                 }
                 if (!reassignMenuItemsList.Any()) // reassign items are less than keys
@@ -326,18 +333,24 @@ namespace CMTest.Project.MasterPlus
                     }
                     foreach (var subItem in reassignMenuSubItems.MenuSubItems)
                     {
-                        AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value,
-                            validKeys[i].GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
+                        try
+                        {
+                            //AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value, validKeys[i].GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
+                        }
+                        catch (Exception e)
+                        {
+                            _r.CurrentTestCase.ErrorMessages.Add(e.Message);
+                        }  
                         reassignMenuSubItems.MenuSubItems.Remove(subItem);
                         if (!reassignMenuSubItems.MenuSubItems.Any())
                         {
-                            recordReassignMenuSubItems = reassignMenuSubItems;
+                            recordReassignMenuSubItems = reassignMenuSubItems; //record null reassignMenuSubItems for row 316 to remove  [reassignMenuItemsList.Remove(recordReassignMenuSubItems); //remove null list  ]
                         }
                         if (i == (validKeys.Count() - 1))
                         {
                             if (reassignMenuItemsList.Any() || reassignMenuSubItems.MenuSubItems.Any())
                             {
-                                i = -1;
+                                i = -1; // reassign items are more than keys, to reassign from Esc
                             }
                         }
                         _blBreak = true;
@@ -346,7 +359,6 @@ namespace CMTest.Project.MasterPlus
                 }
             }
         }
-
         #endregion
     }
 }

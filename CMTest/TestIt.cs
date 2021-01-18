@@ -53,7 +53,7 @@ namespace CMTest
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
 
-
+            _MpCases.Case_AssignInLoop(false, true);
             this.Suit_KeyMappingBaseTest("SK652");
             UtilProcess.KillAllProcessesByName("wmplayer");
             UtilTime.WaitTime(1);
@@ -65,8 +65,6 @@ namespace CMTest
             var barValue2 = sliderbar.DoGetValue();
             _MpCases.Case_CheckAllKeysOnRelayController();
 
-
-            //_MpCases.Case_CheckAllKeysOnRelayController();
         }
         public static void SendUsbKeyAndCheck(KeyPros key, string expectedResult = null)
         {

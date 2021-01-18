@@ -222,7 +222,7 @@ namespace CMTest.Project.MasterPlus
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignInLoop();
+                    MpActions.AssignInLoop(blAssignKey, blVerifyKeyWork);
                 }
                 , Ireporter.SetAsLines($"Assign all keys on the Keyboard with all keys in Reassignment menu.",
                     blAssignKey ? $"Check the all the assigned key work." : $"Check the all the assigned key work!")
