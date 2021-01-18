@@ -141,10 +141,14 @@ namespace CMTest.Project.MasterPlus
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
+        private string GetDescriptionStringOpenReassignmentDialog(string gridKey)
+        {
+            return $"Open Reassignment Dialog for a single Keyboard Key {gridKey}.";
+        }
         private string GetDescriptionString(string pressedKey, string gridKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
-            return Ireporter.SetAsLines($"Open Reassignment Dialog for a single Keyboard Key {gridKey}.",
-                    blAssignKey ? $"Push {pressedKey}." : $"Check the assigned Value is {pressedKey} on the Reassignment Dialog.");
+            return Ireporter.SetAsLines(GetDescriptionStringOpenReassignmentDialog(gridKey),
+                    blAssignKey ? $"Assign {pressedKey}." : $"Check the assigned Value is {pressedKey} on the Reassignment Dialog.");
         }
         private string GetExpectedString(string pressedKey, string gridKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
@@ -162,16 +166,14 @@ namespace CMTest.Project.MasterPlus
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
-        public void Case_SelectItemFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void Case_SelectItemFromReassignMenu(string whichMenuItem, string whichMenuItemSubItem, string assignWhichKeyGrid, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignKeyFromReassignMenu(whichMenuItem, whichMenuItemSubItem, assignWhichKey, blAssignKey);
+                    MpActions.AssignKeyFromReassignMenu(whichMenuItem, whichMenuItemSubItem, assignWhichKeyGrid, blAssignKey, blVerifyKeyWork);
                 }
-                , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {assignWhichKey}.",
-                    $"Open Reassignment Menu.",
-                    blAssignKey ? $"Choose {whichMenuItem} > {whichMenuItemSubItem}." : $"Check the assigned Value is {whichMenuItemSubItem} on the Reassignment Dialog.")
-                , Ireporter.SetAsLines(blAssignKey ? $"Assign successfully." : $"The assigned Value is still {whichMenuItemSubItem} on the Reassignment Dialog.", whichMenuItemSubItem.Equals(assignWhichKey) ? "The Grid would be green." : "The Grid would be purple.")
+                , GetDescriptionString($"{whichMenuItem} > {whichMenuItemSubItem}", assignWhichKeyGrid, blAssignKey, blVerifyKeyWork)
+                , GetExpectedString($"{whichMenuItem} > {whichMenuItemSubItem}", assignWhichKeyGrid, blAssignKey, blVerifyKeyWork)
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
@@ -181,7 +183,7 @@ namespace CMTest.Project.MasterPlus
                 {
                     MpActions.DisableKey(disableWhichKey, blAssignKey);
                 }
-                , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {disableWhichKey}.",
+                , Ireporter.SetAsLines(GetDescriptionStringOpenReassignmentDialog(disableWhichKey),
                     blAssignKey ? $"Set it disabled." : $"Check the {disableWhichKey} is disabled.")
                 , Ireporter.SetAsLines(blAssignKey ? $"Disable successfully." : $"The {disableWhichKey} is still disabled.", "The Grid would be red.")
                 , "Failed."
@@ -193,7 +195,7 @@ namespace CMTest.Project.MasterPlus
                 {
                     MpActions.EnableKey(enableWhichKey, blAssignKey);
                 }
-                , Ireporter.SetAsLines($"Open Reassignment Dialog for Single Keyboard Key {enableWhichKey}.",
+                , Ireporter.SetAsLines(GetDescriptionStringOpenReassignmentDialog(enableWhichKey),
                     blAssignKey ? $"Set it enabled." : $"Check the {enableWhichKey} is enabled.")
                 , Ireporter.SetAsLines(blAssignKey ? $"Enable successfully and the key value is default value {enableWhichKey} on the Reassignment Dialog." : $"The {enableWhichKey} is still enabled and the key value is still the default value {enableWhichKey} on the Reassignment Dialog.", "The Grid would be green.")
                 , "Failed."
