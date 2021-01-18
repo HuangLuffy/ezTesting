@@ -62,7 +62,7 @@ namespace CMTest
         {
             _MpCases.Flow_RestartSystemAndCheckDeviceRecognition(_xmlOps);
         }
-        #region MyRegion
+
         private dynamic Flow_KeyMappingTest(string deviceName)
         {
             _MpCases.Ireporter.GetResultTestInfo().AttrDeviceModel = deviceName;
@@ -133,6 +133,7 @@ namespace CMTest
             _MpCases.LaunchTestReport();
             return r;
         }
+        #region TestSuits
         private dynamic Suit_KeyMappingBaseTest(string deviceName)
         {
             return SuitCommon(() =>
@@ -160,12 +161,17 @@ namespace CMTest
                 _MpCases.Case_CloseMasterPlus(10);
                 _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
                 _MpCases.Case_SelectDeviceFromList(deviceName);
-                _MpCases.Case_SelectTab(MPObj.KeyMappingTab, false);
+                _MpCases.Case_SelectTab(MPObj.KeyMappingTab, reset: false);
                 _AssignLoopVerifyLogic(keysNeedToAssignList, blAssignKey: false, blVerifyKeyWork: true);
                 _MpCases.Case_Reset(MPObj.KeyMappingResetButton);
                 _ResetLoopVerifyLogic(keysNeedToAssignList, blAssignKey: false, blVerifyKeyWork: true);
-                return MARK_FOUND_RESULT;
+                return null;
             }, deviceName);
+        }
+        private dynamic Suit_KeyMappingMatrixTest(string deviceName)
+        {
+            _MpCases.Case_CheckAllKeysOnRelayController();
+            return null;
         }
         #endregion
     }
