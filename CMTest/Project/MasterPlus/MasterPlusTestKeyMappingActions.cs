@@ -302,7 +302,7 @@ namespace CMTest.Project.MasterPlus
         }
         private bool _blBreak = false;
         //for ma
-        public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
         {
             var keys = GetAllKbGridKeys();
 
@@ -316,9 +316,17 @@ namespace CMTest.Project.MasterPlus
                     reassignMenuItemsList.Remove(recordReassignMenuSubItems); //remove null list  
                     recordReassignMenuSubItems = null;
                 }
-                if (!reassignMenuItemsList.Any()) // reassign items are less than keys
+                if (!reassignMenuItemsList.Any()) // reassign items are less than keys then assign A for rest of keys
                 {
-                    return;
+                    try
+                    {
+                        AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(validKeys[i].GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
+                    }
+                    catch (Exception e)
+                    {
+                        _r.CurrentTestCase.ErrorMessages.Add(e.Message);
+                    }
+                    continue;
                 }
                 if (_blBreak)// add this here for when reassignMenuItemsList's count is 1
                 {
@@ -335,7 +343,7 @@ namespace CMTest.Project.MasterPlus
                     {
                         try
                         {
-                            //AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value, validKeys[i].GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
+                            AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value, validKeys[i].GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
                         }
                         catch (Exception e)
                         {
