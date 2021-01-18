@@ -147,8 +147,8 @@ namespace CMTest.Project.MasterPlus
             }
             finally
             {
-                var saveButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignSaveButton);
-                saveButton.DoClickPoint(1);
+                var saveOrCloseButton = reassignDialog.GetElementFromDescendants(blAssignKey ? MPObj.ReassignSaveButton : MPObj.ReassignCloseButton);
+                saveOrCloseButton.DoClickPoint(1);
             }
             if (!keyGridNeedToBeAssigned.GetElementInfo().FullDescription().Equals(gridColorValue))
             {

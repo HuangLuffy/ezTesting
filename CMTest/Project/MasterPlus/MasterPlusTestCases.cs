@@ -141,15 +141,24 @@ namespace CMTest.Project.MasterPlus
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.BlockAllLeftCases);
         }
+        private string GetDescriptionString(string pressedKey, string gridKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        {
+            return Ireporter.SetAsLines($"Open Reassignment Dialog for a single Keyboard Key {gridKey}.",
+                    blAssignKey ? $"Push {pressedKey}." : $"Check the assigned Value is {pressedKey} on the Reassignment Dialog.");
+        }
+        private string GetExpectedString(string pressedKey, string gridKey, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        {
+            return Ireporter.SetAsLines(blAssignKey ? $"Assign successfully." : $"The assigned Value is still {pressedKey} on the Reassignment Dialog.",
+                pressedKey.Equals(gridKey) ? "The Grid would be green." : "The Grid would be purple.");
+        }
         public void Case_AssignKeyOnReassignDialog(KeyPros pressedKey, KeyPros assignWhichKeyGrid, bool blScanCode = false, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
                     MpActions.AssignKeyOnReassignDialog(pressedKey, assignWhichKeyGrid, blScanCode, blAssignKey, blVerifyKeyWork);
                 }
-                , Ireporter.SetAsLines($"Open Reassignment Dialog for a single Keyboard Key {assignWhichKeyGrid.UiaName}.",
-                    blAssignKey ? $"Push {pressedKey.UiaName}." : $"Check the assigned Value is {pressedKey.UiaName} on the Reassignment Dialog.")
-                , Ireporter.SetAsLines(blAssignKey ? $"Assign successfully." : $"The assigned Value is still {pressedKey.UiaName} on the Reassignment Dialog.", pressedKey.UiaName.Equals(assignWhichKeyGrid.UiaName) ? "The Grid would be green." : "The Grid would be purple.")
+                , GetDescriptionString(pressedKey.UiaName, assignWhichKeyGrid.UiaName, blAssignKey, blVerifyKeyWork)
+                , GetExpectedString(pressedKey.UiaName, assignWhichKeyGrid.UiaName, blAssignKey, blVerifyKeyWork)
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
@@ -211,7 +220,7 @@ namespace CMTest.Project.MasterPlus
                 }
                 , Ireporter.SetAsLines($"Assign all keys on the Keyboard with all keys in Reassignment menu.",
                     blAssignKey ? $"Check the all the assigned key work." : $"Check the all the assigned key work!")
-                , Ireporter.SetAsLines(blAssignKey ? $"Check the all the assigned key work." : $"All the assigned key work.", "The Grid would be purple.")
+                , Ireporter.SetAsLines(blAssignKey ? $"Check the all the assigned key work." : $"All the assigned keys work as expected.", "The Grid would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
