@@ -66,6 +66,10 @@ namespace ReportLib
             var wholeLine = "";
             for (var i = 0; i < lines.Length; i++)
             {
+                if (lines[i].Trim().Equals(""))
+                {
+                    continue;
+                }
                 wholeLine += SetNewLine($"{i + 1}. {lines[i]}");
             }
             return wholeLine;

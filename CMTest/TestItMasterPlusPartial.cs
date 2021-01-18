@@ -77,7 +77,7 @@ namespace CMTest
             _MpCases.LaunchTestReport();
             return MARK_FOUND_RESULT;
         }
-        private void _AssignLoopVerifyLogic(IReadOnlyList<List<string>> loop, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        private void _AssignLoopVerifyLogic(IReadOnlyList<List<string>> loop, bool blAssignKey, bool blVerifyKeyWork)
         {
             var t = new List<string>();
             foreach (var item in loop.Reverse())
@@ -112,7 +112,7 @@ namespace CMTest
                 });
             }
         }
-        private void _ResetLoopVerifyLogic(IReadOnlyList<List<string>> loop, bool blAssignKey = false, bool blVerifyKeyWork = true)
+        private void _ResetLoopVerifyLogic(IReadOnlyList<List<string>> loop, bool blAssignKey, bool blVerifyKeyWork)
         {
             var t = new List<string>();
             for (var i = 0; i < loop.Count(); i++)
@@ -125,11 +125,20 @@ namespace CMTest
                 _MpCases.Case_VerifyKeysValueAndColor(item, item, null, blAssignKey, blVerifyKeyWork);
             }
         }
+        private dynamic SuitCommon(Func<dynamic> Suit_Func, string deviceName)
+        {
+            _MpCases.Ireporter.GetResultTestInfo().AttrDeviceModel = deviceName;
+            _MpCases.Ireporter.GetResultTestInfo().AttrTestName = Suit_Func.Method.Name;
+            var r = Suit_Func.Invoke();
+            _MpCases.LaunchTestReport();
+            return r;
+        }
         private dynamic Suit_KeyMappingBaseTest(string deviceName)
         {
-            //_MpCases.Case_AssignInLoop();
-            var keysNeedToAssignList = new List<List<string>>
+            return SuitCommon(() =>
             {
+                var keysNeedToAssignList = new List<List<string>>
+                {
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_MAIL, KbKeys.SC_KEY_A.UiaName },
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_CALCULATOR, KbKeys.SC_KEY_B.UiaName },
                 new List<string> { MasterPlus.ReassignMenuItems.MediaKeys, MasterPlus.ReassignMenuItems.MediaKeysItems.SC_KEY_PLAY_PAUSE, KbKeys.SC_KEY_C.UiaName },
@@ -143,22 +152,20 @@ namespace CMTest
                 new List<string> { MPObj.DisableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
                 new List<string> { MPObj.EnableKeyCheckbox.Name, "", KbKeys.SC_KEY_K.UiaName },
                 new List<string> { "", KbKeys.SC_KEY_D.UiaName, KbKeys.SC_KEY_L.UiaName },
-            };
-            _MpCases.Ireporter.GetResultTestInfo().AttrDeviceModel = deviceName;
-            _MpCases.Ireporter.GetResultTestInfo().AttrTestName = new StackTrace().GetFrame(0).GetMethod().Name;
-            _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
-            _MpCases.Case_SelectDeviceFromList(deviceName);
-            _MpCases.Case_SelectTab(MPObj.KeyMappingTab);
-            _AssignLoopVerifyLogic(keysNeedToAssignList);
-            _MpCases.Case_CloseMasterPlus(10);
-            _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
-            _MpCases.Case_SelectDeviceFromList(deviceName);
-            _MpCases.Case_SelectTab(MPObj.KeyMappingTab, false);
-            _AssignLoopVerifyLogic(keysNeedToAssignList, false);
-            _MpCases.Case_Reset(MPObj.KeyMappingResetButton);
-            _ResetLoopVerifyLogic(keysNeedToAssignList);
-            _MpCases.LaunchTestReport();
-            return MARK_FOUND_RESULT;
+                };
+                _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
+                _MpCases.Case_SelectDeviceFromList(deviceName);
+                _MpCases.Case_SelectTab(MPObj.KeyMappingTab);
+                _AssignLoopVerifyLogic(keysNeedToAssignList, blAssignKey: true, blVerifyKeyWork : true);
+                _MpCases.Case_CloseMasterPlus(10);
+                _MpCases.Case_LaunchMasterPlus(MasterPlusLaunchTime);
+                _MpCases.Case_SelectDeviceFromList(deviceName);
+                _MpCases.Case_SelectTab(MPObj.KeyMappingTab, false);
+                _AssignLoopVerifyLogic(keysNeedToAssignList, blAssignKey: false, blVerifyKeyWork: true);
+                _MpCases.Case_Reset(MPObj.KeyMappingResetButton);
+                _ResetLoopVerifyLogic(keysNeedToAssignList, blAssignKey: false, blVerifyKeyWork: true);
+                return MARK_FOUND_RESULT;
+            }, deviceName);
         }
         #endregion
     }
