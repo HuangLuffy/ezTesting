@@ -2,21 +2,12 @@
 using CMTest.Project.MasterPlus;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Media;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using ATLib.Input;
 using CMTest.Project.MasterPlusPer;
 using CMTest.Xml;
 using CMTest.Project.RemoteModule;
-using CommonLib;
 using CommonLib.Util.ComBus;
-using CommonLib.Util.IO;
-using CommonLib.Util.Xml;
 using static ATLib.Input.Hw;
-using static ATLib.Input.KbEvent;
 using CMTest.Tool;
 using System.IO;
 using ATLib;
@@ -52,6 +43,9 @@ namespace CMTest
             //AssembleTopMenu();
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
+            UtilKeys.SetKeyByKeyStatus(KbKeys.SC_KEY_NUM_LOCK.KeyValue, UtilKeys.Status.On);
+            UtilKeys.SetKeyByKeyStatus(KbKeys.SC_KEY_CAP.KeyValue, UtilKeys.Status.Off);
+
 
             _MpCases.Case_AssignInLoop(true, false, true);
             this.Suit_KeyMappingBaseTest("SK652");
@@ -64,6 +58,9 @@ namespace CMTest
             UtilTime.WaitTime(0.5);
             var barValue2 = sliderbar.DoGetValue();
             _MpCases.Case_CheckAllKeysOnRelayController();
+        }
+        private void SetKeyStatus()
+        {
 
         }
         public static void SendUsbKeyAndCheck(KeyPros key, string expectedResult = null)

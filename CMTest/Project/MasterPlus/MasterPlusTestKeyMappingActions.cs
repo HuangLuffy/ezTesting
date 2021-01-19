@@ -1,19 +1,11 @@
 ﻿using ATLib;
-using CMTest.Xml;
 using CommonLib.Util;
-using CommonLib.Util.IO;
-using CommonLib.Util.OS;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using ATLib.Input;
-using CommonLib;
-using static ATLib.Input.KbEvent;
-using ReportLib;
 using static ATLib.Input.Hw;
-using CommonLib.Util.ComBus;
 
 namespace CMTest.Project.MasterPlus
 {
@@ -275,7 +267,7 @@ namespace CMTest.Project.MasterPlus
                 {
                     if (blScanCode)
                     {
-                        KbEvent.Press(pressedKey.ScanCode);
+                        UtilKeys.PressByScanCode(pressedKey.ScanCode);
                     }
                     else
                     {

@@ -101,7 +101,6 @@
     <Compile Include="ATS.cs" />
     <Compile Include="Input\HWSimulator.cs" />
     <Compile Include="Input\ATGTestInput.cs" />
-    <Compile Include="Input\KbEvent.cs" />
     <Compile Include="Input\Hw.cs" />
     <Compile Include="Input\NativeMethods.cs" />
     <Compile Include="Input\SafeNativeMethods.cs" />

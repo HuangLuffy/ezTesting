@@ -15,7 +15,6 @@ using CommonLib.Util.Project;
 using Nancy;
 using ReportLib;
 using static ATLib.Input.Hw;
-using static ATLib.Input.KbEvent;
 
 namespace CMTest.Project.MasterPlus
 {
