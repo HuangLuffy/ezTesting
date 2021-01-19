@@ -20,7 +20,7 @@ namespace CMTest.Project.MasterPlus
             //var keyGridNeedToBeAssigned = assignContainer.GetElementFromChild(new ATElementStruct() { Name = assignWhichKeyGrid });
             var keyGridNeedToBeAssigned = GetAllKbGridKeys().First(x => x.GetElementInfo().Name().Equals(assignWhichKeyGrid));
 
-            keyGridNeedToBeAssigned.DoClickPoint(1);
+            keyGridNeedToBeAssigned.DoClickPoint(0.6);
             var reassignDialog = masterPlusMainWindow.GetElementFromChild(MPObj.ReassignDialog);
             if (blAssignKey)
             {
@@ -34,9 +34,9 @@ namespace CMTest.Project.MasterPlus
                     try
                     {
                         var closeButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCloseButton);
-                        closeButton.DoClickPoint(1);
+                        closeButton.DoClickPoint(0.6);
                         closeButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCloseButton);// if dropdown
-                        closeButton.DoClickPoint(1);
+                        closeButton.DoClickPoint(0.6);
                     }
                     catch (Exception)
                     {
@@ -140,7 +140,7 @@ namespace CMTest.Project.MasterPlus
             finally
             {
                 var saveOrCloseButton = reassignDialog.GetElementFromDescendants(blAssignKey ? MPObj.ReassignSaveButton : MPObj.ReassignCloseButton);
-                saveOrCloseButton.DoClickPoint(1);
+                saveOrCloseButton.DoClickPoint(0.4);
             }
             if (!keyGridNeedToBeAssigned.GetElementInfo().FullDescription().Equals(gridColorValue))
             {
@@ -215,7 +215,7 @@ namespace CMTest.Project.MasterPlus
                 (reassignDialog) =>
                 {
                     var reassignCollapseButton = reassignDialog.GetElementFromDescendants(MPObj.ReassignCollapseButton);
-                    reassignCollapseButton.DoClickPoint(1);
+                    reassignCollapseButton.DoClickPoint(0.6);
                     var reassignDropdown = GetMasterPlusMainWindow().GetElementFromChild(MPObj.ReassignDropdown);
                     if (_theLastMenuItem.Equals(string.Empty) || !_theLastMenuItem.Equals(whichMenuItem))
                     {
@@ -226,7 +226,7 @@ namespace CMTest.Project.MasterPlus
                     if (allReassignCatalogListItems == null)
                     {
                         var whichCatalog = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItem });
-                        whichCatalog.DoClickPoint(1);
+                        whichCatalog.DoClickPoint(0.6);
                     }
                     var subItem = reassignDropdown.GetElementFromChild(new ATElementStruct() { FullDescriton = whichMenuItemSubItem }, returnNullWhenException: true);
                     if (subItem == null && whichMenuItem.Equals(MasterPlus.ReassignMenuItems.LettersNumbers))
