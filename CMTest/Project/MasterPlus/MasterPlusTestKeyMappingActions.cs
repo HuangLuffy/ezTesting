@@ -292,13 +292,14 @@ namespace CMTest.Project.MasterPlus
                 throw new Exception("Can not find any virtual keys on the UI.");
             }
 
-            IEnumerable<AT> t = new List<AT>
-            {
-                r.ElementAt(0),
-                r.ElementAt(1),
-                r.ElementAt(2)
-            };
-            return t;
+            //IEnumerable<AT> t = new List<AT>
+            //{
+            //    r.ElementAt(0),
+            //    r.ElementAt(1),
+            //    r.ElementAt(2)
+            //};
+            //return t;
+            return r;
         }
         private bool _blBreak = false;
         //for ma
@@ -359,6 +360,10 @@ namespace CMTest.Project.MasterPlus
                             if (reassignMenuItemsList.Any() || reassignMenuSubItems.MenuSubItems.Any())
                             {
                                 i = -1; // reassign items are more than keys, to reassign from Esc
+                                if (!blVerifyKeyWork) //for manual when all keys are assigned
+                                {
+                                    return;
+                                }
                             }
                         }
                         _blBreak = true;

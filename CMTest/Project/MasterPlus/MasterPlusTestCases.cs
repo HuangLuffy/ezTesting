@@ -218,11 +218,11 @@ namespace CMTest.Project.MasterPlus
         }
 
         //or ma
-        public void Case_AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void Case_AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignInLoop(blAssignKey, blVerifyKeyWork);
+                    MpActions.AssignInLoop(blAssignKey, blVerifyKeyWork, blScanCode);
                 }
                 , Ireporter.SetAsLines($"Assign all keys on the Keyboard with all keys in Reassignment menu.",
                     blAssignKey ? $"Check the all the assigned key work." : $"Check the all the assigned key work!")
