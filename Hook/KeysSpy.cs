@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Hook.Hook;
 
 namespace Hook
 {
@@ -37,18 +38,21 @@ namespace Hook
 
         private void HookManager_KeyDown(object sender, KeyEventArgs e)
         {
-            var k = e.KeyCode.ToString() + "\n";
-            tb.AppendText(k);
-            //AddValueToLabel(k);
-            //tb.AppendText(e.KeyValue.ToString());
-            //tb.ScrollToCaret();
-            foreach (var item in ignoreEventList)
+            var k = e.KeyCode.ToString();
+            KeyboardHookStruct _KeyboardHookStruct = (KeyboardHookStruct)sender;
+            if (_KeyboardHookStruct.VirtualKeyCode == 13)
             {
-                if (e.KeyCode.ToString().Equals(item))
-                {
-                    e.Handled = true;
-                }
+                k = _KeyboardHookStruct.Flags == 0 ? k : "NumPadReturn";
             }
+            tb.AppendText(k + "\n");
+            e.Handled = true;
+            //foreach (var item in ignoreEventList)
+            //{
+            //    if (e.KeyCode.ToString().Equals(item))
+            //    {
+            //        e.Handled = true;
+            //    }
+            //}
         }
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {

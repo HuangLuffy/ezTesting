@@ -242,17 +242,19 @@ namespace Hook
         private static int KeyboardHookProc(int nCode, Int32 wParam, IntPtr lParam)
         {
             //表示如有underlaing事件设置e.Handled标志
+
             bool handled = false;
 
             if (nCode >= 0)
             {
                 //在lParam中读取KeyboardHookStruct结构
-                KeyboardHookStruct MyKeyboardHookStruct = (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
+                KeyboardHookStruct _KeyboardHookStruct = (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
                 if (s_KeyDown != null && (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN))
                 {
-                    Keys keyData = (Keys)MyKeyboardHookStruct.VirtualKeyCode;
+                    Keys keyData = (Keys)_KeyboardHookStruct.VirtualKeyCode;
                     KeyEventArgs e = new KeyEventArgs(keyData);
-                    s_KeyDown.Invoke(null, e);
+                    s_KeyDown.Invoke(_KeyboardHookStruct, e);
+                    //s_KeyDown.Invoke(null, e);
                     handled = e.Handled;
                 }
 
@@ -265,11 +267,11 @@ namespace Hook
                     byte[] keyState = new byte[256];
                     GetKeyboardState(keyState);
                     byte[] inBuffer = new byte[2];
-                    if (ToAscii(MyKeyboardHookStruct.VirtualKeyCode,
-                              MyKeyboardHookStruct.ScanCode,
+                    if (ToAscii(_KeyboardHookStruct.VirtualKeyCode,
+                              _KeyboardHookStruct.ScanCode,
                               keyState,
                               inBuffer,
-                              MyKeyboardHookStruct.Flags) == 1)
+                              _KeyboardHookStruct.Flags) == 1)
                     {
                         char key = (char)inBuffer[0];
                         if ((isDownCapslock ^ isDownShift) && Char.IsLetter(key)) key = Char.ToUpper(key);
@@ -282,7 +284,7 @@ namespace Hook
                 // 按键弹起
                 if (s_KeyUp != null && (wParam == WM_KEYUP || wParam == WM_SYSKEYUP))
                 {
-                    Keys keyData = (Keys)MyKeyboardHookStruct.VirtualKeyCode;
+                    Keys keyData = (Keys)_KeyboardHookStruct.VirtualKeyCode;
                     KeyEventArgs e = new KeyEventArgs(keyData);
                     s_KeyUp.Invoke(null, e);
                     handled = handled || e.Handled;

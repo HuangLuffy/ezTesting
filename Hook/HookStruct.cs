@@ -65,7 +65,7 @@ namespace Hook
         /// <remarks>
         /// </remarks>
         [StructLayout(LayoutKind.Sequential)]
-        private struct KeyboardHookStruct
+        public struct KeyboardHookStruct
         {
             /// <summary>
             /// 指定一个虚拟键码。该代码必须是一个值范围为1〜254
