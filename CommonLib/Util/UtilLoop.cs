@@ -11,7 +11,7 @@ namespace CommonLib.Util
         public static void testC()
         {
             var listTop = new List<string> {
-                "a", "n"
+                "a", "b", "c"
             };
             var listSecond = new List<List<string>> {
                 new List<string> {
@@ -27,14 +27,13 @@ namespace CommonLib.Util
             }, (x) =>
             {
                 Console.WriteLine($"{x}   A");
-            }, true);
+            }, false);
         }
-        public static void ControlLoop<T1, T2>(IEnumerable<T1> listTop, IEnumerable<IEnumerable<T2>> listSecond, Action<T1, IEnumerable<T2>, T2> listSecondSubItemsAction, Action<T1> whenTopItemsMoreThanSecondItems = null, bool blReturnWhenLoopedAllSecondItems = true)
+        public static void ControlLoop<T1, T2>(IEnumerable<T1> listTop, IEnumerable<IEnumerable<T2>> listSecond, Action<T1, IEnumerable<T2>, T2> listSecondSubItemsAction, Action<T1> whenTopItemsMoreThanSecondItems = null, bool blReturnWhenLoopedAllSecondItems = false)
         {
             bool _blBreak = false;
             for (var i = 0; i < listTop.Count(); i++)
             {
-                //listSecond.Remove((x) => x); //remove null list  
                 if (!listSecond.Any()) // All items in listSecond are less than the items in listTop
                 {
                     if (whenTopItemsMoreThanSecondItems != null)
