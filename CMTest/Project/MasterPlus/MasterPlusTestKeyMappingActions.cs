@@ -125,7 +125,7 @@ namespace CMTest.Project.MasterPlus
                         var value = assignedValue.GetElementInfo().FullDescription();
                         if (!value.Equals(pressedKey))
                         {
-                            _r.RecordActionFailedDuringCaseRunning($"Input {pressedKey}, but get {value}.", "assignedValueWrong");
+                            _r.RecordActionFailedDuringCaseRunning($"Input {pressedKey}, but got {value}.", "assignedValueWrong");
                         }
                         if (keyGridNeedToBeAssigned.GetElementInfo().Name().Equals(pressedKey))
                         {
@@ -293,6 +293,8 @@ namespace CMTest.Project.MasterPlus
             //return t;
             return r;
         }
+        
+
         private bool _blBreak = false;
         //for ma
         public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
