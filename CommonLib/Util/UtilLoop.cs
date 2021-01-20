@@ -11,14 +11,14 @@ namespace CommonLib.Util
         public static void testC()
         {
             var listTop = new List<string> {
-                "a", "b", "c"
+                "a", "b", "c", "D"
             };
             var listSecond = new List<List<string>> {
                 new List<string> {
-                "1"
+                "1", "2", "3", "4"
                 },
                 new List<string> {
-                "4"
+                "5", "6", "7", "8"
                 },
             };
             ControlLoop(listTop, listSecond, (x, y, z) =>
@@ -72,7 +72,7 @@ namespace CommonLib.Util
                                 i = -1; // All items in listSecond are more than keys, to reassign from Esc
                                 if (blReturnWhenLoopedAllSecondItems)
                                 {
-                                    return;
+                                    return; //for manual set true
                                 }
                             }
                         }
