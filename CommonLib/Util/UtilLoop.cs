@@ -8,6 +8,24 @@ namespace CommonLib.Util
 {
     public class UtilLoop
     {
+
+        public static void testB()
+        {
+            var listTop = new List<string> {
+                "a"
+            };
+            var listSecond = new List<string> {
+                "1"
+            };
+            OneParentItemOneChildItemLoopController(listTop, listSecond, (x, y, z) =>
+            {
+                Console.WriteLine($"{x}   {y}");
+            }, (x) =>
+            {
+                Console.WriteLine($"{x}   A");
+            }, false);
+        }
+
         public static void testC()
         {
             var listTop = new List<string> {
@@ -21,7 +39,7 @@ namespace CommonLib.Util
                 "5", "6", "7", "8"
                 },
             };
-            ControlLoop(listTop, listSecond, (x, y, z) =>
+            OneParentItemOneChildItemLoopController(listTop, listSecond, (x, y, z) =>
             {
                 Console.WriteLine($"{x}   {z}");
             }, (x) =>
@@ -29,7 +47,11 @@ namespace CommonLib.Util
                 Console.WriteLine($"{x}   A");
             }, false);
         }
-        public static void ControlLoop<T1, T2>(IEnumerable<T1> listTop, IEnumerable<IEnumerable<T2>> listSecond, Action<T1, IEnumerable<T2>, T2> listSecondSubItemsAction, Action<T1> whenTopItemsMoreThanSecondItems = null, bool blReturnWhenLoopedAllSecondItems = false)
+        //public static void OneParentItemOneChildItemLoopController<T1, T2>(IEnumerable<T1> listTop, IEnumerable<T2> listSecond, Action<T1, IEnumerable<T2>, T2> listSecondSubItemsAction, Action<T1> whenTopItemsMoreThanSecondItems = null, bool blReturnWhenLoopedAllSecondItems = false)
+        //{
+        //    OneParentItemOneChildItemLoopController<T1, T2>(listTop, listSecond, listSecondSubItemsAction, whenTopItemsMoreThanSecondItems, blReturnWhenLoopedAllSecondItems);
+        //}
+        public static void OneParentItemOneChildItemLoopController<T1, T2>(IEnumerable<T1> listTop, IEnumerable<IEnumerable<T2>> listSecond, Action<T1, IEnumerable<T2>, T2> listSecondSubItemsAction, Action<T1> whenTopItemsMoreThanSecondItems = null, bool blReturnWhenLoopedAllSecondItems = false)
         {
             bool _blBreak = false;
             for (var i = 0; i < listTop.Count(); i++)
@@ -60,10 +82,19 @@ namespace CommonLib.Util
                     foreach (var subItem in listSecondSubItems)
                     {
                         listSecondSubItemsAction.Invoke(listTop.ElementAt(i), listSecondSubItems, subItem);
-                        listSecondSubItems.Remove(subItem);
-                        if (!listSecondSubItems.Any())
+
+
+                        if (!listSecondSubItems.GetType().Name.Contains("List")) // for secondList is List<x> not List<List<x>>
                         {
-                            listSecond = listSecond.Where(x => x.Count() != 0);
+                            listSecond = listSecond.Where(x => !x.Equals(listSecondSubItems));
+                        }
+                        else
+                        {
+                            listSecondSubItems.Remove(subItem);
+                            if (!listSecondSubItems.Any())
+                            {
+                                listSecond = listSecond.Where(x => x.Count() != 0);
+                            }
                         }
                         if (i == (listTop.Count() - 1))
                         {
