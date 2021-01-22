@@ -46,7 +46,7 @@ namespace CMTest
             UtilKeys.SetKeyByKeyStatus(KbKeys.SC_KEY_NUM_LOCK.KeyValue, UtilKeys.Status.On);
             UtilKeys.SetKeyByKeyStatus(KbKeys.SC_KEY_CAP.KeyValue, UtilKeys.Status.Off);
 
-            UtilLoop.testB();
+            UtilLoop.testA();
 
 
             _MpCases.Case_AssignInLoop(true, false, true);
