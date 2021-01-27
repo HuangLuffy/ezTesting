@@ -27,18 +27,38 @@ namespace CMTest
         private readonly UtilCmd _cmd = new UtilCmd();
         private readonly XmlOps _xmlOps = new XmlOps();
         private readonly MonitorAction _monitorAction = new MonitorAction();
-        public static UtilSerialRelayController Usrc = new UtilSerialRelayController();
-        public static KeysSpyOp Kso;
+        public static UtilSerialRelayController USBController = new UtilSerialRelayController();
+        public static KeysSpyOp KeysSpy;
         private RemoteOS _remoteOs;
         //public static object UtilRegrex { get; private set; }
         private readonly IDictionary<string, Func<dynamic>> _optionsTopMenu = new Dictionary<string, Func<dynamic>>();
         private readonly IDictionary<string, Func<dynamic>> _optionsXmlPlugInOutDeviceNames = new Dictionary<string, Func<dynamic>>();
         private readonly IReadOnlyList<string> _listXmlTestLanguages = new List<string>() {"Deutsch", "English",
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
+
+        public IEnumerable<string> Aaa()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($"i = {i}");
+                for (int j = 0; j < 2; i++)
+                {
+                    yield return $"j = {j}";
+                }
+            }
+        }
+
+
         public TestIt()
         {
+            Console.WriteLine(Aaa());
+
+
+
+
+
             _MpCases = new MasterPlusTestCases();
-            Kso = new KeysSpyOp(_MpCases.MpActions.KeySpyRelativePath);
+            KeysSpy = new KeysSpyOp(_MpCases.MpActions.KeySpyRelativePath);
             _portalTestFlows = new PortalTestFlows();
             //AssembleTopMenu();
             GetKeyboardKeysFromKeyMapTabFile();
@@ -67,14 +87,14 @@ namespace CMTest
         }
         public static void SendUsbKeyAndCheck(KeyPros key, string expectedResult = null)
         {
-            TestIt.Kso.ClickClear();
-            TestIt.Usrc.SendToPort(key.Port, executedWait:0.3);
-            var actualResultList = TestIt.Kso.GetContentList();
+            TestIt.KeysSpy.ClickClear();
+            TestIt.USBController.SendToPort(key.Port, executedWait:0.3);
+            var actualResultList = TestIt.KeysSpy.GetContentList();
             if (expectedResult == null)
             {
                 if (actualResultList != null)
                 {
-                    throw new Exception($"The key still has output. - VarName: [{key.VarName}] - Actual: [{TestIt.Kso.GetContentList().ElementAt(0)}] - Expected:[No any output] Port:[{key.Port}] Ui:[{key.UiaName}]");
+                    throw new Exception($"The key still has output. - VarName: [{key.VarName}] - Actual: [{TestIt.KeysSpy.GetContentList().ElementAt(0)}] - Expected:[No any output] Port:[{key.Port}] Ui:[{key.UiaName}]");
                 }
                 return;
             }

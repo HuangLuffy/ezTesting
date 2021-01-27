@@ -271,7 +271,7 @@ namespace CMTest.Project.MasterPlus
                     }
                     else
                     {
-                        TestIt.Usrc.SendToPort(pressedKey.Port);
+                        TestIt.USBController.SendToPort(pressedKey.Port);
                     }
                 }, blAssignKey, blVerifyKeyWork);
         }
