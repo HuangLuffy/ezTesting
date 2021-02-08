@@ -36,27 +36,9 @@ namespace CMTest
         private readonly IReadOnlyList<string> _listXmlTestLanguages = new List<string>() {"Deutsch", "English",
             "Español", "Français", "Italiano", "Korean", "Malay", "Português (Portugal)", "Thai", "Türkçe", "Vietnamese", "Русский", "繁體中文", "中文（简体）" };
 
-        public IEnumerable<string> Aaa()
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                Console.WriteLine($"i = {i}");
-                for (int j = 0; j < 2; i++)
-                {
-                    yield return $"j = {j}";
-                }
-            }
-        }
-
 
         public TestIt()
         {
-            //Console.WriteLine(Aaa());
-
-
-
-
-
             _MpCases = new MasterPlusTestCases();
             KeysSpy = new KeysSpyOp(_MpCases.MpActions.KeySpyRelativePath);
             _portalTestFlows = new PortalTestFlows();

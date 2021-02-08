@@ -55,6 +55,11 @@ namespace CMTest.Project.MasterPlus
         //{
         //    [ReassignMenuItems.LettersNumbers] = { ["ReassignMenuItems.LettersNumbers"] = "" }
         //};
+        public class ReassignMenuOptionAndSubItemsOneToOne
+        {
+            public string MenuOption { set; get; }
+            public string MenuSubItems { set; get; }
+        }
         public class ReassignMenuOptionAndSubItems
         {
             public string MenuOption { set; get; }
@@ -91,6 +96,23 @@ namespace CMTest.Project.MasterPlus
                         MenuOption = typeof(ReassignMenuItems).GetFields().First((x) => x.Name.Equals(type.Name.Replace("Items", ""))).GetValue(0).ToString(),
                         MenuSubItems = GetReassignMenuSubItems(type)
                     });
+                }
+                return t;
+            }
+            public static IEnumerable<ReassignMenuOptionAndSubItemsOneToOne> GetReassignMenuItemsListOneToOne()
+            {
+                IEnumerable<ReassignMenuOptionAndSubItemsOneToOne> t = new List<ReassignMenuOptionAndSubItemsOneToOne>();
+                var types = typeof(ReassignMenuItems).GetNestedTypes();
+                foreach (var type in types)
+                {
+                    foreach (var item in GetReassignMenuSubItems(type))
+                    {
+                        t.Add(new ReassignMenuOptionAndSubItemsOneToOne
+                        {
+                            MenuOption = typeof(ReassignMenuItems).GetFields().First((x) => x.Name.Equals(type.Name.Replace("Items", ""))).GetValue(0).ToString(),
+                            MenuSubItems = item.Value
+                        });
+                    }
                 }
                 return t;
             }

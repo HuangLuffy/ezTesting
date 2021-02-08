@@ -296,37 +296,34 @@ namespace CMTest.Project.MasterPlus
 
         private bool _blBreak = false;
         //for ma
-        //public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
-        //{
-        //    var keys = GetAllKbGridKeys();
-        //    var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList();
-        //    var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen());
-        //    UtilLoop.OneParentItemOneChildItemLoopController(validKeys, reassignMenuItemsList, (x, y) =>
-        //    {
-        //        foreach (var subItem in y.MenuSubItems)
-        //        {
-        //            try
-        //            {
-        //                AssignKeyFromReassignMenu(y.MenuOption, subItem.Value, x.GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                _r.CurrentTestCase.ErrorMessages.Add(e.Message);
-        //            }
-        //        }
-        //    }, (x) =>
-        //    {
-        //        try
-        //        {
-        //            AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            _r.CurrentTestCase.ErrorMessages.Add(e.Message);
-        //        }
-        //    }, false);
-        //}
         public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
+        {
+            var keys = GetAllKbGridKeys();
+            var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsListOneToOne();
+            var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen());
+            UtilLoop.OneParentItemOneChildItemLoopController(validKeys, reassignMenuItemsList, (x, y) =>
+            {
+                try
+                {
+                    AssignKeyFromReassignMenu(y.MenuOption, y.MenuSubItems, x.GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
+                }
+                catch (Exception e)
+                {
+                    _r.CurrentTestCase.ErrorMessages.Add(e.Message);
+                }
+            }, (x) =>
+            {
+                try
+                {
+                    AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
+                }
+                catch (Exception e)
+                {
+                    _r.CurrentTestCase.ErrorMessages.Add(e.Message);
+                }
+            }, false);
+        }
+        public void AssignInLoop1(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
         {
             var keys = GetAllKbGridKeys();
 
