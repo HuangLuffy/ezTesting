@@ -51,7 +51,7 @@ namespace CMTest
 
         public TestIt()
         {
-            Console.WriteLine(Aaa());
+            //Console.WriteLine(Aaa());
 
 
 
@@ -66,7 +66,7 @@ namespace CMTest
             UtilKeys.SetKeyByKeyStatus(KbKeys.SC_KEY_NUM_LOCK.KeyValue, UtilKeys.Status.On);
             UtilKeys.SetKeyByKeyStatus(KbKeys.SC_KEY_CAP.KeyValue, UtilKeys.Status.Off);
 
-            UtilLoop.testA();
+            //UtilLoop.testA();
 
 
             _MpCases.Case_AssignInLoop(true, false, true);

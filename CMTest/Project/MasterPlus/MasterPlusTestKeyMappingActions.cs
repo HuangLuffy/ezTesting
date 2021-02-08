@@ -296,105 +296,105 @@ namespace CMTest.Project.MasterPlus
 
         private bool _blBreak = false;
         //for ma
-        public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
-        {
-            var keys = GetAllKbGridKeys();
-            var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList();
-            var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen());
-            UtilLoop.OneParentItemOneChildItemLoopController(validKeys, reassignMenuItemsList, (x, y) =>
-            {
-                foreach (var subItem in y.MenuSubItems)
-                {
-                    try
-                    {
-                        AssignKeyFromReassignMenu(y.MenuOption, subItem.Value, x.GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
-                    }
-                    catch (Exception e)
-                    {
-                        _r.CurrentTestCase.ErrorMessages.Add(e.Message);
-                    }
-                }
-            }, (x) =>
-            {
-                try
-                {
-                    AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
-                }
-                catch (Exception e)
-                {
-                    _r.CurrentTestCase.ErrorMessages.Add(e.Message);
-                }
-            }, false);
-        }
         //public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
         //{
         //    var keys = GetAllKbGridKeys();
-
-        //    var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().ToList();
-        //    var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen()).ToList();
-        //    ReassignMenuOptionAndSubItems recordReassignMenuSubItems = null;
-        //    for (var i = 0; i < validKeys.Count(); i++)
+        //    var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList();
+        //    var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen());
+        //    UtilLoop.OneParentItemOneChildItemLoopController(validKeys, reassignMenuItemsList, (x, y) =>
         //    {
-        //        if (recordReassignMenuSubItems != null)
-        //        {
-        //            reassignMenuItemsList.Remove(recordReassignMenuSubItems); //remove null list  
-        //            recordReassignMenuSubItems = null;
-        //        }
-        //        if (!reassignMenuItemsList.Any()) // reassign items are less than keys then assign A for rest of keys
+        //        foreach (var subItem in y.MenuSubItems)
         //        {
         //            try
         //            {
-        //                AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(validKeys[i].GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
+        //                AssignKeyFromReassignMenu(y.MenuOption, subItem.Value, x.GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
         //            }
         //            catch (Exception e)
         //            {
         //                _r.CurrentTestCase.ErrorMessages.Add(e.Message);
         //            }
-        //            continue;
         //        }
-        //        if (_blBreak)// add this here for when reassignMenuItemsList's count is 1
+        //    }, (x) =>
+        //    {
+        //        try
         //        {
-        //            _blBreak = false;
+        //            AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
         //        }
-        //        foreach (var reassignMenuSubItems in reassignMenuItemsList)
+        //        catch (Exception e)
         //        {
-        //            if (_blBreak)
-        //            {
-        //                _blBreak = false;
-        //                break;
-        //            }
-        //            foreach (var subItem in reassignMenuSubItems.MenuSubItems)
-        //            {
-        //                try
-        //                {
-        //                    AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value, validKeys[i].GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
-        //                }
-        //                catch (Exception e)
-        //                {
-        //                    _r.CurrentTestCase.ErrorMessages.Add(e.Message);
-        //                }
-        //                reassignMenuSubItems.MenuSubItems.Remove(subItem);
-        //                if (!reassignMenuSubItems.MenuSubItems.Any())
-        //                {
-        //                    recordReassignMenuSubItems = reassignMenuSubItems; //record null reassignMenuSubItems for row 316 to remove  [reassignMenuItemsList.Remove(recordReassignMenuSubItems); //remove null list  ]
-        //                }
-        //                if (i == (validKeys.Count() - 1))
-        //                {
-        //                    if (reassignMenuItemsList.Any() || reassignMenuSubItems.MenuSubItems.Any())
-        //                    {
-        //                        i = -1; // reassign items are more than keys, to reassign from Esc
-        //                        if (!blVerifyKeyWork) //for manual when all keys are assigned
-        //                        {
-        //                            return;
-        //                        }
-        //                    }
-        //                }
-        //                _blBreak = true;
-        //                break;
-        //            }
+        //            _r.CurrentTestCase.ErrorMessages.Add(e.Message);
         //        }
-        //    }
+        //    }, false);
         //}
+        public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
+        {
+            var keys = GetAllKbGridKeys();
+
+            var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsList().ToList();
+            var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen()).ToList();
+            ReassignMenuOptionAndSubItems recordReassignMenuSubItems = null;
+            for (var i = 0; i < validKeys.Count(); i++)
+            {
+                if (recordReassignMenuSubItems != null)
+                {
+                    reassignMenuItemsList.Remove(recordReassignMenuSubItems); //remove null list  
+                    recordReassignMenuSubItems = null;
+                }
+                if (!reassignMenuItemsList.Any()) // reassign items are less than keys then assign A for rest of keys
+                {
+                    try
+                    {
+                        AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(validKeys[i].GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
+                    }
+                    catch (Exception e)
+                    {
+                        _r.CurrentTestCase.ErrorMessages.Add(e.Message);
+                    }
+                    continue;
+                }
+                if (_blBreak)// add this here for when reassignMenuItemsList's count is 1
+                {
+                    _blBreak = false;
+                }
+                foreach (var reassignMenuSubItems in reassignMenuItemsList)
+                {
+                    if (_blBreak)
+                    {
+                        _blBreak = false;
+                        break;
+                    }
+                    foreach (var subItem in reassignMenuSubItems.MenuSubItems)
+                    {
+                        try
+                        {
+                            AssignKeyFromReassignMenu(reassignMenuSubItems.MenuOption, subItem.Value, validKeys[i].GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
+                        }
+                        catch (Exception e)
+                        {
+                            _r.CurrentTestCase.ErrorMessages.Add(e.Message);
+                        }
+                        reassignMenuSubItems.MenuSubItems.Remove(subItem);
+                        if (!reassignMenuSubItems.MenuSubItems.Any())
+                        {
+                            recordReassignMenuSubItems = reassignMenuSubItems; //record null reassignMenuSubItems for row 316 to remove  [reassignMenuItemsList.Remove(recordReassignMenuSubItems); //remove null list  ]
+                        }
+                        if (i == (validKeys.Count() - 1))
+                        {
+                            if (reassignMenuItemsList.Any() || reassignMenuSubItems.MenuSubItems.Any())
+                            {
+                                i = -1; // reassign items are more than keys, to reassign from Esc
+                                if (!blVerifyKeyWork) //for manual when all keys are assigned
+                                {
+                                    return;
+                                }
+                            }
+                        }
+                        _blBreak = true;
+                        break;
+                    }
+                }
+            }
+        }
         #endregion
     }
 }

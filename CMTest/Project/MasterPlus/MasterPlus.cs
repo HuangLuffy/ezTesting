@@ -105,6 +105,11 @@ namespace CMTest.Project.MasterPlus
                 public static string SC_KEY_G = Hw.KbKeys.SC_KEY_G.UiaName;
                 public static string SC_KEY_H = Hw.KbKeys.SC_KEY_H.UiaName;
                 public static string SC_KEY_I = Hw.KbKeys.SC_KEY_I.UiaName;
+                public static string SC_KEY_J = Hw.KbKeys.SC_KEY_J.UiaName;
+                public static string SC_KEY_K = Hw.KbKeys.SC_KEY_K.UiaName;
+                public static string SC_KEY_L = Hw.KbKeys.SC_KEY_L.UiaName;
+                public static string SC_KEY_M = Hw.KbKeys.SC_KEY_M.UiaName;
+                public static string SC_KEY_N = Hw.KbKeys.SC_KEY_N.UiaName;
                 public static string SC_KEY_O = Hw.KbKeys.SC_KEY_O.UiaName;
                 public static string SC_KEY_P = Hw.KbKeys.SC_KEY_P.UiaName;
                 public static string SC_KEY_Q = Hw.KbKeys.SC_KEY_Q.UiaName;
@@ -197,6 +202,8 @@ namespace CMTest.Project.MasterPlus
             }
             public class PunctuationKeysItems
             {
+                public static string SC_KEY_TILDE = Hw.KbKeys.SC_KEY_TILDE.UiaName;
+
                 public static string SC_KEY_NEG = Hw.KbKeys.SC_KEY_NEG.UiaName;
                 public static string SC_KEY_EQUATION = Hw.KbKeys.SC_KEY_EQUATION.UiaName;
                 public static string SC_KEY_L_BACKETS = Hw.KbKeys.SC_KEY_L_BACKETS.UiaName;
