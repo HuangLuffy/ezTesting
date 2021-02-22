@@ -70,7 +70,7 @@ namespace CommonLib.Util
                 UtilWinApi.keybd_event((byte)key, 0x45, 0, (UIntPtr)0);
             }
         }
-        public static void SetKeyByKeyStatus(int KeyValue, Status s)
+        public static void SetPhysicalKeyStatus(int KeyValue, Status s)
         {
             if (UtilWinApi.GetKeyState(KeyValue) != (int)s)
             {

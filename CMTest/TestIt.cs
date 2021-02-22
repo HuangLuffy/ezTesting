@@ -45,8 +45,8 @@ namespace CMTest
             //AssembleTopMenu();
             GetKeyboardKeysFromKeyMapTabFile();
             GetMatrixFromFile();
-            UtilKeys.SetKeyByKeyStatus(KbKeys.SC_KEY_NUM_LOCK.KeyValue, UtilKeys.Status.On);
-            UtilKeys.SetKeyByKeyStatus(KbKeys.SC_KEY_CAP.KeyValue, UtilKeys.Status.Off);
+            UtilKeys.SetPhysicalKeyStatus(KbKeys.SC_KEY_NUM_LOCK.KeyValue, UtilKeys.Status.On);
+            UtilKeys.SetPhysicalKeyStatus(KbKeys.SC_KEY_CAP.KeyValue, UtilKeys.Status.Off);
 
             //UtilLoop.testA();
 
