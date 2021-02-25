@@ -305,7 +305,8 @@ namespace CMTest.Project.MasterPlus
             {
                 try
                 {
-                    AssignKeyFromReassignMenu(y.MenuOption, y.MenuSubItems, x.GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
+                    AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
+                    //AssignKeyFromReassignMenu(y.MenuOption, y.MenuSubItems, x.GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
                 }
                 catch (Exception e)
                 {
