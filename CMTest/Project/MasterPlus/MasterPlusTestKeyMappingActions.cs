@@ -293,14 +293,33 @@ namespace CMTest.Project.MasterPlus
             //return t;
             return r;
         }
-
         private bool _blBreak = false;
         //for ma
+        private string GetDupKeys(IEnumerable<AT> validKeys)
+        {
+            var keysNameList = new List<string>();
+            foreach (var item in validKeys)
+            {
+                keysNameList.Add(item.GetElementInfo().Name());
+            }
+            var u = keysNameList.GroupBy(o => o).Where(g => g.Count() > 1).Select(g => g.ElementAt(0));
+            string t1 = "";
+            foreach (var item in u)
+            {
+                t1 += $"[{item}]";
+            }
+            return t1;
+        }
         public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCodeInput = false)
         {
             var keys = GetAllKbGridKeys();
             var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsListOneToOne();
             var validKeys = keys.Where(t => !t.GetElementInfo().IsOffscreen());
+            var dupString = GetDupKeys(validKeys);
+            if (!dupString.Equals(""))
+            {
+                _r.CurrentTestCase.ErrorMessages.Add($"There are duplicated keys exist. {dupString}");
+            }
             UtilLoop.OneParentItemOneChildItemLoopController(validKeys, reassignMenuItemsList, (x, y) =>
             {
                 try

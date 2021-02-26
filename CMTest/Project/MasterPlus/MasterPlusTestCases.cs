@@ -225,7 +225,7 @@ namespace CMTest.Project.MasterPlus
                 }
                 , Ireporter.SetAsLines($"Assign all keys on the Keyboard with all keys in Reassignment menu.",
                     blAssignKey ? $"Check the all the assigned key work." : $"Check the all the assigned key work!")
-                , Ireporter.SetAsLines(blVerifyKeyWork ? $"Check that all the assigned key work as expected." : $"Assigned successfully.", "All assigned Grids would be purple.")
+                , Ireporter.SetAsLines("Verify if there are some duplicates keys as default assginment.", blVerifyKeyWork ? $"Check that all the assigned key work as expected." : $"Assigned successfully.", "All assigned Grids would be purple.")
                 , "Failed."
                 , ReportLib.Reporter.WhenCaseFailed.StillRunThisCase);
         }
