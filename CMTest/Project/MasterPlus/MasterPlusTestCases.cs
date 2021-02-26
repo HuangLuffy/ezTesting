@@ -158,11 +158,11 @@ namespace CMTest.Project.MasterPlus
             return Ireporter.SetAsLines(blAssignKey ? $"Assign successfully." : $"The assigned Value is still {pressedKey} on the Reassignment Dialog.",
                 pressedKey.Equals(gridKey) ? "The Grid would be green." : "The Grid would be purple.", GetStringExpectedVerifyKey(pressedKey, blVerifyKeyWork));
         }
-        public void Case_AssignKeyOnReassignDialog(KeyPros pressedKey, KeyPros assignWhichKeyGrid, bool blScanCode = false, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void Case_AssignKeyOnReassignDialog(KeyPros pressedKey, KeyPros assignWhichKeyGrid, bool blScanCodeInput = false, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignKeyOnReassignDialog(pressedKey, assignWhichKeyGrid, blScanCode, blAssignKey, blVerifyKeyWork);
+                    MpActions.AssignKeyOnReassignDialog(pressedKey, assignWhichKeyGrid, blScanCodeInput, blAssignKey, blVerifyKeyWork);
                 }
                 , GetStringDescription(pressedKey.UiaName, assignWhichKeyGrid.UiaName, blAssignKey, blVerifyKeyWork)
                 , GetStringExpected(pressedKey.UiaName, assignWhichKeyGrid.UiaName, blAssignKey, blVerifyKeyWork)
@@ -217,11 +217,11 @@ namespace CMTest.Project.MasterPlus
         }
 
         //or ma
-        public void Case_AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
+        public void Case_AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCodeInput = false)
         {
             Ireporter.Exec(() =>
                 {
-                    MpActions.AssignInLoop(blAssignKey, blVerifyKeyWork, blScanCode);
+                    MpActions.AssignInLoop(blAssignKey, blVerifyKeyWork, blScanCodeInput);
                 }
                 , Ireporter.SetAsLines($"Assign all keys on the Keyboard with all keys in Reassignment menu.",
                     blAssignKey ? $"Check the all the assigned key work." : $"Check the all the assigned key work!")

@@ -260,12 +260,12 @@ namespace CMTest.Project.MasterPlus
                     enableKeyCheckbox.DoClickPoint(1);
                 }, blAssignKey, blVerifyKeyWork);
         }
-        public void AssignKeyOnReassignDialog(KeyPros pressedKey, KeyPros assignWhichKeyGrid, bool blScanCode = false, bool blAssignKey = true, bool blVerifyKeyWork = true)
+        public void AssignKeyOnReassignDialog(KeyPros pressedKey, KeyPros assignWhichKeyGrid, bool blScanCodeInput = false, bool blAssignKey = true, bool blVerifyKeyWork = true)
         {
             CommonAssignKeyAndVerify(pressedKey.UiaName, assignWhichKeyGrid.UiaName,
                 (reassignDialog) =>
                 {
-                    if (blScanCode)
+                    if (blScanCodeInput)
                     {
                         UtilKeys.PressByScanCode(pressedKey.ScanCode);
                     }
@@ -296,7 +296,7 @@ namespace CMTest.Project.MasterPlus
 
         private bool _blBreak = false;
         //for ma
-        public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
+        public void AssignInLoop(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCodeInput = false)
         {
             var keys = GetAllKbGridKeys();
             var reassignMenuItemsList = MasterPlus.ReassignMenuItems.GetReassignMenuItemsListOneToOne();
@@ -305,7 +305,7 @@ namespace CMTest.Project.MasterPlus
             {
                 try
                 {
-                    AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
+                    AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCodeInput, blAssignKey, blVerifyKeyWork);
                     //AssignKeyFromReassignMenu(y.MenuOption, y.MenuSubItems, x.GetElementInfo().Name(), blAssignKey, blVerifyKeyWork);
                 }
                 catch (Exception e)
@@ -316,7 +316,7 @@ namespace CMTest.Project.MasterPlus
             {
                 try
                 {
-                    AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
+                    AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCodeInput, blAssignKey, blVerifyKeyWork);
                 }
                 catch (Exception e)
                 {
@@ -324,7 +324,7 @@ namespace CMTest.Project.MasterPlus
                 }
             }, false);
         }
-        public void AssignInLoop1(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCode = false)
+        public void AssignInLoop1(bool blAssignKey = true, bool blVerifyKeyWork = true, bool blScanCodeInput = false)
         {
             var keys = GetAllKbGridKeys();
 
@@ -342,7 +342,7 @@ namespace CMTest.Project.MasterPlus
                 {
                     try
                     {
-                        AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(validKeys[i].GetElementInfo().Name()), blScanCode, blAssignKey, blVerifyKeyWork);
+                        AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(validKeys[i].GetElementInfo().Name()), blScanCodeInput, blAssignKey, blVerifyKeyWork);
                     }
                     catch (Exception e)
                     {
