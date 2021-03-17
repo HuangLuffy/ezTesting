@@ -320,12 +320,26 @@ namespace CMTest.Project.MasterPlus
             {
                 _r.CurrentTestCase.ErrorMessages.Add($"There are duplicated keys exist. {dupString}");
             }
+            KeyPros assignWhichKeyGrid = null;
+
             UtilLoop.OneParentItemOneChildItemLoopController(validKeys, reassignMenuItemsList, (x, y) =>
             {
                 try
                 {
+                    if (x.GetElementInfo().Name().Equals("PAUSE"))
+                    {
+                        ;
+                    }
                     if (blScanCodeInput)
                     {
+                        try
+                        {
+                            assignWhichKeyGrid = Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name());
+                        }
+                        catch (Exception)
+                        {
+                            assignWhichKeyGrid = new KeyPros() { UiaName = x.GetElementInfo().Name() };
+                        }
                         AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCodeInput, blAssignKey, blVerifyKeyWork);
                     }
                     else
@@ -341,6 +355,14 @@ namespace CMTest.Project.MasterPlus
             {
                 try
                 {
+                    try
+                    {
+                        assignWhichKeyGrid = Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name());
+                    }
+                    catch (Exception)
+                    {
+                        assignWhichKeyGrid = new KeyPros() { UiaName = x.GetElementInfo().Name() };
+                    }
                     AssignKeyOnReassignDialog(Hw.KbKeys.SC_KEY_A, Hw.KbKeys.GetScKeyByUiaName(x.GetElementInfo().Name()), blScanCodeInput, blAssignKey, blVerifyKeyWork);
                 }
                 catch (Exception e)

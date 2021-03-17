@@ -49,7 +49,7 @@ namespace CMTest
             UtilKeys.SetPhysicalKeyStatus(KbKeys.SC_KEY_CAP.KeyValue, UtilKeys.Status.Off);
 
             //UtilLoop.testA();
-            _MpCases.Case_AssignInLoop(blAssignKey: true, blVerifyKeyWork: false, blScanCodeInput: true);
+            //_MpCases.Case_AssignInLoop(blAssignKey: true, blVerifyKeyWork: false, blScanCodeInput: true);
 
             _MpCases.Case_AssignInLoop(true, false, true);
             this.Suit_KeyMappingBaseTest("SK652");
